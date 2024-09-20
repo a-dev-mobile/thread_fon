@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "916005111326",
+    "project_id": "dev-threadfon",
+    "storage_bucket": "dev-threadfon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916005111326:android:08cb75afad3b7acaf5d00f",
+        "android_client_info": {
+          "package_name": "a.dev.mobile.threadfon.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "916005111326-i1e3fb34stncurqc83pm03msrcjpmcas.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg5nhB6yvfJXNVmJ8jwbeQujdmD3v8Zew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916005111326-i1e3fb34stncurqc83pm03msrcjpmcas.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
