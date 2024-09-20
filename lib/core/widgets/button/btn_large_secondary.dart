@@ -20,7 +20,7 @@ class BtnLargeSecondary extends StatelessWidget {
           : ConstColor.neutral_grey_800,
     );
     final buttonStyle = ElevatedButton.styleFrom(
-      primary: Theme.of(context).scaffoldBackgroundColor,
+      // primary: Theme.of(context).scaffoldBackgroundColor,
       shape: const StadiumBorder(),
       side: BorderSide(
         width: 0.5,

@@ -6,9 +6,9 @@ part of 'm_thread_tolerance_values_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MThreadToleranceValuesModel _$$_MThreadToleranceValuesModelFromJson(
+_$MThreadToleranceValuesModelImpl _$$MThreadToleranceValuesModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_MThreadToleranceValuesModel(
+    _$MThreadToleranceValuesModelImpl(
       es_d: (json['es_d'] as num?)?.toDouble() ?? 0,
       ei_d: (json['ei_d'] as num?)?.toDouble() ?? 0,
       es_d1: (json['es_d1'] as num?)?.toDouble() ?? 0,
@@ -17,8 +17,8 @@ _$_MThreadToleranceValuesModel _$$_MThreadToleranceValuesModelFromJson(
       ei_d2: (json['ei_d2'] as num?)?.toDouble() ?? 0,
     );
 
-Map<String, dynamic> _$$_MThreadToleranceValuesModelToJson(
-        _$_MThreadToleranceValuesModel instance) =>
+Map<String, dynamic> _$$MThreadToleranceValuesModelImplToJson(
+        _$MThreadToleranceValuesModelImpl instance) =>
     <String, dynamic>{
       'es_d': instance.es_d,
       'ei_d': instance.ei_d,

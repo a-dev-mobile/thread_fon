@@ -9,14 +9,14 @@
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
-      "args": ["--flavor", "dev"]
+
     },
     {
       "name": "prod_debug_thread_fon",
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
-      "args": ["--flavor", "prod"]
+
     }
   ]
 }

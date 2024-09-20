@@ -6,8 +6,8 @@ part of 'm_thread_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MThreadModel _$$_MThreadModelFromJson(Map<String, dynamic> json) =>
-    _$_MThreadModel(
+_$MThreadModelImpl _$$MThreadModelImplFromJson(Map<String, dynamic> json) =>
+    _$MThreadModelImpl(
       id: json['id'] as String? ?? '',
       diam: json['diam'] as String? ?? '',
       tolerance: json['tolerance'] as String? ?? '',
@@ -24,7 +24,7 @@ _$_MThreadModel _$$_MThreadModelFromJson(Map<String, dynamic> json) =>
       pitch: json['pitch'] as String? ?? '',
     );
 
-Map<String, dynamic> _$$_MThreadModelToJson(_$_MThreadModel instance) =>
+Map<String, dynamic> _$$MThreadModelImplToJson(_$MThreadModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'diam': instance.diam,

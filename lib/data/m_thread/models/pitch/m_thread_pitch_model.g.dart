@@ -6,8 +6,9 @@ part of 'm_thread_pitch_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MThreadPitchModel _$$_MThreadPitchModelFromJson(Map<String, dynamic> json) =>
-    _$_MThreadPitchModel(
+_$MThreadPitchModelImpl _$$MThreadPitchModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$MThreadPitchModelImpl(
       isCoarse: json['isCoarse'] as bool? ?? false,
       isFine: json['isFine'] as bool? ?? false,
       isSuperFine: json['isSuperFine'] as bool? ?? false,
@@ -22,8 +23,8 @@ _$_MThreadPitchModel _$$_MThreadPitchModelFromJson(Map<String, dynamic> json) =>
           const <String>[],
     );
 
-Map<String, dynamic> _$$_MThreadPitchModelToJson(
-        _$_MThreadPitchModel instance) =>
+Map<String, dynamic> _$$MThreadPitchModelImplToJson(
+        _$MThreadPitchModelImpl instance) =>
     <String, dynamic>{
       'isCoarse': instance.isCoarse,
       'isFine': instance.isFine,

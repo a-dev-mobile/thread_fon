@@ -23,7 +23,7 @@ SnackBar mySnakBarWidget({
       text,
       textAlign: TextAlign.center,
       style: AppTextStyle.H3_REGULAR(
-        colorText: Theme.of(context).textTheme.bodyText1!.color,
+        // colorText: Theme.of(context).textTheme.bodyText1!.color,
       ),
     ),
     backgroundColor: backgroundColor,

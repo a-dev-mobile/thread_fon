@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:threadfon/modules/threads/view/m_thread/view/m_thread_tolerance/view/m_thread_tolerance_page.dart';
 
-import '../../../../../../../app/routes/route.gr.dart';
+
 import '../../../../../../../config/styles/app_text_style.dart';
 import '../../../../../../../core/constants/colors.dart';
 import '../../../../../../../core/utils/app_utils.dart';
@@ -170,7 +171,16 @@ class _PitchItem extends StatelessWidget {
 
           return;
         }
-        AutoRouter.of(context).push(const MThreadToleranceRoute());
+
+    Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MThreadTolerancePage(),
+                ),
+              );
+
+
+
       },
       title: Center(
         child: Text(
@@ -215,7 +225,7 @@ class _PitchItem extends StatelessWidget {
           AppLocalizations.of(context).no_data,
           textAlign: TextAlign.center,
           style: AppTextStyle.H3_REGULAR(
-            colorText: Theme.of(context).textTheme.bodyText1!.color,
+            // colorText: Theme.of(context).textTheme.bodyText1!.color,
           ),
         ),
         // content: Text('This is a demo alert dialog.'),

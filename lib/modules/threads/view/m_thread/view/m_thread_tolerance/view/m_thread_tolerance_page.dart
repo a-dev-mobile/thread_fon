@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:threadfon/modules/threads/view/m_thread/view/m_thread_info/view/m_thread_info_page.dart';
 
-import '../../../../../../../app/admob/ad_helper.dart';
-import '../../../../../../../app/routes/route.gr.dart';
 import '../../../../../../../config/styles/app_text_style.dart';
 import '../../../../../../../core/constants/common.dart';
 import '../../../../../../../core/utils/app_log.dart';
@@ -17,16 +15,12 @@ import '../../../../../../../core/widgets/my_msg_widget.dart';
 import '../../../../../../../data/m_thread/m_thread_repository.dart';
 import '../../../../../../../data/m_thread/models/tolerance/m_thread_tolerance_model.dart';
 import '../../../cubit/m_thread_cubit.dart';
-import 'cubit/ads_interstitial_cubit.dart';
 
 class MThreadTolerancePage extends StatelessWidget {
   const MThreadTolerancePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (context) => AdsInterstitialCubit(),
-        child: _MThreadTolerancePage(),
-      );
+  Widget build(BuildContext context) => _MThreadTolerancePage();
 }
 
 class _MThreadTolerancePage extends StatelessWidget {
@@ -87,92 +81,15 @@ class ToleranceWidget extends StatefulWidget {
 
 class _ToleranceWidgetState extends State<ToleranceWidget> {
   int _interstitialLoadAttempts = 0;
-  InterstitialAd? _interstitialAd;
-
-  void _createInterstitialAd() {
-    InterstitialAd.load(
-      adUnitId: interstitialAdUnitId,
-      request: const AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (InterstitialAd ad) {
-          _interstitialAd = ad;
-          _interstitialLoadAttempts = 0;
-          _interstitialAd!.setImmersiveMode(true);
-        },
-        onAdFailedToLoad: (LoadAdError error) {
-          _interstitialLoadAttempts += 1;
-          _interstitialAd = null;
-          if (_interstitialLoadAttempts <= ConstCommon.maxFailedLoadAttempts) {
-            _createInterstitialAd();
-          }
-        },
-      ),
-    );
-  }
-
-  void _showInterstialAd() {
-    if (_interstitialAd == null) {
-      log.w('Warning: attempt to show interstitial before loaded.');
-      return;
-    }
-    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (InterstitialAd ad) =>
-          log.w('ad onAdShowedFullScreenContent.'),
-      onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        log.w('$ad onAdDismissedFullScreenContent.');
-        ad.dispose();
-        _createInterstitialAd();
-      },
-      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        log.w('$ad onAdFailedToShowFullScreenContent: $error');
-        ad.dispose();
-        _createInterstitialAd();
-      },
-      onAdImpression: (InterstitialAd ad) => log.i('$ad impression occurred.'),
-    );
-
-    _interstitialAd!.show();
-    _interstitialAd = null;
-  }
-
-  void showAd() {
-    log.w('start ad');
-    _showInterstialAd();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _createInterstitialAd();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-
-    _interstitialAd?.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<AdsInterstitialCubit>().state;
     return SingleChildScrollView(
       padding: EdgeInsets.only(bottom: 120.h),
       child: Column(
         children: [
           for (var item in widget.listTolerance)
-            ToleranceItem(
-              tolerance: item,
-              onTap: () {
-                if (state > ConstCommon.maxViewInfoPageBeforeAds) {
-                  context.read<AdsInterstitialCubit>().reset();
-                  if (ConstCommon.isShowAd) showAd();
-                  context.read<AdsInterstitialCubit>().increment();
-                } else {
-                  context.read<AdsInterstitialCubit>().increment();
-                }
-              },
-            ),
+            ToleranceItem(tolerance: item, onTap: () {}),
         ],
       ),
     );
@@ -216,9 +133,13 @@ class ToleranceItem extends StatelessWidget {
           es_d1: toleranceValues.es_d1,
           es_d2: toleranceValues.es_d2,
         );
-
-        await AutoRouter.of(context).push(const MThreadInfoRoute());
-        onTap();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MThreadInfoPage(),
+          ),
+        );
+        // await AutoRouter.of(context).push(const MThreadInfoRoute());
       },
       title: Center(
         child: Text(

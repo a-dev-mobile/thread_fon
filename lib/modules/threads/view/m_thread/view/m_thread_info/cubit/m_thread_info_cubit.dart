@@ -3,12 +3,13 @@
 import 'dart:core';
 
 // Package imports:
-import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 import '../../../../../../../core/constants/common.dart';
 import '../../../../../../../core/utils/app_utils.dart';
 
-class MThreadInfoCubit extends HydratedCubit<int> {
+class MThreadInfoCubit extends Cubit<int> {
   MThreadInfoCubit() : super(ConstCommon.mmUnit);
 
   void setUnit(int value) {

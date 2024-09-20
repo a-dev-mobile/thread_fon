@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:threadfon/modules/threads/view/m_thread/view/m_thread_pitch/view/m_thread_pitch_page.dart';
 
-import '../../../../../../../app/routes/route.gr.dart';
+
 import '../../../../../../../config/styles/app_text_style.dart';
 import '../../../../../../../core/widgets/my_error_widget.dart';
 import '../../../../../../../core/widgets/my_load_widget.dart';
@@ -18,7 +19,7 @@ class MThreadDiamPage extends StatelessWidget {
   const MThreadDiamPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     final repository = RepositoryProvider.of<MThreadRepository>(context);
 
     return Scaffold(
@@ -64,7 +65,12 @@ class ThreadDiamCard extends StatelessWidget {
           InkWell(
             onTap: () {
               context.read<MThreadCubit>().setDiam(item);
-              AutoRouter.of(context).push(const MThreadPitchRoute());
+               Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const MThreadPitchPage(),
+                ),
+              );
             },
             child: Center(
               child: Text(

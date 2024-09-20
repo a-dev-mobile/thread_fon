@@ -6,12 +6,14 @@ part of 'm_thread_diam_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MThreadDiamModel _$$_MThreadDiamModelFromJson(Map<String, dynamic> json) =>
-    _$_MThreadDiamModel(
+_$MThreadDiamModelImpl _$$MThreadDiamModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$MThreadDiamModelImpl(
       diam: json['diam'] as String,
     );
 
-Map<String, dynamic> _$$_MThreadDiamModelToJson(_$_MThreadDiamModel instance) =>
+Map<String, dynamic> _$$MThreadDiamModelImplToJson(
+        _$MThreadDiamModelImpl instance) =>
     <String, dynamic>{
       'diam': instance.diam,
     };

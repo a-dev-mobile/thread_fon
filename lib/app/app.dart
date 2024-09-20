@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:threadfon/modules/threads/threads_wrapper_page.dart';
 
 import '../config/theme/app_theme.dart';
 import '../modules/setting/cubit/toggle_lang_cubit.dart';
 import '../modules/setting/cubit/toggle_theme_cubit.dart';
 
-import 'routes/route.gr.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -36,17 +36,15 @@ class _ThreadFonApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _appRouter = AppRouter();
-
     return BlocBuilder<ToggleThemeCubit, bool>(
       builder: (context, isDark) => BlocBuilder<ToggleLangCubit, String>(
         builder: (context, langCode) => ScreenUtilInit(
-          designSize: const Size(360, 960), // as figma
+          designSize: const Size(360, 960), // как в Figma
           minTextAdapt: true,
           splitScreenMode: true,
-          builder: (context) => MaterialApp.router(
+          builder: (context, child) => MaterialApp(
             builder: (context, widget) {
-              ScreenUtil.setContext(context);
+  
 
               return MediaQuery(
                 data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
@@ -66,8 +64,13 @@ class _ThreadFonApp extends StatelessWidget {
             supportedLocales: AppLocalizations.supportedLocales,
             locale: Locale(langCode),
             //
-            routerDelegate: _appRouter.delegate(),
-            routeInformationParser: _appRouter.defaultRouteParser(),
+            home: const ThreadsWrapperPage(), // Установка первой страницы
+            // Если у вас есть маршруты, вы можете добавить их здесь
+            // Например:
+            // routes: {
+            //   '/threads': (context) => const ThreadsWrapperPage(),
+            //   // другие маршруты
+            // },
           ),
         ),
       ),

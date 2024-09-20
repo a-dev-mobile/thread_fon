@@ -18,7 +18,7 @@ import 'widgets/female/m_thread_info_female_image.dart';
 import 'widgets/male/m_thread_info_male_image.dart';
 
 class MThreadInfoPage extends StatelessWidget {
-  const MThreadInfoPage({Key? key}) : super(key: key);
+  const  MThreadInfoPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

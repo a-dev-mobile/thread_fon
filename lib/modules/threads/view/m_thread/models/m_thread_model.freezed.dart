@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'm_thread_model.dart';
 
@@ -12,56 +12,11 @@ part of 'm_thread_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 MThreadModel _$MThreadModelFromJson(Map<String, dynamic> json) {
   return _MThreadModel.fromJson(json);
 }
-
-/// @nodoc
-class _$MThreadModelTearOff {
-  const _$MThreadModelTearOff();
-
-  _MThreadModel call(
-      {String id = '',
-      String diam = '',
-      String tolerance = '',
-      bool isCoarsePitch = false,
-      bool isFinePitch = false,
-      bool isSuperFinePitch = false,
-      bool isMale = false,
-      double es_d = 0.0,
-      double ei_d = 0.0,
-      double es_d1 = 0.0,
-      double ei_d1 = 0.0,
-      double es_d2 = 0.0,
-      double ei_d2 = 0.0,
-      String pitch = ''}) {
-    return _MThreadModel(
-      id: id,
-      diam: diam,
-      tolerance: tolerance,
-      isCoarsePitch: isCoarsePitch,
-      isFinePitch: isFinePitch,
-      isSuperFinePitch: isSuperFinePitch,
-      isMale: isMale,
-      es_d: es_d,
-      ei_d: ei_d,
-      es_d1: es_d1,
-      ei_d1: ei_d1,
-      es_d2: es_d2,
-      ei_d2: ei_d2,
-      pitch: pitch,
-    );
-  }
-
-  MThreadModel fromJson(Map<String, Object?> json) {
-    return MThreadModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MThreadModel = _$MThreadModelTearOff();
 
 /// @nodoc
 mixin _$MThreadModel {
@@ -80,8 +35,12 @@ mixin _$MThreadModel {
   double get ei_d2 => throw _privateConstructorUsedError;
   String get pitch => throw _privateConstructorUsedError;
 
+  /// Serializes this MThreadModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MThreadModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MThreadModelCopyWith<MThreadModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -90,7 +49,8 @@ mixin _$MThreadModel {
 abstract class $MThreadModelCopyWith<$Res> {
   factory $MThreadModelCopyWith(
           MThreadModel value, $Res Function(MThreadModel) then) =
-      _$MThreadModelCopyWithImpl<$Res>;
+      _$MThreadModelCopyWithImpl<$Res, MThreadModel>;
+  @useResult
   $Res call(
       {String id,
       String diam,
@@ -109,98 +69,104 @@ abstract class $MThreadModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MThreadModelCopyWithImpl<$Res> implements $MThreadModelCopyWith<$Res> {
+class _$MThreadModelCopyWithImpl<$Res, $Val extends MThreadModel>
+    implements $MThreadModelCopyWith<$Res> {
   _$MThreadModelCopyWithImpl(this._value, this._then);
 
-  final MThreadModel _value;
   // ignore: unused_field
-  final $Res Function(MThreadModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  /// Create a copy of MThreadModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? diam = freezed,
-    Object? tolerance = freezed,
-    Object? isCoarsePitch = freezed,
-    Object? isFinePitch = freezed,
-    Object? isSuperFinePitch = freezed,
-    Object? isMale = freezed,
-    Object? es_d = freezed,
-    Object? ei_d = freezed,
-    Object? es_d1 = freezed,
-    Object? ei_d1 = freezed,
-    Object? es_d2 = freezed,
-    Object? ei_d2 = freezed,
-    Object? pitch = freezed,
+    Object? id = null,
+    Object? diam = null,
+    Object? tolerance = null,
+    Object? isCoarsePitch = null,
+    Object? isFinePitch = null,
+    Object? isSuperFinePitch = null,
+    Object? isMale = null,
+    Object? es_d = null,
+    Object? ei_d = null,
+    Object? es_d1 = null,
+    Object? ei_d1 = null,
+    Object? es_d2 = null,
+    Object? ei_d2 = null,
+    Object? pitch = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      diam: diam == freezed
+      diam: null == diam
           ? _value.diam
           : diam // ignore: cast_nullable_to_non_nullable
               as String,
-      tolerance: tolerance == freezed
+      tolerance: null == tolerance
           ? _value.tolerance
           : tolerance // ignore: cast_nullable_to_non_nullable
               as String,
-      isCoarsePitch: isCoarsePitch == freezed
+      isCoarsePitch: null == isCoarsePitch
           ? _value.isCoarsePitch
           : isCoarsePitch // ignore: cast_nullable_to_non_nullable
               as bool,
-      isFinePitch: isFinePitch == freezed
+      isFinePitch: null == isFinePitch
           ? _value.isFinePitch
           : isFinePitch // ignore: cast_nullable_to_non_nullable
               as bool,
-      isSuperFinePitch: isSuperFinePitch == freezed
+      isSuperFinePitch: null == isSuperFinePitch
           ? _value.isSuperFinePitch
           : isSuperFinePitch // ignore: cast_nullable_to_non_nullable
               as bool,
-      isMale: isMale == freezed
+      isMale: null == isMale
           ? _value.isMale
           : isMale // ignore: cast_nullable_to_non_nullable
               as bool,
-      es_d: es_d == freezed
+      es_d: null == es_d
           ? _value.es_d
           : es_d // ignore: cast_nullable_to_non_nullable
               as double,
-      ei_d: ei_d == freezed
+      ei_d: null == ei_d
           ? _value.ei_d
           : ei_d // ignore: cast_nullable_to_non_nullable
               as double,
-      es_d1: es_d1 == freezed
+      es_d1: null == es_d1
           ? _value.es_d1
           : es_d1 // ignore: cast_nullable_to_non_nullable
               as double,
-      ei_d1: ei_d1 == freezed
+      ei_d1: null == ei_d1
           ? _value.ei_d1
           : ei_d1 // ignore: cast_nullable_to_non_nullable
               as double,
-      es_d2: es_d2 == freezed
+      es_d2: null == es_d2
           ? _value.es_d2
           : es_d2 // ignore: cast_nullable_to_non_nullable
               as double,
-      ei_d2: ei_d2 == freezed
+      ei_d2: null == ei_d2
           ? _value.ei_d2
           : ei_d2 // ignore: cast_nullable_to_non_nullable
               as double,
-      pitch: pitch == freezed
+      pitch: null == pitch
           ? _value.pitch
           : pitch // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$MThreadModelCopyWith<$Res>
+abstract class _$$MThreadModelImplCopyWith<$Res>
     implements $MThreadModelCopyWith<$Res> {
-  factory _$MThreadModelCopyWith(
-          _MThreadModel value, $Res Function(_MThreadModel) then) =
-      __$MThreadModelCopyWithImpl<$Res>;
+  factory _$$MThreadModelImplCopyWith(
+          _$MThreadModelImpl value, $Res Function(_$MThreadModelImpl) then) =
+      __$$MThreadModelImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String diam,
@@ -219,86 +185,87 @@ abstract class _$MThreadModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MThreadModelCopyWithImpl<$Res> extends _$MThreadModelCopyWithImpl<$Res>
-    implements _$MThreadModelCopyWith<$Res> {
-  __$MThreadModelCopyWithImpl(
-      _MThreadModel _value, $Res Function(_MThreadModel) _then)
-      : super(_value, (v) => _then(v as _MThreadModel));
+class __$$MThreadModelImplCopyWithImpl<$Res>
+    extends _$MThreadModelCopyWithImpl<$Res, _$MThreadModelImpl>
+    implements _$$MThreadModelImplCopyWith<$Res> {
+  __$$MThreadModelImplCopyWithImpl(
+      _$MThreadModelImpl _value, $Res Function(_$MThreadModelImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _MThreadModel get _value => super._value as _MThreadModel;
-
+  /// Create a copy of MThreadModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? diam = freezed,
-    Object? tolerance = freezed,
-    Object? isCoarsePitch = freezed,
-    Object? isFinePitch = freezed,
-    Object? isSuperFinePitch = freezed,
-    Object? isMale = freezed,
-    Object? es_d = freezed,
-    Object? ei_d = freezed,
-    Object? es_d1 = freezed,
-    Object? ei_d1 = freezed,
-    Object? es_d2 = freezed,
-    Object? ei_d2 = freezed,
-    Object? pitch = freezed,
+    Object? id = null,
+    Object? diam = null,
+    Object? tolerance = null,
+    Object? isCoarsePitch = null,
+    Object? isFinePitch = null,
+    Object? isSuperFinePitch = null,
+    Object? isMale = null,
+    Object? es_d = null,
+    Object? ei_d = null,
+    Object? es_d1 = null,
+    Object? ei_d1 = null,
+    Object? es_d2 = null,
+    Object? ei_d2 = null,
+    Object? pitch = null,
   }) {
-    return _then(_MThreadModel(
-      id: id == freezed
+    return _then(_$MThreadModelImpl(
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      diam: diam == freezed
+      diam: null == diam
           ? _value.diam
           : diam // ignore: cast_nullable_to_non_nullable
               as String,
-      tolerance: tolerance == freezed
+      tolerance: null == tolerance
           ? _value.tolerance
           : tolerance // ignore: cast_nullable_to_non_nullable
               as String,
-      isCoarsePitch: isCoarsePitch == freezed
+      isCoarsePitch: null == isCoarsePitch
           ? _value.isCoarsePitch
           : isCoarsePitch // ignore: cast_nullable_to_non_nullable
               as bool,
-      isFinePitch: isFinePitch == freezed
+      isFinePitch: null == isFinePitch
           ? _value.isFinePitch
           : isFinePitch // ignore: cast_nullable_to_non_nullable
               as bool,
-      isSuperFinePitch: isSuperFinePitch == freezed
+      isSuperFinePitch: null == isSuperFinePitch
           ? _value.isSuperFinePitch
           : isSuperFinePitch // ignore: cast_nullable_to_non_nullable
               as bool,
-      isMale: isMale == freezed
+      isMale: null == isMale
           ? _value.isMale
           : isMale // ignore: cast_nullable_to_non_nullable
               as bool,
-      es_d: es_d == freezed
+      es_d: null == es_d
           ? _value.es_d
           : es_d // ignore: cast_nullable_to_non_nullable
               as double,
-      ei_d: ei_d == freezed
+      ei_d: null == ei_d
           ? _value.ei_d
           : ei_d // ignore: cast_nullable_to_non_nullable
               as double,
-      es_d1: es_d1 == freezed
+      es_d1: null == es_d1
           ? _value.es_d1
           : es_d1 // ignore: cast_nullable_to_non_nullable
               as double,
-      ei_d1: ei_d1 == freezed
+      ei_d1: null == ei_d1
           ? _value.ei_d1
           : ei_d1 // ignore: cast_nullable_to_non_nullable
               as double,
-      es_d2: es_d2 == freezed
+      es_d2: null == es_d2
           ? _value.es_d2
           : es_d2 // ignore: cast_nullable_to_non_nullable
               as double,
-      ei_d2: ei_d2 == freezed
+      ei_d2: null == ei_d2
           ? _value.ei_d2
           : ei_d2 // ignore: cast_nullable_to_non_nullable
               as double,
-      pitch: pitch == freezed
+      pitch: null == pitch
           ? _value.pitch
           : pitch // ignore: cast_nullable_to_non_nullable
               as String,
@@ -308,8 +275,8 @@ class __$MThreadModelCopyWithImpl<$Res> extends _$MThreadModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MThreadModel implements _MThreadModel {
-  const _$_MThreadModel(
+class _$MThreadModelImpl implements _MThreadModel {
+  const _$MThreadModelImpl(
       {this.id = '',
       this.diam = '',
       this.tolerance = '',
@@ -325,50 +292,50 @@ class _$_MThreadModel implements _MThreadModel {
       this.ei_d2 = 0.0,
       this.pitch = ''});
 
-  factory _$_MThreadModel.fromJson(Map<String, dynamic> json) =>
-      _$$_MThreadModelFromJson(json);
+  factory _$MThreadModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MThreadModelImplFromJson(json);
 
-  @JsonKey()
   @override
+  @JsonKey()
   final String id;
-  @JsonKey()
   @override
+  @JsonKey()
   final String diam;
-  @JsonKey()
   @override
+  @JsonKey()
   final String tolerance;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool isCoarsePitch;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool isFinePitch;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool isSuperFinePitch;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool isMale;
-  @JsonKey()
   @override
+  @JsonKey()
   final double es_d;
-  @JsonKey()
   @override
+  @JsonKey()
   final double ei_d;
-  @JsonKey()
   @override
+  @JsonKey()
   final double es_d1;
-  @JsonKey()
   @override
+  @JsonKey()
   final double ei_d1;
-  @JsonKey()
   @override
+  @JsonKey()
   final double es_d2;
-  @JsonKey()
   @override
+  @JsonKey()
   final double ei_d2;
-  @JsonKey()
   @override
+  @JsonKey()
   final String pitch;
 
   @override
@@ -377,77 +344,84 @@ class _$_MThreadModel implements _MThreadModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MThreadModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.diam, diam) &&
-            const DeepCollectionEquality().equals(other.tolerance, tolerance) &&
-            const DeepCollectionEquality()
-                .equals(other.isCoarsePitch, isCoarsePitch) &&
-            const DeepCollectionEquality()
-                .equals(other.isFinePitch, isFinePitch) &&
-            const DeepCollectionEquality()
-                .equals(other.isSuperFinePitch, isSuperFinePitch) &&
-            const DeepCollectionEquality().equals(other.isMale, isMale) &&
-            const DeepCollectionEquality().equals(other.es_d, es_d) &&
-            const DeepCollectionEquality().equals(other.ei_d, ei_d) &&
-            const DeepCollectionEquality().equals(other.es_d1, es_d1) &&
-            const DeepCollectionEquality().equals(other.ei_d1, ei_d1) &&
-            const DeepCollectionEquality().equals(other.es_d2, es_d2) &&
-            const DeepCollectionEquality().equals(other.ei_d2, ei_d2) &&
-            const DeepCollectionEquality().equals(other.pitch, pitch));
+            other is _$MThreadModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.diam, diam) || other.diam == diam) &&
+            (identical(other.tolerance, tolerance) ||
+                other.tolerance == tolerance) &&
+            (identical(other.isCoarsePitch, isCoarsePitch) ||
+                other.isCoarsePitch == isCoarsePitch) &&
+            (identical(other.isFinePitch, isFinePitch) ||
+                other.isFinePitch == isFinePitch) &&
+            (identical(other.isSuperFinePitch, isSuperFinePitch) ||
+                other.isSuperFinePitch == isSuperFinePitch) &&
+            (identical(other.isMale, isMale) || other.isMale == isMale) &&
+            (identical(other.es_d, es_d) || other.es_d == es_d) &&
+            (identical(other.ei_d, ei_d) || other.ei_d == ei_d) &&
+            (identical(other.es_d1, es_d1) || other.es_d1 == es_d1) &&
+            (identical(other.ei_d1, ei_d1) || other.ei_d1 == ei_d1) &&
+            (identical(other.es_d2, es_d2) || other.es_d2 == es_d2) &&
+            (identical(other.ei_d2, ei_d2) || other.ei_d2 == ei_d2) &&
+            (identical(other.pitch, pitch) || other.pitch == pitch));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(diam),
-      const DeepCollectionEquality().hash(tolerance),
-      const DeepCollectionEquality().hash(isCoarsePitch),
-      const DeepCollectionEquality().hash(isFinePitch),
-      const DeepCollectionEquality().hash(isSuperFinePitch),
-      const DeepCollectionEquality().hash(isMale),
-      const DeepCollectionEquality().hash(es_d),
-      const DeepCollectionEquality().hash(ei_d),
-      const DeepCollectionEquality().hash(es_d1),
-      const DeepCollectionEquality().hash(ei_d1),
-      const DeepCollectionEquality().hash(es_d2),
-      const DeepCollectionEquality().hash(ei_d2),
-      const DeepCollectionEquality().hash(pitch));
+      id,
+      diam,
+      tolerance,
+      isCoarsePitch,
+      isFinePitch,
+      isSuperFinePitch,
+      isMale,
+      es_d,
+      ei_d,
+      es_d1,
+      ei_d1,
+      es_d2,
+      ei_d2,
+      pitch);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MThreadModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  _$MThreadModelCopyWith<_MThreadModel> get copyWith =>
-      __$MThreadModelCopyWithImpl<_MThreadModel>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$MThreadModelImplCopyWith<_$MThreadModelImpl> get copyWith =>
+      __$$MThreadModelImplCopyWithImpl<_$MThreadModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MThreadModelToJson(this);
+    return _$$MThreadModelImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _MThreadModel implements MThreadModel {
   const factory _MThreadModel(
-      {String id,
-      String diam,
-      String tolerance,
-      bool isCoarsePitch,
-      bool isFinePitch,
-      bool isSuperFinePitch,
-      bool isMale,
-      double es_d,
-      double ei_d,
-      double es_d1,
-      double ei_d1,
-      double es_d2,
-      double ei_d2,
-      String pitch}) = _$_MThreadModel;
+      {final String id,
+      final String diam,
+      final String tolerance,
+      final bool isCoarsePitch,
+      final bool isFinePitch,
+      final bool isSuperFinePitch,
+      final bool isMale,
+      final double es_d,
+      final double ei_d,
+      final double es_d1,
+      final double ei_d1,
+      final double es_d2,
+      final double ei_d2,
+      final String pitch}) = _$MThreadModelImpl;
 
   factory _MThreadModel.fromJson(Map<String, dynamic> json) =
-      _$_MThreadModel.fromJson;
+      _$MThreadModelImpl.fromJson;
 
   @override
   String get id;
@@ -477,8 +451,11 @@ abstract class _MThreadModel implements MThreadModel {
   double get ei_d2;
   @override
   String get pitch;
+
+  /// Create a copy of MThreadModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$MThreadModelCopyWith<_MThreadModel> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$MThreadModelImplCopyWith<_$MThreadModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

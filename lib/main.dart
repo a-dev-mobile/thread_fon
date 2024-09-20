@@ -1,12 +1,12 @@
-// Package imports:
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:threadfon/data/m_thread/m_thread_repository.dart';
+import 'package:threadfon/modules/threads/view/m_thread/cubit/m_thread_cubit.dart';
 
 import 'app/app.dart';
 import 'app/services/local_storage_service.dart';
@@ -17,29 +17,33 @@ import 'threadfon_bloc_observer.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 // Initialize Firebase.
-  await Firebase.initializeApp();
+
   await LocalStorageServices.service.initialize();
 // Elsewhere in your code
   // FirebaseCrashlytics.instance.crash();
 
-  await MobileAds.instance.initialize();
   sqfliteFfiInit();
   await copyDb();
 
-  final hydratedStorage = await HydratedStorage.build(
-    storageDirectory: kIsWeb
-        ? HydratedStorage.webStorageDirectory
-        : await getTemporaryDirectory(),
-  );
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  HydratedBlocOverrides.runZoned(
-    () => runApp(const App()),
-    storage: hydratedStorage,
-    blocObserver: ThreadFonBlocObserver(),
-  );
+
+  final pathDB = LocalStorageServices.service.getString(ConstStorage.keyPathDB);
+
+  runApp(MultiRepositoryProvider(
+    providers: [
+      RepositoryProvider<MThreadRepository>(
+        create: (context) => MThreadRepository(pathDB: pathDB),
+      ),
+    ],
+    child: MultiBlocProvider(providers: [
+      BlocProvider(
+        create: (context) => MThreadCubit(),
+      ),
+    ], child: const App()),
+  ));
 }
 
 //

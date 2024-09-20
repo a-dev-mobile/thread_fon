@@ -6,9 +6,9 @@ part of 'm_thread_tolerance_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MThreadToleranceModel _$$_MThreadToleranceModelFromJson(
+_$MThreadToleranceModelImpl _$$MThreadToleranceModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_MThreadToleranceModel(
+    _$MThreadToleranceModelImpl(
       id: json['id'] as String? ?? '',
       listTolerance: (json['listTolerance'] as List<dynamic>?)
               ?.map((e) => e as String)
@@ -16,8 +16,8 @@ _$_MThreadToleranceModel _$$_MThreadToleranceModelFromJson(
           const <String>[],
     );
 
-Map<String, dynamic> _$$_MThreadToleranceModelToJson(
-        _$_MThreadToleranceModel instance) =>
+Map<String, dynamic> _$$MThreadToleranceModelImplToJson(
+        _$MThreadToleranceModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'listTolerance': instance.listTolerance,

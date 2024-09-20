@@ -51,7 +51,7 @@ class MThreadInfoMaleImage extends StatelessWidget {
                 SizedBox.expand(
                   child: Image(
                     fit: BoxFit.contain,
-                    color: Theme.of(context).textTheme.bodyText1!.color,
+                    // color: Theme.of(context).textTheme.bodyText1!.color,
                     image: AssetImage(path),
                   ),
                 ),

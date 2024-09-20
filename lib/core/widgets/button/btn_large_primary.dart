@@ -21,7 +21,7 @@ class BtnLargePrimary extends StatelessWidget {
           isDarkMode ? ConstColor.neutral_grey_800 : ConstColor.neutral_white,
     );
     final buttonStyle = ElevatedButton.styleFrom(
-      primary: Theme.of(context).primaryColor,
+      // primary: Theme.of(context).primaryColor,
       shape: const StadiumBorder(),
       side: const BorderSide(width: 0.5, color: ConstColor.neutral_grey_400),
     );

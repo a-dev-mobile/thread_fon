@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'm_thread_tolerance_model.dart';
 
@@ -12,7 +12,7 @@ part of 'm_thread_tolerance_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 MThreadToleranceModel _$MThreadToleranceModelFromJson(
     Map<String, dynamic> json) {
@@ -20,32 +20,16 @@ MThreadToleranceModel _$MThreadToleranceModelFromJson(
 }
 
 /// @nodoc
-class _$MThreadToleranceModelTearOff {
-  const _$MThreadToleranceModelTearOff();
-
-  _MThreadToleranceModel call(
-      {String id = '', List<String> listTolerance = const <String>[]}) {
-    return _MThreadToleranceModel(
-      id: id,
-      listTolerance: listTolerance,
-    );
-  }
-
-  MThreadToleranceModel fromJson(Map<String, Object?> json) {
-    return MThreadToleranceModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MThreadToleranceModel = _$MThreadToleranceModelTearOff();
-
-/// @nodoc
 mixin _$MThreadToleranceModel {
   String get id => throw _privateConstructorUsedError;
   List<String> get listTolerance => throw _privateConstructorUsedError;
 
+  /// Serializes this MThreadToleranceModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MThreadToleranceModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MThreadToleranceModelCopyWith<MThreadToleranceModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -54,70 +38,79 @@ mixin _$MThreadToleranceModel {
 abstract class $MThreadToleranceModelCopyWith<$Res> {
   factory $MThreadToleranceModelCopyWith(MThreadToleranceModel value,
           $Res Function(MThreadToleranceModel) then) =
-      _$MThreadToleranceModelCopyWithImpl<$Res>;
+      _$MThreadToleranceModelCopyWithImpl<$Res, MThreadToleranceModel>;
+  @useResult
   $Res call({String id, List<String> listTolerance});
 }
 
 /// @nodoc
-class _$MThreadToleranceModelCopyWithImpl<$Res>
+class _$MThreadToleranceModelCopyWithImpl<$Res,
+        $Val extends MThreadToleranceModel>
     implements $MThreadToleranceModelCopyWith<$Res> {
   _$MThreadToleranceModelCopyWithImpl(this._value, this._then);
 
-  final MThreadToleranceModel _value;
   // ignore: unused_field
-  final $Res Function(MThreadToleranceModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  /// Create a copy of MThreadToleranceModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? listTolerance = freezed,
+    Object? id = null,
+    Object? listTolerance = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      listTolerance: listTolerance == freezed
+      listTolerance: null == listTolerance
           ? _value.listTolerance
           : listTolerance // ignore: cast_nullable_to_non_nullable
               as List<String>,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$MThreadToleranceModelCopyWith<$Res>
+abstract class _$$MThreadToleranceModelImplCopyWith<$Res>
     implements $MThreadToleranceModelCopyWith<$Res> {
-  factory _$MThreadToleranceModelCopyWith(_MThreadToleranceModel value,
-          $Res Function(_MThreadToleranceModel) then) =
-      __$MThreadToleranceModelCopyWithImpl<$Res>;
+  factory _$$MThreadToleranceModelImplCopyWith(
+          _$MThreadToleranceModelImpl value,
+          $Res Function(_$MThreadToleranceModelImpl) then) =
+      __$$MThreadToleranceModelImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String id, List<String> listTolerance});
 }
 
 /// @nodoc
-class __$MThreadToleranceModelCopyWithImpl<$Res>
-    extends _$MThreadToleranceModelCopyWithImpl<$Res>
-    implements _$MThreadToleranceModelCopyWith<$Res> {
-  __$MThreadToleranceModelCopyWithImpl(_MThreadToleranceModel _value,
-      $Res Function(_MThreadToleranceModel) _then)
-      : super(_value, (v) => _then(v as _MThreadToleranceModel));
+class __$$MThreadToleranceModelImplCopyWithImpl<$Res>
+    extends _$MThreadToleranceModelCopyWithImpl<$Res,
+        _$MThreadToleranceModelImpl>
+    implements _$$MThreadToleranceModelImplCopyWith<$Res> {
+  __$$MThreadToleranceModelImplCopyWithImpl(_$MThreadToleranceModelImpl _value,
+      $Res Function(_$MThreadToleranceModelImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _MThreadToleranceModel get _value => super._value as _MThreadToleranceModel;
-
+  /// Create a copy of MThreadToleranceModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? listTolerance = freezed,
+    Object? id = null,
+    Object? listTolerance = null,
   }) {
-    return _then(_MThreadToleranceModel(
-      id: id == freezed
+    return _then(_$MThreadToleranceModelImpl(
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      listTolerance: listTolerance == freezed
-          ? _value.listTolerance
+      listTolerance: null == listTolerance
+          ? _value._listTolerance
           : listTolerance // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -126,19 +119,25 @@ class __$MThreadToleranceModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MThreadToleranceModel implements _MThreadToleranceModel {
-  _$_MThreadToleranceModel(
-      {this.id = '', this.listTolerance = const <String>[]});
+class _$MThreadToleranceModelImpl implements _MThreadToleranceModel {
+  _$MThreadToleranceModelImpl(
+      {this.id = '', final List<String> listTolerance = const <String>[]})
+      : _listTolerance = listTolerance;
 
-  factory _$_MThreadToleranceModel.fromJson(Map<String, dynamic> json) =>
-      _$$_MThreadToleranceModelFromJson(json);
+  factory _$MThreadToleranceModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MThreadToleranceModelImplFromJson(json);
 
-  @JsonKey()
   @override
+  @JsonKey()
   final String id;
-  @JsonKey()
+  final List<String> _listTolerance;
   @override
-  final List<String> listTolerance;
+  @JsonKey()
+  List<String> get listTolerance {
+    if (_listTolerance is EqualUnmodifiableListView) return _listTolerance;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_listTolerance);
+  }
 
   @override
   String toString() {
@@ -146,46 +145,54 @@ class _$_MThreadToleranceModel implements _MThreadToleranceModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MThreadToleranceModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
+            other is _$MThreadToleranceModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
             const DeepCollectionEquality()
-                .equals(other.listTolerance, listTolerance));
+                .equals(other._listTolerance, _listTolerance));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(listTolerance));
+      runtimeType, id, const DeepCollectionEquality().hash(_listTolerance));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MThreadToleranceModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  _$MThreadToleranceModelCopyWith<_MThreadToleranceModel> get copyWith =>
-      __$MThreadToleranceModelCopyWithImpl<_MThreadToleranceModel>(
-          this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$MThreadToleranceModelImplCopyWith<_$MThreadToleranceModelImpl>
+      get copyWith => __$$MThreadToleranceModelImplCopyWithImpl<
+          _$MThreadToleranceModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MThreadToleranceModelToJson(this);
+    return _$$MThreadToleranceModelImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _MThreadToleranceModel implements MThreadToleranceModel {
-  factory _MThreadToleranceModel({String id, List<String> listTolerance}) =
-      _$_MThreadToleranceModel;
+  factory _MThreadToleranceModel(
+      {final String id,
+      final List<String> listTolerance}) = _$MThreadToleranceModelImpl;
 
   factory _MThreadToleranceModel.fromJson(Map<String, dynamic> json) =
-      _$_MThreadToleranceModel.fromJson;
+      _$MThreadToleranceModelImpl.fromJson;
 
   @override
   String get id;
   @override
   List<String> get listTolerance;
+
+  /// Create a copy of MThreadToleranceModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$MThreadToleranceModelCopyWith<_MThreadToleranceModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$MThreadToleranceModelImplCopyWith<_$MThreadToleranceModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

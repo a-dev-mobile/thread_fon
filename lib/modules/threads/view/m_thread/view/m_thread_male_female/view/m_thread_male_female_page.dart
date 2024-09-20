@@ -5,8 +5,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/src/provider.dart';
+import 'package:threadfon/modules/threads/view/m_thread/view/m_thread_diam/view/m_thread_diam_page.dart';
 
-import '../../../../../../../app/routes/route.gr.dart';
+
 import '../../../../../../../config/styles/app_text_style.dart';
 import '../../../../../../../core/constants/common.dart';
 import '../../../cubit/m_thread_cubit.dart';
@@ -51,7 +52,14 @@ class MThreadMaleFemalePage extends StatelessWidget {
       );
 
   void nextScreen(BuildContext context) {
-    AutoRouter.of(context).push(const MThreadDiamRoute());
+ Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const MThreadDiamPage(),
+    ),
+  );
+
+
   }
 }
 
@@ -70,7 +78,7 @@ class ChoiceTypeThread extends StatelessWidget {
   Widget build(BuildContext context) {
     final scaffoldBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
 
-    final colorText = Theme.of(context).textTheme.bodyText1!.color;
+    // final colorText = Theme.of(context).textTheme.bodyText1!.color;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       elevation: 3,
@@ -86,7 +94,7 @@ class ChoiceTypeThread extends StatelessWidget {
                 padding: EdgeInsets.all(8.0.h),
                 child: SvgPicture.asset(
                   pathSvg,
-                  color: colorText,
+                  // color: colorText,
                   // height: 120.h,
                 ),
               ),
@@ -96,7 +104,7 @@ class ChoiceTypeThread extends StatelessWidget {
               child: Text(
                 text.toUpperCase(),
                 textAlign: TextAlign.center,
-                style: AppTextStyle.LABEL_SEMI_BOLD(colorText),
+                style: AppTextStyle.LABEL_SEMI_BOLD(),
               ),
             ),
           ],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+
 
 import '../../../config/styles/app_text_style.dart';
 import '../../../core/constants/colors.dart';
@@ -31,11 +31,11 @@ class AboutAppWidget extends StatelessWidget {
     final isDark = brightness == Brightness.dark;
     final backgroundColor =
         isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
-    final packageInfo = await PackageInfo.fromPlatform();
+  
 
     final appName = AppLocalizations.of(context).app_name;
 // String packageName = packageInfo.packageName;
-    final version = packageInfo.version;
+
 // String buildNumber = packageInfo.buildNumber;
 
     return showDialog<void>(
@@ -44,10 +44,10 @@ class AboutAppWidget extends StatelessWidget {
       builder: (BuildContext context) => AlertDialog(
         backgroundColor: backgroundColor,
         title: Text(
-          '$appName : $version',
+          '$appName : version',
           textAlign: TextAlign.center,
           style: AppTextStyle.H3_REGULAR(
-            colorText: Theme.of(context).textTheme.bodyText1!.color,
+            // colorText: Theme.of(context).textTheme.bodyText1!.color,
           ),
         ),
         content: Column(
