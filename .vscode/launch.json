@@ -1,22 +1,38 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "dev_debug_thread_fon",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "debug",
+    "version": "0.2.0",
+    "configurations": [
 
-    },
-    {
-      "name": "prod_debug_thread_fon",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "debug",
 
-    }
-  ]
+        {
+            "name": "Run App ",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "args": [
+            
+            ],
+            "env": {}
+        },
+        
+
+        {
+            "name": "Run Chrome",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "args": [
+           
+            ],
+            "deviceId": "chrome",
+            "env": {}
+        }
+
+    ]
 }
+
+
+/* 
+WEB_DEPLOY_PATH
+/home/dmitriy/web/thread
+
+*/

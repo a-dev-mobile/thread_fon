@@ -1,25 +1,23 @@
 // Package imports:
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/src/provider.dart';
+import 'package:threadfon/config/styles/app_text_style.dart';
+import 'package:threadfon/core/constants/common.dart';
+import 'package:threadfon/modules/threads/view/m_thread/cubit/m_thread_cubit.dart';
 import 'package:threadfon/modules/threads/view/m_thread/view/m_thread_diam/view/m_thread_diam_page.dart';
-
-
-import '../../../../../../../config/styles/app_text_style.dart';
-import '../../../../../../../core/constants/common.dart';
-import '../../../cubit/m_thread_cubit.dart';
+import 'package:threadfon/src/common/localization/localization.dart';
 
 class MThreadMaleFemalePage extends StatelessWidget {
-  const MThreadMaleFemalePage({Key? key}) : super(key: key);
+  const MThreadMaleFemalePage({super.key});
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(
-            AppLocalizations.of(context).thread_type,
+            Localization.of(context).thread_type,
           ),
         ),
         body: Column(
@@ -31,7 +29,7 @@ class MThreadMaleFemalePage extends StatelessWidget {
                   nextScreen(context);
                 },
                 pathSvg: ConstAssets.svgNuts,
-                text: AppLocalizations.of(context).internal_thread,
+                text: Localization.of(context).internal_thread,
               ),
             ),
             Expanded(
@@ -41,7 +39,7 @@ class MThreadMaleFemalePage extends StatelessWidget {
                   nextScreen(context);
                 },
                 pathSvg: ConstAssets.svgBolt,
-                text: AppLocalizations.of(context).external_thread,
+                text: Localization.of(context).external_thread,
               ),
             ),
             SizedBox(
@@ -52,24 +50,22 @@ class MThreadMaleFemalePage extends StatelessWidget {
       );
 
   void nextScreen(BuildContext context) {
- Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => const MThreadDiamPage(),
-    ),
-  );
-
-
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MThreadDiamPage(),
+      ),
+    );
   }
 }
 
 class ChoiceTypeThread extends StatelessWidget {
   const ChoiceTypeThread({
-    Key? key,
     required this.pathSvg,
     required this.text,
     required this.onTap,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String pathSvg;
   final String text;

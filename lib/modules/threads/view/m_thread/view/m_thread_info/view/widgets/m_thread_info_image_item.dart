@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 
 class MThreadInfoImageItem extends StatelessWidget {
   const MThreadInfoImageItem({
-    Key? key,
     required this.posX,
     required this.posY,
     required this.angle,
     required this.minSizeImage,
     required this.text,
     required this.style,
-  }) : super(key: key);
+    super.key,
+  });
 
   final double posX;
   final double posY;

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-
 // Package imports:
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
-import '../../../config/styles/app_text_style.dart';
-import '../../../core/constants/colors.dart';
-import '../../../core/widgets/button/btn_list_tile.dart';
-import '../../../core/widgets/my_divider.dart';
+import 'package:threadfon/config/styles/app_text_style.dart';
+import 'package:threadfon/core/constants/colors.dart';
+import 'package:threadfon/core/widgets/button/btn_list_tile.dart';
+import 'package:threadfon/core/widgets/my_divider.dart';
+import 'package:threadfon/src/common/localization/localization.dart';
 
 class AboutAppWidget extends StatelessWidget {
   const AboutAppWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => BtnListTile(
@@ -22,33 +20,30 @@ class AboutAppWidget extends StatelessWidget {
         leading: const Icon(
           Icons.info_outline,
         ),
-        text: AppLocalizations.of(context).about,
+        text: Localization.of(context).about,
         // trailing: const Icon(Icons.chevron_right),
       );
 
   Future<void> _showDialogAboutApp(BuildContext context) async {
     final brightness = Theme.of(context).brightness;
     final isDark = brightness == Brightness.dark;
-    final backgroundColor =
-        isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
-  
+    final backgroundColor = isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
 
-    final appName = AppLocalizations.of(context).app_name;
+    final appName = Localization.of(context).app_name;
 // String packageName = packageInfo.packageName;
 
 // String buildNumber = packageInfo.buildNumber;
 
     return showDialog<void>(
       context: context,
-      barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) => AlertDialog(
         backgroundColor: backgroundColor,
         title: Text(
           '$appName : version',
           textAlign: TextAlign.center,
           style: AppTextStyle.H3_REGULAR(
-            // colorText: Theme.of(context).textTheme.bodyText1!.color,
-          ),
+              // colorText: Theme.of(context).textTheme.bodyText1!.color,
+              ),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -61,33 +56,33 @@ class AboutAppWidget extends StatelessWidget {
 
   List<Widget> buildDialog(BuildContext context) => [
         Text(
-          AppLocalizations.of(context).thank_you,
+          Localization.of(context).thank_you,
           textAlign: TextAlign.center,
           style: AppTextStyle.LABEL_SEMI_BOLD(),
         ),
         const MyDivider(),
         Text(
-          AppLocalizations.of(context).dialog_title_about_app,
+          Localization.of(context).dialog_title_about_app,
           style: AppTextStyle.LABEL_REGULAR(),
         ),
         Text(
-          AppLocalizations.of(context).dialog_about_app_1,
+          Localization.of(context).dialog_about_app_1,
           textAlign: TextAlign.left,
           style: AppTextStyle.LABEL_REGULAR(),
         ),
         Text(
-          AppLocalizations.of(context).dialog_about_app_2,
+          Localization.of(context).dialog_about_app_2,
           textAlign: TextAlign.left,
           style: AppTextStyle.LABEL_REGULAR(),
         ),
         Text(
-          AppLocalizations.of(context).dialog_about_app_3,
+          Localization.of(context).dialog_about_app_3,
           textAlign: TextAlign.left,
           style: AppTextStyle.LABEL_REGULAR(),
         ),
         const MyDivider(),
         Text(
-          AppLocalizations.of(context).dialog_about_app_5,
+          Localization.of(context).dialog_about_app_5,
           style: AppTextStyle.LABEL_SEMI_BOLD(),
         ),
       ];

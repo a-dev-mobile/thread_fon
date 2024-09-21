@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
+import 'package:threadfon/src/common/localization/localization.dart';
 // Package imports:
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyErrorWidget extends StatelessWidget {
   const MyErrorWidget({
-    Key? key,
     required this.errorMsg,
-  }) : super(key: key);
+    super.key,
+  });
   final String errorMsg;
   @override
   Widget build(BuildContext context) => Center(
-        child: Text('${AppLocalizations.of(context).generalError} > $errorMsg'),
+        child: Text('${Localization.of(context).generalError} > $errorMsg'),
       );
 }

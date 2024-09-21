@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 
-import 'app_log.dart';
+import 'package:threadfon/core/utils/app_log.dart';
 
 /// Exception thrown when copying fails
 // class DbNotCopy implements Exception {}

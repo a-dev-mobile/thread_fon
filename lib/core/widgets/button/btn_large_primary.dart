@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/colors.dart';
+import 'package:threadfon/core/constants/colors.dart';
 
 class BtnLargePrimary extends StatelessWidget {
-  const BtnLargePrimary({Key? key, required this.text, required this.onClick})
-      : super(key: key);
+  const BtnLargePrimary({required this.text, required this.onClick, super.key});
   final String text;
   final Function() onClick;
 

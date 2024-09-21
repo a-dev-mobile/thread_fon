@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../../config/styles/app_text_style.dart';
+import 'package:threadfon/config/styles/app_text_style.dart';
 
 class BtnListTile extends StatelessWidget {
   const BtnListTile({
-    Key? key,
     required this.onTap,
-    this.leading,
     required this.text,
+    super.key,
+    this.leading,
     this.trailing,
-  }) : super(key: key);
+  });
 
   final Function() onTap;
   final Widget? leading;

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-
 // Package imports:
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../core/widgets/my_divider.dart';
-import 'widget/about_app.dart';
-import 'widget/exit_app.dart';
-import 'widget/feed_back.dart';
-import 'widget/lang_switch.dart';
-import 'widget/rate_app.dart';
-import 'widget/theme_switch.dart';
+import 'package:threadfon/core/widgets/my_divider.dart';
+import 'package:threadfon/modules/setting/widget/about_app.dart';
+import 'package:threadfon/modules/setting/widget/exit_app.dart';
+import 'package:threadfon/modules/setting/widget/feed_back.dart';
+import 'package:threadfon/modules/setting/widget/lang_switch.dart';
+import 'package:threadfon/modules/setting/widget/rate_app.dart';
+import 'package:threadfon/modules/setting/widget/theme_switch.dart';
+import 'package:threadfon/src/common/localization/localization.dart';
 
 class SettingPage extends StatelessWidget {
-  const SettingPage({Key? key}) : super(key: key);
+  const SettingPage({super.key});
 
   @override
   Widget build(
@@ -20,11 +19,11 @@ class SettingPage extends StatelessWidget {
   ) =>
       Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context).setting),
+          title: Text(Localization.of(context).setting),
         ),
-        body: Column(
+        body: const Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [
+          children: [
             ThemeSwitchWidget(),
             MyDivider(),
             LangSwitchWidget(),

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:threadfon/config/styles/app_text_style.dart';
 import 'package:threadfon/core/constants/colors.dart';
-
-import '../../config/styles/app_text_style.dart';
 
 SnackBar mySnakBarWidget({
   required BuildContext context,
@@ -23,8 +22,8 @@ SnackBar mySnakBarWidget({
       text,
       textAlign: TextAlign.center,
       style: AppTextStyle.H3_REGULAR(
-        // colorText: Theme.of(context).textTheme.bodyText1!.color,
-      ),
+          // colorText: Theme.of(context).textTheme.bodyText1!.color,
+          ),
     ),
     backgroundColor: backgroundColor,
   );

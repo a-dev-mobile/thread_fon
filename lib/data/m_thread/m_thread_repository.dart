@@ -3,12 +3,12 @@
 // Package imports:
 import 'package:sqflite/sqflite.dart';
 
-import '../../core/utils/app_log.dart';
-import '../../core/utils/app_utils.dart';
-import 'models/diam/m_thread_diam_model.dart';
-import 'models/pitch/m_thread_pitch_model.dart';
-import 'models/tolerance/m_thread_tolerance_model.dart';
-import 'models/tolerance_values/m_thread_tolerance_values_model.dart';
+import 'package:threadfon/core/utils/app_log.dart';
+import 'package:threadfon/core/utils/app_utils.dart';
+import 'package:threadfon/data/m_thread/models/diam/m_thread_diam_model.dart';
+import 'package:threadfon/data/m_thread/models/pitch/m_thread_pitch_model.dart';
+import 'package:threadfon/data/m_thread/models/tolerance/m_thread_tolerance_model.dart';
+import 'package:threadfon/data/m_thread/models/tolerance_values/m_thread_tolerance_values_model.dart';
 
 class MThreadRepository {
   MThreadRepository({required this.pathDB});

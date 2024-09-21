@@ -5,9 +5,8 @@ import 'dart:core';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
-import '../../../../../../../core/constants/common.dart';
-import '../../../../../../../core/utils/app_utils.dart';
+import 'package:threadfon/core/constants/common.dart';
+import 'package:threadfon/core/utils/app_utils.dart';
 
 class MThreadInfoCubit extends Cubit<int> {
   MThreadInfoCubit() : super(ConstCommon.mmUnit);
@@ -37,10 +36,11 @@ class MThreadInfoCubit extends Cubit<int> {
     }
   }
 
-  String minorMajorDiam(
-          {required bool isMale,
-          required String diameter,
-          required String pitch}) =>
+  String minorMajorDiam({
+    required bool isMale,
+    required String diameter,
+    required String pitch,
+  }) =>
       isMale ? diam(diameter) : _minorDiam(diam: diameter, pitch: pitch);
 
   String minorMajorDiamSub({
@@ -161,12 +161,13 @@ class MThreadInfoCubit extends Cubit<int> {
     return AppUtilsNumber.getFormatNumber(result, ConstCommon.precisionMm);
   }
 
-  String minorMajorDiamMin(
-      {required String diam,
-      required String pitch,
-      required bool isMale,
-      required double ei_d,
-      required double ei_d1}) {
+  String minorMajorDiamMin({
+    required String diam,
+    required String pitch,
+    required bool isMale,
+    required double ei_d,
+    required double ei_d1,
+  }) {
     var result = 0.0;
     if (isMale) {
       result = AppUtilsParse.stringToDouble(diam) + ei_d;
@@ -181,14 +182,15 @@ class MThreadInfoCubit extends Cubit<int> {
     return AppUtilsNumber.getFormatNumber(result, ConstCommon.precisionMm);
   }
 
-  String minorMajorDiamMeanSub(
-      {required String diamS,
-      required String pitch,
-      required bool isMale,
-      required double ei_d,
-      required double ei_d1,
-      required double es_d,
-      required double es_d1}) {
+  String minorMajorDiamMeanSub({
+    required String diamS,
+    required String pitch,
+    required bool isMale,
+    required double ei_d,
+    required double ei_d1,
+    required double es_d,
+    required double es_d1,
+  }) {
     var result = 0.0;
     final diam = AppUtilsParse.stringToDouble(diamS);
 
@@ -207,14 +209,15 @@ class MThreadInfoCubit extends Cubit<int> {
     return AppUtilsNumber.getFormatNumber(result, ConstCommon.precisionMm);
   }
 
-  String minorMajorDiamMean(
-      {required String diamS,
-      required String pitch,
-      required bool isMale,
-      required double ei_d,
-      required double ei_d1,
-      required double es_d,
-      required double es_d1}) {
+  String minorMajorDiamMean({
+    required String diamS,
+    required String pitch,
+    required bool isMale,
+    required double ei_d,
+    required double ei_d1,
+    required double es_d,
+    required double es_d1,
+  }) {
     var result = 0.0;
     final diam = AppUtilsParse.stringToDouble(diamS);
     final basicMiniorNuts = _basicMiniorNuts(diam: diamS, pitch: pitch);
@@ -232,12 +235,13 @@ class MThreadInfoCubit extends Cubit<int> {
     return AppUtilsNumber.getFormatNumber(result, ConstCommon.precisionMm);
   }
 
-  String minorMajorDiamMax(
-      {required String diamS,
-      required bool isMale,
-      required String pitch,
-      required double es_d,
-      required double es_d1}) {
+  String minorMajorDiamMax({
+    required String diamS,
+    required bool isMale,
+    required String pitch,
+    required double es_d,
+    required double es_d1,
+  }) {
     var result = 0.0;
     final diam = AppUtilsParse.stringToDouble(diamS);
     final basicMiniorNuts = _basicMiniorNuts(diam: diamS, pitch: pitch);
@@ -344,10 +348,11 @@ class MThreadInfoCubit extends Cubit<int> {
     }
   }
 
-  String depth(
-          {required bool isMale,
-          required String diam,
-          required String pitch}) =>
+  String depth({
+    required bool isMale,
+    required String diam,
+    required String pitch,
+  }) =>
       isMale
           ? _depthThreadMale(diam: diam, pitch: pitch)
           : _depthThreadFemale(diam: diam, pitch: pitch);

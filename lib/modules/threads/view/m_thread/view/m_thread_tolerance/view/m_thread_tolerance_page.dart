@@ -1,23 +1,20 @@
 // Package imports:
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:threadfon/config/styles/app_text_style.dart';
+import 'package:threadfon/core/widgets/my_error_widget.dart';
+import 'package:threadfon/core/widgets/my_load_widget.dart';
+import 'package:threadfon/core/widgets/my_msg_widget.dart';
+import 'package:threadfon/data/m_thread/m_thread_repository.dart';
+import 'package:threadfon/data/m_thread/models/tolerance/m_thread_tolerance_model.dart';
+import 'package:threadfon/modules/threads/view/m_thread/cubit/m_thread_cubit.dart';
 import 'package:threadfon/modules/threads/view/m_thread/view/m_thread_info/view/m_thread_info_page.dart';
-
-import '../../../../../../../config/styles/app_text_style.dart';
-import '../../../../../../../core/constants/common.dart';
-import '../../../../../../../core/utils/app_log.dart';
-import '../../../../../../../core/widgets/my_error_widget.dart';
-import '../../../../../../../core/widgets/my_load_widget.dart';
-import '../../../../../../../core/widgets/my_msg_widget.dart';
-import '../../../../../../../data/m_thread/m_thread_repository.dart';
-import '../../../../../../../data/m_thread/models/tolerance/m_thread_tolerance_model.dart';
-import '../../../cubit/m_thread_cubit.dart';
+import 'package:threadfon/src/common/localization/localization.dart';
 
 class MThreadTolerancePage extends StatelessWidget {
-  const MThreadTolerancePage({Key? key}) : super(key: key);
+  const MThreadTolerancePage({super.key});
 
   @override
   Widget build(BuildContext context) => _MThreadTolerancePage();
@@ -32,7 +29,7 @@ class _MThreadTolerancePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).thread_tolerance),
+        title: Text(Localization.of(context).thread_tolerance),
       ),
       body: FutureBuilder(
         future: repository.fetchMTolerance(
@@ -51,9 +48,7 @@ class _MThreadTolerancePage extends StatelessWidget {
                 if (snapshot.data == null) {
                   return const MyMsgWidget(msg: 'no data');
                 } else {
-                  context
-                      .read<MThreadCubit>()
-                      .setIdTolerance(snapshot.data!.id);
+                  context.read<MThreadCubit>().setIdTolerance(snapshot.data!.id);
 
                   return ToleranceWidget(
                     listTolerance: (snapshot.data!).listTolerance,
@@ -70,8 +65,8 @@ class _MThreadTolerancePage extends StatelessWidget {
 class ToleranceWidget extends StatefulWidget {
   const ToleranceWidget({
     required this.listTolerance,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final List<String> listTolerance;
 
@@ -80,7 +75,7 @@ class ToleranceWidget extends StatefulWidget {
 }
 
 class _ToleranceWidgetState extends State<ToleranceWidget> {
-  int _interstitialLoadAttempts = 0;
+  final int _interstitialLoadAttempts = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -88,8 +83,7 @@ class _ToleranceWidgetState extends State<ToleranceWidget> {
       padding: EdgeInsets.only(bottom: 120.h),
       child: Column(
         children: [
-          for (var item in widget.listTolerance)
-            ToleranceItem(tolerance: item, onTap: () {}),
+          for (final item in widget.listTolerance) ToleranceItem(tolerance: item, onTap: () {}),
         ],
       ),
     );
@@ -98,17 +92,17 @@ class _ToleranceWidgetState extends State<ToleranceWidget> {
 
 class ToleranceItem extends StatelessWidget {
   const ToleranceItem({
-    Key? key,
     required this.tolerance,
     required this.onTap,
-  }) : super(key: key);
+    super.key,
+  });
   final String tolerance;
   final Function() onTap;
   @override
   Widget build(BuildContext context) {
     final repository = RepositoryProvider.of<MThreadRepository>(context);
     final mThreadModelCubit = context.read<MThreadCubit>();
-    final abrv = AppLocalizations.of(context).m_thread_abrv;
+    final abrv = Localization.of(context).m_thread_abrv;
 
     final diam = mThreadModelCubit.state.diam;
     final pitch = mThreadModelCubit.state.pitch;

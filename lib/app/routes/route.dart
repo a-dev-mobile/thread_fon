@@ -1,4 +1,4 @@
-// import 'package:auto_route/auto_route.dart';
+//
 // import 'package:threadfon/modules/root/root_page.dart';
 // import 'package:threadfon/modules/setting/setting_page.dart';
 // import 'package:threadfon/modules/threads/view/m_thread/view/m_thread_diam/view/m_thread_diam_page.dart';

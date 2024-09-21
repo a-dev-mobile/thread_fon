@@ -1,34 +1,32 @@
 // Package imports:
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:threadfon/config/styles/app_text_style.dart';
+import 'package:threadfon/core/constants/colors.dart';
+import 'package:threadfon/core/utils/app_utils.dart';
+import 'package:threadfon/core/widgets/my_divider.dart';
+import 'package:threadfon/core/widgets/my_error_widget.dart';
+import 'package:threadfon/core/widgets/my_load_widget.dart';
+import 'package:threadfon/core/widgets/my_msg_widget.dart';
+import 'package:threadfon/data/m_thread/m_thread_repository.dart';
+import 'package:threadfon/data/m_thread/models/pitch/m_thread_pitch_model.dart';
+import 'package:threadfon/modules/threads/view/m_thread/cubit/m_thread_cubit.dart';
 import 'package:threadfon/modules/threads/view/m_thread/view/m_thread_tolerance/view/m_thread_tolerance_page.dart';
-
-
-import '../../../../../../../config/styles/app_text_style.dart';
-import '../../../../../../../core/constants/colors.dart';
-import '../../../../../../../core/utils/app_utils.dart';
-import '../../../../../../../core/widgets/my_divider.dart';
-import '../../../../../../../core/widgets/my_error_widget.dart';
-import '../../../../../../../core/widgets/my_load_widget.dart';
-import '../../../../../../../core/widgets/my_msg_widget.dart';
-import '../../../../../../../data/m_thread/m_thread_repository.dart';
-import '../../../../../../../data/m_thread/models/pitch/m_thread_pitch_model.dart';
-import '../../../cubit/m_thread_cubit.dart';
+import 'package:threadfon/src/common/localization/localization.dart';
 
 enum TypePitch { coarse, fine, superFine }
 
 class MThreadPitchPage extends StatelessWidget {
-  const MThreadPitchPage({Key? key}) : super(key: key);
+  const MThreadPitchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final repository = RepositoryProvider.of<MThreadRepository>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).thread_pitch),
+        title: Text(Localization.of(context).thread_pitch),
       ),
       body: FutureBuilder(
         future: repository.fetchMPitch(context.read<MThreadCubit>().state.diam),
@@ -44,19 +42,16 @@ class MThreadPitchPage extends StatelessWidget {
                   return const MyMsgWidget(msg: 'no data');
                 } else {
                   return SingleChildScrollView(
-                    // TODO for ads
+                    // TODOfor ads
                     padding: EdgeInsets.only(bottom: 120.h),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        if (snapshot.data!.isCoarse)
-                          _CoarsePitchWidget(pitchModel: snapshot.data!),
-                        if (snapshot.data!.isFine)
-                          FinePitchWidget(pitchModel: snapshot.data!),
-                        if (snapshot.data!.isSuperFine)
-                          SuperFinePitchWidget(pitchModel: snapshot.data!),
+                        if (snapshot.data!.isCoarse) _CoarsePitchWidget(pitchModel: snapshot.data!),
+                        if (snapshot.data!.isFine) FinePitchWidget(pitchModel: snapshot.data!),
+                        if (snapshot.data!.isSuperFine) SuperFinePitchWidget(pitchModel: snapshot.data!),
                       ],
                     ),
                   );
@@ -70,7 +65,7 @@ class MThreadPitchPage extends StatelessWidget {
 }
 
 class FinePitchWidget extends StatelessWidget {
-  const FinePitchWidget({Key? key, required this.pitchModel}) : super(key: key);
+  const FinePitchWidget({required this.pitchModel, super.key});
 
   final MThreadPitchModel pitchModel;
 
@@ -79,9 +74,9 @@ class FinePitchWidget extends StatelessWidget {
         children: [
           const MyDivider(),
           _PitchTypeWidget(
-            typePitch: AppLocalizations.of(context).thread_pitch_fine,
+            typePitch: Localization.of(context).thread_pitch_fine,
           ),
-          for (var pitch in pitchModel.pitchsFine)
+          for (final pitch in pitchModel.pitchsFine)
             _PitchItem(
               pitch: pitch,
               typePitch: TypePitch.fine,
@@ -91,8 +86,7 @@ class FinePitchWidget extends StatelessWidget {
 }
 
 class SuperFinePitchWidget extends StatelessWidget {
-  const SuperFinePitchWidget({Key? key, required this.pitchModel})
-      : super(key: key);
+  const SuperFinePitchWidget({required this.pitchModel, super.key});
 
   final MThreadPitchModel pitchModel;
 
@@ -101,9 +95,9 @@ class SuperFinePitchWidget extends StatelessWidget {
         children: [
           const MyDivider(),
           _PitchTypeWidget(
-            typePitch: AppLocalizations.of(context).thread_pitch_superfine,
+            typePitch: Localization.of(context).thread_pitch_superfine,
           ),
-          for (var pitch in pitchModel.pitchsSuperFine)
+          for (final pitch in pitchModel.pitchsSuperFine)
             _PitchItem(
               pitch: pitch,
               typePitch: TypePitch.superFine,
@@ -114,16 +108,15 @@ class SuperFinePitchWidget extends StatelessWidget {
 
 class _CoarsePitchWidget extends StatelessWidget {
   const _CoarsePitchWidget({
-    Key? key,
     required this.pitchModel,
-  }) : super(key: key);
+  });
 
   final MThreadPitchModel pitchModel;
   @override
   Widget build(BuildContext context) => Column(
         children: [
           _PitchTypeWidget(
-            typePitch: AppLocalizations.of(context).thread_pitch_coarse,
+            typePitch: Localization.of(context).thread_pitch_coarse,
           ),
           _PitchItem(
             pitch: pitchModel.pitchCoarse,
@@ -135,9 +128,8 @@ class _CoarsePitchWidget extends StatelessWidget {
 
 class _PitchTypeWidget extends StatelessWidget {
   const _PitchTypeWidget({
-    Key? key,
     required this.typePitch,
-  }) : super(key: key);
+  });
   final String typePitch;
   @override
   Widget build(BuildContext context) => Text(
@@ -148,15 +140,14 @@ class _PitchTypeWidget extends StatelessWidget {
 
 class _PitchItem extends StatelessWidget {
   const _PitchItem({
-    Key? key,
     required this.pitch,
     required this.typePitch,
-  }) : super(key: key);
+  });
   final String pitch;
   final TypePitch typePitch;
   @override
   Widget build(BuildContext context) {
-    final abrv = AppLocalizations.of(context).m_thread_abrv;
+    final abrv = Localization.of(context).m_thread_abrv;
     final diam = context.read<MThreadCubit>().state.diam;
     return ListTile(
       contentPadding: const EdgeInsets.all(8),
@@ -164,7 +155,7 @@ class _PitchItem extends StatelessWidget {
         _selectedPitch(context, typePitch, pitch);
         if (AppUtilsParse.stringToDouble(diam) < 1) {
           // ScaffoldMessenger.of(context).showSnackBar(mySnakBarWidget(
-          //     context: context, text: AppLocalizations.of(context)!.no_data));
+          //     context: context, text: Localization.of(context)!.no_data));
           // log.i('show snack');
 
           _showMyDialog(context);
@@ -172,15 +163,12 @@ class _PitchItem extends StatelessWidget {
           return;
         }
 
-    Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MThreadTolerancePage(),
-                ),
-              );
-
-
-
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MThreadTolerancePage(),
+          ),
+        );
       },
       title: Center(
         child: Text(
@@ -199,34 +187,29 @@ class _PitchItem extends StatelessWidget {
     switch (typePitch) {
       case TypePitch.coarse:
         mThreadCubit.setCoarsePith();
-        break;
       case TypePitch.fine:
         mThreadCubit.setFinePith();
-        break;
 
       case TypePitch.superFine:
         mThreadCubit.setSuperFinePith();
-        break;
     }
   }
 
   Future<void> _showMyDialog(BuildContext context) async {
     final brightness = Theme.of(context).brightness;
     final isDark = brightness == Brightness.dark;
-    final backgroundColor =
-        isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
+    final backgroundColor = isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
 
     return showDialog<void>(
       context: context,
-      barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) => AlertDialog(
         backgroundColor: backgroundColor,
         title: Text(
-          AppLocalizations.of(context).no_data,
+          Localization.of(context).no_data,
           textAlign: TextAlign.center,
           style: AppTextStyle.H3_REGULAR(
-            // colorText: Theme.of(context).textTheme.bodyText1!.color,
-          ),
+              // colorText: Theme.of(context).textTheme.bodyText1!.color,
+              ),
         ),
         // content: Text('This is a demo alert dialog.'),
       ),

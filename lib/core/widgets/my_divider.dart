@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../constants/colors.dart';
+import 'package:threadfon/core/constants/colors.dart';
 
 class MyDivider extends StatelessWidget {
   const MyDivider({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => const Divider(

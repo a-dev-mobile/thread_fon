@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import '../../../core/constants/common.dart';
-import '../../../core/widgets/button/btn_list_tile.dart';
+import 'package:threadfon/core/constants/common.dart';
+import 'package:threadfon/core/widgets/button/btn_list_tile.dart';
+import 'package:threadfon/src/common/localization/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FeedbackWidget extends StatelessWidget {
   const FeedbackWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => BtnListTile(
@@ -17,7 +17,7 @@ class FeedbackWidget extends StatelessWidget {
           launch(emailLaunchUri(context).toString());
         },
         leading: const Icon(Icons.feedback_outlined),
-        text: AppLocalizations.of(context).feedback,
+        text: Localization.of(context).feedback,
         // trailing: const Icon(Icons.chevron_right),
       );
 
@@ -25,6 +25,6 @@ class FeedbackWidget extends StatelessWidget {
         scheme: 'mailto',
         path: ConstCommon.email,
         query:
-            '${Uri.encodeComponent('subject')}=${Uri.encodeComponent('${AppLocalizations.of(context).feedback} -> ${AppLocalizations.of(context).app_name}')}',
+            '${Uri.encodeComponent('subject')}=${Uri.encodeComponent('${Localization.of(context).feedback} -> ${Localization.of(context).app_name}')}',
       );
 }

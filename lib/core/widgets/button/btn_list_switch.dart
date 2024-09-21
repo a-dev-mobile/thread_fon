@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../../config/styles/app_text_style.dart';
-import '../../constants/colors.dart';
+import 'package:threadfon/config/styles/app_text_style.dart';
+import 'package:threadfon/core/constants/colors.dart';
 
 class BtnListSwitch extends StatelessWidget {
   const BtnListSwitch({
-    Key? key,
     required this.value,
     required this.onChanged,
-    this.leading,
     required this.text,
-  }) : super(key: key);
+    super.key,
+    this.leading,
+  });
   final bool value;
   final Function(bool value) onChanged;
   final Widget? leading;

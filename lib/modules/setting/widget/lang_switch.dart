@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../../config/styles/app_text_style.dart';
-import '../../../core/constants/colors.dart';
-import '../../../core/widgets/button/btn_list_tile.dart';
-import '../cubit/toggle_lang_cubit.dart';
+import 'package:threadfon/config/styles/app_text_style.dart';
+import 'package:threadfon/core/constants/colors.dart';
+import 'package:threadfon/core/widgets/button/btn_list_tile.dart';
+import 'package:threadfon/modules/setting/cubit/toggle_lang_cubit.dart';
+import 'package:threadfon/src/common/localization/localization.dart';
 
 class LangSwitchWidget extends StatelessWidget {
   const LangSwitchWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => BtnListTile(
@@ -20,27 +18,28 @@ class LangSwitchWidget extends StatelessWidget {
           Navigator.of(context).restorablePush(_dialogBuilderSelectLang);
         },
         leading: const Icon(Icons.language),
-        text: AppLocalizations.of(context).app_lang,
+        text: Localization.of(context).app_lang,
         trailing: const Icon(Icons.chevron_right),
       );
 
   static Route<Object?> _dialogBuilderSelectLang(
-          BuildContext context, Object? arguments) =>
+    BuildContext context,
+    Object? arguments,
+  ) =>
       DialogRoute<void>(
         context: context,
         builder: (BuildContext context) => SimpleDialog(
-          backgroundColor: Theme.of(context).brightness == Brightness.dark
-              ? ConstColor.neutral_grey_800
-              : ConstColor.neutral_white,
+          backgroundColor:
+              Theme.of(context).brightness == Brightness.dark ? ConstColor.neutral_grey_800 : ConstColor.neutral_white,
           title: Text(
-            AppLocalizations.of(context).app_lang,
+            Localization.of(context).app_lang,
             style: AppTextStyle.H3_REGULAR(context: context),
           ),
           children: [
             SimpleDialogOption(
               onPressed: () => _click(context),
               child: Text(
-                AppLocalizations.of(context).lang_ru,
+                Localization.of(context).lang_ru,
                 style: AppTextStyle.BODY_SEMI_BOLD(),
               ),
             ),
@@ -50,7 +49,7 @@ class LangSwitchWidget extends StatelessWidget {
                 Navigator.pop(context);
               },
               child: Text(
-                AppLocalizations.of(context).lang_en,
+                Localization.of(context).lang_en,
                 style: AppTextStyle.BODY_SEMI_BOLD(),
               ),
             ),

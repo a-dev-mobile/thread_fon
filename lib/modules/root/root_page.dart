@@ -1,7 +1,7 @@
 // // Package imports:
-// import 'package:auto_route/auto_route.dart';
+//
 // import 'package:flutter/material.dart';
-// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// 
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:flutter_svg/svg.dart';
 
@@ -23,7 +23,6 @@
 // class _RootPageState extends State<RootPage> {
 
 //   bool _isBottomBannerAdLoaded = false;
-
 
 //   @override
 //   void initState() {
@@ -53,7 +52,7 @@
 //           if (_isBottomBannerAdLoaded)
 //             Container(
 //               alignment: Alignment.center,
-           
+
 //             )
 //           else
 //             const SizedBox.shrink(),
@@ -85,11 +84,11 @@
 //                     color: Theme.of(context).primaryColor,
 //                     height: 25.w,
 //                   ),
-//                   title: Text(AppLocalizations.of(context).m_thread),
+//                   title: Text(Localization.of(context).m_thread),
 //                 ),
 //                 SalomonBottomBarItem(
 //                   icon: const Icon(Icons.settings),
-//                   title: Text(AppLocalizations.of(context).setting),
+//                   title: Text(Localization.of(context).setting),
 //                 ),
 //               ],
 //             ),

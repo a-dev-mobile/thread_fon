@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../constants/common.dart';
-import 'app_log.dart';
+import 'package:threadfon/core/constants/common.dart';
+import 'package:threadfon/core/utils/app_log.dart';
 
 abstract class AppUtilsString {
   static String removeDecimalZeroFormat(double n) =>

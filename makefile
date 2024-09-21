@@ -1,0 +1,83 @@
+# Переменные для использования fvm flutter и fvm dart
+FLUTTER = fvm flutter
+DART = fvm dart
+
+.PHONY: help get clean fluttergen gen-build gen-watch fix format \
+        get-mstaffapi-client get-service-desk get-ota-update \
+        gen-service-desk gen-all update gen-localization init
+
+########################
+# Общая помощь
+########################
+
+# Задача для получения зависимостей
+get:
+	$(FLUTTER) pub get
+
+########################
+# Очистка
+########################
+
+# Задача для очистки предыдущих сборок
+clean:
+	$(FLUTTER) clean
+
+########################
+# Генерация кода
+########################
+
+# Задача для сборки с использованием build_runner
+gen-build:
+	$(DART) run build_runner build --delete-conflicting-outputs --release
+
+# Задача для запуска build_runner в режиме наблюдения
+gen-watch:
+	$(DART) run build_runner watch --delete-conflicting-outputs --release
+
+########################
+# Генерация локализации
+########################
+
+# Задача для генерации локализации
+gen-localization:
+	$(FLUTTER) gen-l10n
+
+########################
+# Исправление и форматирование
+########################
+
+# Задача для применения исправлений Dart кода
+fix:
+	$(DART) fix --apply lib
+
+# Задача для форматирования Dart кода
+format:
+	$(DART) format --fix .
+
+########################
+# Комплексные задачи
+########################
+
+# Задача для выполнения всех задач генерации
+gen-all: clean get gen-build gen-localization
+
+# Задача для получения всех зависимостей
+get-all: clean get 
+
+# Задача для сборки Android-приложения
+build-android:
+	$(FLUTTER) build apk --release 
+
+########################
+# Инициализация проекта
+########################
+
+# Задача инициализации проекта
+init:
+	fvm use
+	git pull
+	$(MAKE) get-all
+	$(MAKE) gen-all
+	$(MAKE) format
+	$(MAKE) fix
+

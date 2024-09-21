@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../../../../../config/styles/app_text_style.dart';
-import '../../../../../../../../../core/utils/app_utils.dart';
-import '../m_thread_info_image_item.dart';
+import 'package:threadfon/config/styles/app_text_style.dart';
+import 'package:threadfon/core/utils/app_utils.dart';
+import 'package:threadfon/modules/threads/view/m_thread/view/m_thread_info/view/widgets/m_thread_info_image_item.dart';
 
 class MThreadInfoFemaleImage extends StatelessWidget {
   const MThreadInfoFemaleImage({
-    Key? key,
     required this.path,
     required this.pitch,
     required this.depth,
@@ -24,7 +23,8 @@ class MThreadInfoFemaleImage extends StatelessWidget {
     required this.diamMiddleToleranceBottom,
     required this.diamMajorToleranceTop,
     required this.diamMajorToleranceBottom,
-  }) : super(key: key);
+    super.key,
+  });
   final String path;
   final String pitch;
   final String depth;

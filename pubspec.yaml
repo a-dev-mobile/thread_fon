@@ -1,92 +1,70 @@
 name: threadfon
 description: A new Flutter project.
 
-
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
-
 environment:
-  sdk: ^3.5.3
-
-
+  sdk: '>=3.4.1 <4.0.0'
+  flutter: 3.24.3
 
 dependencies:
-  auto_route: ^9.2.2
-  auto_route_generator: ^9.0.0
+  intl: any
+  async: any
+  path: any
+  collection: any
+  meta: any
 
-  # Architecture
   bloc: ^8.1.4
   flutter_bloc: ^8.1.6
-  provider: ^6.1.2
-  
-  
-
-  
-
   flutter:
     sdk: flutter
+  flutter_native_splash: ^2.4.1
+  # Architecture
+
 
   # localization
   flutter_localizations:
     sdk: flutter
-  intl: ^0.19.0
+
 
   # for UI
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.10
   salomon_bottom_bar: ^3.3.2
-  
 
-
+  json_annotation: ^4.9.0
+  freezed_annotation: ^2.4.4
 
   # for info
-  logger: ^1.4.0
+  logger: ^2.4.0
 
   path_provider: ^2.1.4
   url_launcher: ^6.3.0
 
-
   # storage
   shared_preferences: ^2.3.2
   sqflite: ^2.3.3
-  
 
-
-  # helper data class
-  json_annotation: ^4.9.0
-  freezed_annotation: ^2.4.4
-  # lints
-  # more rules hard
-
-  very_good_analysis: ^6.0.0
+  # very_good_analysis: ^6.0.0
   sqflite_common_ffi: ^2.3.3
 
 dev_dependencies:
-
-    # helper generators
+  intl_utils: ^2.8.7
   build_runner: ^2.4.12
-  
-  # helper data class
-  json_serializable: ^6.8.0
-  freezed: ^2.5.7
-
-
-  # icon splash helpers
-  flutter_launcher_icons: ^0.13.1
-  # flutter_native_splash: ^2.1.5
-
+  json_serializable:
+    ^6.8.0
+    # helper generators
   flutter_test:
     sdk: flutter
+  flutter_gen_runner: ^5.7.0
 
-
+  freezed: ^2.5.7
 
 flutter:
   generate: true
-
   uses-material-design: true
   assets:
     - assets/
@@ -97,20 +75,15 @@ flutter:
     - assets/images/type_thread/
     - assets/images/m_thread/
 
-  fonts:
-    - family: montserrat
-      fonts:
-        - asset: assets/fonts/montserrat_light.ttf
-          weight: 300
-        - asset: assets/fonts/montserrat_regular.ttf
-          weight: 400
-        - asset: assets/fonts/montserrat_medium.ttf
-          weight: 500
-        - asset: assets/fonts/montserrat_semibold.ttf
-          weight: 600
-        - asset: assets/fonts/montserrat_bold.ttf
-          weight: 700
-        - asset: assets/fonts/montserrat_mediumitalic.ttf
-          style: italic
-  #
+flutter_intl:
+  enabled: true
+  class_name: GeneratedLocalization
+  main_locale: en
+  arb_dir: lib/src/common/localization
+  output_dir: lib/src/common/localization/generated
+  use_deferred_loading: false
 
+flutter_gen:
+  output: lib/src/common/constant/
+  line_length: 120
+  #

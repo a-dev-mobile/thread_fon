@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../core/constants/colors.dart';
+import 'package:threadfon/core/constants/colors.dart';
 
 class AppTheme {
   // Private Constructor
@@ -41,8 +41,10 @@ class AppTheme {
         iconTheme: iconTheme(),
       );
 
-  static AppBarTheme _getAppBarTheme(
-      {required BuildContext context, required bool isDark}) {
+  static AppBarTheme _getAppBarTheme({
+    required BuildContext context,
+    required bool isDark,
+  }) {
     final backgroundColor =
         isDark ? ConstColor.neutral_grey_900 : ConstColor.neutral_white;
     final foregroundColor =
@@ -67,8 +69,10 @@ class AppTheme {
     return appBarTheme;
   }
 
-  static TextTheme _getTextTheme(
-      {required BuildContext context, required bool isDark}) {
+  static TextTheme _getTextTheme({
+    required BuildContext context,
+    required bool isDark,
+  }) {
     final bodyColor =
         isDark ? ConstColor.neutral_grey_200 : ConstColor.neutral_grey_800;
 

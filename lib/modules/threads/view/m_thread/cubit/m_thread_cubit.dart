@@ -3,7 +3,7 @@
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/models.dart';
+import 'package:threadfon/modules/threads/view/m_thread/models/models.dart';
 
 class MThreadCubit extends Cubit<MThreadModel> {
   MThreadCubit() : super(const MThreadModel());
