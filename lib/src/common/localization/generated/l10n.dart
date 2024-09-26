@@ -452,10 +452,10 @@ class GeneratedLocalization {
   }
 
   /// `Load...`
-  String get load {
+  String get loadingMessage {
     return Intl.message(
       'Load...',
-      name: 'load',
+      name: 'loadingMessage',
       desc: '',
       args: [],
     );

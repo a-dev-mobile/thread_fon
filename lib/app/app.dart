@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:threadfon/app/flex_theme.dart';
-
 import 'package:threadfon/modules/setting/cubit/toggle_lang_cubit.dart';
 import 'package:threadfon/modules/setting/cubit/toggle_theme_cubit.dart';
 import 'package:threadfon/modules/threads/threads_wrapper_page.dart';
@@ -34,36 +32,31 @@ class _ThreadFonApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<ToggleThemeCubit, bool>(
-      builder: (context, isDark) => BlocBuilder<ToggleLangCubit, String>(
-        builder: (context, langCode) => ScreenUtilInit(
-          designSize: const Size(360, 960), // как в Figma
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (context, child) => MaterialApp(
+        builder: (context, isDark) => BlocBuilder<ToggleLangCubit, String>(
+          builder: (context, langCode) => MaterialApp(
             builder: (context, widget) => MediaQuery(
-                data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
-                child: widget!,
-              ),
+              data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
+              child: widget!,
+            ),
 
             onGenerateTitle: (context) => Localization.of(context).app_name,
             debugShowCheckedModeBanner: false,
             //
-            themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+            themeMode: ThemeMode.dark,
             theme: FlexTheme.lightThemeData(),
             darkTheme: FlexTheme.darkThemeData(),
             //
-          localizationsDelegates: const <LocalizationsDelegate<Object?>>[
+            localizationsDelegates: const <LocalizationsDelegate<Object?>>[
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
               Localization.delegate,
             ],
-           supportedLocales: Localization.supportedLocales,
+            supportedLocales: Localization.supportedLocales,
             locale: Locale(langCode),
             //
-            home: const ThreadsWrapperPage(), 
+            home: const ThreadsWrapperPage(),
           ),
         ),
-      ),
-    );
+      );
 }

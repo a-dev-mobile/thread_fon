@@ -2,13 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:threadfon/config/styles/app_text_style.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/core/widgets/my_load_widget.dart';
 import 'package:threadfon/core/widgets/my_msg_widget.dart';
 import 'package:threadfon/data/m_thread/m_thread_repository.dart';
-import 'package:threadfon/data/m_thread/models/tolerance/m_thread_tolerance_model.dart';
 import 'package:threadfon/modules/threads/view/m_thread/cubit/m_thread_cubit.dart';
 import 'package:threadfon/modules/threads/view/m_thread/view/m_thread_info/view/m_thread_info_page.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
@@ -37,7 +35,7 @@ class _MThreadTolerancePage extends StatelessWidget {
           isMale: model.isMale,
           pitch: model.pitch,
         ),
-        builder: (context, AsyncSnapshot<MThreadToleranceModel> snapshot) {
+        builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return const MyLoadWidget();
@@ -78,16 +76,14 @@ class _ToleranceWidgetState extends State<ToleranceWidget> {
   final int _interstitialLoadAttempts = 0;
 
   @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.only(bottom: 120.h),
-      child: Column(
-        children: [
-          for (final item in widget.listTolerance) ToleranceItem(tolerance: item, onTap: () {}),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 120),
+        child: Column(
+          children: [
+            for (final item in widget.listTolerance) ToleranceItem(tolerance: item, onTap: () {}),
+          ],
+        ),
+      );
 }
 
 class ToleranceItem extends StatelessWidget {

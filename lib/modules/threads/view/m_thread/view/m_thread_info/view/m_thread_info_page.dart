@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:threadfon/config/styles/app_text_style.dart';
 import 'package:threadfon/core/constants/colors.dart';
 import 'package:threadfon/core/constants/common.dart';
@@ -45,7 +44,7 @@ class _MThreadInfoPage extends StatelessWidget {
           // ],
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.only(bottom: 120.h),
+          padding: const EdgeInsets.only(bottom: 120),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -226,8 +225,8 @@ class _MThreadInfoPage extends StatelessWidget {
                     ),
               ),
 
-              SizedBox(
-                height: 60.h,
+              const SizedBox(
+                height: 60,
               ),
             ],
           ),
@@ -359,8 +358,8 @@ class ThreadMinMaxMeanItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: EdgeInsets.all(8.w),
-        height: 65.h,
+        padding: const EdgeInsets.all(8),
+        height: 65,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -390,8 +389,8 @@ class BasicThreadParametersItem extends StatelessWidget {
   final String value;
   @override
   Widget build(BuildContext context) => Container(
-        padding: EdgeInsets.only(left: 8.w, right: 8.w),
-        height: 30.h,
+        padding: const EdgeInsets.only(left: 8, right: 8),
+        height: 30,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -434,8 +433,8 @@ class ThreadTolerancesItem extends StatelessWidget {
     final updateBottom = _updateTolerance(bottom);
 
     return Container(
-      padding: EdgeInsets.only(left: 8.w, right: 8.w),
-      height: 60.h,
+      padding: const EdgeInsets.only(left: 8, right: 8),
+      height: 60,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -473,7 +472,7 @@ class ThreadCaptionItem extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) => Padding(
-        padding: EdgeInsets.all(8.w),
+        padding: const EdgeInsets.all(8),
         child: Text(
           text,
           style: AppTextStyle.H2(),
@@ -500,7 +499,7 @@ class ThreadSubInfo extends StatelessWidget {
           style: AppTextStyle.LABEL_REGULAR(),
         ),
         Padding(
-          padding: EdgeInsets.only(bottom: 8.h),
+          padding: const EdgeInsets.only(bottom: 8),
           child: Text(
             '( ${_getDeignationPitch(model, context)} )',
             style: AppTextStyle.LABEL_REGULAR(),
@@ -555,7 +554,7 @@ class UnitsSegmentControl extends StatelessWidget {
 
     return BlocBuilder<MThreadInfoCubit, int>(
       builder: (context, state) => Container(
-        margin: EdgeInsets.all(8.h),
+        margin: const EdgeInsets.all(8),
         child: CupertinoSegmentedControl<int>(
           unselectedColor: Theme.of(context).scaffoldBackgroundColor,
           borderColor: ConstColor.neutral_grey_400,

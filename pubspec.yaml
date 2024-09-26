@@ -46,7 +46,7 @@ dependencies:
 
   # for UI
   cupertino_icons: ^1.0.8
-  flutter_screenutil: ^5.9.3
+  # flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.10
   salomon_bottom_bar: ^3.3.2
 

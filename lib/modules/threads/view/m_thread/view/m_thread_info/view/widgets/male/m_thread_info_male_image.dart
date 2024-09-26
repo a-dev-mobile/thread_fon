@@ -1,9 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 // Package imports:
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:threadfon/config/styles/app_text_style.dart';
 import 'package:threadfon/core/utils/app_utils.dart';
@@ -38,124 +36,129 @@ class MThreadInfoMaleImage extends StatelessWidget {
   final String diamMajorToleranceTop;
   final String diamMajorToleranceBottom;
   @override
-  Widget build(BuildContext context) => SizedBox(
-        height: 0.4.sh,
-        width: 1.sw,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final minSize = min(constraints.maxWidth, constraints.maxHeight);
+  Widget build(BuildContext context) {
+    final size= MediaQuery.of(context).size;
 
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox.expand(
-                  child: Image(
-                    fit: BoxFit.contain,
-                    // color: Theme.of(context).textTheme.bodyText1!.color,
-                    image: AssetImage(path),
-                  ),
-                ),
-                //all widget text in image
+    return SizedBox(
+      height: 0.4* size.height,
+      width: size.width,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final minSize = min(constraints.maxWidth, constraints.maxHeight);
 
-                MThreadInfoImageItem(
-                  angle: 0,
-                  posX: -33.487,
-                  posY: -43.136,
-                  minSizeImage: minSize,
-                  text: depth,
-                  style: AppTextStyle.H3_REGULAR(context: context),
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox.expand(
+                child: Image(
+                  color: Colors.white,
+                  fit: BoxFit.contain,
+                  // color: Theme.of(context).textTheme.bodyText1!.color,
+                  image: AssetImage(path),
                 ),
-                MThreadInfoImageItem(
-                  angle: 0,
-                  posX: -2.486,
-                  posY: -43.136,
-                  minSizeImage: minSize,
-                  text: pitch,
-                  style: AppTextStyle.H3_REGULAR(context: context),
-                ),
+              ),
+              //all widget text in image
 
-                //
-                MThreadInfoImageItem(
-                  angle: 0,
-                  posX: -30,
-                  posY: 25,
-                  minSizeImage: minSize,
-                  style: AppTextStyle.LABEL_REGULAR(context: context),
-                  text: _updateTolerance(diamMajorToleranceTop),
-                ),
-                MThreadInfoImageItem(
-                  angle: 0,
-                  posX: -40,
-                  posY: 30,
-                  minSizeImage: minSize,
-                  text: 'Ø$diamMajor',
-                  style: AppTextStyle.CAPTION(context: context),
-                ),
-                MThreadInfoImageItem(
-                  angle: 0,
-                  posX: -30,
-                  posY: 35,
-                  minSizeImage: minSize,
-                  style: AppTextStyle.LABEL_REGULAR(context: context),
-                  text: _updateTolerance(diamMajorToleranceBottom),
-                ),
+              MThreadInfoImageItem(
+                angle: 0,
+                posX: -33.487,
+                posY: -43.136,
+                minSizeImage: minSize,
+                text: depth,
+                style: AppTextStyle.H3_REGULAR(context: context),
+              ),
+              MThreadInfoImageItem(
+                angle: 0,
+                posX: -2.486,
+                posY: -43.136,
+                minSizeImage: minSize,
+                text: pitch,
+                style: AppTextStyle.H3_REGULAR(context: context),
+              ),
 
-                // pitch diam
-                MThreadInfoImageItem(
-                  angle: 0,
-                  posX: 5,
-                  posY: 20,
-                  minSizeImage: minSize,
-                  style: AppTextStyle.LABEL_REGULAR(context: context),
-                  text: _updateTolerance(diamMiddleToleranceTop),
-                ),
-                MThreadInfoImageItem(
-                  angle: 0,
-                  posX: -5,
-                  posY: 25,
-                  minSizeImage: minSize,
-                  text: 'Ø$diamMiddle',
-                  style: AppTextStyle.CAPTION(context: context),
-                ),
-                MThreadInfoImageItem(
-                  angle: 0,
-                  posX: 5,
-                  posY: 30,
-                  minSizeImage: minSize,
-                  style: AppTextStyle.LABEL_REGULAR(context: context),
-                  text: _updateTolerance(diamMiddleToleranceBottom),
-                ),
+              //
+              MThreadInfoImageItem(
+                angle: 0,
+                posX: -30,
+                posY: 25,
+                minSizeImage: minSize,
+                style: AppTextStyle.LABEL_REGULAR(context: context),
+                text: _updateTolerance(diamMajorToleranceTop),
+              ),
+              MThreadInfoImageItem(
+                angle: 0,
+                posX: -40,
+                posY: 30,
+                minSizeImage: minSize,
+                text: 'Ø$diamMajor',
+                style: AppTextStyle.CAPTION(context: context),
+              ),
+              MThreadInfoImageItem(
+                angle: 0,
+                posX: -30,
+                posY: 35,
+                minSizeImage: minSize,
+                style: AppTextStyle.LABEL_REGULAR(context: context),
+                text: _updateTolerance(diamMajorToleranceBottom),
+              ),
 
-                // MAJOR
-                MThreadInfoImageItem(
-                  angle: 0,
-                  posX: 40,
-                  posY: 20,
-                  minSizeImage: minSize,
-                  style: AppTextStyle.LABEL_REGULAR(context: context),
-                  text: _updateTolerance(diamMinorToleranceTop),
-                ),
-                MThreadInfoImageItem(
-                  angle: 0,
-                  posX: 30,
-                  posY: 25,
-                  minSizeImage: minSize,
-                  text: 'Ø$diamMinor',
-                  style: AppTextStyle.CAPTION(context: context),
-                ),
-                MThreadInfoImageItem(
-                  angle: 0,
-                  posX: 40,
-                  posY: 30,
-                  minSizeImage: minSize,
-                  style: AppTextStyle.LABEL_REGULAR(context: context),
-                  text: _updateTolerance(diamMiddleToleranceBottom),
-                ),
-              ],
-            );
-          },
-        ),
-      );
+              // pitch diam
+              MThreadInfoImageItem(
+                angle: 0,
+                posX: 5,
+                posY: 20,
+                minSizeImage: minSize,
+                style: AppTextStyle.LABEL_REGULAR(context: context),
+                text: _updateTolerance(diamMiddleToleranceTop),
+              ),
+              MThreadInfoImageItem(
+                angle: 0,
+                posX: -5,
+                posY: 25,
+                minSizeImage: minSize,
+                text: 'Ø$diamMiddle',
+                style: AppTextStyle.CAPTION(context: context),
+              ),
+              MThreadInfoImageItem(
+                angle: 0,
+                posX: 5,
+                posY: 30,
+                minSizeImage: minSize,
+                style: AppTextStyle.LABEL_REGULAR(context: context),
+                text: _updateTolerance(diamMiddleToleranceBottom),
+              ),
+
+              // MAJOR
+              MThreadInfoImageItem(
+                angle: 0,
+                posX: 40,
+                posY: 20,
+                minSizeImage: minSize,
+                style: AppTextStyle.LABEL_REGULAR(context: context),
+                text: _updateTolerance(diamMinorToleranceTop),
+              ),
+              MThreadInfoImageItem(
+                angle: 0,
+                posX: 30,
+                posY: 25,
+                minSizeImage: minSize,
+                text: 'Ø$diamMinor',
+                style: AppTextStyle.CAPTION(context: context),
+              ),
+              MThreadInfoImageItem(
+                angle: 0,
+                posX: 40,
+                posY: 30,
+                minSizeImage: minSize,
+                style: AppTextStyle.LABEL_REGULAR(context: context),
+                text: _updateTolerance(diamMiddleToleranceBottom),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
 
   String _updateTolerance(String value) {
     if (AppUtilsParse.stringToDouble(value) == 0) {

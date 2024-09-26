@@ -44,7 +44,7 @@
   "max": "max",
   "min": "min",
   "mean": "mean",
-  "load": "Load...",
+  "loadingMessage": "Load...",
   "thank_you": "Thank You for choosing our application",
   "version": "Version",
   "dialog_title_about_app": "With this application you will be able to find out the basic parameters of the thread as well:",

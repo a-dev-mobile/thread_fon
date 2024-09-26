@@ -5,14 +5,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class AppTextStyle {
   // static final BuildContext _context = AppGlobal.getContext();
 
   static TextStyle H3_BOLD([Color? colorText]) => TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: 20.sp,
+        fontSize: 20,
         color: colorText,
         letterSpacing: 0.15,
       );
@@ -26,7 +25,7 @@ abstract class AppTextStyle {
 
     return TextStyle(
       fontWeight: FontWeight.normal,
-      fontSize: isTable ? 10.sp : 20.sp,
+      fontSize: isTable ? 10 : 20,
       color: colorText,
       letterSpacing: 0.15,
     );
@@ -41,7 +40,7 @@ abstract class AppTextStyle {
 
     return TextStyle(
       fontWeight: FontWeight.normal,
-      fontSize: isTable ? 15.sp : 25.sp,
+      fontSize: isTable ? 15 : 25,
       color: colorText,
       height: 1.25,
     );
@@ -49,13 +48,13 @@ abstract class AppTextStyle {
 
   static TextStyle BODY_SEMI_BOLD({Color? colorText}) => TextStyle(
         fontWeight: FontWeight.w600,
-        fontSize: 16.sp,
+        fontSize: 16,
         color: colorText,
         height: 1.5,
       );
 
   static TextStyle LABEL_EXTRA_BOLD({Color? colorText}) =>
-      TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp, color: colorText);
+      TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: colorText);
 
   static TextStyle LABEL_REGULAR({Color? colorText, BuildContext? context}) {
     var isTable = false;
@@ -66,17 +65,17 @@ abstract class AppTextStyle {
 
     return TextStyle(
       fontWeight: FontWeight.normal,
-      fontSize: isTable ? 6.sp : 12.sp,
+      fontSize: isTable ? 6 : 12,
       color: colorText,
     );
   }
 
   static TextStyle LABEL_SEMI_BOLD([Color? textColor]) =>
-      TextStyle(fontWeight: FontWeight.w600, fontSize: 12.sp, color: textColor);
+      TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: textColor);
 
   static TextStyle BUTTON() => TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: 15.sp,
+        fontSize: 15,
         letterSpacing: 1.25,
       );
 
@@ -89,7 +88,7 @@ abstract class AppTextStyle {
 
     return TextStyle(
       fontWeight: FontWeight.normal,
-      fontSize: isTable ? 7.sp : 14.sp,
+      fontSize: isTable ? 7 : 14,
       letterSpacing: 0.2,
       color: colorText,
     );
@@ -97,15 +96,14 @@ abstract class AppTextStyle {
 
   static TextStyle BODY_REGULAR([Color? colorText]) => TextStyle(
         fontWeight: FontWeight.normal,
-        fontSize: 16.sp,
+        fontSize: 16,
         color: colorText,
       );
 
   static bool isTablet(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    final diagonal =
-        sqrt((size.width * size.width) + (size.height * size.height));
+    final diagonal = sqrt((size.width * size.width) + (size.height * size.height));
 
     /*
     print(

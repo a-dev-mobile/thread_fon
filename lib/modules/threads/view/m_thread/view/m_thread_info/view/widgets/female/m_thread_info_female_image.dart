@@ -1,9 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 // Package imports:
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:threadfon/config/styles/app_text_style.dart';
 import 'package:threadfon/core/utils/app_utils.dart';
@@ -39,8 +37,8 @@ class MThreadInfoFemaleImage extends StatelessWidget {
   final String diamMajorToleranceBottom;
   @override
   Widget build(BuildContext context) => SizedBox(
-        height: 0.4.sh,
-        width: 1.sw,
+        height: 0.4,
+        width: 1,
         child: LayoutBuilder(
           builder: (context, constraints) {
             final minSize = min(constraints.maxWidth, constraints.maxHeight);

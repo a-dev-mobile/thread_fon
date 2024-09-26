@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:threadfon/config/styles/app_text_style.dart';
 import 'package:threadfon/core/constants/colors.dart';
 import 'package:threadfon/core/utils/app_utils.dart';
@@ -30,7 +29,7 @@ class MThreadPitchPage extends StatelessWidget {
       ),
       body: FutureBuilder(
         future: repository.fetchMPitch(context.read<MThreadCubit>().state.diam),
-        builder: (context, AsyncSnapshot<MThreadPitchModel> snapshot) {
+        builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return const MyLoadWidget();
@@ -43,7 +42,7 @@ class MThreadPitchPage extends StatelessWidget {
                 } else {
                   return SingleChildScrollView(
                     // TODOfor ads
-                    padding: EdgeInsets.only(bottom: 120.h),
+                    padding: const EdgeInsets.only(bottom: 120),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
@@ -202,7 +201,7 @@ class _PitchItem extends StatelessWidget {
 
     return showDialog<void>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
+      builder: (context) => AlertDialog(
         backgroundColor: backgroundColor,
         title: Text(
           Localization.of(context).no_data,

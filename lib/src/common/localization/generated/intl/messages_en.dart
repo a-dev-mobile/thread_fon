@@ -56,7 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("English"),
         "languageCode": MessageLookupByLibrary.simpleMessage("en"),
         "launch": MessageLookupByLibrary.simpleMessage("Launch"),
-        "load": MessageLookupByLibrary.simpleMessage("Load..."),
+        "loadingMessage": MessageLookupByLibrary.simpleMessage("Load..."),
         "localeCode": MessageLookupByLibrary.simpleMessage("en_US"),
         "m_thread": MessageLookupByLibrary.simpleMessage("Metric thread"),
         "m_thread_abrv": MessageLookupByLibrary.simpleMessage("M"),

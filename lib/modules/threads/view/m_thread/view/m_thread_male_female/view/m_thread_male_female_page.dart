@@ -1,7 +1,6 @@
 // Package imports:
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/src/provider.dart';
 import 'package:threadfon/config/styles/app_text_style.dart';
@@ -42,8 +41,8 @@ class MThreadMaleFemalePage extends StatelessWidget {
                 text: Localization.of(context).external_thread,
               ),
             ),
-            SizedBox(
-              height: 180.h,
+            const SizedBox(
+              height: 180,
             ),
           ],
         ),
@@ -78,7 +77,7 @@ class ChoiceTypeThread extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       elevation: 3,
-      margin: EdgeInsets.all(8.h),
+      margin: const EdgeInsets.all(8),
       color: scaffoldBackgroundColor,
       child: InkWell(
         onTap: onTap,
@@ -87,16 +86,16 @@ class ChoiceTypeThread extends StatelessWidget {
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsets.all(8.0.h),
+                padding: const EdgeInsets.all(8),
                 child: SvgPicture.asset(
                   pathSvg,
                   // color: colorText,
-                  // height: 120.h,
+                  // height: 120,
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(8.h),
+              padding: const EdgeInsets.all(8),
               child: Text(
                 text.toUpperCase(),
                 textAlign: TextAlign.center,
