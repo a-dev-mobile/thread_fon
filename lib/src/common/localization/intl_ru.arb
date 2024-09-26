@@ -5,10 +5,6 @@
   "localeCode": "ru_RU",
   "languageCode": "ru",
   "language": "Russia",
-  "@ ############# Routes #############": {},
-  "main": "Home",
-
-  "@ ############# Errors #############": {},
   "main": "Главная",
   "setting": "Настройки",
   "app_lang": "Язык приложения",

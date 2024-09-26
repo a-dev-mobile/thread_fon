@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
-import 'package:threadfon/src/common/localization/generated/l10n.dart' as generated
-    show GeneratedLocalization, AppLocalizationDelegate;
+import 'package:threadfon/src/common/localization/generated/l10n.dart'
+    as generated show GeneratedLocalization, AppLocalizationDelegate;
 
 /// Localization.
 final class Localization extends generated.GeneratedLocalization {
@@ -48,9 +48,11 @@ final class _LocalizationView extends LocalizationsDelegate<Localization> {
   @override
   bool isSupported(Locale locale) => _delegate.isSupported(locale);
 
-  @override
-  Future<Localization> load(Locale locale) => generated.GeneratedLocalization.load2(locale)
-      .then<Localization>((localization) => Localization._current = Localization._(locale));
+@override
+  Future<Localization> load(Locale locale) async {
+    await _delegate.load(locale);
+    return Localization._current = Localization._(locale);
+  }
 
   @override
   bool shouldReload(covariant _LocalizationView old) => _delegate.shouldReload(old._delegate);

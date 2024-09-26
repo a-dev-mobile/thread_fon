@@ -3,10 +3,10 @@
   "localeCode": "en_US",
   "languageCode": "en",
   "language": "English",
-  "@ ############# Routes #############": {},
+
   "main": "Home",
 
-  "@ ############# Errors #############": {},
+
   
   "setting": "Settings",
   "app_lang": "Application language",
