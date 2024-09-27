@@ -10,8 +10,7 @@ class FlexTheme {
   static final FlexTheme _internalSingleton = FlexTheme._internal();
 
   /// *---* [Light Theme] *---*
-  static ThemeData lightThemeData() {
-    return FlexThemeData.light(
+  static ThemeData lightThemeData() => FlexThemeData.light(
       scheme: FlexScheme.ebonyClay,
       surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
       blendLevel: 7,
@@ -27,7 +26,6 @@ class FlexTheme {
       // To use the Playground font, add GoogleFonts package and uncomment
       fontFamily: GoogleFonts.montserrat().fontFamily,
     );
-  }
 
   /// *---* [Dark Theme] *---*
   static ThemeData darkThemeData() {

@@ -33,7 +33,7 @@ Future<void> main() async {
         await LocalStorageServices.service.initialize();
 
         // Настройка глобального обработчика ошибок Flutter
-        FlutterError.onError = (FlutterErrorDetails details) {
+        FlutterError.onError = (details) {
           final exception = details.exception;
           final stackTrace = details.stack ?? StackTrace.current;
 
@@ -42,7 +42,7 @@ Future<void> main() async {
             FlutterError.dumpErrorToConsole(details);
           }
 
-          // Форматируем стек вызовов для лучшей читаемости
+
  
 
           if (kReleaseMode) {
