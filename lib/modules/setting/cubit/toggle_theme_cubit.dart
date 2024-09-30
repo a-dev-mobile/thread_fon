@@ -1,10 +1,10 @@
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
+// // Package imports:
+// import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ToggleThemeCubit extends Cubit<bool> {
-  ToggleThemeCubit() : super(false);
+// class ToggleThemeCubit extends Cubit<bool> {
+//   ToggleThemeCubit() : super(false);
 
-  void toggleTheme({required bool isDark}) {
-    emit(isDark);
-  }
-}
+//   void toggleTheme({required bool isDark}) {
+//     emit(isDark);
+//   }
+// }

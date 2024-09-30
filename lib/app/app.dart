@@ -1,29 +1,69 @@
+// app.dart
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
+// Импорт необходимых пакетов
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:threadfon/app/flex_theme.dart';
-import 'package:threadfon/modules/setting/cubit/toggle_lang_cubit.dart';
-import 'package:threadfon/modules/setting/cubit/toggle_theme_cubit.dart';
+import 'package:threadfon/app/future_builder_n.dart';
+import 'package:threadfon/app/theme_notifier.dart';
+import 'package:threadfon/app/language_notifier.dart'; // Новый импорт
 import 'package:threadfon/modules/threads/threads_wrapper_page.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
+import 'package:threadfon/app/value_listenable_builder_n.dart'; // Импортируем ValueListenableBuilderN
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) => MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => ToggleThemeCubit(),
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  late Future<ThemeMode> _themeModeFuture;
+  late Future<String> _localeFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _themeModeFuture = ThemeNotifier.loadTheme();
+    _localeFuture = LanguageNotifier.loadLocale();
+  }
+
+  @override
+  Widget build(BuildContext context) => FutureBuilderN<dynamic>(
+        futures: [_themeModeFuture, _localeFuture],
+        builder: (context, data, error) {
+          if (error != null) {
+            return MaterialApp(
+              home: Scaffold(
+                body: Center(child: Text('Ошибка: $error')),
+              ),
+            );
+          }
+          final themeMode = data[0] as ThemeMode?;
+          final locale = data[1] as String?;
+
+          return ThemeNotifier(
+            initialMode: themeMode ?? ThemeMode.light,
+            child: LanguageNotifier(
+              initialLocale: locale ?? window.locale.languageCode,
+              child: const _ThreadFonApp(),
+            ),
+          );
+        },
+        loadingWidget: const MaterialApp(
+          home: Scaffold(
+            body: Center(child: CircularProgressIndicator()),
           ),
-          BlocProvider(
-            create: (context) => ToggleLangCubit(),
+        ),
+        errorWidget: const MaterialApp(
+          home: Scaffold(
+            body: Center(child: Text('Не удалось загрузить настройки')),
           ),
-        ],
-        child: const _ThreadFonApp(),
+        ),
       );
 }
 
@@ -31,32 +71,50 @@ class _ThreadFonApp extends StatelessWidget {
   const _ThreadFonApp();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<ToggleThemeCubit, bool>(
-        builder: (context, isDark) => BlocBuilder<ToggleLangCubit, String>(
-          builder: (context, langCode) => MaterialApp(
-            builder: (context, widget) => MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
-              child: widget!,
-            ),
+  Widget build(BuildContext context) {
+    // Получаем ValueNotifier<ThemeMode> из ThemeNotifier
+    final themeModeNotifier = ThemeNotifier.of(context);
 
-            onGenerateTitle: (context) => Localization.of(context).app_name,
-            debugShowCheckedModeBanner: false,
-            //
-            themeMode: isDark? ThemeMode.dark:ThemeMode.light,
-            theme: FlexTheme.lightThemeData(),
-            darkTheme: FlexTheme.darkThemeData(),
-            //
-            localizationsDelegates: const <LocalizationsDelegate<Object?>>[
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-              Localization.delegate,
-            ],
-            supportedLocales: Localization.supportedLocales,
-            locale: Locale(langCode),
-            //
-            home: const ThreadsWrapperPage(),
+    // Получаем ValueNotifier<String> из LanguageNotifier
+    final languageNotifier = LanguageNotifier.of(context);
+
+    if (themeModeNotifier == null || languageNotifier == null) {
+      // Если Notifier'ы не найдены, можно вернуть пустой контейнер или обработать ошибку
+      return const SizedBox.shrink();
+    }
+
+    return ValueListenableBuilderN<dynamic>(
+      listenable: [themeModeNotifier, languageNotifier],
+      builder: (context, values, child) {
+        final themeMode = values[0] as ThemeMode;
+        final locale = values[1] as String;
+
+        return MaterialApp(
+          builder: (context, widget) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaleFactor: 1.0, // Устанавливаем textScaleFactor в 1.0
+            ),
+            child: widget!,
           ),
-        ),
-      );
+          onGenerateTitle: (context) => Localization.of(context).app_name,
+          debugShowCheckedModeBanner: false,
+          //
+          themeMode: themeMode, // Используем ThemeMode из ValueNotifier
+          theme: FlexTheme.lightThemeData(),
+          darkTheme: FlexTheme.darkThemeData(),
+          //
+          localizationsDelegates: const <LocalizationsDelegate<Object?>>[
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            Localization.delegate,
+          ],
+          supportedLocales: Localization.supportedLocales,
+          locale: Locale(locale),
+          //
+          home: const ThreadsWrapperPage(),
+        );
+      },
+    );
+  }
 }

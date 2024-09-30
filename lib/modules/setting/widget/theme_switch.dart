@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threadfon/core/widgets/button/btn_list_switch.dart';
-import 'package:threadfon/modules/setting/cubit/toggle_theme_cubit.dart';
+import 'package:threadfon/app/theme_notifier.dart';
+import 'package:threadfon/config/styles/app_text_style.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
 
 class ThemeSwitchWidget extends StatelessWidget {
@@ -11,14 +9,28 @@ class ThemeSwitchWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<ToggleThemeCubit, bool>(
-        builder: (context, state) => BtnListSwitch(
-          onChanged: (value) {
-            context.read<ToggleThemeCubit>().toggleTheme(isDark: value);
-          },
-          value: state,
-          leading: const Icon(Icons.brightness_6),
-          text: Localization.of(context).dark_theme,
+  Widget build(BuildContext context) {
+    // Получаем экземпляр ThemeNotifier
+    final themeNotifier = ThemeNotifier.ofNotifier(context);
+
+    if (themeNotifier == null) {
+      // Если ThemeNotifier не найден, можно вернуть пустой контейнер или обработать ошибку
+      return Container();
+    }
+
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier.notifier!,
+      builder: (context, themeMode, _) => SwitchListTile(
+        title: Text(
+          Localization.of(context).dark_theme,
+          style: AppTextStyle.BODY_SEMI_BOLD(),
         ),
-      );
+        onChanged: (value) {
+          var newThemeMode = value ? ThemeMode.dark : ThemeMode.light;
+          themeNotifier.setTheme(newThemeMode);
+        },
+        value: themeMode == ThemeMode.dark,
+      ),
+    );
+  }
 }
