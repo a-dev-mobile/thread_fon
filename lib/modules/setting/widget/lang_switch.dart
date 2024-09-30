@@ -28,7 +28,7 @@ class LangSwitchWidget extends StatelessWidget {
   ) =>
       DialogRoute<void>(
         context: context,
-        builder: (BuildContext context) => SimpleDialog(
+        builder: (context) => SimpleDialog(
           backgroundColor:
               Theme.of(context).brightness == Brightness.dark ? ConstColor.neutral_grey_800 : ConstColor.neutral_white,
           title: Text(

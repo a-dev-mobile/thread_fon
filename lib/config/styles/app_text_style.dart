@@ -73,7 +73,7 @@ abstract class AppTextStyle {
   static TextStyle LABEL_SEMI_BOLD([Color? textColor]) =>
       TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: textColor);
 
-  static TextStyle BUTTON() => TextStyle(
+  static TextStyle BUTTON() => const TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 15,
         letterSpacing: 1.25,

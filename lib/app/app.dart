@@ -42,7 +42,7 @@ class _ThreadFonApp extends StatelessWidget {
             onGenerateTitle: (context) => Localization.of(context).app_name,
             debugShowCheckedModeBanner: false,
             //
-            themeMode: ThemeMode.dark,
+            themeMode: isDark? ThemeMode.dark:ThemeMode.light,
             theme: FlexTheme.lightThemeData(),
             darkTheme: FlexTheme.darkThemeData(),
             //

@@ -25,7 +25,7 @@ Future<void> main() async {
   runZonedGuarded<void>(
     () async {
       // Инициализация Flutter и сохранение splash-экрана внутри зоны
-      WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+      var widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
       FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
       try {

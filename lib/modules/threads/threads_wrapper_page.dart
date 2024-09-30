@@ -9,7 +9,5 @@ class ThreadsWrapperPage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return const MThreadMaleFemalePage();
-  }
+  Widget build(BuildContext context) => const MThreadMaleFemalePage();
 }

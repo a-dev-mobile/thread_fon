@@ -51,9 +51,9 @@ class MThreadInfoMaleImage extends StatelessWidget {
             children: [
               SizedBox.expand(
                 child: Image(
-                  color: Colors.white,
+                  color: Theme.of(context).textTheme.bodyMedium!.color,
                   fit: BoxFit.contain,
-                  // color: Theme.of(context).textTheme.bodyText1!.color,
+                   
                   image: AssetImage(path),
                 ),
               ),
@@ -88,7 +88,7 @@ class MThreadInfoMaleImage extends StatelessWidget {
               MThreadInfoImageItem(
                 angle: 0,
                 posX: -40,
-                posY: 30,
+                posY: 35,
                 minSizeImage: minSize,
                 text: 'Ø$diamMajor',
                 style: AppTextStyle.CAPTION(context: context),
@@ -96,7 +96,7 @@ class MThreadInfoMaleImage extends StatelessWidget {
               MThreadInfoImageItem(
                 angle: 0,
                 posX: -30,
-                posY: 35,
+                posY: 40,
                 minSizeImage: minSize,
                 style: AppTextStyle.LABEL_REGULAR(context: context),
                 text: _updateTolerance(diamMajorToleranceBottom),
@@ -114,7 +114,7 @@ class MThreadInfoMaleImage extends StatelessWidget {
               MThreadInfoImageItem(
                 angle: 0,
                 posX: -5,
-                posY: 25,
+                posY: 28,
                 minSizeImage: minSize,
                 text: 'Ø$diamMiddle',
                 style: AppTextStyle.CAPTION(context: context),
@@ -122,7 +122,7 @@ class MThreadInfoMaleImage extends StatelessWidget {
               MThreadInfoImageItem(
                 angle: 0,
                 posX: 5,
-                posY: 30,
+                posY: 33,
                 minSizeImage: minSize,
                 style: AppTextStyle.LABEL_REGULAR(context: context),
                 text: _updateTolerance(diamMiddleToleranceBottom),
@@ -140,7 +140,7 @@ class MThreadInfoMaleImage extends StatelessWidget {
               MThreadInfoImageItem(
                 angle: 0,
                 posX: 30,
-                posY: 25,
+                posY: 22,
                 minSizeImage: minSize,
                 text: 'Ø$diamMinor',
                 style: AppTextStyle.CAPTION(context: context),
@@ -148,7 +148,7 @@ class MThreadInfoMaleImage extends StatelessWidget {
               MThreadInfoImageItem(
                 angle: 0,
                 posX: 40,
-                posY: 30,
+                posY: 27,
                 minSizeImage: minSize,
                 style: AppTextStyle.LABEL_REGULAR(context: context),
                 text: _updateTolerance(diamMiddleToleranceBottom),

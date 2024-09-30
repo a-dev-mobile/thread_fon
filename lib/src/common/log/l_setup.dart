@@ -1,10 +1,10 @@
 import 'package:logger/logger.dart';
 
 class CustomPrinter extends LogPrinter {
-  final String className;
-  final LogPrinter original;
 
   CustomPrinter(this.className, this.original);
+  final String className;
+  final LogPrinter original;
 
   @override
   List<String> log(LogEvent event) {
@@ -14,8 +14,6 @@ class CustomPrinter extends LogPrinter {
 }
 
 class L {
-  final Logger _logger;
-  final Logger _loggerNoStack;
 
   L(String className)
       : _logger = Logger(
@@ -24,46 +22,48 @@ class L {
         _loggerNoStack = Logger(
           printer: CustomPrinter(className, PrettyPrinter(methodCount: 0)),
         );
+  final Logger _logger;
+  final Logger _loggerNoStack;
 
   // Методы для логирования с стеком
-  void d(dynamic message, {dynamic error, StackTrace? stackTrace}) {
+  void d(message, {error, StackTrace? stackTrace}) {
     _logger.d(message, error: error, stackTrace: stackTrace ?? StackTrace.current);
   }
 
-  void i(dynamic message, {dynamic error, StackTrace? stackTrace}) {
+  void i(message, {error, StackTrace? stackTrace}) {
     _logger.i(message, error: error, stackTrace: stackTrace ?? StackTrace.current);
   }
 
-  void w(dynamic message, {dynamic error, StackTrace? stackTrace}) {
+  void w(message, {error, StackTrace? stackTrace}) {
     _logger.w(message, error: error, stackTrace: stackTrace ?? StackTrace.current);
   }
 
-  void e(dynamic message, {dynamic error, StackTrace? stackTrace}) {
+  void e(message, {error, StackTrace? stackTrace}) {
     _logger.e(message, error: error, stackTrace: stackTrace ?? StackTrace.current);
   }
 
-  void v(dynamic message, {dynamic error, StackTrace? stackTrace}) {
+  void v(message, {error, StackTrace? stackTrace}) {
     _logger.v(message, error: error, stackTrace: stackTrace ?? StackTrace.current);
   }
 
   // Методы для логирования без стека
-  void dNoStack(dynamic message, {dynamic error}) {
+  void dNoStack(message, {error}) {
     _loggerNoStack.d(message, error: error);
   }
 
-  void iNoStack(dynamic message, {dynamic error}) {
+  void iNoStack(message, {error}) {
     _loggerNoStack.i(message, error: error);
   }
 
-  void wNoStack(dynamic message, {dynamic error}) {
+  void wNoStack(message, {error}) {
     _loggerNoStack.w(message, error: error);
   }
 
-  void eNoStack(dynamic message, {dynamic error}) {
+  void eNoStack(message, {error}) {
     _loggerNoStack.e(message, error: error);
   }
 
-  void vNoStack(dynamic message, {dynamic error}) {
+  void vNoStack(message, {error}) {
     _loggerNoStack.v(message, error: error);
   }
 }

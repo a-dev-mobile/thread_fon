@@ -26,13 +26,10 @@ class MThreadInfoImageItem extends StatelessWidget {
             Offset((posX / 100) * minSizeImage, (posY / 100) * minSizeImage),
         child: Transform.rotate(
           angle: angle * pi / 180,
-          child: Container(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: Text(
-              text,
-              textAlign: TextAlign.start,
-              style: style,
-            ),
+          child: Text(
+            text,
+            textAlign: TextAlign.start,
+            style: style,
           ),
         ),
       );

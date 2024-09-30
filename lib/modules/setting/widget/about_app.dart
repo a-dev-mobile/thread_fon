@@ -36,7 +36,7 @@ class AboutAppWidget extends StatelessWidget {
 
     return showDialog<void>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
+      builder: (context) => AlertDialog(
         backgroundColor: backgroundColor,
         title: Text(
           '$appName : version',

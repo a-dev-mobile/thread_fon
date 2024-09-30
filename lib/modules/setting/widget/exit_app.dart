@@ -37,7 +37,7 @@ class ExitAppWidget extends StatelessWidget {
 
     return showDialog<void>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
+      builder: (context) => AlertDialog(
         backgroundColor: backgroundColor,
         title: Text(
           title,

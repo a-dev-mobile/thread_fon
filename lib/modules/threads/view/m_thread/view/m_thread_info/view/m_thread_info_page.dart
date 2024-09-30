@@ -7,6 +7,7 @@ import 'package:threadfon/core/constants/colors.dart';
 import 'package:threadfon/core/constants/common.dart';
 import 'package:threadfon/core/utils/app_utils.dart';
 import 'package:threadfon/core/widgets/my_divider.dart';
+import 'package:threadfon/modules/setting/setting_page.dart';
 import 'package:threadfon/modules/threads/view/m_thread/cubit/m_thread_cubit.dart';
 import 'package:threadfon/modules/threads/view/m_thread/models/models.dart';
 import 'package:threadfon/modules/threads/view/m_thread/view/m_thread_info/cubit/m_thread_info_cubit.dart';
@@ -39,9 +40,19 @@ class _MThreadInfoPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(Localization.of(context).threads_info),
-          // actions: [
-          //   IconButton(onPressed: () {}, icon: const Icon(Icons.info_outline))
-          // ],
+          actions: [
+            IconButton(onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SettingPage(),
+                    ),
+                  );
+
+
+
+            }, icon: const Icon(Icons.settings))
+          ],
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.only(bottom: 120),

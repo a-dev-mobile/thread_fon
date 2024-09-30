@@ -13,7 +13,7 @@ class ThemeSwitchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocBuilder<ToggleThemeCubit, bool>(
         builder: (context, state) => BtnListSwitch(
-          onChanged: (bool value) {
+          onChanged: (value) {
             context.read<ToggleThemeCubit>().toggleTheme(isDark: value);
           },
           value: state,
