@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-
 import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/util/platform/error_util_vm.dart';
 
@@ -46,9 +45,9 @@ abstract final class ErrorUtil {
   }) async {
     try {
       if (warning) {
-        _l.v(message, stackTrace: stackTrace ?? StackTrace.current);
+        _l.t(message, stackTrace: stackTrace ?? StackTrace.current);
       } else {
-        _l.i(message, stackTrace: stackTrace ?? StackTrace.current);
+        _l.iNoStack(message, stackTrace: stackTrace ?? StackTrace.current);
       }
       $captureMessage(message, stackTrace, hint, warning).ignore();
     } on Object catch (error, stackTrace) {

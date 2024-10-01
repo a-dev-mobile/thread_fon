@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 
-import 'package:threadfon/core/utils/app_log.dart';
+import 'package:threadfon/src/common/util/app_log.dart';
 
 class ThreadFonBlocObserver extends BlocObserver {
   @override

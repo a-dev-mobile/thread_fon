@@ -42,8 +42,8 @@ class L {
     _logger.e(message, error: error, stackTrace: stackTrace ?? StackTrace.current);
   }
 
-  void v(message, {error, StackTrace? stackTrace}) {
-    _logger.v(message, error: error, stackTrace: stackTrace ?? StackTrace.current);
+  void t(message, {error, StackTrace? stackTrace}) {
+    _logger.t(message, error: error, stackTrace: stackTrace ?? StackTrace.current);
   }
 
   // Методы для логирования без стека
@@ -63,7 +63,7 @@ class L {
     _loggerNoStack.e(message, error: error);
   }
 
-  void vNoStack(message, {error}) {
-    _loggerNoStack.v(message, error: error);
+  void tNoStack(message, {error}) {
+    _loggerNoStack.t(message, error: error);
   }
 }

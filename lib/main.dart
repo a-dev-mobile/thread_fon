@@ -8,15 +8,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:threadfon/app/app.dart';
-import 'package:threadfon/app/services/local_storage_service.dart';
+import 'package:threadfon/src/common/app/app.dart';
+
 import 'package:threadfon/app_error_handler.dart';
-import 'package:threadfon/core/constants/storage.dart';
-import 'package:threadfon/core/utils/file_copy.dart';
-import 'package:threadfon/data/m_thread/m_thread_repository.dart';
-import 'package:threadfon/modules/threads/view/m_thread/cubit/m_thread_cubit.dart';
+import 'package:threadfon/src/common/constant/storage.dart';
+import 'package:threadfon/src/common/util/file_copy.dart';
+import 'package:threadfon/src/common/data/m_thread_repository.dart';
+import 'package:threadfon/src/common/data/local_storage.dart';
+import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
-import 'package:threadfon/src/common/util/error_util.dart';
+import 'package:threadfon/src/features/threads/view/m_thread/cubit/m_thread_cubit.dart';
 
 final _l = L('main');
 
@@ -30,7 +31,9 @@ Future<void> main() async {
 
       try {
         // Инициализация локального хранилища
-        await LocalStorageServices.service.initialize();
+
+        final localStorage = LocalStorage(isShowLog: true);
+        await localStorage.initialize();
 
         // Настройка глобального обработчика ошибок Flutter
         FlutterError.onError = (details) {
@@ -41,9 +44,6 @@ Future<void> main() async {
             // В режиме разработки выводим ошибку в консоль
             FlutterError.dumpErrorToConsole(details);
           }
-
-
- 
 
           if (kReleaseMode) {
             // В релизном режиме отправляем все ошибки в Firebase
@@ -56,7 +56,7 @@ Future<void> main() async {
 
         // Инициализация sqflite FFI и копирование базы данных
         sqfliteFfiInit();
-        await copyDb();
+        await copyDb(localStorage);
 
         // Установка предпочтительной ориентации экрана
         await SystemChrome.setPreferredOrientations([
@@ -64,31 +64,34 @@ Future<void> main() async {
           DeviceOrientation.portraitDown,
         ]);
 
-        final pathDB = LocalStorageServices.service.getString(ConstStorage.keyPathDB);
+        final pathDB = await localStorage.getPathDB();
 
         // Запуск приложения с провайдерами репозиториев и BLoC
         runApp(
-          MultiRepositoryProvider(
-            providers: [
-              RepositoryProvider<MThreadRepository>(
-                create: (context) => MThreadRepository(pathDB: pathDB),
-              ),
-            ],
-            child: MultiBlocProvider(
+          LocalStorageProvider(
+            localStorage: localStorage,
+            child: MultiRepositoryProvider(
               providers: [
-                BlocProvider(
-                  create: (context) => MThreadCubit(),
+                RepositoryProvider<MThreadRepository>(
+                  create: (context) => MThreadRepository(pathDB: pathDB),
                 ),
               ],
-              child: const App(),
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => MThreadCubit(),
+                  ),
+                ],
+                child: const App(),
+              ),
             ),
           ),
         );
-      } catch (e, s) {
+      } on Exception catch (e, s) {
         // Логирование ошибок из блока try-catch с указанием источника
         if (kReleaseMode) {
           // В релизном режиме отправляем ошибку в Firebase с полным стеком вызовов
-          AppErrorHandler.recordError(e, s);
+          await AppErrorHandler.recordError(e, s);
         } else {
           // В режиме разработки логируем ошибку с полным стеком вызовов
           _l.e('Exception in main', error: e, stackTrace: s);
@@ -96,7 +99,7 @@ Future<void> main() async {
       } finally {
         // Удаление splash-экрана и логирование закрытия
         FlutterNativeSplash.remove();
-        _l.vNoStack('** close NATIVE splash**');
+        _l.tNoStack('** close NATIVE splash**');
       }
 
       // Обработка всех необработанных асинхронных ошибок
@@ -149,9 +152,8 @@ Future<void> main() async {
 }
 
 /// Копирование базы данных, если она ещё не скопирована
-Future<void> copyDb() async {
-  final pref = LocalStorageServices.service;
-  final pathDB = pref.getString(ConstStorage.keyPathDB);
+Future<void> copyDb(LocalStorage localStorage) async {
+  final pathDB = await localStorage.getPathDB();
 
   if (pathDB.isNotEmpty) return;
 
@@ -165,5 +167,5 @@ Future<void> copyDb() async {
     nameFile: nameFile,
   );
 
-  await pref.saveString(ConstStorage.keyPathDB, '$pathTo/$nameFile');
+  await localStorage.setPathDB('$pathTo/$nameFile');
 }

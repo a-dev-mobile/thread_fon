@@ -22,38 +22,6 @@ class $AssetsDbGen {
   List<String> get values => [threadDb, threadSqbpro];
 }
 
-class $AssetsFontsGen {
-  const $AssetsFontsGen();
-
-  /// File path: assets/fonts/montserrat_bold.ttf
-  String get montserratBold => 'assets/fonts/montserrat_bold.ttf';
-
-  /// File path: assets/fonts/montserrat_light.ttf
-  String get montserratLight => 'assets/fonts/montserrat_light.ttf';
-
-  /// File path: assets/fonts/montserrat_medium.ttf
-  String get montserratMedium => 'assets/fonts/montserrat_medium.ttf';
-
-  /// File path: assets/fonts/montserrat_mediumitalic.ttf
-  String get montserratMediumitalic => 'assets/fonts/montserrat_mediumitalic.ttf';
-
-  /// File path: assets/fonts/montserrat_regular.ttf
-  String get montserratRegular => 'assets/fonts/montserrat_regular.ttf';
-
-  /// File path: assets/fonts/montserrat_semibold.ttf
-  String get montserratSemibold => 'assets/fonts/montserrat_semibold.ttf';
-
-  /// List of all assets
-  List<String> get values => [
-        montserratBold,
-        montserratLight,
-        montserratMedium,
-        montserratMediumitalic,
-        montserratRegular,
-        montserratSemibold
-      ];
-}
-
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
@@ -110,7 +78,6 @@ class Assets {
   Assets._();
 
   static const $AssetsDbGen db = $AssetsDbGen();
-  static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsSvgGen svg = $AssetsSvgGen();
 }
