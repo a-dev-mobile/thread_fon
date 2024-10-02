@@ -3,14 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/src/provider.dart';
-import 'package:threadfon/src/common/constant/enums.dart';
-import 'package:threadfon/src/common/data/local_storage.dart';
-import 'package:threadfon/src/common/data/local_storage_provider.dart';
-import 'package:threadfon/src/common/styles/app_text_style.dart';
 import 'package:threadfon/src/common/constant/common.dart';
-import 'package:threadfon/src/features/threads/view/m_thread/cubit/m_thread_cubit.dart';
-import 'package:threadfon/src/features/m_thread_diam/view/m_thread_diam_page.dart';
+import 'package:threadfon/src/common/constant/enums.dart';
+import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
+import 'package:threadfon/src/common/styles/app_text_style.dart';
+import 'package:threadfon/src/features/m_thread_diam/view/metric_thread_diameter_screen.dart';
+import 'package:threadfon/src/features/threads/view/m_thread/cubit/m_thread_cubit.dart';
 
 class MThreadMaleFemalePage extends StatelessWidget {
   const MThreadMaleFemalePage({super.key});
@@ -31,7 +30,7 @@ class MThreadMaleFemalePage extends StatelessWidget {
             child: ChoiceTypeThread(
               onTap: () {
                 context.read<MThreadCubit>().setMale(false);
-              localStorage.updateUserSelection(
+                localStorage.updateUserSelection(
                   (current) {
                     return current.copyWith(threadType: ThreadType.internal);
                   },
@@ -46,7 +45,7 @@ class MThreadMaleFemalePage extends StatelessWidget {
             child: ChoiceTypeThread(
               onTap: () {
                 context.read<MThreadCubit>().setMale(true);
-                      localStorage.updateUserSelection(
+                localStorage.updateUserSelection(
                   (current) {
                     return current.copyWith(threadType: ThreadType.external);
                   },
@@ -69,7 +68,7 @@ class MThreadMaleFemalePage extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute<void>(
-        builder: (context) => const MThreadDiamPage(),
+        builder: (context) => const MetricDiameterScreen(),
       ),
     );
   }

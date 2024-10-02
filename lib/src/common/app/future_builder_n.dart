@@ -33,7 +33,8 @@ class _FutureBuilderNState<T> extends State<FutureBuilderN<T>> {
   @override
   void initState() {
     super.initState();
-    _combinedFuture = widget.loadInParallel ? _loadInParallel() : _loadSequentially();
+    _combinedFuture =
+        widget.loadInParallel ? _loadInParallel() : _loadSequentially();
   }
 
   Future<List<T?>> _loadInParallel() async => Future.wait(widget.futures);
@@ -57,13 +58,16 @@ class _FutureBuilderNState<T> extends State<FutureBuilderN<T>> {
         future: _combinedFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return widget.loadingWidget ?? const Center(child: CircularProgressIndicator());
+            return widget.loadingWidget ??
+                const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return widget.errorWidget ?? Center(child: Text('Error: ${snapshot.error}'));
+            return widget.errorWidget ??
+                Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
             return widget.builder(context, snapshot.data!, null);
           } else {
-            return widget.errorWidget ?? const Center(child: Text('Unknown error occurred'));
+            return widget.errorWidget ??
+                const Center(child: Text('Unknown error occurred'));
           }
         },
       );

@@ -8,10 +8,12 @@ part 'user_selection.g.dart'; // Если вы планируете исполь
 class UserSelection with _$UserSelection {
   const factory UserSelection({
     ThreadType? threadType,
-    double? diameter,
+    double? diam,
+    int? id,
     double? step,
     String? tolerance,
   }) = _UserSelection;
 
-  factory UserSelection.fromJson(Map<String, dynamic> json) => _$UserSelectionFromJson(json);
+  factory UserSelection.fromJson(Map<String, dynamic> json) =>
+      _$UserSelectionFromJson(json);
 }

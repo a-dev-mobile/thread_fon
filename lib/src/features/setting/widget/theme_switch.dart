@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:threadfon/src/common/app/theme_notifier.dart';
-import 'package:threadfon/src/common/styles/app_text_style.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
+import 'package:threadfon/src/common/styles/app_text_style.dart';
 
 class ThemeSwitchWidget extends StatelessWidget {
   const ThemeSwitchWidget({

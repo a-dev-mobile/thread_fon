@@ -1,8 +1,8 @@
 // // Package imports:
 //
 // import 'package:flutter/material.dart';
-// 
-// 
+//
+//
 // import 'package:flutter_svg/svg.dart';
 
 // import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';

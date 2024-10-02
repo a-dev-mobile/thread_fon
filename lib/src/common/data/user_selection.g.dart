@@ -9,7 +9,8 @@ part of 'user_selection.dart';
 _$UserSelectionImpl _$$UserSelectionImplFromJson(Map<String, dynamic> json) =>
     _$UserSelectionImpl(
       threadType: $enumDecodeNullable(_$ThreadTypeEnumMap, json['threadType']),
-      diameter: (json['diameter'] as num?)?.toDouble(),
+      diam: (json['diam'] as num?)?.toDouble(),
+      id: (json['id'] as num?)?.toInt(),
       step: (json['step'] as num?)?.toDouble(),
       tolerance: json['tolerance'] as String?,
     );
@@ -17,7 +18,8 @@ _$UserSelectionImpl _$$UserSelectionImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$UserSelectionImplToJson(_$UserSelectionImpl instance) =>
     <String, dynamic>{
       'threadType': _$ThreadTypeEnumMap[instance.threadType],
-      'diameter': instance.diameter,
+      'diam': instance.diam,
+      'id': instance.id,
       'step': instance.step,
       'tolerance': instance.tolerance,
     };

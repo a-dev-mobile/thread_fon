@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:threadfon/src/common/app/language_notifier.dart';
+import 'package:threadfon/src/common/localization/localization.dart';
 import 'package:threadfon/src/common/styles/app_text_style.dart';
 import 'package:threadfon/src/common/widgets/button/btn_list_tile.dart';
-import 'package:threadfon/src/common/localization/localization.dart';
 
 class LangSwitchWidget extends StatelessWidget {
   const LangSwitchWidget({

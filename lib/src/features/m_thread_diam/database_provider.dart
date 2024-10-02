@@ -1,6 +1,6 @@
 // database_provider.dart
 import 'package:flutter/material.dart';
-import 'package:threadfon/src/features/m_thread_diam/view/database_service.dart';
+import 'package:threadfon/src/features/m_thread_diam/database_service.dart';
 
 class DatabaseProvider extends InheritedWidget {
   const DatabaseProvider({
@@ -12,7 +12,8 @@ class DatabaseProvider extends InheritedWidget {
 
   /// Метод для доступа к DatabaseService из контекста
   static DatabaseService of(BuildContext context) {
-    final provider = context.dependOnInheritedWidgetOfExactType<DatabaseProvider>();
+    final provider =
+        context.dependOnInheritedWidgetOfExactType<DatabaseProvider>();
     if (provider == null) {
       throw FlutterError('DatabaseProvider не найден в контексте');
     }

@@ -9,7 +9,6 @@ typedef ValueListenableBuilderNWidgetBuilder<T> = Widget Function(
 );
 
 class ValueListenableBuilderN<T> extends StatefulWidget {
-
   const ValueListenableBuilderN({
     required this.listenable,
     required this.builder,
@@ -21,10 +20,12 @@ class ValueListenableBuilderN<T> extends StatefulWidget {
   final Widget? child;
 
   @override
-  _ValueListenableBuilderNState<T> createState() => _ValueListenableBuilderNState<T>();
+  _ValueListenableBuilderNState<T> createState() =>
+      _ValueListenableBuilderNState<T>();
 }
 
-class _ValueListenableBuilderNState<T> extends State<ValueListenableBuilderN<T>> {
+class _ValueListenableBuilderNState<T>
+    extends State<ValueListenableBuilderN<T>> {
   late List<T> _currentValues;
 
   @override
@@ -65,5 +66,6 @@ class _ValueListenableBuilderNState<T> extends State<ValueListenableBuilderN<T>>
   }
 
   @override
-  Widget build(BuildContext context) => widget.builder(context, _currentValues, widget.child);
+  Widget build(BuildContext context) =>
+      widget.builder(context, _currentValues, widget.child);
 }

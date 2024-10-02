@@ -1,6 +1,7 @@
 import 'package:threadfon/src/common/log/l_setup.dart';
 
 final _l = L('app_error_handler');
+
 class AppErrorHandler {
   static Future<void> recordError(
     e,

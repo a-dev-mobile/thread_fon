@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:threadfon/src/common/constant/colors.dart';
+import 'package:threadfon/src/common/localization/localization.dart';
 // Package imports:
 
 import 'package:threadfon/src/common/styles/app_text_style.dart';
-import 'package:threadfon/src/common/constant/colors.dart';
 import 'package:threadfon/src/common/widgets/button/btn_list_tile.dart';
 import 'package:threadfon/src/common/widgets/my_divider.dart';
-import 'package:threadfon/src/common/localization/localization.dart';
 
 class AboutAppWidget extends StatelessWidget {
   const AboutAppWidget({
@@ -27,7 +27,8 @@ class AboutAppWidget extends StatelessWidget {
   Future<void> _showDialogAboutApp(BuildContext context) async {
     final brightness = Theme.of(context).brightness;
     final isDark = brightness == Brightness.dark;
-    final backgroundColor = isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
+    final backgroundColor =
+        isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
 
     final appName = Localization.of(context).app_name;
 // String packageName = packageInfo.packageName;

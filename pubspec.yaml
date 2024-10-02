@@ -11,7 +11,6 @@ environment:
 
 dependencies:
   # Annotation
-  meta: any
   json_annotation: ^4.9.0
 
   # State management
@@ -28,6 +27,7 @@ dependencies:
   intl: any
   async: any
   path: any
+  meta: any
   collection: any
 
   convert: any
@@ -60,14 +60,13 @@ dependencies:
   postgres: ^3.4.0
   retry: ^3.1.2
 
+
 dev_dependencies:
   intl_utils: ^2.8.7
   build_runner: ^2.4.13
   json_serializable:
     ^6.8.0
 
-  flutter_test:
-    sdk: flutter
   flutter_gen_runner: ^5.7.0
   # Linting
   flutter_lints: ^5.0.0

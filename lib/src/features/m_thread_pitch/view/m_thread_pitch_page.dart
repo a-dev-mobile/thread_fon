@@ -2,19 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threadfon/src/common/styles/app_text_style.dart';
 import 'package:threadfon/src/common/constant/colors.dart';
+import 'package:threadfon/src/common/data/m_thread_repository.dart';
+import 'package:threadfon/src/common/localization/localization.dart';
+import 'package:threadfon/src/common/styles/app_text_style.dart';
 import 'package:threadfon/src/common/util/app_utils.dart';
 import 'package:threadfon/src/common/widgets/my_divider.dart';
 import 'package:threadfon/src/common/widgets/my_error_widget.dart';
 import 'package:threadfon/src/common/widgets/my_load_widget.dart';
 import 'package:threadfon/src/common/widgets/my_msg_widget.dart';
-import 'package:threadfon/src/common/data/m_thread_repository.dart';
 import 'package:threadfon/src/features/m_thread_tolerance/view/m_thread_tolerance_page.dart';
 import 'package:threadfon/src/features/pitch/m_thread_pitch_model.dart';
 import 'package:threadfon/src/features/threads/view/m_thread/cubit/m_thread_cubit.dart';
-
-import 'package:threadfon/src/common/localization/localization.dart';
 
 enum TypePitch { coarse, fine, superFine }
 
@@ -49,9 +48,12 @@ class MThreadPitchPage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        if (snapshot.data!.isCoarse) _CoarsePitchWidget(pitchModel: snapshot.data!),
-                        if (snapshot.data!.isFine) FinePitchWidget(pitchModel: snapshot.data!),
-                        if (snapshot.data!.isSuperFine) SuperFinePitchWidget(pitchModel: snapshot.data!),
+                        if (snapshot.data!.isCoarse)
+                          _CoarsePitchWidget(pitchModel: snapshot.data!),
+                        if (snapshot.data!.isFine)
+                          FinePitchWidget(pitchModel: snapshot.data!),
+                        if (snapshot.data!.isSuperFine)
+                          SuperFinePitchWidget(pitchModel: snapshot.data!),
                       ],
                     ),
                   );
@@ -198,7 +200,8 @@ class _PitchItem extends StatelessWidget {
   Future<void> _showMyDialog(BuildContext context) async {
     final brightness = Theme.of(context).brightness;
     final isDark = brightness == Brightness.dark;
-    final backgroundColor = isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
+    final backgroundColor =
+        isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
 
     return showDialog<void>(
       context: context,

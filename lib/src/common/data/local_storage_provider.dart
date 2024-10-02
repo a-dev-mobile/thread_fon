@@ -11,11 +11,13 @@ class LocalStorageProvider extends InheritedWidget {
   final LocalStorage localStorage;
 
   static LocalStorage of(BuildContext context) {
-    final result = context.dependOnInheritedWidgetOfExactType<LocalStorageProvider>();
+    final result =
+        context.dependOnInheritedWidgetOfExactType<LocalStorageProvider>();
     assert(result != null, 'No LocalStorageProvider found in context');
     return result!.localStorage;
   }
 
   @override
-  bool updateShouldNotify(covariant LocalStorageProvider oldWidget) => localStorage != oldWidget.localStorage;
+  bool updateShouldNotify(covariant LocalStorageProvider oldWidget) =>
+      localStorage != oldWidget.localStorage;
 }

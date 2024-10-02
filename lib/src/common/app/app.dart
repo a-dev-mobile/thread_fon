@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:threadfon/src/common/app/flex_theme.dart';
 import 'package:threadfon/src/common/app/future_builder_n.dart';
-import 'package:threadfon/src/common/app/theme_notifier.dart';
 import 'package:threadfon/src/common/app/language_notifier.dart'; // Новый импорт
-import 'package:threadfon/src/features/threads/threads_wrapper_page.dart';
-import 'package:threadfon/src/common/localization/localization.dart';
+import 'package:threadfon/src/common/app/theme_notifier.dart';
 import 'package:threadfon/src/common/app/value_listenable_builder_n.dart'; // Импортируем ValueListenableBuilderN
+import 'package:threadfon/src/common/localization/localization.dart';
+import 'package:threadfon/src/features/threads/threads_wrapper_page.dart';
 
 class App extends StatefulWidget {
   const App({
@@ -90,16 +90,10 @@ class _ThreadFonApp extends StatelessWidget {
         final locale = values[1] as String;
 
         return MaterialApp(
-          builder: (context, widget) => MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              textScaler: const TextScaler.linear(1), // Устанавливаем textScaleFactor в 1.0
-            ),
-            child: widget!,
-          ),
-          onGenerateTitle: (context) => Localization.of(context).app_name,
+                    onGenerateTitle: (context) => Localization.of(context).app_name,
           debugShowCheckedModeBanner: false,
           //
-          themeMode: themeMode, // Используем ThemeMode из ValueNotifier
+          themeMode: themeMode, 
           theme: FlexTheme.lightThemeData(),
           darkTheme: FlexTheme.darkThemeData(),
           //

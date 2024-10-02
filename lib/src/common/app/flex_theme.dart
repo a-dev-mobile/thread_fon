@@ -11,21 +11,21 @@ class FlexTheme {
 
   /// *---* [Light Theme] *---*
   static ThemeData lightThemeData() => FlexThemeData.light(
-      scheme: FlexScheme.ebonyClay,
-      surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-      blendLevel: 7,
-      subThemesData: const FlexSubThemesData(
-        blendOnLevel: 10,
-        blendOnColors: false,
-        useTextTheme: true,
-        alignedDropdown: true,
-        useInputDecoratorThemeInDialogs: true,
-      ),
-      visualDensity: FlexColorScheme.comfortablePlatformDensity,
-      useMaterial3: false,
-      // To use the Playground font, add GoogleFonts package and uncomment
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    );
+        scheme: FlexScheme.ebonyClay,
+        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+        blendLevel: 7,
+        subThemesData: const FlexSubThemesData(
+          blendOnLevel: 10,
+          blendOnColors: false,
+          useTextTheme: true,
+          alignedDropdown: true,
+          useInputDecoratorThemeInDialogs: true,
+        ),
+        visualDensity: FlexColorScheme.comfortablePlatformDensity,
+        useMaterial3: false,
+        // To use the Playground font, add GoogleFonts package and uncomment
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+      );
 
   /// *---* [Dark Theme] *---*
   static ThemeData darkThemeData() {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:threadfon/src/common/localization/localization.dart';
 // Package imports:
 
 import 'package:threadfon/src/common/widgets/my_divider.dart';
@@ -8,7 +9,6 @@ import 'package:threadfon/src/features/setting/widget/feed_back.dart';
 import 'package:threadfon/src/features/setting/widget/lang_switch.dart';
 import 'package:threadfon/src/features/setting/widget/rate_app.dart';
 import 'package:threadfon/src/features/setting/widget/theme_switch.dart';
-import 'package:threadfon/src/common/localization/localization.dart';
 
 class SettingPage extends StatelessWidget {
   const SettingPage({super.key});

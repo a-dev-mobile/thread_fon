@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:threadfon/src/common/constant/colors.dart';
 
 class BtnLargeSecondary extends StatelessWidget {
-  const BtnLargeSecondary(
-      {required this.text, required this.onClick, super.key,});
+  const BtnLargeSecondary({
+    required this.text,
+    required this.onClick,
+    super.key,
+  });
   final String text;
   final Function() onClick;
   @override

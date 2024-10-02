@@ -37,10 +37,10 @@ class MThreadInfoMaleImage extends StatelessWidget {
   final String diamMajorToleranceBottom;
   @override
   Widget build(BuildContext context) {
-    final size= MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
 
     return SizedBox(
-      height: 0.4* size.height,
+      height: 0.4 * size.height,
       width: size.width,
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -53,7 +53,6 @@ class MThreadInfoMaleImage extends StatelessWidget {
                 child: Image(
                   color: Theme.of(context).textTheme.bodyMedium!.color,
                   fit: BoxFit.contain,
-                   
                   image: AssetImage(path),
                 ),
               ),

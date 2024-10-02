@@ -10,17 +10,20 @@ import 'package:meta/meta.dart';
 /// ISO 8601 format.
 ///
 /// Use it as an annotation, like so: `@dateTimeJsonConverter`.
-const JsonConverter<DateTime, String> dateTimeJsonConverter = DateTimeJsonCodec();
+const JsonConverter<DateTime, String> dateTimeJsonConverter =
+    DateTimeJsonCodec();
 
 /// Convert a [DateTime] to a JSON value.
 String toJsonDateTime(DateTime value) => dateTimeJsonConverter.toJson(value);
 
 /// Convert a [DateTime] to a JSON value or return `null` if the value is `null`.
-String? toJsonDateTimeOrNull(DateTime? value) => value == null ? null : dateTimeJsonConverter.toJson(value);
+String? toJsonDateTimeOrNull(DateTime? value) =>
+    value == null ? null : dateTimeJsonConverter.toJson(value);
 
 /// Restore the [DateTime] from a JSON value.
 DateTime fromJsonDateTime(Object json) =>
-    fromJsonDateTimeOrNull(json) ?? (throw ArgumentError.value(json, 'json', 'Invalid DateTime value'));
+    fromJsonDateTimeOrNull(json) ??
+    (throw ArgumentError.value(json, 'json', 'Invalid DateTime value'));
 
 /// Restore the [DateTime] from a JSON value or return `null` if the value is `null`.
 DateTime? fromJsonDateTimeOrNull(Object? json) => switch (json) {
@@ -35,7 +38,8 @@ DateTime? fromJsonDateTimeOrNull(Object? json) => switch (json) {
 /// ISO 8601 format.
 ///
 /// You should prefer using this codec instead of [DateTime.toIso8601String].
-class DateTimeJsonCodec extends Codec<DateTime, String> implements JsonConverter<DateTime, String> {
+class DateTimeJsonCodec extends Codec<DateTime, String>
+    implements JsonConverter<DateTime, String> {
   @literal
   const DateTimeJsonCodec();
 
@@ -58,7 +62,8 @@ class DateTimeToJsonEncoder extends Converter<DateTime, String> {
   const DateTimeToJsonEncoder();
 
   @override
-  String convert(DateTime input) => input.isUtc ? input.toUtcIso8601String() : input.toLocalIso8601String();
+  String convert(DateTime input) =>
+      input.isUtc ? input.toUtcIso8601String() : input.toLocalIso8601String();
 }
 
 /// A [String] -> [DateTime] converter.
@@ -75,13 +80,15 @@ class DateTimeFromJsonDecoder extends Converter<String, DateTime> {
 
 /// Extension methods for the DateTime class.
 extension DateTimeExtension on DateTime {
-  static final intl.DateFormat _isoFormat = intl.DateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  static final intl.DateFormat _isoFormat =
+      intl.DateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
   /// Format date
   String format({intl.DateFormat? format}) {
     if (format != null) return format.format(this);
     final now = DateTime.now();
-    final today = now.copyWith(hour: 0, minute: 0, second: 0, millisecond: 0, microsecond: 0);
+    final today = now.copyWith(
+        hour: 0, minute: 0, second: 0, millisecond: 0, microsecond: 0);
     if (isAfter(today)) return intl.DateFormat.Hms().format(this);
     if (isAfter(today.subtract(const Duration(days: 7)))) {
       return intl.DateFormat(intl.DateFormat.WEEKDAY).format(this);

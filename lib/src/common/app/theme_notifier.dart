@@ -18,7 +18,8 @@ class ThemeNotifier extends InheritedNotifier<ValueNotifier<ThemeMode>> {
   }
 
   // Новый метод для доступа к ThemeNotifier
-  static ThemeNotifier? ofNotifier(BuildContext context) => context.dependOnInheritedWidgetOfExactType<ThemeNotifier>();
+  static ThemeNotifier? ofNotifier(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<ThemeNotifier>();
 
   // Метод для установки конкретной темы и сохранения в SharedPreferences
   Future<void> setTheme(ThemeMode mode) async {

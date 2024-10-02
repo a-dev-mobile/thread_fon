@@ -1,5 +1,4 @@
 enum ThreadType {
   external,
   internal,
-  
 }

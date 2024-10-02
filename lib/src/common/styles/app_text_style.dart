@@ -103,7 +103,8 @@ abstract class AppTextStyle {
   static bool isTablet(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    final diagonal = sqrt((size.width * size.width) + (size.height * size.height));
+    final diagonal =
+        sqrt((size.width * size.width) + (size.height * size.height));
 
     /*
     print(

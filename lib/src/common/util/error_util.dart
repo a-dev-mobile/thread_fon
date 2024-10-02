@@ -47,7 +47,7 @@ abstract final class ErrorUtil {
       if (warning) {
         _l.t(message, stackTrace: stackTrace ?? StackTrace.current);
       } else {
-        _l.iNoStack(message, stackTrace: stackTrace ?? StackTrace.current);
+        _l.i(message, stackTrace: stackTrace ?? StackTrace.current);
       }
       $captureMessage(message, stackTrace, hint, warning).ignore();
     } on Object catch (error, stackTrace) {
@@ -60,5 +60,6 @@ abstract final class ErrorUtil {
   }
 
   /// Rethrows the error with the stack trace.
-  static Never throwWithStackTrace(Object error, StackTrace stackTrace) => Error.throwWithStackTrace(error, stackTrace);
+  static Never throwWithStackTrace(Object error, StackTrace stackTrace) =>
+      Error.throwWithStackTrace(error, stackTrace);
 }

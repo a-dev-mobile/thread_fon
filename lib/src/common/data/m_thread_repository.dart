@@ -5,8 +5,9 @@ import 'package:sqflite/sqflite.dart';
 
 import 'package:threadfon/src/common/util/app_log.dart';
 import 'package:threadfon/src/common/util/app_utils.dart';
-
 import 'package:threadfon/src/features/m_thread_diam/m_thread_diam_model.dart';
+
+
 import 'package:threadfon/src/features/pitch/m_thread_pitch_model.dart';
 import 'package:threadfon/src/features/tolerance/m_thread_tolerance_model.dart';
 import 'package:threadfon/src/features/tolerance_values/m_thread_tolerance_values_model.dart';
@@ -231,11 +232,6 @@ class MThreadRepository {
     if (response.isEmpty) throw Exception();
 
     for (var i = 3; i < response[0].length; i++) {
-
-
-
-
-
       key = response[0].keys.elementAt(i).toString();
       value = response[0].values.elementAt(i).toString();
       if (value == 'null') continue;

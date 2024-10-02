@@ -8,16 +8,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:threadfon/src/common/app/app.dart';
-
 import 'package:threadfon/app_error_handler.dart';
-import 'package:threadfon/src/common/constant/storage.dart';
-import 'package:threadfon/src/common/util/file_copy.dart';
-import 'package:threadfon/src/common/data/m_thread_repository.dart';
+import 'package:threadfon/src/common/app/app.dart';
 import 'package:threadfon/src/common/data/local_storage.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
+import 'package:threadfon/src/common/data/m_thread_repository.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
+import 'package:threadfon/src/common/util/file_copy.dart';
 import 'package:threadfon/src/features/threads/view/m_thread/cubit/m_thread_cubit.dart';
+import 'package:threadfon/src/features/m_thread_diam/database_provider.dart'; // Импорт DatabaseProvider
+import 'package:threadfon/src/features/m_thread_diam/database_service.dart';   // Импорт DatabaseService
 
 final _l = L('main');
 
@@ -50,7 +50,8 @@ Future<void> main() async {
             AppErrorHandler.recordError(exception, stackTrace);
           } else {
             // В режиме разработки логируем ошибку для отладки
-            _l.e('FlutterError.onError', error: exception, stackTrace: stackTrace);
+            _l.e('FlutterError.onError',
+                error: exception, stackTrace: stackTrace);
           }
         };
 
@@ -66,23 +67,34 @@ Future<void> main() async {
 
         final pathDB = await localStorage.getPathDB();
 
-        // Запуск приложения с провайдерами репозиториев и BLoC
+        // Инициализация DatabaseService
+        final databaseService = DatabaseService(
+          host: '134.255.232.136',
+          database: 'thread_db',
+          username: 'readonly_user',
+          password: '123123',
+        );
+
+        // Запуск приложения с провайдерами
         runApp(
-          LocalStorageProvider(
-            localStorage: localStorage,
-            child: MultiRepositoryProvider(
-              providers: [
-                RepositoryProvider<MThreadRepository>(
-                  create: (context) => MThreadRepository(pathDB: pathDB),
-                ),
-              ],
-              child: MultiBlocProvider(
+          DatabaseProvider(
+            databaseService: databaseService,
+            child: LocalStorageProvider(
+              localStorage: localStorage,
+              child: MultiRepositoryProvider(
                 providers: [
-                  BlocProvider(
-                    create: (context) => MThreadCubit(),
+                  RepositoryProvider<MThreadRepository>(
+                    create: (context) => MThreadRepository(pathDB: pathDB),
                   ),
                 ],
-                child: const App(),
+                child: MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (context) => MThreadCubit(),
+                    ),
+                  ],
+                  child: const App(),
+                ),
               ),
             ),
           ),
@@ -99,7 +111,7 @@ Future<void> main() async {
       } finally {
         // Удаление splash-экрана и логирование закрытия
         FlutterNativeSplash.remove();
-        _l.tNoStack('** close NATIVE splash**');
+        _l.t('** close NATIVE splash**',includeStackTrace: false);
       }
 
       // Обработка всех необработанных асинхронных ошибок
@@ -109,7 +121,8 @@ Future<void> main() async {
           AppErrorHandler.recordError(error, stack);
         } else {
           // В режиме разработки логируем ошибку для отладки
-          _l.e('🚑 PlatformDispatcher.onError', error: error, stackTrace: stack);
+          _l.e('🚑 PlatformDispatcher.onError',
+              error: error, stackTrace: stack);
         }
 
         return true;

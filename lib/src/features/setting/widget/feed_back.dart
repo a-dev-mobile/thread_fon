@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 
 import 'package:threadfon/src/common/constant/common.dart';
-import 'package:threadfon/src/common/widgets/button/btn_list_tile.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
+import 'package:threadfon/src/common/widgets/button/btn_list_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FeedbackWidget extends StatelessWidget {

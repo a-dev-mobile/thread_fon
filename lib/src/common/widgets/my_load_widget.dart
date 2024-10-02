@@ -8,5 +8,6 @@ class MyLoadWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Center(child: Text(Localization.of(context).loadingMessage));
+  Widget build(BuildContext context) =>
+      Center(child: Text(Localization.of(context).loadingMessage));
 }

@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:threadfon/src/common/constant/colors.dart';
+import 'package:threadfon/src/common/localization/localization.dart';
 // Package imports:
 
 import 'package:threadfon/src/common/styles/app_text_style.dart';
-import 'package:threadfon/src/common/constant/colors.dart';
 import 'package:threadfon/src/common/widgets/button/btn_list_tile.dart';
-import 'package:threadfon/src/common/localization/localization.dart';
 
 class ExitAppWidget extends StatelessWidget {
   const ExitAppWidget({
@@ -29,7 +29,8 @@ class ExitAppWidget extends StatelessWidget {
   Future<void> _showDialogExitApp(BuildContext context) async {
     final brightness = Theme.of(context).brightness;
     final isDark = brightness == Brightness.dark;
-    final backgroundColor = isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
+    final backgroundColor =
+        isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
 
     final title = Localization.of(context).exit_app_warning;
     final yes = Localization.of(context).yes;

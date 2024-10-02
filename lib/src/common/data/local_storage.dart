@@ -16,7 +16,7 @@ class LocalStorage {
   SharedPreferences? _sharedPreferences;
   SharedPreferencesWithCache? _cachePreferences;
 
-  bool _isShowLog;
+  final bool _isShowLog;
   DateTime _lastCacheUpdate = DateTime.now();
 
   static const Duration _cacheDuration = Duration(minutes: 5);
@@ -41,7 +41,7 @@ class LocalStorage {
         },
       ),
     );
-    _l.iNoStack('INITIALIZE LocalStorage');
+    _l.i('INITIALIZE LocalStorage', includeStackTrace: false);
   }
 
   // ******************************
@@ -52,7 +52,8 @@ class LocalStorage {
         forceRefresh: forceRefresh,
       );
 
-  Future<void> setAppId(String? value) => _setValue<String>(key: _appId, value: value ?? '');
+  Future<void> setAppId(String? value) =>
+      _setValue<String>(key: _appId, value: value ?? '');
 
   // ******************************
   // Методы для работы с keyPathDB
@@ -64,7 +65,8 @@ class LocalStorage {
       )) ??
       '';
 
-  Future<void> setPathDB(String? value) => _setValue<String>(key: ConstStorage.keyPathDB, value: value ?? '');
+  Future<void> setPathDB(String? value) =>
+      _setValue<String>(key: ConstStorage.keyPathDB, value: value ?? '');
 
   // ******************************
   // Методы для работы с _userSelection
@@ -77,10 +79,12 @@ class LocalStorage {
     );
     try {
       return jsonString != null
-          ? UserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
+          ? UserSelection.fromJson(
+              json.decode(jsonString) as Map<String, dynamic>)
           : const UserSelection();
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'GET_USER_SELECTION', _userSelectionKey, jsonString);
+      await _recordError(
+          e, s, 'GET_USER_SELECTION', _userSelectionKey, jsonString);
       return const UserSelection();
     }
   }
@@ -110,29 +114,34 @@ class LocalStorage {
 
       await _log('UPDATE_USER_SELECTION', _userSelectionKey, updatedSelection);
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'UPDATE_USER_SELECTION', _userSelectionKey, null);
+      await _recordError(
+          e, s, 'UPDATE_USER_SELECTION', _userSelectionKey, null);
     }
   }
   // ******************************
   // Методы для работы с _userAgent
 
-  Future<String?> getUserAgent({bool forceRefresh = false}) => _getValue<String>(
+  Future<String?> getUserAgent({bool forceRefresh = false}) =>
+      _getValue<String>(
         key: _userAgent,
         forceRefresh: forceRefresh,
       );
 
-  Future<void> setUserAgent(String? value) => _setValue<String>(key: _userAgent, value: value ?? '');
+  Future<void> setUserAgent(String? value) =>
+      _setValue<String>(key: _userAgent, value: value ?? '');
 
   // ******************************
   // Методы для работы с _targetUrl
 
-  Future<String?> getTargetUrl({bool forceRefresh = false}) => _getValue<String>(
+  Future<String?> getTargetUrl({bool forceRefresh = false}) =>
+      _getValue<String>(
         key: _targetUrl,
         forceRefresh: forceRefresh,
         defaultValue: 'https://unknown.com?utm_source=organic_mob',
       );
 
-  Future<void> setTargetUrl(String? value) => _setValue<String>(key: _targetUrl, value: value ?? '');
+  Future<void> setTargetUrl(String? value) =>
+      _setValue<String>(key: _targetUrl, value: value ?? '');
 
   // ******************************
   // Универсальные методы для хранения и получения данных
@@ -145,7 +154,11 @@ class LocalStorage {
     try {
       _ensureInitialized();
 
-      if (value is String || value is bool || value is int || value is double || value is List<String>) {
+      if (value is String ||
+          value is bool ||
+          value is int ||
+          value is double ||
+          value is List<String>) {
         if (value is String) {
           await _sharedPreferences!.setString(key, value);
         } else if (value is bool) {
@@ -195,7 +208,8 @@ class LocalStorage {
         return _getFromSharedPreferences<T>(key, defaultValue);
       }
 
-      if (forceRefresh || DateTime.now().difference(_lastCacheUpdate) > _cacheDuration) {
+      if (forceRefresh ||
+          DateTime.now().difference(_lastCacheUpdate) > _cacheDuration) {
         await _cachePreferences!.reloadCache();
         _lastCacheUpdate = DateTime.now();
       }
@@ -251,7 +265,8 @@ class LocalStorage {
       return _cachePreferences!.containsKey(key);
     } catch (e) {
       if (e is ArgumentError) {
-        await _log('WARN', key, 'Key is not included in the PreferencesFilter allowlist');
+        await _log('WARN', key,
+            'Key is not included in the PreferencesFilter allowlist');
         return false;
       }
       rethrow; // Если это не ArgumentError, выбрасываем дальше
@@ -285,7 +300,9 @@ class LocalStorage {
       defaultValue: '{}',
     );
     try {
-      return jsonString != null ? json.decode(jsonString) as Map<String, dynamic> : null;
+      return jsonString != null
+          ? json.decode(jsonString) as Map<String, dynamic>
+          : null;
     } on Exception catch (e, s) {
       await _recordError(e, s, 'GET_JSON', key, jsonString);
       return null;
@@ -298,7 +315,7 @@ class LocalStorage {
   /// Логирование действия, если включен режим отображения логов.
   Future<void> _log(String action, String key, dynamic value) async {
     if (_isShowLog) {
-      _l.iNoStack('$action > $key, Value: $value');
+      _l.i('$action > $key, Value: $value', includeStackTrace: false);
     }
   }
 
@@ -337,7 +354,8 @@ class LocalStorage {
   /// Проверка инициализации хранилищ
   void _ensureInitialized() {
     if (_sharedPreferences == null || _cachePreferences == null) {
-      throw Exception('LocalStorage not initialized. Call initialize() before using.');
+      throw Exception(
+          'LocalStorage not initialized. Call initialize() before using.');
     }
   }
 }

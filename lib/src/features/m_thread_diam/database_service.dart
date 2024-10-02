@@ -4,28 +4,13 @@ import 'package:threadfon/src/common/log/l_setup.dart';
 final _l = L('database_service');
 
 class DatabaseService {
-  // Приватный конструктор
-  DatabaseService._internal({
+// Публичный конструктор
+  DatabaseService({
     required this.host,
     required this.database,
     required this.username,
     required this.password,
   });
-
-  /// Метод для получения экземпляра синглтона
-  static DatabaseService getInstance() {
-    _instance ??= DatabaseService._internal(
-      host: '134.255.232.136',
-      database: 'thread_db',
-      username: 'readonly_user',
-      password: '123123',
-    );
-    return _instance!;
-  }
-
-  // Статическая переменная для хранения экземпляра синглтона
-  static DatabaseService? _instance;
-
   // Параметры подключения
   final String host;
   final String database;
@@ -43,7 +28,7 @@ class DatabaseService {
 
     try {
       final connection = await Connection.open(endpoint);
-      _l.iNoStack('Соединение к базе данных установлено.');
+      _l.i('Соединение к базе данных установлено.', includeStackTrace: false);
       return connection;
     } catch (e) {
       _l.e('Ошибка при открытии соединения', error: e);
@@ -55,7 +40,7 @@ class DatabaseService {
   Future<void> closeConnection(Connection connection) async {
     try {
       await connection.close();
-      _l.iNoStack('Соединение с базой данных закрыто.');
+      _l.i('Соединение с базой данных закрыто.', includeStackTrace: false);
     } catch (e) {
       _l.e('Ошибка при закрытии соединения', error: e);
       rethrow; // Перебрасываем исключение дальше, если нужно
@@ -63,13 +48,14 @@ class DatabaseService {
   }
 
   /// Метод для выполнения запроса без возвращаемых данных
-  Future<void> execute(Connection connection, String query, [Map<String, dynamic>? parameters]) async {
+  Future<void> execute(Connection connection, String query,
+      [Map<String, dynamic>? parameters]) async {
     try {
       await connection.execute(
         Sql.named(query),
         parameters: parameters,
       );
-      _l.iNoStack('Запрос выполнен успешно.');
+      _l.i('Запрос выполнен успешно.', includeStackTrace: false);
     } catch (e) {
       _l.e('Ошибка при выполнении запроса', error: e);
       rethrow; // Перебрасываем исключение дальше, если нужно
@@ -77,13 +63,14 @@ class DatabaseService {
   }
 
   /// Метод для выполнения запроса и получения результатов
-  Future<List<ResultRow>> query(Connection connection, String query, [Map<String, dynamic>? parameters]) async {
+  Future<List<ResultRow>> query(Connection connection, String query,
+      [Map<String, dynamic>? parameters]) async {
     try {
       final result = await connection.execute(
         Sql.named(query),
         parameters: parameters,
       );
-      _l.iNoStack('Запрос выполнен успешно.');
+      _l.i('Запрос выполнен успешно.', includeStackTrace: false);
       return result;
     } catch (e) {
       _l.e('Ошибка при выполнении запроса', error: e);
@@ -92,10 +79,11 @@ class DatabaseService {
   }
 
   /// Метод для выполнения транзакции
-  Future<void> runTransaction(Connection connection, Future<void> Function(TxSession session) action) async {
+  Future<void> runTransaction(Connection connection,
+      Future<void> Function(TxSession session) action) async {
     try {
       await connection.runTx(action);
-      _l.iNoStack('Транзакция выполнена успешно.');
+      _l.i('Транзакция выполнена успешно.', includeStackTrace: false);
     } catch (e) {
       _l.e('Ошибка при выполнении транзакции', error: e);
       rethrow; // Перебрасываем исключение дальше, если нужно
