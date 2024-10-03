@@ -1,7 +1,7 @@
 // Package imports:
 
 import 'package:flutter/material.dart';
-import 'package:threadfon/src/features/m_thread_male_female/view/m_thread_male_female_page.dart';
+import 'package:threadfon/src/features/thread_type_selection/view/thread_type_selection_page.dart';
 
 class ThreadsWrapperPage extends StatelessWidget {
   const ThreadsWrapperPage({
@@ -9,5 +9,5 @@ class ThreadsWrapperPage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => const MThreadMaleFemalePage();
+  Widget build(BuildContext context) => const ThreadTypeSelectionPage();
 }

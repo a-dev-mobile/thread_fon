@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/src/common/constant/colors.dart';
 import 'package:threadfon/src/common/data/m_thread_repository.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
-import 'package:threadfon/src/common/styles/app_text_style.dart';
+import 'package:threadfon/src/common/styles/app_text_styles_extension.dart';
 import 'package:threadfon/src/common/util/app_utils.dart';
 import 'package:threadfon/src/common/widgets/my_divider.dart';
 import 'package:threadfon/src/common/widgets/my_error_widget.dart';
@@ -48,12 +48,9 @@ class MThreadPitchPage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        if (snapshot.data!.isCoarse)
-                          _CoarsePitchWidget(pitchModel: snapshot.data!),
-                        if (snapshot.data!.isFine)
-                          FinePitchWidget(pitchModel: snapshot.data!),
-                        if (snapshot.data!.isSuperFine)
-                          SuperFinePitchWidget(pitchModel: snapshot.data!),
+                        if (snapshot.data!.isCoarse) _CoarsePitchWidget(pitchModel: snapshot.data!),
+                        if (snapshot.data!.isFine) FinePitchWidget(pitchModel: snapshot.data!),
+                        if (snapshot.data!.isSuperFine) SuperFinePitchWidget(pitchModel: snapshot.data!),
                       ],
                     ),
                   );
@@ -136,7 +133,7 @@ class _PitchTypeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Text(
         typePitch,
-        style: AppTextStyle.LABEL_REGULAR(),
+  
       );
 }
 
@@ -175,7 +172,7 @@ class _PitchItem extends StatelessWidget {
       title: Center(
         child: Text(
           '$abrv $diam x $pitch',
-          style: AppTextStyle.H2(),
+      
         ),
       ),
     );
@@ -200,8 +197,7 @@ class _PitchItem extends StatelessWidget {
   Future<void> _showMyDialog(BuildContext context) async {
     final brightness = Theme.of(context).brightness;
     final isDark = brightness == Brightness.dark;
-    final backgroundColor =
-        isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
+    final backgroundColor = isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
 
     return showDialog<void>(
       context: context,
@@ -210,9 +206,7 @@ class _PitchItem extends StatelessWidget {
         title: Text(
           Localization.of(context).no_data,
           textAlign: TextAlign.center,
-          style: AppTextStyle.H3_REGULAR(
-              // colorText: Theme.of(context).textTheme.bodyText1!.color,
-              ),
+ 
         ),
         // content: Text('This is a demo alert dialog.'),
       ),

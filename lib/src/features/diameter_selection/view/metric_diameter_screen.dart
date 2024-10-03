@@ -5,7 +5,7 @@ import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/features/diameter_selection/controller/diameter_controller.dart';
 import 'package:threadfon/src/features/diameter_selection/data/diameter_repository_impl.dart';
 import 'package:threadfon/src/features/diameter_selection/database_provider.dart';
-import 'package:threadfon/src/features/m_thread_male_female/view/m_thread_male_female_page.dart';
+import 'package:threadfon/src/features/thread_type_selection/view/thread_type_selection_page.dart';
 
 final _l = L('metric_thread_diameter_screen');
 
@@ -51,7 +51,7 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (context) => const MThreadMaleFemalePage(),
+              builder: (context) => const ThreadTypeSelectionPage(),
             ),
           );
         });
@@ -79,6 +79,10 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
             case EnumScreenStatus.error:
               return Center(child: Text('Error: ${_controller.state.error}'));
 
+            case EnumScreenStatus.loadingNavigating:
+              return const Scaffold(
+                body: Center(child: LinearProgressIndicator()),
+              );
             case EnumScreenStatus.success:
               return ListView.builder(
                 itemCount: _controller.state.diameters.length,
@@ -92,6 +96,7 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
                   );
                 },
               );
+            // TODO: Handle this case.
           }
         },
       ),

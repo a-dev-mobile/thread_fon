@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:threadfon/src/common/styles/app_text_style.dart';
+import 'package:threadfon/src/common/styles/app_text_styles_extension.dart';
 
 class BtnListTile extends StatelessWidget {
   const BtnListTile({
@@ -20,7 +19,7 @@ class BtnListTile extends StatelessWidget {
   Widget build(BuildContext context) => ListTile(
         trailing: trailing,
         leading: leading,
-        title: Text(text, style: AppTextStyle.BODY_SEMI_BOLD()),
+        title: Text(text, ),
         onTap: onTap,
       );
 }

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 // Package imports:
 
-import 'package:threadfon/src/common/styles/app_text_style.dart';
+import 'package:threadfon/src/common/styles/app_text_styles_extension.dart';
 import 'package:threadfon/src/common/util/app_utils.dart';
 import 'package:threadfon/src/features/m_thread_info/view/widgets/m_thread_info_image_item.dart';
 
@@ -64,7 +64,7 @@ class MThreadInfoMaleImage extends StatelessWidget {
                 posY: -43.136,
                 minSizeImage: minSize,
                 text: depth,
-                style: AppTextStyle.H3_REGULAR(context: context),
+                style: context.textStyle.headlineSmall,
               ),
               MThreadInfoImageItem(
                 angle: 0,
@@ -72,7 +72,7 @@ class MThreadInfoMaleImage extends StatelessWidget {
                 posY: -43.136,
                 minSizeImage: minSize,
                 text: pitch,
-                style: AppTextStyle.H3_REGULAR(context: context),
+                style: context.textStyle.headlineSmall,
               ),
 
               //
@@ -81,7 +81,7 @@ class MThreadInfoMaleImage extends StatelessWidget {
                 posX: -30,
                 posY: 25,
                 minSizeImage: minSize,
-                style: AppTextStyle.LABEL_REGULAR(context: context),
+                style: context.textStyle.headlineSmall,
                 text: _updateTolerance(diamMajorToleranceTop),
               ),
               MThreadInfoImageItem(
@@ -90,14 +90,14 @@ class MThreadInfoMaleImage extends StatelessWidget {
                 posY: 35,
                 minSizeImage: minSize,
                 text: 'Ø$diamMajor',
-                style: AppTextStyle.CAPTION(context: context),
+                style: context.textStyle.headlineSmall,
               ),
               MThreadInfoImageItem(
                 angle: 0,
                 posX: -30,
                 posY: 40,
                 minSizeImage: minSize,
-                style: AppTextStyle.LABEL_REGULAR(context: context),
+                style: context.textStyle.headlineSmall,
                 text: _updateTolerance(diamMajorToleranceBottom),
               ),
 
@@ -107,7 +107,7 @@ class MThreadInfoMaleImage extends StatelessWidget {
                 posX: 5,
                 posY: 20,
                 minSizeImage: minSize,
-                style: AppTextStyle.LABEL_REGULAR(context: context),
+                style: context.textStyle.headlineSmall,
                 text: _updateTolerance(diamMiddleToleranceTop),
               ),
               MThreadInfoImageItem(
@@ -116,14 +116,14 @@ class MThreadInfoMaleImage extends StatelessWidget {
                 posY: 28,
                 minSizeImage: minSize,
                 text: 'Ø$diamMiddle',
-                style: AppTextStyle.CAPTION(context: context),
+                style: context.textStyle.headlineSmall,
               ),
               MThreadInfoImageItem(
                 angle: 0,
                 posX: 5,
                 posY: 33,
                 minSizeImage: minSize,
-                style: AppTextStyle.LABEL_REGULAR(context: context),
+                style: context.textStyle.headlineSmall,
                 text: _updateTolerance(diamMiddleToleranceBottom),
               ),
 
@@ -133,7 +133,7 @@ class MThreadInfoMaleImage extends StatelessWidget {
                 posX: 40,
                 posY: 20,
                 minSizeImage: minSize,
-                style: AppTextStyle.LABEL_REGULAR(context: context),
+                style: context.textStyle.headlineSmall,
                 text: _updateTolerance(diamMinorToleranceTop),
               ),
               MThreadInfoImageItem(
@@ -142,14 +142,14 @@ class MThreadInfoMaleImage extends StatelessWidget {
                 posY: 22,
                 minSizeImage: minSize,
                 text: 'Ø$diamMinor',
-                style: AppTextStyle.CAPTION(context: context),
+                style: context.textStyle.headlineSmall,
               ),
               MThreadInfoImageItem(
                 angle: 0,
                 posX: 40,
                 posY: 27,
                 minSizeImage: minSize,
-                style: AppTextStyle.LABEL_REGULAR(context: context),
+                style: context.textStyle.headlineSmall,
                 text: _updateTolerance(diamMiddleToleranceBottom),
               ),
             ],

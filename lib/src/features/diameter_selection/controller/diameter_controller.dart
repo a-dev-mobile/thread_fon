@@ -58,9 +58,10 @@ class DiameterController with ChangeNotifier {
   }
 
   Future<void> updateUserSelection({required int id, required double diameter}) async {
-    _updateState(status: EnumScreenStatus.loading);
+    _updateState(status: EnumScreenStatus.loadingNavigating);
     try {
       await _localStorage.updateUserSelection((userSelection) => userSelection.copyWith(id: id, diameter: diameter));
+      await Future.delayed(const Duration(milliseconds: 5000));
       _updateState(status: EnumScreenStatus.navigating);
     } catch (e) {
       _updateState(status: EnumScreenStatus.error, error: e.toString());

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:threadfon/src/common/app/language_notifier.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
-import 'package:threadfon/src/common/styles/app_text_style.dart';
+import 'package:threadfon/src/common/styles/app_text_styles_extension.dart';
 import 'package:threadfon/src/common/widgets/button/btn_list_tile.dart';
 
 class LangSwitchWidget extends StatelessWidget {
@@ -31,7 +31,7 @@ class LangSwitchWidget extends StatelessWidget {
       builder: (context) => SimpleDialog(
         title: Text(
           Localization.of(context).app_lang,
-          style: AppTextStyle.H3_REGULAR(context: context),
+          style: context.textStyle.headlineSmall,
         ),
         children: [
           SimpleDialogOption(
@@ -41,7 +41,7 @@ class LangSwitchWidget extends StatelessWidget {
             },
             child: Text(
               Localization.of(context).lang_ru,
-              style: AppTextStyle.BODY_SEMI_BOLD(),
+         
             ),
           ),
           SimpleDialogOption(
@@ -52,7 +52,7 @@ class LangSwitchWidget extends StatelessWidget {
             },
             child: Text(
               Localization.of(context).lang_en,
-              style: AppTextStyle.BODY_SEMI_BOLD(),
+             
             ),
           ),
         ],
