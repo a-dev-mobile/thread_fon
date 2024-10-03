@@ -1,4 +1,4 @@
-enum ThreadType {
+enum EnumThreadType {
   external,
   internal,
 }

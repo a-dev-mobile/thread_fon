@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:threadfon/src/features/m_thread_diam/model/diameter_model.dart';
+import 'package:threadfon/src/features/diameter_selection/model/diameter_model.dart';
 
 
 

@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:threadfon/src/common/data/local_storage.dart';
-import 'package:threadfon/src/features/m_thread_diam/data/i_diameter_repository.dart';
-import 'package:threadfon/src/features/m_thread_diam/database_service.dart';
-import 'package:threadfon/src/features/m_thread_diam/model/diameter_model.dart';
+import 'package:threadfon/src/features/diameter_selection/data/i_diameter_repository.dart';
+import 'package:threadfon/src/features/diameter_selection/database_service.dart';
+import 'package:threadfon/src/features/diameter_selection/model/diameter_model.dart';
 
 class DiameterRepositoryImpl implements IDiameterRepository {
   DiameterRepositoryImpl({
@@ -17,12 +17,12 @@ class DiameterRepositoryImpl implements IDiameterRepository {
   Future<List<DiameterModel>> fetchDiameters() async {
     final connection = await _databaseService.openConnection();
     try {
-      final result = await _databaseService.query(
+      final result = await _databaseService.fetchResults(
         connection,
         '''
-SELECT DISTINCT ON (diam) id, diam
+SELECT DISTINCT ON (diameter) id, diameter
 FROM metric.main
-ORDER BY diam ASC;
+ORDER BY diameter ASC;
 ''',
       );
 

@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/src/provider.dart';
 import 'package:threadfon/src/common/constant/common.dart';
-import 'package:threadfon/src/common/constant/enums.dart';
+import 'package:threadfon/src/common/constant/enums_thread_type.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
 import 'package:threadfon/src/common/styles/app_text_style.dart';
-import 'package:threadfon/src/features/m_thread_diam/view/metric_thread_diameter_screen.dart';
+import 'package:threadfon/src/features/diameter_selection/view/metric_thread_diameter_screen.dart';
 import 'package:threadfon/src/features/threads/view/m_thread/cubit/m_thread_cubit.dart';
 
 class MThreadMaleFemalePage extends StatelessWidget {
@@ -32,7 +32,7 @@ class MThreadMaleFemalePage extends StatelessWidget {
                 context.read<MThreadCubit>().setMale(false);
                 localStorage.updateUserSelection(
                   (current) {
-                    return current.copyWith(threadType: ThreadType.internal);
+                    return current.copyWith(threadType: EnumThreadType.internal);
                   },
                 );
                 nextScreen(context);
@@ -47,7 +47,7 @@ class MThreadMaleFemalePage extends StatelessWidget {
                 context.read<MThreadCubit>().setMale(true);
                 localStorage.updateUserSelection(
                   (current) {
-                    return current.copyWith(threadType: ThreadType.external);
+                    return current.copyWith(threadType: EnumThreadType.external);
                   },
                 );
                 nextScreen(context);

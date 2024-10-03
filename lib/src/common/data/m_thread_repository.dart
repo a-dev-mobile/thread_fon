@@ -2,10 +2,11 @@
 
 // Package imports:
 import 'package:sqflite/sqflite.dart';
+import 'package:threadfon/data/m_thread/models/m_thread_diam_model.dart';
 
 import 'package:threadfon/src/common/util/app_log.dart';
 import 'package:threadfon/src/common/util/app_utils.dart';
-import 'package:threadfon/src/features/m_thread_diam/m_thread_diam_model.dart';
+
 
 
 import 'package:threadfon/src/features/pitch/m_thread_pitch_model.dart';

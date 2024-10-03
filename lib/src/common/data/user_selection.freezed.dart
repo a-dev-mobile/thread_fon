@@ -20,8 +20,8 @@ UserSelection _$UserSelectionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserSelection {
-  ThreadType? get threadType => throw _privateConstructorUsedError;
-  double? get diam => throw _privateConstructorUsedError;
+  EnumThreadType? get threadType => throw _privateConstructorUsedError;
+  double? get diameter => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
   double? get step => throw _privateConstructorUsedError;
   String? get tolerance => throw _privateConstructorUsedError;
@@ -43,8 +43,8 @@ abstract class $UserSelectionCopyWith<$Res> {
       _$UserSelectionCopyWithImpl<$Res, UserSelection>;
   @useResult
   $Res call(
-      {ThreadType? threadType,
-      double? diam,
+      {EnumThreadType? threadType,
+      double? diameter,
       int? id,
       double? step,
       String? tolerance});
@@ -66,7 +66,7 @@ class _$UserSelectionCopyWithImpl<$Res, $Val extends UserSelection>
   @override
   $Res call({
     Object? threadType = freezed,
-    Object? diam = freezed,
+    Object? diameter = freezed,
     Object? id = freezed,
     Object? step = freezed,
     Object? tolerance = freezed,
@@ -75,10 +75,10 @@ class _$UserSelectionCopyWithImpl<$Res, $Val extends UserSelection>
       threadType: freezed == threadType
           ? _value.threadType
           : threadType // ignore: cast_nullable_to_non_nullable
-              as ThreadType?,
-      diam: freezed == diam
-          ? _value.diam
-          : diam // ignore: cast_nullable_to_non_nullable
+              as EnumThreadType?,
+      diameter: freezed == diameter
+          ? _value.diameter
+          : diameter // ignore: cast_nullable_to_non_nullable
               as double?,
       id: freezed == id
           ? _value.id
@@ -105,8 +105,8 @@ abstract class _$$UserSelectionImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {ThreadType? threadType,
-      double? diam,
+      {EnumThreadType? threadType,
+      double? diameter,
       int? id,
       double? step,
       String? tolerance});
@@ -126,7 +126,7 @@ class __$$UserSelectionImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? threadType = freezed,
-    Object? diam = freezed,
+    Object? diameter = freezed,
     Object? id = freezed,
     Object? step = freezed,
     Object? tolerance = freezed,
@@ -135,10 +135,10 @@ class __$$UserSelectionImplCopyWithImpl<$Res>
       threadType: freezed == threadType
           ? _value.threadType
           : threadType // ignore: cast_nullable_to_non_nullable
-              as ThreadType?,
-      diam: freezed == diam
-          ? _value.diam
-          : diam // ignore: cast_nullable_to_non_nullable
+              as EnumThreadType?,
+      diameter: freezed == diameter
+          ? _value.diameter
+          : diameter // ignore: cast_nullable_to_non_nullable
               as double?,
       id: freezed == id
           ? _value.id
@@ -160,15 +160,15 @@ class __$$UserSelectionImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserSelectionImpl implements _UserSelection {
   const _$UserSelectionImpl(
-      {this.threadType, this.diam, this.id, this.step, this.tolerance});
+      {this.threadType, this.diameter, this.id, this.step, this.tolerance});
 
   factory _$UserSelectionImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserSelectionImplFromJson(json);
 
   @override
-  final ThreadType? threadType;
+  final EnumThreadType? threadType;
   @override
-  final double? diam;
+  final double? diameter;
   @override
   final int? id;
   @override
@@ -178,7 +178,7 @@ class _$UserSelectionImpl implements _UserSelection {
 
   @override
   String toString() {
-    return 'UserSelection(threadType: $threadType, diam: $diam, id: $id, step: $step, tolerance: $tolerance)';
+    return 'UserSelection(threadType: $threadType, diameter: $diameter, id: $id, step: $step, tolerance: $tolerance)';
   }
 
   @override
@@ -188,7 +188,8 @@ class _$UserSelectionImpl implements _UserSelection {
             other is _$UserSelectionImpl &&
             (identical(other.threadType, threadType) ||
                 other.threadType == threadType) &&
-            (identical(other.diam, diam) || other.diam == diam) &&
+            (identical(other.diameter, diameter) ||
+                other.diameter == diameter) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.step, step) || other.step == step) &&
             (identical(other.tolerance, tolerance) ||
@@ -198,7 +199,7 @@ class _$UserSelectionImpl implements _UserSelection {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, threadType, diam, id, step, tolerance);
+      Object.hash(runtimeType, threadType, diameter, id, step, tolerance);
 
   /// Create a copy of UserSelection
   /// with the given fields replaced by the non-null parameter values.
@@ -218,8 +219,8 @@ class _$UserSelectionImpl implements _UserSelection {
 
 abstract class _UserSelection implements UserSelection {
   const factory _UserSelection(
-      {final ThreadType? threadType,
-      final double? diam,
+      {final EnumThreadType? threadType,
+      final double? diameter,
       final int? id,
       final double? step,
       final String? tolerance}) = _$UserSelectionImpl;
@@ -228,9 +229,9 @@ abstract class _UserSelection implements UserSelection {
       _$UserSelectionImpl.fromJson;
 
   @override
-  ThreadType? get threadType;
+  EnumThreadType? get threadType;
   @override
-  double? get diam;
+  double? get diameter;
   @override
   int? get id;
   @override

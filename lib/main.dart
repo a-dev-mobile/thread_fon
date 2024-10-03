@@ -16,8 +16,8 @@ import 'package:threadfon/src/common/data/m_thread_repository.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/util/file_copy.dart';
 import 'package:threadfon/src/features/threads/view/m_thread/cubit/m_thread_cubit.dart';
-import 'package:threadfon/src/features/m_thread_diam/database_provider.dart'; // Импорт DatabaseProvider
-import 'package:threadfon/src/features/m_thread_diam/database_service.dart';   // Импорт DatabaseService
+import 'package:threadfon/src/features/diameter_selection/database_provider.dart'; // Импорт DatabaseProvider
+import 'package:threadfon/src/features/diameter_selection/database_service.dart';   // Импорт DatabaseService
 
 final _l = L('main');
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:threadfon/src/common/constant/enum_screen_status.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
-import 'package:threadfon/src/features/m_thread_diam/controller/diameter_controller.dart';
-import 'package:threadfon/src/features/m_thread_diam/data/diameter_repository_impl.dart';
-import 'package:threadfon/src/features/m_thread_diam/database_provider.dart';
-import 'package:threadfon/src/features/m_thread_diam/enum_page_status.dart';
+import 'package:threadfon/src/features/diameter_selection/controller/diameter_controller.dart';
+import 'package:threadfon/src/features/diameter_selection/data/diameter_repository_impl.dart';
+import 'package:threadfon/src/features/diameter_selection/database_provider.dart';
 import 'package:threadfon/src/features/m_thread_male_female/view/m_thread_male_female_page.dart';
 
 final _l = L('metric_thread_diameter_screen');
@@ -30,9 +30,8 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
       final localStorage = LocalStorageProvider.of(context);
       final repository = DiameterRepositoryImpl(databaseService: databaseService);
       _controller = DiameterController(repository: repository, localStorage: localStorage);
-      _controller
-        ..addListener(_updateState)
-        ..loadDiameters();
+      _controller.addListener(_updateState);
+      _controller.loadDiameters();
       _isControllerInitialized = true;
     }
   }
@@ -47,7 +46,7 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
 
   void _updateState() {
     if (mounted) {
-      if (_controller.state.status == EnumStatus.navigateToNextScreen) {
+      if (_controller.state.status == EnumScreenStatus.navigating) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.push(
             context,
@@ -55,7 +54,6 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
               builder: (context) => const MThreadMaleFemalePage(),
             ),
           );
-
         });
         return;
       }
@@ -66,7 +64,7 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _l.d('-- build start', includeStackTrace: false);
+    _l.d('Building MetricDiameterScreen', includeStackTrace: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Выберите Диаметр резьбы'),
@@ -74,26 +72,22 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
       body: Builder(
         builder: (context) {
           switch (_controller.state.status) {
-            case EnumStatus.init:
-            case EnumStatus.load:
-            case EnumStatus.navigateToNextScreen:
+            case EnumScreenStatus.initial:
+            case EnumScreenStatus.loading:
+            case EnumScreenStatus.navigating:
               return const Center(child: CircularProgressIndicator());
-            case EnumStatus.error:
-              return Center(child: Text('Ошибка: ${_controller.state.error}'));
-            case EnumStatus.transition:
-              return const Center(
-                  child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-              ));
-            case EnumStatus.success:
+            case EnumScreenStatus.error:
+              return Center(child: Text('Error: ${_controller.state.error}'));
+
+            case EnumScreenStatus.success:
               return ListView.builder(
                 itemCount: _controller.state.diameters.length,
                 itemBuilder: (context, index) {
                   final data = _controller.state.diameters[index];
                   return ListTile(
-                    title: Text(data.diam.toString()),
+                    title: Text(data.diameter.toString()),
                     onTap: () {
-                      _controller.updateUserSelection(id: data.id, diam: data.diam);
+                      _controller.updateUserSelection(id: data.id, diameter: data.diameter);
                     },
                   );
                 },
