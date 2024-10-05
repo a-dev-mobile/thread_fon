@@ -17,7 +17,7 @@ class MThreadRepository {
 
   Future<List<MThreadDiamModel>> fetchMDiams() async {
     final db = await openDatabase(pathDB);
-    final List<Map> queryResult = await db.rawQuery(
+    final queryResult = await db.rawQuery(
       '''
  select [Range_1] as diam from  [isoNormal] WHERE diam is NOT NULL
  UNION

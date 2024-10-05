@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-
 import 'package:threadfon/src/common/app/app.dart';
 import 'package:threadfon/src/common/data/local_storage.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
@@ -19,7 +18,7 @@ import 'package:threadfon/src/features/diameter_selection/database_provider.dart
 import 'package:threadfon/src/features/diameter_selection/database_service.dart'; // Импорт DatabaseService
 import 'package:threadfon/src/features/threads/view/m_thread/cubit/m_thread_cubit.dart';
 
-final _l = CustomLogger('main');
+final _l = L('main');
 
 Future<void> main() async {
   // Обернуть всё в runZonedGuarded, включая инициализацию Flutter bindings
@@ -48,11 +47,9 @@ Future<void> main() async {
           if (kReleaseMode) {
             // В релизном режиме отправляем все ошибки в Firebase
             AppErrorHandler().recordError(exception, stackTrace);
-
           } else {
             // В режиме разработки логируем ошибку для отладки
-            _l.e('FlutterError.onError',
-                error: exception, stackTrace: stackTrace);
+            _l.e('FlutterError.onError', error: exception, stackTrace: stackTrace);
           }
         };
 
@@ -122,8 +119,7 @@ Future<void> main() async {
           AppErrorHandler().recordError(error, stack);
         } else {
           // В режиме разработки логируем ошибку для отладки
-          _l.e('🚑 PlatformDispatcher.onError',
-              error: error, stackTrace: stack);
+          _l.e('🚑 PlatformDispatcher.onError', error: error, stackTrace: stack);
         }
 
         return true;

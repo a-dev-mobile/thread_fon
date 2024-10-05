@@ -6,7 +6,7 @@ import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/util/platform/error_util_vm.dart';
 
 /// Error util.
-final _l = CustomLogger('error_util');
+final _l = L('error_util');
 
 abstract final class ErrorUtil {
   /// Log the error to the console and to Crashlytics.
@@ -60,6 +60,5 @@ abstract final class ErrorUtil {
   }
 
   /// Rethrows the error with the stack trace.
-  static Never throwWithStackTrace(Object error, StackTrace stackTrace) =>
-      Error.throwWithStackTrace(error, stackTrace);
+  static Never throwWithStackTrace(Object error, StackTrace stackTrace) => Error.throwWithStackTrace(error, stackTrace);
 }

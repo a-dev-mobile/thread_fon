@@ -13,8 +13,7 @@ class ThreadTypeSelectionPage extends StatefulWidget {
   const ThreadTypeSelectionPage({super.key});
 
   @override
-  _ThreadTypeSelectionPageState createState() =>
-      _ThreadTypeSelectionPageState();
+  _ThreadTypeSelectionPageState createState() => _ThreadTypeSelectionPageState();
 }
 
 class _ThreadTypeSelectionPageState extends State<ThreadTypeSelectionPage> {
@@ -88,7 +87,7 @@ class _ThreadTypeSelectionPageState extends State<ThreadTypeSelectionPage> {
             children: _controller.state.threadTypes.map((threadType) {
               return Expanded(
                 child: ThreadTypeChoiceCard(
-                  onTap: () => _controller.selectThreadType(threadType),
+                  onTap: () => _controller.updateUserSelection(threadType),
                   svgAssetPath: threadType.svgAssetPath,
                   label: 'threadType.name',
                 ),

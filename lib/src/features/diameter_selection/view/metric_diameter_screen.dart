@@ -5,14 +5,17 @@ import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/features/diameter_selection/controller/diameter_controller.dart';
 import 'package:threadfon/src/features/diameter_selection/data/diameter_repository_impl.dart';
 import 'package:threadfon/src/features/diameter_selection/database_provider.dart';
-import 'package:threadfon/src/features/thread_type_selection/view/thread_type_selection_page.dart';
+import 'package:threadfon/src/features/tolerance_selection/view/metric_tolerance_screen.dart';
 
-final _l = CustomLogger('metric_thread_diameter_screen');
+final _l = L('metric_thread_diameter_screen');
+
+// Создаем глобальный PageStorageBucket
+final PageStorageBucket _pageBucket = PageStorageBucket();
 
 class MetricDiameterScreen extends StatefulWidget {
   const MetricDiameterScreen({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<MetricDiameterScreen> createState() => _MetricDiameterScreenState();
@@ -23,17 +26,21 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
   bool _isControllerInitialized = false;
 
   @override
+  void initState() {
+    super.initState();
+    // Инициализация не требуется для PageStorageKey
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isControllerInitialized) {
       final databaseService = DatabaseProvider.of(context);
       final localStorage = LocalStorageProvider.of(context);
-      final repository =
-          DiameterRepositoryImpl(databaseService: databaseService);
-      _controller = DiameterController(
-          repository: repository, localStorage: localStorage);
+      final repository = DiameterRepositoryImpl(databaseService: databaseService);
+      _controller = DiameterController(repository: repository, localStorage: localStorage);
       _controller.addListener(_updateState);
-      _controller.loadDiameters();
+      _controller.loadData();
       _isControllerInitialized = true;
     }
   }
@@ -48,19 +55,20 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
 
   void _updateState() {
     if (mounted) {
-      if (_controller.state.status == EnumScreenStatus.navigating) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (context) => const ThreadTypeSelectionPage(),
-            ),
-          );
-        });
-        return;
-      }
-
-      setState(() {});
+      setState(() {
+        if (_controller.state.status == EnumScreenStatus.success) {
+          // Позиция прокрутки будет автоматически восстановлена благодаря PageStorageKey
+        } else if (_controller.state.status == EnumScreenStatus.navigating) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (context) => const MetricToleranceScreen(),
+              ),
+            );
+          });
+        }
+      });
     }
   }
 
@@ -71,37 +79,40 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
       appBar: AppBar(
         title: const Text('Выберите Диаметр резьбы'),
       ),
-      body: Builder(
-        builder: (context) {
-          switch (_controller.state.status) {
-            case EnumScreenStatus.initial:
-            case EnumScreenStatus.loading:
-            case EnumScreenStatus.navigating:
-              return const Center(child: CircularProgressIndicator());
-            case EnumScreenStatus.error:
-              return Center(child: Text('Error: ${_controller.state.error}'));
+      body: PageStorage(
+        bucket: _pageBucket,
+        child: Builder(
+          builder: (context) {
+            switch (_controller.state.status) {
+              case EnumScreenStatus.initial:
+              case EnumScreenStatus.loading:
+              case EnumScreenStatus.navigating:
+                return const Center(child: CircularProgressIndicator());
+              case EnumScreenStatus.error:
+                return Center(child: Text('Error: ${_controller.state.error}'));
 
-            case EnumScreenStatus.loadingNavigating:
-              return const Scaffold(
-                body: Center(child: LinearProgressIndicator()),
-              );
-            case EnumScreenStatus.success:
-              return ListView.builder(
-                itemCount: _controller.state.diameters.length,
-                itemBuilder: (context, index) {
-                  final data = _controller.state.diameters[index];
-                  return ListTile(
-                    title: Text(data.diameter.toString()),
-                    onTap: () {
-                      _controller.updateUserSelection(
-                          id: data.id, diameter: data.diameter);
-                    },
-                  );
-                },
-              );
-            // TODO: Handle this case.
-          }
-        },
+              case EnumScreenStatus.loadingNavigating:
+                return const Scaffold(
+                  body: Center(child: LinearProgressIndicator()),
+                );
+              case EnumScreenStatus.success:
+                return ListView.builder(
+                  key: const PageStorageKey<String>('MetricDiameterScroll'),
+                  itemCount: _controller.state.diameters.length,
+                  itemBuilder: (context, index) {
+                    final data = _controller.state.diameters[index];
+                    return ListTile(
+                      title: Text(data.diameter.toString()),
+                      onTap: () {
+                        _controller.updateUserSelection(id: data.id, diameter: data.diameter);
+                      },
+                    );
+                  },
+                );
+              // TODO: Handle this case.
+            }
+          },
+        ),
       ),
     );
   }

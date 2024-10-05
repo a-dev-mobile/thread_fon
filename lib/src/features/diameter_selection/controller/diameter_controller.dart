@@ -10,12 +10,10 @@ part 'diameter_controller.freezed.dart';
 part 'diameter_controller.g.dart';
 part 'diameter_state.dart';
 
-final _logger = CustomLogger('diameter_controller');
+final _logger = L('diameter_controller');
 
 class DiameterController with ChangeNotifier {
-  DiameterController(
-      {required IDiameterRepository repository,
-      required LocalStorage localStorage})
+  DiameterController({required IDiameterRepository repository, required LocalStorage localStorage})
       : _repository = repository,
         _localStorage = localStorage;
   DiameterState _state = const DiameterState();
@@ -33,7 +31,7 @@ class DiameterController with ChangeNotifier {
     super.dispose();
   }
 
-  Future<void> loadDiameters() async {
+  Future<void> loadData() async {
     _updateState(status: EnumScreenStatus.loading, error: null);
     try {
       final diameters = await _repository.fetchDiameters();
@@ -59,14 +57,15 @@ class DiameterController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateUserSelection(
-      {required int id, required double diameter}) async {
+  Future<void> updateUserSelection({required int id, required double diameter}) async {
     _updateState(status: EnumScreenStatus.loadingNavigating);
     try {
-      await _localStorage.updateUserSelection((userSelection) =>
-          userSelection.copyWith(id: id, diameter: diameter));
-      await Future.delayed(const Duration(milliseconds: 5000));
+      await _localStorage.updateUserSelection((userSelection) => userSelection.copyWith(id: id, diameter: diameter));
+
       _updateState(status: EnumScreenStatus.navigating);
+
+      await Future<void>.delayed(const Duration(seconds: 1));
+      _updateState(status: EnumScreenStatus.success);
     } on Exception catch (e) {
       _updateState(status: EnumScreenStatus.error, error: e.toString());
     }

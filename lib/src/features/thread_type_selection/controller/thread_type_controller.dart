@@ -10,7 +10,7 @@ part 'thread_type_controller.freezed.dart';
 part 'thread_type_controller.g.dart';
 part 'thread_type_state.dart';
 
-final _logger = CustomLogger('thread_type_controller');
+final _logger = L('thread_type_controller');
 
 class ThreadTypeController with ChangeNotifier {
   ThreadTypeController({
@@ -59,7 +59,7 @@ class ThreadTypeController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> selectThreadType(ThreadTypeModel selectedThreadType) async {
+  Future<void> updateUserSelection(ThreadTypeModel selectedThreadType) async {
     _updateState(status: EnumScreenStatus.loadingNavigating);
     try {
       // Update user selection in local storage
@@ -68,7 +68,6 @@ class ThreadTypeController with ChangeNotifier {
           threadType: selectedThreadType.enumThreadType,
         ),
       );
-      await Future.delayed(const Duration(milliseconds: 5000));
       _updateState(status: EnumScreenStatus.navigating);
     } on Exception catch (e) {
       _updateState(status: EnumScreenStatus.error, error: e.toString());

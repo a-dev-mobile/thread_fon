@@ -1,7 +1,7 @@
 import 'package:postgres/postgres.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 
-final _logger = CustomLogger('database_service');
+final _logger = L('database_service');
 
 class DatabaseService {
   DatabaseService({
@@ -44,8 +44,7 @@ class DatabaseService {
     }
   }
 
-  Future<void> executeQuery(Connection connection, String query,
-      [Map<String, dynamic>? parameters]) async {
+  Future<void> executeQuery(Connection connection, String query, [Map<String, dynamic>? parameters]) async {
     try {
       await connection.execute(
         Sql.named(query),
@@ -58,8 +57,7 @@ class DatabaseService {
     }
   }
 
-  Future<List<ResultRow>> fetchResults(Connection connection, String query,
-      [Map<String, dynamic>? parameters]) async {
+  Future<List<ResultRow>> fetchResults(Connection connection, String query, [Map<String, dynamic>? parameters]) async {
     try {
       final result = await connection.execute(
         Sql.named(query),
@@ -73,12 +71,10 @@ class DatabaseService {
     }
   }
 
-  Future<void> runTransaction(Connection connection,
-      Future<void> Function(TxSession session) action) async {
+  Future<void> runTransaction(Connection connection, Future<void> Function(TxSession session) action) async {
     try {
       await connection.runTx(action);
-      _logger.i('Transaction completed successfully.',
-          includeStackTrace: false);
+      _logger.i('Transaction completed successfully.', includeStackTrace: false);
     } on Exception catch (e) {
       _logger.e('Error during transaction', error: e);
       rethrow;
