@@ -6,7 +6,7 @@ import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/util/platform/error_util_vm.dart';
 
 /// Error util.
-final _l = L('error_util');
+final _l = CustomLogger('error_util');
 
 abstract final class ErrorUtil {
   /// Log the error to the console and to Crashlytics.

@@ -3,7 +3,6 @@ import 'package:threadfon/src/common/constant/colors.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
 // Package imports:
 
-import 'package:threadfon/src/common/styles/app_text_styles_extension.dart';
 import 'package:threadfon/src/common/widgets/button/btn_list_tile.dart';
 import 'package:threadfon/src/common/widgets/my_divider.dart';
 
@@ -27,7 +26,8 @@ class AboutAppWidget extends StatelessWidget {
   Future<void> _showDialogAboutApp(BuildContext context) async {
     final brightness = Theme.of(context).brightness;
     final isDark = brightness == Brightness.dark;
-    final backgroundColor = isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
+    final backgroundColor =
+        isDark ? ConstColor.neutral_grey_1000 : ConstColor.neutral_grey_100;
 
     final appName = Localization.of(context).app_name;
 // String packageName = packageInfo.packageName;
@@ -41,7 +41,6 @@ class AboutAppWidget extends StatelessWidget {
         title: Text(
           '$appName : version',
           textAlign: TextAlign.center,
- 
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -56,32 +55,26 @@ class AboutAppWidget extends StatelessWidget {
         Text(
           Localization.of(context).thank_you,
           textAlign: TextAlign.center,
-      
         ),
         const MyDivider(),
         Text(
           Localization.of(context).dialog_title_about_app,
-      
         ),
         Text(
           Localization.of(context).dialog_about_app_1,
           textAlign: TextAlign.left,
-     
         ),
         Text(
           Localization.of(context).dialog_about_app_2,
           textAlign: TextAlign.left,
-        
         ),
         Text(
           Localization.of(context).dialog_about_app_3,
           textAlign: TextAlign.left,
-     
         ),
         const MyDivider(),
         Text(
           Localization.of(context).dialog_about_app_5,
-        
         ),
       ];
 }

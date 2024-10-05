@@ -41,7 +41,6 @@ class LangSwitchWidget extends StatelessWidget {
             },
             child: Text(
               Localization.of(context).lang_ru,
-         
             ),
           ),
           SimpleDialogOption(
@@ -52,7 +51,6 @@ class LangSwitchWidget extends StatelessWidget {
             },
             child: Text(
               Localization.of(context).lang_en,
-             
             ),
           ),
         ],

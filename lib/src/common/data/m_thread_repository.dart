@@ -7,8 +7,6 @@ import 'package:threadfon/data/m_thread/models/m_thread_diam_model.dart';
 import 'package:threadfon/src/common/util/app_log.dart';
 import 'package:threadfon/src/common/util/app_utils.dart';
 
-
-
 import 'package:threadfon/src/features/pitch/m_thread_pitch_model.dart';
 import 'package:threadfon/src/features/tolerance/m_thread_tolerance_model.dart';
 import 'package:threadfon/src/features/tolerance_values/m_thread_tolerance_values_model.dart';
@@ -293,7 +291,7 @@ class MThreadRepository {
     var value = 0.0;
     try {
       value = double.parse(text);
-    } catch (e) {
+    } on Exception catch (e) {
       log.e(e);
     }
 

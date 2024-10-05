@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:threadfon/src/common/constant/common.dart';
 import 'package:threadfon/src/common/util/app_log.dart';
 
@@ -92,7 +91,7 @@ class AppUtilsParse {
     try {
       return Color(int.parse(hexCode.replaceAll('#', '0xFF')))
           .withOpacity(opacity);
-    } catch (e) {
+    } on Exception {
       return const Color(0xFFCCCCCC).withOpacity(opacity);
     }
   }
@@ -101,7 +100,7 @@ class AppUtilsParse {
     var value = 0.0;
     try {
       value = double.parse(text);
-    } catch (e) {
+    } on Exception catch (e) {
       logger.e(e);
     }
 

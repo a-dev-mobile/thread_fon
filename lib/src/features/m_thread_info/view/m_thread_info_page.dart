@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/src/common/constant/colors.dart';
 import 'package:threadfon/src/common/constant/common.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
-import 'package:threadfon/src/common/styles/app_text_styles_extension.dart';
 import 'package:threadfon/src/common/util/app_utils.dart';
 import 'package:threadfon/src/common/widgets/my_divider.dart';
 import 'package:threadfon/src/features/m_thread_info/cubit/m_thread_info_cubit.dart';
@@ -71,11 +70,13 @@ class _MThreadInfoPage extends StatelessWidget {
               const MyDivider(),
               BasicThreadParametersItem(
                 title: Localization.of(context).thread_diam_nom,
-                value: context.watch<MThreadInfoCubit>().diam(mThreadModel.diam),
+                value:
+                    context.watch<MThreadInfoCubit>().diam(mThreadModel.diam),
               ),
               BasicThreadParametersItem(
                 title: Localization.of(context).thread_pitch,
-                value: context.watch<MThreadInfoCubit>().pitch(mThreadModel.pitch),
+                value:
+                    context.watch<MThreadInfoCubit>().pitch(mThreadModel.pitch),
               ),
               // глубина резьбы
               BasicThreadParametersItem(
@@ -103,7 +104,9 @@ class _MThreadInfoPage extends StatelessWidget {
 
               // внутренний наружний диам
               ThreadCaptionItem(
-                text: mThreadModel.isMale ? Localization.of(context).diam_major : Localization.of(context).diam_minor,
+                text: mThreadModel.isMale
+                    ? Localization.of(context).diam_major
+                    : Localization.of(context).diam_minor,
               ),
               // допуск наружний
               ThreadTolerancesItem(
@@ -113,16 +116,18 @@ class _MThreadInfoPage extends StatelessWidget {
                       diameter: mThreadModel.diam,
                       pitch: mThreadModel.pitch,
                     ),
-                top: context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEs(
-                      isMale: mThreadModel.isMale,
-                      es_d: mThreadModel.es_d,
-                      es_d1: mThreadModel.es_d1,
-                    ),
-                bottom: context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEi(
-                      isMale: mThreadModel.isMale,
-                      ei_d: mThreadModel.ei_d,
-                      ei_d1: mThreadModel.ei_d1,
-                    ),
+                top:
+                    context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEs(
+                          isMale: mThreadModel.isMale,
+                          es_d: mThreadModel.es_d,
+                          es_d1: mThreadModel.es_d1,
+                        ),
+                bottom:
+                    context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEi(
+                          isMale: mThreadModel.isMale,
+                          ei_d: mThreadModel.ei_d,
+                          ei_d1: mThreadModel.ei_d1,
+                        ),
               ),
               ThreadMinMaxMeanItem(
                 max: context.watch<MThreadInfoCubit>().minorMajorDiamMax(
@@ -162,8 +167,12 @@ class _MThreadInfoPage extends StatelessWidget {
                       diam: mThreadModel.diam,
                       pitch: mThreadModel.pitch,
                     ),
-                top: context.watch<MThreadInfoCubit>().middleDiamToleranceEs(es_d2: mThreadModel.es_d2),
-                bottom: context.watch<MThreadInfoCubit>().middleDiamToleranceEi(ei_d2: mThreadModel.ei_d2),
+                top: context
+                    .watch<MThreadInfoCubit>()
+                    .middleDiamToleranceEs(es_d2: mThreadModel.es_d2),
+                bottom: context
+                    .watch<MThreadInfoCubit>()
+                    .middleDiamToleranceEi(ei_d2: mThreadModel.ei_d2),
               ),
               ThreadMinMaxMeanItem(
                 max: context.watch<MThreadInfoCubit>().middleDiamMax(
@@ -187,7 +196,9 @@ class _MThreadInfoPage extends StatelessWidget {
               // внутренний наружний диам
               const MyDivider(),
               ThreadCaptionItem(
-                text: mThreadModel.isMale ? Localization.of(context).diam_minor : Localization.of(context).diam_major,
+                text: mThreadModel.isMale
+                    ? Localization.of(context).diam_minor
+                    : Localization.of(context).diam_major,
               ),
 
               ThreadTolerancesItem(
@@ -197,16 +208,18 @@ class _MThreadInfoPage extends StatelessWidget {
                       diameter: mThreadModel.diam,
                       pitch: mThreadModel.pitch,
                     ),
-                top: context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEs(
-                      isMale: mThreadModel.isMale,
-                      es_d: mThreadModel.es_d,
-                      es_d1: mThreadModel.es_d1,
-                    ),
-                bottom: context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEi(
-                      isMale: mThreadModel.isMale,
-                      ei_d: mThreadModel.ei_d,
-                      ei_d1: mThreadModel.ei_d1,
-                    ),
+                top:
+                    context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEs(
+                          isMale: mThreadModel.isMale,
+                          es_d: mThreadModel.es_d,
+                          es_d1: mThreadModel.es_d1,
+                        ),
+                bottom:
+                    context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEi(
+                          isMale: mThreadModel.isMale,
+                          ei_d: mThreadModel.ei_d,
+                          ei_d1: mThreadModel.ei_d1,
+                        ),
               ),
 
               ThreadMinMaxMeanItem(
@@ -274,28 +287,36 @@ class _FemaleImage extends StatelessWidget {
               pitch: mThreadModel.pitch,
             ),
         pitch: context.watch<MThreadInfoCubit>().pitch(mThreadModel.pitch),
-        diamMajorToleranceBottom: context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEi(
-              isMale: mThreadModel.isMale,
-              ei_d: mThreadModel.ei_d,
-              ei_d1: mThreadModel.ei_d1,
-            ),
-        diamMajorToleranceTop: context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEs(
-              isMale: mThreadModel.isMale,
-              es_d: mThreadModel.es_d,
-              es_d1: mThreadModel.es_d1,
-            ),
-        diamMiddleToleranceBottom: context.watch<MThreadInfoCubit>().middleDiamToleranceEi(ei_d2: mThreadModel.ei_d2),
-        diamMiddleToleranceTop: context.watch<MThreadInfoCubit>().middleDiamToleranceEs(es_d2: mThreadModel.es_d2),
-        diamMinorToleranceBottom: context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEi(
-              isMale: mThreadModel.isMale,
-              ei_d: mThreadModel.ei_d,
-              ei_d1: mThreadModel.ei_d1,
-            ),
-        diamMinorToleranceTop: context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEs(
-              isMale: mThreadModel.isMale,
-              es_d: mThreadModel.es_d,
-              es_d1: mThreadModel.es_d1,
-            ),
+        diamMajorToleranceBottom:
+            context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEi(
+                  isMale: mThreadModel.isMale,
+                  ei_d: mThreadModel.ei_d,
+                  ei_d1: mThreadModel.ei_d1,
+                ),
+        diamMajorToleranceTop:
+            context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEs(
+                  isMale: mThreadModel.isMale,
+                  es_d: mThreadModel.es_d,
+                  es_d1: mThreadModel.es_d1,
+                ),
+        diamMiddleToleranceBottom: context
+            .watch<MThreadInfoCubit>()
+            .middleDiamToleranceEi(ei_d2: mThreadModel.ei_d2),
+        diamMiddleToleranceTop: context
+            .watch<MThreadInfoCubit>()
+            .middleDiamToleranceEs(es_d2: mThreadModel.es_d2),
+        diamMinorToleranceBottom:
+            context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEi(
+                  isMale: mThreadModel.isMale,
+                  ei_d: mThreadModel.ei_d,
+                  ei_d1: mThreadModel.ei_d1,
+                ),
+        diamMinorToleranceTop:
+            context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEs(
+                  isMale: mThreadModel.isMale,
+                  es_d: mThreadModel.es_d,
+                  es_d1: mThreadModel.es_d1,
+                ),
       );
 }
 
@@ -329,28 +350,36 @@ class _MaleImage extends StatelessWidget {
               pitch: mThreadModel.pitch,
             ),
         pitch: context.watch<MThreadInfoCubit>().pitch(mThreadModel.pitch),
-        diamMajorToleranceBottom: context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEi(
-              isMale: mThreadModel.isMale,
-              ei_d: mThreadModel.ei_d,
-              ei_d1: mThreadModel.ei_d1,
-            ),
-        diamMajorToleranceTop: context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEs(
-              isMale: mThreadModel.isMale,
-              es_d: mThreadModel.es_d,
-              es_d1: mThreadModel.es_d1,
-            ),
-        diamMiddleToleranceBottom: context.watch<MThreadInfoCubit>().middleDiamToleranceEi(ei_d2: mThreadModel.ei_d2),
-        diamMiddleToleranceTop: context.watch<MThreadInfoCubit>().middleDiamToleranceEs(es_d2: mThreadModel.es_d2),
-        diamMinorToleranceBottom: context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEi(
-              isMale: mThreadModel.isMale,
-              ei_d: mThreadModel.ei_d,
-              ei_d1: mThreadModel.ei_d1,
-            ),
-        diamMinorToleranceTop: context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEs(
-              isMale: mThreadModel.isMale,
-              es_d: mThreadModel.es_d,
-              es_d1: mThreadModel.es_d1,
-            ),
+        diamMajorToleranceBottom:
+            context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEi(
+                  isMale: mThreadModel.isMale,
+                  ei_d: mThreadModel.ei_d,
+                  ei_d1: mThreadModel.ei_d1,
+                ),
+        diamMajorToleranceTop:
+            context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEs(
+                  isMale: mThreadModel.isMale,
+                  es_d: mThreadModel.es_d,
+                  es_d1: mThreadModel.es_d1,
+                ),
+        diamMiddleToleranceBottom: context
+            .watch<MThreadInfoCubit>()
+            .middleDiamToleranceEi(ei_d2: mThreadModel.ei_d2),
+        diamMiddleToleranceTop: context
+            .watch<MThreadInfoCubit>()
+            .middleDiamToleranceEs(es_d2: mThreadModel.es_d2),
+        diamMinorToleranceBottom:
+            context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEi(
+                  isMale: mThreadModel.isMale,
+                  ei_d: mThreadModel.ei_d,
+                  ei_d1: mThreadModel.ei_d1,
+                ),
+        diamMinorToleranceTop:
+            context.watch<MThreadInfoCubit>().minorMajorDiamToleranceEs(
+                  isMale: mThreadModel.isMale,
+                  es_d: mThreadModel.es_d,
+                  es_d1: mThreadModel.es_d1,
+                ),
       );
 }
 
@@ -381,7 +410,8 @@ class ThreadMinMaxMeanItem extends StatelessWidget {
       );
 }
 
-Widget _columnNameValue(String name, String value, BuildContext context) => Column(
+Widget _columnNameValue(String name, String value, BuildContext context) =>
+    Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
@@ -411,7 +441,9 @@ class BasicThreadParametersItem extends StatelessWidget {
             Text(
               title,
             ),
-            Text(value, ),
+            Text(
+              value,
+            ),
           ],
         ),
       );
@@ -459,18 +491,18 @@ class ThreadTolerancesItem extends StatelessWidget {
           ),
           Row(
             children: [
-              Text(value, ),
+              Text(
+                value,
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     updateTop,
-                  
                   ),
                   Text(
                     updateBottom,
-                 
                   ),
                 ],
               ),
@@ -493,7 +525,6 @@ class ThreadCaptionItem extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Text(
           text,
-        
           textAlign: TextAlign.center,
         ),
       );
@@ -514,13 +545,11 @@ class ThreadSubInfo extends StatelessWidget {
       children: [
         Text(
           title,
-       
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: Text(
             '( ${_getDeignationPitch(model, context)} )',
-        
           ),
         ),
       ],
@@ -558,7 +587,6 @@ class ThreadDeignationWidget extends StatelessWidget {
 
     return Text(
       '$abrv$diam x $pitch - $tolerance',
-     
       textAlign: TextAlign.center,
     );
   }
@@ -589,6 +617,5 @@ class UnitsSegmentControl extends StatelessWidget {
 
   Widget buildSegment(String text) => Text(
         text,
-      
       );
 }

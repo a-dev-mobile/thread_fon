@@ -7,7 +7,7 @@ import 'package:threadfon/src/features/diameter_selection/data/diameter_reposito
 import 'package:threadfon/src/features/diameter_selection/database_provider.dart';
 import 'package:threadfon/src/features/thread_type_selection/view/thread_type_selection_page.dart';
 
-final _l = L('metric_thread_diameter_screen');
+final _l = CustomLogger('metric_thread_diameter_screen');
 
 class MetricDiameterScreen extends StatefulWidget {
   const MetricDiameterScreen({
@@ -28,8 +28,10 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
     if (!_isControllerInitialized) {
       final databaseService = DatabaseProvider.of(context);
       final localStorage = LocalStorageProvider.of(context);
-      final repository = DiameterRepositoryImpl(databaseService: databaseService);
-      _controller = DiameterController(repository: repository, localStorage: localStorage);
+      final repository =
+          DiameterRepositoryImpl(databaseService: databaseService);
+      _controller = DiameterController(
+          repository: repository, localStorage: localStorage);
       _controller.addListener(_updateState);
       _controller.loadDiameters();
       _isControllerInitialized = true;
@@ -91,7 +93,8 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
                   return ListTile(
                     title: Text(data.diameter.toString()),
                     onTap: () {
-                      _controller.updateUserSelection(id: data.id, diameter: data.diameter);
+                      _controller.updateUserSelection(
+                          id: data.id, diameter: data.diameter);
                     },
                   );
                 },

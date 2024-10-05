@@ -10,5 +10,6 @@ class DiameterModel with _$DiameterModel {
     required double diameter,
   }) = _DiameterModel;
 
-  factory DiameterModel.fromJson(Map<String, dynamic> json) => _$DiameterModelFromJson(json);
+  factory DiameterModel.fromJson(Map<String, dynamic> json) =>
+      _$DiameterModelFromJson(json);
 }

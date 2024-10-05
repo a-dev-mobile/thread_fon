@@ -8,5 +8,6 @@ class DiameterState with _$DiameterState {
     String? error,
   }) = _DiameterState;
 
-  factory DiameterState.fromJson(Map<String, dynamic> json) => _$DiameterStateFromJson(json);
+  factory DiameterState.fromJson(Map<String, dynamic> json) =>
+      _$DiameterStateFromJson(json);
 }

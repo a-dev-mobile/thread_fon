@@ -1,7 +1,7 @@
 import 'package:postgres/postgres.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 
-final _logger = L('database_service');
+final _logger = CustomLogger('database_service');
 
 class DatabaseService {
   DatabaseService({
@@ -28,7 +28,7 @@ class DatabaseService {
       final connection = await Connection.open(endpoint);
       _logger.i('Database connection established.', includeStackTrace: false);
       return connection;
-    } catch (e) {
+    } on Exception catch (e) {
       _logger.e('Error opening connection', error: e);
       rethrow;
     }
@@ -38,7 +38,7 @@ class DatabaseService {
     try {
       await connection.close();
       _logger.i('Database connection closed.', includeStackTrace: false);
-    } catch (e) {
+    } on Exception catch (e) {
       _logger.e('Error closing connection', error: e);
       rethrow;
     }
@@ -52,7 +52,7 @@ class DatabaseService {
         parameters: parameters,
       );
       _logger.i('Query executed successfully.', includeStackTrace: false);
-    } catch (e) {
+    } on Exception catch (e) {
       _logger.e('Error executing query', error: e);
       rethrow;
     }
@@ -67,7 +67,7 @@ class DatabaseService {
       );
       _logger.i('Query executed successfully.', includeStackTrace: false);
       return result;
-    } catch (e) {
+    } on Exception catch (e) {
       _logger.e('Error fetching results', error: e);
       rethrow;
     }
@@ -77,8 +77,9 @@ class DatabaseService {
       Future<void> Function(TxSession session) action) async {
     try {
       await connection.runTx(action);
-      _logger.i('Transaction completed successfully.', includeStackTrace: false);
-    } catch (e) {
+      _logger.i('Transaction completed successfully.',
+          includeStackTrace: false);
+    } on Exception catch (e) {
       _logger.e('Error during transaction', error: e);
       rethrow;
     }

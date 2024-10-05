@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:threadfon/src/common/constant/enum_screen_status.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
-import 'package:threadfon/src/common/styles/app_text_styles_extension.dart';
 import 'package:threadfon/src/features/diameter_selection/view/metric_diameter_screen.dart';
 import 'package:threadfon/src/features/thread_type_selection/controller/thread_type_controller.dart';
 import 'package:threadfon/src/features/thread_type_selection/data/thread_type_repository_impl.dart';
@@ -14,7 +13,8 @@ class ThreadTypeSelectionPage extends StatefulWidget {
   const ThreadTypeSelectionPage({super.key});
 
   @override
-  _ThreadTypeSelectionPageState createState() => _ThreadTypeSelectionPageState();
+  _ThreadTypeSelectionPageState createState() =>
+      _ThreadTypeSelectionPageState();
 }
 
 class _ThreadTypeSelectionPageState extends State<ThreadTypeSelectionPage> {

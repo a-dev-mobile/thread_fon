@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/src/common/data/m_thread_repository.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
-import 'package:threadfon/src/common/styles/app_text_styles_extension.dart';
 import 'package:threadfon/src/common/widgets/my_error_widget.dart';
 import 'package:threadfon/src/common/widgets/my_load_widget.dart';
 import 'package:threadfon/src/common/widgets/my_msg_widget.dart';
@@ -46,7 +45,9 @@ class _MThreadTolerancePage extends StatelessWidget {
                 if (snapshot.data == null) {
                   return const MyMsgWidget(msg: 'no data');
                 } else {
-                  context.read<MThreadCubit>().setIdTolerance(snapshot.data!.id);
+                  context
+                      .read<MThreadCubit>()
+                      .setIdTolerance(snapshot.data!.id);
 
                   return ToleranceWidget(
                     listTolerance: (snapshot.data!).listTolerance,
@@ -80,7 +81,8 @@ class _ToleranceWidgetState extends State<ToleranceWidget> {
         padding: const EdgeInsets.only(bottom: 120),
         child: Column(
           children: [
-            for (final item in widget.listTolerance) ToleranceItem(tolerance: item, onTap: () {}),
+            for (final item in widget.listTolerance)
+              ToleranceItem(tolerance: item, onTap: () {}),
           ],
         ),
       );
@@ -134,7 +136,6 @@ class ToleranceItem extends StatelessWidget {
       title: Center(
         child: Text(
           '$abrv $diam x $pitch - $tolerance',
-      
         ),
       ),
     );

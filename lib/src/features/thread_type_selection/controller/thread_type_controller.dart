@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/src/common/constant/enum_screen_status.dart';
 import 'package:threadfon/src/common/data/local_storage.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
-
 import 'package:threadfon/src/features/thread_type_selection/data/i_thread_type_repository.dart';
 import 'package:threadfon/src/features/thread_type_selection/model/thread_type_model.dart';
 
@@ -11,7 +10,7 @@ part 'thread_type_controller.freezed.dart';
 part 'thread_type_controller.g.dart';
 part 'thread_type_state.dart';
 
-final _logger = L('thread_type_controller');
+final _logger = CustomLogger('thread_type_controller');
 
 class ThreadTypeController with ChangeNotifier {
   ThreadTypeController({
@@ -39,7 +38,7 @@ class ThreadTypeController with ChangeNotifier {
     try {
       final threadTypes = await _repository.fetchThreadTypes();
       _updateState(status: EnumScreenStatus.success, threadTypes: threadTypes);
-    } catch (e, s) {
+    } on Exception catch (e, s) {
       _logger.e('Error loading thread types', error: e, stackTrace: s);
       _updateState(status: EnumScreenStatus.error, error: e.toString());
     }
@@ -70,8 +69,8 @@ class ThreadTypeController with ChangeNotifier {
         ),
       );
       await Future.delayed(const Duration(milliseconds: 5000));
-    _updateState(status: EnumScreenStatus.navigating);
-    } catch (e) {
+      _updateState(status: EnumScreenStatus.navigating);
+    } on Exception catch (e) {
       _updateState(status: EnumScreenStatus.error, error: e.toString());
     }
   }

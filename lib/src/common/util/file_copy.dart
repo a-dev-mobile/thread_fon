@@ -21,7 +21,7 @@ class FileCopy {
       await File(fullPath).writeAsBytes(
         buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
       );
-    } catch (e) {
+    } on Exception catch (e) {
       log.e(e);
     }
 

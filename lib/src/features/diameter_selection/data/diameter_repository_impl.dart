@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:threadfon/src/common/data/local_storage.dart';
 import 'package:threadfon/src/features/diameter_selection/data/i_diameter_repository.dart';
 import 'package:threadfon/src/features/diameter_selection/database_service.dart';
 import 'package:threadfon/src/features/diameter_selection/model/diameter_model.dart';
@@ -8,7 +7,6 @@ import 'package:threadfon/src/features/diameter_selection/model/diameter_model.d
 class DiameterRepositoryImpl implements IDiameterRepository {
   DiameterRepositoryImpl({
     required DatabaseService databaseService,
-
   }) : _databaseService = databaseService;
 
   final DatabaseService _databaseService;

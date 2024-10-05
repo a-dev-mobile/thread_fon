@@ -14,5 +14,6 @@ class UserSelection with _$UserSelection {
     String? tolerance,
   }) = _UserSelection;
 
-  factory UserSelection.fromJson(Map<String, dynamic> json) => _$UserSelectionFromJson(json);
+  factory UserSelection.fromJson(Map<String, dynamic> json) =>
+      _$UserSelectionFromJson(json);
 }

@@ -8,18 +8,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:threadfon/app_error_handler.dart';
+
 import 'package:threadfon/src/common/app/app.dart';
 import 'package:threadfon/src/common/data/local_storage.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/data/m_thread_repository.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/util/file_copy.dart';
-import 'package:threadfon/src/features/threads/view/m_thread/cubit/m_thread_cubit.dart';
 import 'package:threadfon/src/features/diameter_selection/database_provider.dart'; // Импорт DatabaseProvider
-import 'package:threadfon/src/features/diameter_selection/database_service.dart';   // Импорт DatabaseService
+import 'package:threadfon/src/features/diameter_selection/database_service.dart'; // Импорт DatabaseService
+import 'package:threadfon/src/features/threads/view/m_thread/cubit/m_thread_cubit.dart';
 
-final _l = L('main');
+final _l = CustomLogger('main');
 
 Future<void> main() async {
   // Обернуть всё в runZonedGuarded, включая инициализацию Flutter bindings
@@ -47,7 +47,8 @@ Future<void> main() async {
 
           if (kReleaseMode) {
             // В релизном режиме отправляем все ошибки в Firebase
-            AppErrorHandler.recordError(exception, stackTrace);
+            AppErrorHandler().recordError(exception, stackTrace);
+
           } else {
             // В режиме разработки логируем ошибку для отладки
             _l.e('FlutterError.onError',
@@ -103,7 +104,7 @@ Future<void> main() async {
         // Логирование ошибок из блока try-catch с указанием источника
         if (kReleaseMode) {
           // В релизном режиме отправляем ошибку в Firebase с полным стеком вызовов
-          await AppErrorHandler.recordError(e, s);
+          await AppErrorHandler().recordError(e, s);
         } else {
           // В режиме разработки логируем ошибку с полным стеком вызовов
           _l.e('Exception in main', error: e, stackTrace: s);
@@ -111,14 +112,14 @@ Future<void> main() async {
       } finally {
         // Удаление splash-экрана и логирование закрытия
         FlutterNativeSplash.remove();
-        _l.t('** close NATIVE splash**',includeStackTrace: false);
+        _l.t('** close NATIVE splash**', includeStackTrace: false);
       }
 
       // Обработка всех необработанных асинхронных ошибок
       PlatformDispatcher.instance.onError = (error, stack) {
         if (kReleaseMode) {
           // В релизном режиме отправляем ошибку в Firebase
-          AppErrorHandler.recordError(error, stack);
+          AppErrorHandler().recordError(error, stack);
         } else {
           // В режиме разработки логируем ошибку для отладки
           _l.e('🚑 PlatformDispatcher.onError',
@@ -136,7 +137,7 @@ Future<void> main() async {
             final stackTrace = errorAndStacktrace.last as StackTrace;
 
             // Отправляем ошибку в Firebase
-            await AppErrorHandler.recordError(error, stackTrace);
+            await AppErrorHandler().recordError(error, stackTrace);
           }).sendPort,
         );
       } else {
@@ -155,7 +156,7 @@ Future<void> main() async {
       // Логирование ошибок из runZonedGuarded с указанием источника
       if (kReleaseMode) {
         // В релизном режиме отправляем ошибку в Firebase
-        AppErrorHandler.recordError(error, stack);
+        AppErrorHandler().recordError(error, stack);
       } else {
         // В режиме разработки логируем ошибку для отладки
         _l.e('runZonedGuarded', error: error, stackTrace: stack);

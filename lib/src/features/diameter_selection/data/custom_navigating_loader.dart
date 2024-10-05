@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CustomNavigatingLoader extends StatefulWidget {
-  const CustomNavigatingLoader({Key? key}) : super(key: key);
+  const CustomNavigatingLoader({super.key});
 
   @override
   _CustomNavigatingLoaderState createState() => _CustomNavigatingLoaderState();
 }
 
-class _CustomNavigatingLoaderState extends State<CustomNavigatingLoader> with SingleTickerProviderStateMixin {
+class _CustomNavigatingLoaderState extends State<CustomNavigatingLoader>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
 
@@ -21,7 +22,8 @@ class _CustomNavigatingLoaderState extends State<CustomNavigatingLoader> with Si
     )..repeat(); // Repeat the animation indefinitely
 
     // Define the animation (rotation from 0 to 2π radians)
-    _animation = Tween<double>(begin: 0, end: 2 * 3.1415926535).animate(_controller);
+    _animation =
+        Tween<double>(begin: 0, end: 2 * 3.1415926535).animate(_controller);
   }
 
   @override

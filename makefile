@@ -77,7 +77,7 @@ build-android:
 # Задача инициализации проекта
 init:
 	fvm use
-	git pull
+	git pull --rebase=false
 	$(MAKE) get-all
 	$(MAKE) gen-all
 	$(MAKE) format

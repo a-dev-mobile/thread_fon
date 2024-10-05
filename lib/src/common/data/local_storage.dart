@@ -6,7 +6,7 @@ import 'package:threadfon/src/common/constant/storage.dart';
 import 'package:threadfon/src/common/data/user_selection.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 
-final _l = L('local_storage');
+final _l = CustomLogger('local_storage');
 
 /// Класс для работы с локальным хранилищем, включая асинхронное и кешированное хранилище.
 /// Обеспечивает сохранение и получение данных с возможностью кеширования и обработки ошибок.
@@ -263,7 +263,7 @@ class LocalStorage {
   Future<bool> _isValidKey(String key) async {
     try {
       return _cachePreferences!.containsKey(key);
-    } catch (e) {
+    } on Exception catch (e) {
       if (e is ArgumentError) {
         await _log('WARN', key,
             'Key is not included in the PreferencesFilter allowlist');

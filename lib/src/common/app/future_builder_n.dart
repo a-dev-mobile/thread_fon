@@ -45,7 +45,7 @@ class _FutureBuilderNState<T> extends State<FutureBuilderN<T>> {
       try {
         final result = await future;
         results.add(result);
-      } catch (e) {
+      } on Exception catch (e) {
         // Прерываем загрузку при первой же ошибке
         return Future.error(e);
       }

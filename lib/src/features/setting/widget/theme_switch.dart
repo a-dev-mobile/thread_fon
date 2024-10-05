@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:threadfon/src/common/app/theme_notifier.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
-import 'package:threadfon/src/common/styles/app_text_styles_extension.dart';
 
 class ThemeSwitchWidget extends StatelessWidget {
   const ThemeSwitchWidget({
@@ -23,7 +22,6 @@ class ThemeSwitchWidget extends StatelessWidget {
       builder: (context, themeMode, _) => SwitchListTile(
         title: Text(
           Localization.of(context).dark_theme,
-     
         ),
         onChanged: (value) {
           var newThemeMode = value ? ThemeMode.dark : ThemeMode.light;

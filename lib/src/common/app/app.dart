@@ -90,10 +90,10 @@ class _ThreadFonApp extends StatelessWidget {
         final locale = values[1] as String;
 
         return MaterialApp(
-                    onGenerateTitle: (context) => Localization.of(context).app_name,
+          onGenerateTitle: (context) => Localization.of(context).app_name,
           debugShowCheckedModeBanner: false,
           //
-          themeMode: themeMode, 
+          themeMode: themeMode,
           theme: FlexTheme.lightThemeData(),
           darkTheme: FlexTheme.darkThemeData(),
           //
