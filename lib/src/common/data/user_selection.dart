@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/src/common/constant/enums_thread_type.dart';
+import 'package:threadfon/src/features/pitch_selection/model/pitch_model.dart';
 
 part 'user_selection.freezed.dart';
 part 'user_selection.g.dart'; // Если вы планируете использовать JSON сериализацию
@@ -10,10 +11,12 @@ class UserSelection with _$UserSelection {
     EnumThreadType? threadType,
     double? diameter,
     int? id,
-    double? step,
+    double? pitch,
+    TypePitch? typePitch,
+    MetricThreadRange? rangeMain,
+    InstrumentThreadRange? rangeSub,
     String? tolerance,
   }) = _UserSelection;
 
-  factory UserSelection.fromJson(Map<String, dynamic> json) =>
-      _$UserSelectionFromJson(json);
+  factory UserSelection.fromJson(Map<String, dynamic> json) => _$UserSelectionFromJson(json);
 }

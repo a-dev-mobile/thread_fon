@@ -2,29 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/src/common/constant/enum_screen_status.dart'; // Добавьте импорт EnumStatus
 import 'package:threadfon/src/common/data/local_storage.dart';
-import 'package:threadfon/src/common/data/user_selection.dart';
 import 'package:threadfon/src/common/error/error_state.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
-import 'package:threadfon/src/features/tolerance_selection/data/i_tolerance_repository.dart';
-import 'package:threadfon/src/features/tolerance_selection/model/tolerance_model.dart';
+import 'package:threadfon/src/features/pitch_selection/data/i_pitch_repository.dart';
+import 'package:threadfon/src/features/pitch_selection/model/pitch_model.dart';
 
-part 'tolerance_controller.freezed.dart';
-part 'tolerance_state.dart';
+part 'pitch_controller.freezed.dart';
+part 'pitch_state.dart';
 
-final _logger = L('tolerance_controller');
+final _logger = L('pitch_controller');
 
-class ToleranceController with ChangeNotifier {
-  ToleranceController({required IToleranceRepository repository, required LocalStorage localStorage})
+class PitchController with ChangeNotifier {
+  PitchController({required IPitchRepository repository, required LocalStorage localStorage})
       : _repository = repository,
         _localStorage = localStorage;
-  ToleranceState _state = const ToleranceState();
+  PitchState _state = const PitchState();
 
-  final IToleranceRepository _repository;
+  final IPitchRepository _repository;
   final LocalStorage _localStorage;
 
   bool _isDisposed = false;
 
-  ToleranceState get state => _state;
+  PitchState get state => _state;
 
   @override
   void dispose() {
@@ -32,13 +31,13 @@ class ToleranceController with ChangeNotifier {
     super.dispose();
   }
 
-  Future<void> loadTolerances() async {
+  Future<void> loadPitchs() async {
     _updateState(status: EnumScreenStatus.loading, error: null);
 
     final userSelection = await _localStorage.getUserSelection();
 
     try {
-      final model = await _repository.fetchTolerances(userSelection.diameter!);
+      final model = await _repository.fetchPitchs(userSelection.diameter!);
       _updateState(status: EnumScreenStatus.success, model: model);
     } on Exception catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
@@ -48,7 +47,7 @@ class ToleranceController with ChangeNotifier {
         error: ErrorState(
           exception: e,
           stackTrace: s.toString().isNotEmpty ? s : StackTrace.current,
-          msgUser: 'An error occurred while loading tolerances. Please try again later.',
+          msgUser: 'An error occurred while loading pitchs. Please try again later.',
         ),
       );
     }
@@ -56,7 +55,7 @@ class ToleranceController with ChangeNotifier {
 
   void _updateState({
     EnumScreenStatus? status,
-    List<ToleranceModel>? model,
+    List<PitchModel>? model,
     ErrorState? error,
   }) {
     if (_isDisposed) return;

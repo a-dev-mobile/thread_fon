@@ -5,7 +5,7 @@ import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/features/diameter_selection/controller/diameter_controller.dart';
 import 'package:threadfon/src/features/diameter_selection/data/diameter_repository_impl.dart';
 import 'package:threadfon/src/features/diameter_selection/database_provider.dart';
-import 'package:threadfon/src/features/tolerance_selection/view/metric_tolerance_screen.dart';
+import 'package:threadfon/src/features/pitch_selection/view/metric_pitch_screen.dart';
 
 final _l = L('metric_thread_diameter_screen');
 
@@ -14,8 +14,8 @@ final PageStorageBucket _pageBucket = PageStorageBucket();
 
 class MetricDiameterScreen extends StatefulWidget {
   const MetricDiameterScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<MetricDiameterScreen> createState() => _MetricDiameterScreenState();
@@ -63,7 +63,7 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
             Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => const MetricToleranceScreen(),
+                builder: (context) => const MetricPitchScreen(),
               ),
             );
           });

@@ -3,26 +3,24 @@ import 'package:threadfon/src/common/constant/enum_screen_status.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
-
 import 'package:threadfon/src/features/diameter_selection/database_provider.dart';
 import 'package:threadfon/src/features/diameter_selection/view/metric_diameter_screen.dart';
+import 'package:threadfon/src/features/pitch_selection/controller/pitch_controller.dart';
+import 'package:threadfon/src/features/pitch_selection/data/pitch_repository_impl.dart';
 
-import 'package:threadfon/src/features/tolerance_selection/controller/tolerance_controller.dart';
-import 'package:threadfon/src/features/tolerance_selection/data/tolerance_repository_impl.dart';
+final _l = L('metric_pitch_screen');
 
-final _l = L('metric_tolerance_screen');
-
-class MetricToleranceScreen extends StatefulWidget {
-  const MetricToleranceScreen({
+class MetricPitchScreen extends StatefulWidget {
+  const MetricPitchScreen({
     super.key,
   });
 
   @override
-  State<MetricToleranceScreen> createState() => _MetricToleranceScreenState();
+  State<MetricPitchScreen> createState() => _MetricPitchScreenState();
 }
 
-class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
-  late final ToleranceController _controller;
+class _MetricPitchScreenState extends State<MetricPitchScreen> {
+  late final PitchController _controller;
   bool _isControllerInitialized = false;
 
   @override
@@ -31,11 +29,11 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
     if (!_isControllerInitialized) {
       final databaseService = DatabaseProvider.of(context);
       final localStorage = LocalStorageProvider.of(context);
-      final repository = ToleranceRepositoryImpl(databaseService: databaseService);
-      _controller = ToleranceController(repository: repository, localStorage: localStorage);
+      final repository = PitchRepositoryImpl(databaseService: databaseService);
+      _controller = PitchController(repository: repository, localStorage: localStorage);
       _controller
         ..addListener(_updateState)
-        ..loadTolerances();
+        ..loadPitchs();
       _isControllerInitialized = true;
     }
   }
@@ -68,10 +66,10 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _l.d('Building MetricToleranceScreen', includeStackTrace: false);
+    _l.d('Building MetricPitchScreen', includeStackTrace: false);
     return Scaffold(
       appBar: AppBar(
-        title:  Text(Localization.of(context).thread_tolerance),
+        title: Text(Localization.of(context).thread_pitch),
       ),
       body: Builder(
         builder: (context) {
