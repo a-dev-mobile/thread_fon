@@ -1,43 +1,112 @@
+-- ========================================
 -- Удаляем существующую функцию, если она существует
+-- ========================================
 DROP FUNCTION IF EXISTS metric.get_pitch(double precision, character varying);
 
--- Создаем новую функцию
-CREATE OR REPLACE FUNCTION metric.get_pitch(diameter_input double precision, locale character varying DEFAULT 'en')
-RETURNS TABLE(id bigint, type character varying, result_text text)
-LANGUAGE plpgsql
+-- ========================================
+-- Создаем новую функцию metric.get_pitch
+-- ========================================
+CREATE OR REPLACE FUNCTION metric.get_pitch(
+    diameter_input DOUBLE PRECISION, -- Входной диаметр для поиска
+    locale VARCHAR DEFAULT 'en'       -- Локаль для текстовых описаний (по умолчанию 'en')
+)
+RETURNS TABLE(
+    id BIGINT,          -- Идентификатор записи (NULL для заголовков)
+    type VARCHAR,      -- Тип записи ('header' или 'value')
+    result_text TEXT   -- Текстовое описание
+)
+LANGUAGE SQL
 AS $$
-DECLARE
-    rec RECORD;
-    current_type_pitch character varying;
-BEGIN
-    FOR rec IN
-        SELECT main.id,
-               main.type_pitch,
-               CASE main.type_pitch
-                   WHEN 1 THEN CASE locale WHEN 'ru' THEN 'Основной шаг (Крупный)' ELSE 'Coarse' END
-                   WHEN 2 THEN CASE locale WHEN 'ru' THEN 'Мелкий шаг' ELSE 'Fine' END
-                   WHEN 3 THEN CASE locale WHEN 'ru' THEN 'Супер мелкий шаг' ELSE 'Extra Fine' END
-                   ELSE CASE locale WHEN 'ru' THEN 'Неизвестный' ELSE 'Unknown' END
-               END AS type_pitch_text,
-               format('M %s x %s', main.diameter, main.pitch)::character varying AS description
+    -- ========================================
+    -- Общие Табличные Выражения (CTE)
+    -- ========================================
+    WITH 
+    -- ----------------------------------------
+    -- pitch_data: Собирает данные по заданному диаметру с текстовыми описаниями
+    -- ----------------------------------------
+    pitch_data AS (
+        SELECT 
+            main.id,
+            main.type_pitch,
+            -- Генерация текстового описания типа шага в зависимости от локализации
+            CASE main.type_pitch
+                WHEN 1 THEN CASE WHEN locale = 'ru' THEN 'Основной шаг (Крупный)' ELSE 'Coarse' END
+                WHEN 2 THEN CASE WHEN locale = 'ru' THEN 'Мелкий шаг' ELSE 'Fine' END
+                WHEN 3 THEN CASE WHEN locale = 'ru' THEN 'Супер мелкий шаг' ELSE 'Extra Fine' END
+                ELSE CASE WHEN locale = 'ru' THEN 'Неизвестный' ELSE 'Unknown' END
+            END AS type_pitch_text,
+            -- Формирование описания в формате 'M [диаметр] x [шаг]'
+            FORMAT('M %s x %s', main.diameter, main.pitch) AS description,
+            -- Нумерация строк внутри каждой группы type_pitch для упорядочивания
+            ROW_NUMBER() OVER (PARTITION BY main.type_pitch ORDER BY main.pitch DESC) AS rn
         FROM metric.main AS main
         WHERE main.diameter = diameter_input
-        ORDER BY main.type_pitch, main.pitch DESC
-    LOOP
-        -- Добавляем заголовок, если изменился тип pitch
-        IF current_type_pitch IS DISTINCT FROM rec.type_pitch::character varying THEN
-            current_type_pitch := rec.type_pitch::character varying;
-            id := NULL;  -- Заголовок не имеет id
-            type := 'header';
-            result_text := rec.type_pitch_text;
-            RETURN NEXT;
-        END IF;
-
-        -- Добавляем описание с оригинальным id
-        id := rec.id;
-        type := 'value';
-        result_text := rec.description;
-        RETURN NEXT;
-    END LOOP;
-END;
+    ),
+    
+    -- ----------------------------------------
+    -- headers: Создает заголовки для каждого типа шага
+    -- ----------------------------------------
+    headers AS (
+        SELECT DISTINCT
+            NULL::BIGINT AS id,           -- Заголовки не имеют идентификатора
+            'header'::VARCHAR AS type,    -- Тип записи: 'header'
+            type_pitch_text AS result_text, -- Текст заголовка
+            type_pitch
+        FROM pitch_data
+    ),
+    
+    -- ----------------------------------------
+    -- values: Извлекает значения шагов с соответствующими id
+    -- ----------------------------------------
+    values AS (
+        SELECT
+            id,
+            'value' AS type,              -- Тип записи: 'value'
+            description AS result_text,    -- Описание шага
+            type_pitch
+        FROM pitch_data
+    ),
+    
+    -- ----------------------------------------
+    -- combined: Объединяет заголовки и значения для окончательного результата
+    -- ----------------------------------------
+    combined AS (
+        -- Добавляем заголовки
+        SELECT 
+            headers.type_pitch,
+            headers.result_text,
+            headers.type,
+            headers.id,
+            NULL AS rn                     -- Заголовки не имеют номера строки
+        FROM headers
+        
+        UNION ALL
+        
+        -- Добавляем значения, связывая их с pitch_data для получения номера строки
+        SELECT
+            values.type_pitch,
+            values.result_text,
+            values.type,
+            values.id,
+            pd.rn
+        FROM values
+        JOIN pitch_data pd ON values.id = pd.id
+    )
+    
+    -- ========================================
+    -- Финальный SELECT: Формирует итоговый набор данных
+    -- ========================================
+    SELECT
+        id,
+        type,
+        result_text
+    FROM combined
+    ORDER BY 
+        type_pitch, -- Сортировка по типу шага
+        -- Сначала выводим заголовки, затем значения
+        CASE 
+            WHEN type = 'header' THEN 0
+            ELSE 1
+        END,
+        rn; -- Внутри значений сортируем по номеру строки (убывание шага)
 $$;
