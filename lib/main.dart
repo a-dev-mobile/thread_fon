@@ -68,11 +68,16 @@ Future<void> main() async {
         // Инициализация DatabaseService
         final databaseService = DatabaseService(
           host: '134.255.232.136',
-          database: 'thread_db',
-          username: 'readonly_user',
-          password: '123123',
+          database: 'dev_thread_db',
+          username: 'postgres',
+          password: 'v5dIY8UaX28kpkf6o6ZhoTAPYT6MYcaKxRh9Zg7dwZQfNEXI8c',
         );
+/* 
+DB_USER="postgres"
+export PGPASSWORD="v5dIY8UaX28kpkf6o6ZhoTAPYT6MYcaKxRh9Zg7dwZQfNEXI8c"
+DB_HOST="134.255.232.136"
 
+ */
         // Запуск приложения с провайдерами
         runApp(
           DatabaseProvider(

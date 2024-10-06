@@ -17,11 +17,7 @@ class DiameterRepositoryImpl implements IDiameterRepository {
     try {
       final result = await _databaseService.fetchResults(
         connection,
-        '''
-SELECT DISTINCT ON (diameter) id, diameter
-FROM metric.main
-ORDER BY diameter ASC;
-''',
+        "SELECT * FROM metric.get_diameters('ASC');",
       );
 
       final diameters = result.map((row) {

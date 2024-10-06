@@ -102,7 +102,7 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
                   itemBuilder: (context, index) {
                     final data = _controller.state.diameters[index];
                     return ListTile(
-                      title: Text(data.diameter.toString()),
+                      title: Text(data.description),
                       onTap: () {
                         _controller.updateUserSelection(id: data.id, diameter: data.diameter);
                       },
