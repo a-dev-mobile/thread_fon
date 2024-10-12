@@ -4,19 +4,16 @@ import 'dart:isolate';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:threadfon/src/common/app/app.dart';
 import 'package:threadfon/src/common/data/local_storage.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
-import 'package:threadfon/src/common/data/m_thread_repository.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/util/file_copy.dart';
-import 'package:threadfon/src/features/diameter_selection/database_provider.dart'; // Импорт DatabaseProvider
-import 'package:threadfon/src/features/diameter_selection/database_service.dart'; // Импорт DatabaseService
-import 'package:threadfon/src/features/threads/view/m_thread/cubit/m_thread_cubit.dart';
+import 'package:threadfon/src/features/selection_2_diameter/database_provider.dart'; // Импорт DatabaseProvider
+import 'package:threadfon/src/features/selection_2_diameter/database_service.dart'; // Импорт DatabaseService
 
 final _l = L('main');
 
@@ -49,7 +46,8 @@ Future<void> main() async {
             AppErrorHandler().recordError(exception, stackTrace);
           } else {
             // В режиме разработки логируем ошибку для отладки
-            _l.e('FlutterError.onError', error: exception, stackTrace: stackTrace);
+            _l.e('FlutterError.onError',
+                error: exception, stackTrace: stackTrace);
           }
         };
 
@@ -84,21 +82,7 @@ DB_HOST="134.255.232.136"
             databaseService: databaseService,
             child: LocalStorageProvider(
               localStorage: localStorage,
-              child: MultiRepositoryProvider(
-                providers: [
-                  RepositoryProvider<MThreadRepository>(
-                    create: (context) => MThreadRepository(pathDB: pathDB),
-                  ),
-                ],
-                child: MultiBlocProvider(
-                  providers: [
-                    BlocProvider(
-                      create: (context) => MThreadCubit(),
-                    ),
-                  ],
-                  child: const App(),
-                ),
-              ),
+              child: const App(),
             ),
           ),
         );
@@ -124,7 +108,8 @@ DB_HOST="134.255.232.136"
           AppErrorHandler().recordError(error, stack);
         } else {
           // В режиме разработки логируем ошибку для отладки
-          _l.e('🚑 PlatformDispatcher.onError', error: error, stackTrace: stack);
+          _l.e('🚑 PlatformDispatcher.onError',
+              error: error, stackTrace: stack);
         }
 
         return true;

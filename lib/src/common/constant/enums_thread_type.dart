@@ -1,4 +1,4 @@
 enum EnumThreadType {
-  external,
-  internal,
+  male,
+  female,
 }

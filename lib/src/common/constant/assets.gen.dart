@@ -29,7 +29,8 @@ class $AssetsImagesGen {
   $AssetsImagesMThreadGen get mThread => const $AssetsImagesMThreadGen();
 
   /// Directory path: assets/images/type_thread
-  $AssetsImagesTypeThreadGen get typeThread => const $AssetsImagesTypeThreadGen();
+  $AssetsImagesTypeThreadGen get typeThread =>
+      const $AssetsImagesTypeThreadGen();
 }
 
 class $AssetsSvgGen {
@@ -52,10 +53,12 @@ class $AssetsImagesMThreadGen {
   const $AssetsImagesMThreadGen();
 
   /// File path: assets/images/m_thread/bolt.png
-  AssetGenImage get bolt => const AssetGenImage('assets/images/m_thread/bolt.png');
+  AssetGenImage get bolt =>
+      const AssetGenImage('assets/images/m_thread/bolt.png');
 
   /// File path: assets/images/m_thread/nuts.png
-  AssetGenImage get nuts => const AssetGenImage('assets/images/m_thread/nuts.png');
+  AssetGenImage get nuts =>
+      const AssetGenImage('assets/images/m_thread/nuts.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [bolt, nuts];
@@ -65,10 +68,12 @@ class $AssetsImagesTypeThreadGen {
   const $AssetsImagesTypeThreadGen();
 
   /// File path: assets/images/type_thread/g_thread.png
-  AssetGenImage get gThread => const AssetGenImage('assets/images/type_thread/g_thread.png');
+  AssetGenImage get gThread =>
+      const AssetGenImage('assets/images/type_thread/g_thread.png');
 
   /// File path: assets/images/type_thread/m_thread.png
-  AssetGenImage get mThread => const AssetGenImage('assets/images/type_thread/m_thread.png');
+  AssetGenImage get mThread =>
+      const AssetGenImage('assets/images/type_thread/m_thread.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [gThread, mThread];

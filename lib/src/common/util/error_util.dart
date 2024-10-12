@@ -60,5 +60,6 @@ abstract final class ErrorUtil {
   }
 
   /// Rethrows the error with the stack trace.
-  static Never throwWithStackTrace(Object error, StackTrace stackTrace) => Error.throwWithStackTrace(error, stackTrace);
+  static Never throwWithStackTrace(Object error, StackTrace stackTrace) =>
+      Error.throwWithStackTrace(error, stackTrace);
 }

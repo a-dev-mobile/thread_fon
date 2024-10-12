@@ -1,5 +1,4 @@
 // app.dart
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 // Импорт необходимых пакетов
@@ -43,13 +42,13 @@ class _AppState extends State<App> {
               ),
             );
           }
-          final themeMode = data[0] as ThemeMode?;
-          final locale = data[1] as String?;
+          final themeMode = data[0] as ThemeMode;
+          final locale = data[1] as String;
 
           return ThemeNotifier(
-            initialMode: themeMode ?? ThemeMode.light,
+            initialMode: themeMode,
             child: LanguageNotifier(
-              initialLocale: locale ?? window.locale.languageCode,
+              initialLocale: locale,
               child: const _ThreadFonApp(),
             ),
           );

@@ -7,7 +7,7 @@ CREATE OR REPLACE FUNCTION metric.get_tolerance(
     p_thread_type text
 )
 RETURNS TABLE (
-    main_id bigint,
+    id bigint,
     description text,
     tolerance text
 )
@@ -32,7 +32,7 @@ BEGIN
     -- Извлечение строки по заданному id
     SELECT * INTO row_data 
     FROM metric.main 
-    WHERE id = p_main_id;
+    WHERE metric.main.id = p_main_id;  -- Явное указание таблицы
 
     IF NOT FOUND THEN
         RAISE EXCEPTION 'Запись с id = % не найдена.', p_main_id;
@@ -47,12 +47,12 @@ BEGIN
     -- Проверка наличия квалитетов и обработка результата
     IF tol_array IS NULL OR array_length(tol_array, 1) = 0 THEN
         -- Если квалитеты не определены, генерируем ошибку
-        RAISE EXCEPTION 'В базе данных нет квалитетов для main_id = % и thread_type = %.', p_main_id, p_thread_type;
+        RAISE EXCEPTION 'В базе данных нет квалитетов для id = % и thread_type = %.', p_main_id, p_thread_type;
     ELSE
         -- Возвращаем отдельную строку для каждого квалитета с сохранением названия допуска в description
         RETURN QUERY 
         SELECT 
-            row_data.id AS main_id, 
+            row_data.id AS id, 
             FORMAT('M %s x %s - %s', row_data.diameter, row_data.pitch, 
                    CASE 
                        WHEN p_thread_type = 'female' THEN UPPER(tol)

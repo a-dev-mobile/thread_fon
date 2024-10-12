@@ -40,10 +40,10 @@ class ThemeNotifier extends InheritedNotifier<ValueNotifier<ThemeMode>> {
   // Метод для загрузки темы из SharedPreferences
   static Future<ThemeMode> loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    final themeString = prefs.getString('theme_mode') ?? 'ThemeMode.light';
+    final themeString = prefs.getString('theme_mode') ?? 'ThemeMode.system';
     return ThemeMode.values.firstWhere(
       (mode) => mode.toString() == themeString,
-      orElse: () => ThemeMode.light,
+      orElse: () => ThemeMode.system,
     );
   }
 }

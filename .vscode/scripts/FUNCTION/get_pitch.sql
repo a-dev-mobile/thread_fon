@@ -12,8 +12,8 @@ CREATE OR REPLACE FUNCTION metric.get_pitch(
 )
 RETURNS TABLE(
     id BIGINT,          -- Идентификатор записи (NULL для заголовков)
-    type VARCHAR,      -- Тип записи ('header' или 'value')
-    result_text TEXT   -- Текстовое описание
+    type BIGINT,      -- Тип записи ('1 header' или '2 value')
+    description TEXT   -- Текстовое описание
 )
 LANGUAGE SQL
 AS $$
@@ -49,8 +49,8 @@ AS $$
     headers AS (
         SELECT DISTINCT
             NULL::BIGINT AS id,           -- Заголовки не имеют идентификатора
-            'header'::VARCHAR AS type,    -- Тип записи: 'header'
-            type_pitch_text AS result_text, -- Текст заголовка
+            1::BIGINT AS type,    -- Тип записи: 'header'
+            type_pitch_text AS description, -- Текст заголовка
             type_pitch
         FROM pitch_data
     ),
@@ -61,8 +61,8 @@ AS $$
     values AS (
         SELECT
             id,
-            'value' AS type,              -- Тип записи: 'value'
-            description AS result_text,    -- Описание шага
+            2 AS type,              -- Тип записи: 'value'
+            description AS description,    -- Описание шага
             type_pitch
         FROM pitch_data
     ),
@@ -74,7 +74,7 @@ AS $$
         -- Добавляем заголовки
         SELECT 
             headers.type_pitch,
-            headers.result_text,
+            headers.description,
             headers.type,
             headers.id,
             NULL AS rn                     -- Заголовки не имеют номера строки
@@ -85,7 +85,7 @@ AS $$
         -- Добавляем значения, связывая их с pitch_data для получения номера строки
         SELECT
             values.type_pitch,
-            values.result_text,
+            values.description,
             values.type,
             values.id,
             pd.rn
@@ -99,13 +99,13 @@ AS $$
     SELECT
         id,
         type,
-        result_text
+        description
     FROM combined
     ORDER BY 
         type_pitch, -- Сортировка по типу шага
         -- Сначала выводим заголовки, затем значения
         CASE 
-            WHEN type = 'header' THEN 0
+            WHEN type = 1 THEN 0
             ELSE 1
         END,
         rn; -- Внутри значений сортируем по номеру строки (убывание шага)
