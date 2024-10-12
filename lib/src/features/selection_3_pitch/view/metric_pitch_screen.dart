@@ -92,7 +92,7 @@ class _MetricPitchScreenState extends State<MetricPitchScreen> {
                 itemBuilder: (context, index) {
                   final data = _controller.state.model[index];
                   return ListTile(
-                    title: Text(data.resultText),
+                    title: Text(data.description),
                     onTap: () {
                       _controller.updateUserSelection(id: data.id!);
                     },
