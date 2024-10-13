@@ -7,6 +7,7 @@ import 'package:threadfon/src/features/02_selection_diameter/database_provider.d
 import 'package:threadfon/src/features/02_selection_diameter/view/metric_diameter_screen.dart';
 import 'package:threadfon/src/features/04_selection_tolerance/controller/tolerance_controller.dart';
 import 'package:threadfon/src/features/04_selection_tolerance/data/tolerance_repository_impl.dart';
+import 'package:threadfon/src/features/05_info/view/metric_info_screen.dart';
 
 final _l = L('metric_tolerance_screen');
 
@@ -53,7 +54,7 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (context) => const MetricDiameterScreen(),
+              builder: (context) => const MetricInfoScreen(),
             ),
           );
         });

@@ -5,20 +5,21 @@ import 'package:threadfon/src/common/localization/localization.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/features/02_selection_diameter/database_provider.dart';
 import 'package:threadfon/src/features/02_selection_diameter/view/metric_diameter_screen.dart';
-import 'package:threadfon/src/features/04_selection_tolerance/controller/tolerance_controller.dart';
-import 'package:threadfon/src/features/04_selection_tolerance/data/tolerance_repository_impl.dart';
 
-final _l = L('metric_tolerance_screen');
+import 'package:threadfon/src/features/05_info/controller/info_controller.dart';
+import 'package:threadfon/src/features/05_info/data/info_repository_impl.dart';
 
-class MetricToleranceScreen extends StatefulWidget {
-  const MetricToleranceScreen({super.key});
+final _l = L('metric_info_screen');
+
+class MetricInfoScreen extends StatefulWidget {
+  const MetricInfoScreen({super.key});
 
   @override
-  State<MetricToleranceScreen> createState() => _MetricToleranceScreenState();
+  State<MetricInfoScreen> createState() => _MetricInfoScreenState();
 }
 
-class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
-  late final ToleranceController _controller;
+class _MetricInfoScreenState extends State<MetricInfoScreen> {
+  late final InfoController _controller;
   bool _isControllerInitialized = false;
 
   @override
@@ -27,13 +28,11 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
     if (!_isControllerInitialized) {
       final databaseService = DatabaseProvider.of(context);
       final localStorage = LocalStorageProvider.of(context);
-      final repository =
-          ToleranceRepositoryImpl(databaseService: databaseService);
-      _controller = ToleranceController(
-          repository: repository, localStorage: localStorage);
+      final repository = InfoRepositoryImpl(databaseService: databaseService);
+      _controller = InfoController(repository: repository, localStorage: localStorage);
       _controller
         ..addListener(_updateState)
-        ..loadTolerances();
+        ..loadInfos();
       _isControllerInitialized = true;
     }
   }
@@ -66,10 +65,10 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _l.d('Building MetricToleranceScreen', includeStackTrace: false);
+    _l.d('Building MetricInfoScreen', includeStackTrace: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text(Localization.of(context).thread_tolerance),
+        title: Text(Localization.of(context).threads_info),
       ),
       body: Builder(
         builder: (context) {
@@ -93,8 +92,7 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
                   return ListTile(
                     title: Text(data.description),
                     onTap: () {
-                      _controller.updateUserSelection(
-                          id: data.id, tolerance: data.tolerance);
+                      _controller.updateUserSelection(id: data.id, info: data.info);
                     },
                   );
                 },

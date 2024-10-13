@@ -5,28 +5,26 @@ import 'package:threadfon/src/common/data/local_storage.dart';
 import 'package:threadfon/src/common/error/error_state.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 
-import 'package:threadfon/src/features/04_selection_tolerance/data/tolerance_repository_impl.dart';
-import 'package:threadfon/src/features/04_selection_tolerance/model/tolerance_model.dart';
+import 'package:threadfon/src/features/05_info/data/info_repository_impl.dart';
+import 'package:threadfon/src/features/05_info/model/info_model.dart';
 
-part 'tolerance_controller.freezed.dart';
-part 'tolerance_state.dart';
+part 'info_controller.freezed.dart';
+part 'info_state.dart';
 
-final _logger = L('tolerance_controller');
+final _logger = L('info_controller');
 
-class ToleranceController with ChangeNotifier {
-  ToleranceController(
-      {required ToleranceRepositoryImpl repository,
-      required LocalStorage localStorage})
+class InfoController with ChangeNotifier {
+  InfoController({required InfoRepositoryImpl repository, required LocalStorage localStorage})
       : _repository = repository,
         _localStorage = localStorage;
-  ToleranceState _state = const ToleranceState();
+  InfoState _state = const InfoState();
 
-  final ToleranceRepositoryImpl _repository;
+  final InfoRepositoryImpl _repository;
   final LocalStorage _localStorage;
 
   bool _isDisposed = false;
 
-  ToleranceState get state => _state;
+  InfoState get state => _state;
 
   @override
   void dispose() {
@@ -34,14 +32,13 @@ class ToleranceController with ChangeNotifier {
     super.dispose();
   }
 
-  Future<void> loadTolerances() async {
+  Future<void> loadInfos() async {
     _updateState(status: EnumScreenStatus.loading, error: null);
 
     final userSelection = await _localStorage.getUserSelection();
 
     try {
-      final model = await _repository.fetchTolerances(
-          userSelection.id!, userSelection.threadType!);
+      final model = await _repository.fetchInfos(userSelection.id!, userSelection.threadType!);
       _updateState(status: EnumScreenStatus.success, model: model);
     } on Exception catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
@@ -51,8 +48,7 @@ class ToleranceController with ChangeNotifier {
         error: ErrorState(
           exception: e,
           stackTrace: s.toString().isNotEmpty ? s : StackTrace.current,
-          msgUser:
-              'An error occurred while loading tolerances. Please try again later.',
+          msgUser: 'An error occurred while loading infos. Please try again later.',
         ),
       );
     }
@@ -60,7 +56,7 @@ class ToleranceController with ChangeNotifier {
 
   void _updateState({
     EnumScreenStatus? status,
-    List<ToleranceModel>? model,
+    List<InfoModel>? model,
     ErrorState? error,
   }) {
     if (_isDisposed) return;
@@ -73,12 +69,10 @@ class ToleranceController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateUserSelection(
-      {required int id, required String tolerance}) async {
+  Future<void> updateUserSelection({required int id, required String info}) async {
     _updateState(status: EnumScreenStatus.loadingNavigating);
     try {
-      await _localStorage.updateUserSelection((userSelection) =>
-          userSelection.copyWith(id: id, tolerance: tolerance));
+      await _localStorage.updateUserSelection((userSelection) => userSelection.copyWith(id: id,));
 
       _updateState(status: EnumScreenStatus.navigating);
       await Future<void>.delayed(const Duration(seconds: 1));
@@ -89,8 +83,7 @@ class ToleranceController with ChangeNotifier {
         error: ErrorState(
           exception: e,
           stackTrace: s,
-          msgUser:
-              'An error occurred while updating your selection. Please try again.',
+          msgUser: 'An error occurred while updating your selection. Please try again.',
         ),
       );
     }
