@@ -5,7 +5,6 @@ import 'package:threadfon/src/common/localization/localization.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/features/02_selection_diameter/database_provider.dart';
 import 'package:threadfon/src/features/02_selection_diameter/view/metric_diameter_screen.dart';
-
 import 'package:threadfon/src/features/05_info/controller/info_controller.dart';
 import 'package:threadfon/src/features/05_info/data/info_repository_impl.dart';
 
@@ -32,7 +31,7 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
       _controller = InfoController(repository: repository, localStorage: localStorage);
       _controller
         ..addListener(_updateState)
-        ..loadInfos();
+        ..load();
       _isControllerInitialized = true;
     }
   }

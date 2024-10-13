@@ -4,7 +4,6 @@ import 'package:threadfon/src/common/constant/enum_screen_status.dart';
 import 'package:threadfon/src/common/data/local_storage.dart';
 import 'package:threadfon/src/common/error/error_state.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
-
 import 'package:threadfon/src/features/05_info/data/info_repository_impl.dart';
 import 'package:threadfon/src/features/05_info/model/info_model.dart';
 
@@ -32,13 +31,13 @@ class InfoController with ChangeNotifier {
     super.dispose();
   }
 
-  Future<void> loadInfos() async {
+  Future<void> load() async {
     _updateState(status: EnumScreenStatus.loading, error: null);
 
     final userSelection = await _localStorage.getUserSelection();
 
     try {
-      final model = await _repository.fetchInfos(userSelection.id!, userSelection.threadType!);
+      final model = await _repository.fetchInfo(userSelection.id!, userSelection.threadType!);
       _updateState(status: EnumScreenStatus.success, model: model);
     } on Exception catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
@@ -72,7 +71,9 @@ class InfoController with ChangeNotifier {
   Future<void> updateUserSelection({required int id, required String info}) async {
     _updateState(status: EnumScreenStatus.loadingNavigating);
     try {
-      await _localStorage.updateUserSelection((userSelection) => userSelection.copyWith(id: id,));
+      await _localStorage.updateUserSelection((userSelection) => userSelection.copyWith(
+            id: id,
+          ));
 
       _updateState(status: EnumScreenStatus.navigating);
       await Future<void>.delayed(const Duration(seconds: 1));

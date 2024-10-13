@@ -9,8 +9,8 @@
 DB_NAME="dev_thread_db"
 
 # Переменные для подключения к базе данных
-DB_USER="postgres"
-export PGPASSWORD="v5dIY8UaX28kpkf6o6ZhoTAPYT6MYcaKxRh9Zg7dwZQfNEXI8c"
+DB_USER="readonly_user"
+export PGPASSWORD="123123"
 DB_HOST="134.255.232.136"
 DB_PORT="5432"
 
