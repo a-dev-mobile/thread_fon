@@ -16,12 +16,15 @@ RETURNS TABLE (
     range_main bigint,
     range_sub bigint,
     thread_depth double precision,
-    major_diam_max double precision, -- Добавлена новая колонка
-    major_diam_min double precision, -- Добавлена новая колонка
-    pitch_diam_max double precision, -- Добавлена новая колонка
-    pitch_diam_min double precision, -- Добавлена новая колонка
-    minor_diam_max double precision, -- Добавлена новая колонка
-    minor_diam_min double precision, -- Добавлена новая колонка для min значения
+    major_diam_min double precision, -- Минимальное значение внешнего диаметра
+    major_diam_avg double precision, -- Среднее значение внешнего диаметра
+    major_diam_max double precision, -- Максимальное значение внешнего диаметра
+    pitch_diam_min double precision, -- Минимальное значение диаметра по шагу
+    pitch_diam_avg double precision, -- Среднее значение диаметра по шагу
+    pitch_diam_max double precision, -- Максимальное значение диаметра по шагу
+    minor_diam_min double precision, -- Минимальное значение малого диаметра
+    minor_diam_avg double precision, -- Среднее значение малого диаметра
+    minor_diam_max double precision, -- Максимальное значение малого диаметра
     pitch_diam_d2 double precision,
     minor_diam_d1 double precision,
     minor_diam_d3 double precision,
@@ -95,16 +98,32 @@ BEGIN
     END IF;
     
     -- Вычисление major_diam_max и major_diam_min
-    major_diam_max := row_data.diameter + d_es;
-    major_diam_min := row_data.diameter + d_ei;
+    IF p_thread_type = 'f' THEN
+        -- Для типа резьбы "f" major_diam_max = diameter + d1_es
+        major_diam_max := row_data.diameter + COALESCE(d1_es, 0);  -- Если d1_es = NULL, то берём 0
+    ELSE
+        -- Для типа резьбы "m" major_diam_max = diameter + d_es
+        major_diam_max := row_data.diameter + COALESCE(d_es, 0);  -- Если d_es = NULL, то берём 0
+    END IF;
+    major_diam_min := row_data.diameter + COALESCE(d_ei, 0);  -- Для обоих типов
+    major_diam_avg := (major_diam_max + major_diam_min) / 2;  -- Среднее значение
     
     -- Вычисление pitch_diam_max и pitch_diam_min
-    pitch_diam_max := row_data.pitch_diam_d2 + d2_es;
-    pitch_diam_min := row_data.pitch_diam_d2 + d2_ei;
+    pitch_diam_max := row_data.pitch_diam_d2 + COALESCE(d2_es, 0);  -- Если d2_es = NULL, то берём 0
+    pitch_diam_min := row_data.pitch_diam_d2 + COALESCE(d2_ei, 0);  -- Если d2_ei = NULL, то берём 0
+    pitch_diam_avg := (pitch_diam_max + pitch_diam_min) / 2;  -- Среднее значение
     
-    -- Вычисление minor_diam_max и minor_diam_min
-    minor_diam_max := row_data.minor_diam_d1 + d1_es;
-    minor_diam_min := major_diam_min - 2 * row_data.thread_depth;  -- Исправление на использование ранее вычисленного major_diam_min
+    -- Вычисление minor_diam_max и minor_diam_min для обоих типов резьбы
+    IF p_thread_type = 'f' THEN
+        -- Для типа резьбы f
+        minor_diam_max := row_data.minor_diam_d1 + COALESCE(d1_es, 0);  -- Если d1_es = NULL, то берём 0
+        minor_diam_min := major_diam_min - 2 * row_data.thread_depth;  -- Используем ранее вычисленное major_diam_min
+    ELSE
+        -- Для типа резьбы m
+        minor_diam_max := row_data.minor_diam_d1 + COALESCE(d1_es, 0);  -- Если d1_es = NULL, то берём 0
+        minor_diam_min := major_diam_min - 2 * row_data.thread_depth;  -- Применение глубины резьбы
+    END IF;
+    minor_diam_avg := (minor_diam_max + minor_diam_min) / 2;  -- Среднее значение
 
     -- Возвращение результата с дополнительными колонками и квалитетами
     RETURN QUERY SELECT 
@@ -116,12 +135,15 @@ BEGIN
         row_data.range_main,
         row_data.range_sub,
         row_data.thread_depth,
-        major_diam_max,  -- Возвращаем вычисленный max диаметр
-        major_diam_min,  -- Возвращаем вычисленный min диаметр
-        pitch_diam_max,  -- Возвращаем вычисленный max диаметр шага
-        pitch_diam_min,  -- Возвращаем вычисленный min диаметр шага
-        minor_diam_max,  -- Возвращаем вычисленный max малый диаметр
-        minor_diam_min,  -- Возвращаем вычисленный min малый диаметр
+        major_diam_min, 
+        major_diam_avg, -- Новая колонка для среднего значения внешнего диаметра
+        major_diam_max,
+        pitch_diam_min, 
+        pitch_diam_avg, -- Новая колонка для среднего значения диаметра по шагу
+        pitch_diam_max,
+        minor_diam_min,  
+        minor_diam_avg, -- Новая колонка для среднего значения малого диаметра
+        minor_diam_max,
         row_data.pitch_diam_d2,
         row_data.minor_diam_d1,
         row_data.minor_diam_d3,
