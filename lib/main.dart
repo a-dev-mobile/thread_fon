@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
 import 'package:threadfon/src/common/app/app.dart';
 import 'package:threadfon/src/common/data/local_storage.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/util/file_copy.dart';
-import 'package:threadfon/src/features/selection_2_diameter/database_provider.dart'; // Импорт DatabaseProvider
-import 'package:threadfon/src/features/selection_2_diameter/database_service.dart'; // Импорт DatabaseService
+import 'package:threadfon/src/features/02_selection_diameter/database_provider.dart'; // Импорт DatabaseProvider
+import 'package:threadfon/src/features/02_selection_diameter/database_service.dart'; // Импорт DatabaseService
 
 final _l = L('main');
 
@@ -51,30 +51,36 @@ Future<void> main() async {
           }
         };
 
-        // Инициализация sqflite FFI и копирование базы данных
-        sqfliteFfiInit();
-        await copyDb(localStorage);
-
         // Установка предпочтительной ориентации экрана
         await SystemChrome.setPreferredOrientations([
           DeviceOrientation.portraitUp,
           DeviceOrientation.portraitDown,
         ]);
 
-        final pathDB = await localStorage.getPathDB();
-
         // Инициализация DatabaseService
         final databaseService = DatabaseService(
           host: '134.255.232.136',
           database: 'dev_thread_db',
-          username: 'postgres',
-          password: 'v5dIY8UaX28kpkf6o6ZhoTAPYT6MYcaKxRh9Zg7dwZQfNEXI8c',
+          username: 'readonly_user',
+          password: '123123',
         );
 /* 
 DB_USER="postgres"
 export PGPASSWORD="v5dIY8UaX28kpkf6o6ZhoTAPYT6MYcaKxRh9Zg7dwZQfNEXI8c"
 DB_HOST="134.255.232.136"
 
+
+DB_NAME="dev_thread_db"
+
+# Переменные для подключения к базе данных
+DB_USER="postgres"
+export PGPASSWORD="v5dIY8UaX28kpkf6o6ZhoTAPYT6MYcaKxRh9Zg7dwZQfNEXI8c"
+DB_HOST="134.255.232.136"
+DB_PORT="5432"
+          host: '134.255.232.136',
+          database: 'dev_thread_db',
+          username: 'postgres',
+          password: 'v5dIY8UaX28kpkf6o6ZhoTAPYT6MYcaKxRh9Zg7dwZQfNEXI8c',
  */
         // Запуск приложения с провайдерами
         runApp(

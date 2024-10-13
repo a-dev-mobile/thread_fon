@@ -9,7 +9,8 @@ import 'package:threadfon/src/common/app/language_notifier.dart'; // Новый 
 import 'package:threadfon/src/common/app/theme_notifier.dart';
 import 'package:threadfon/src/common/app/value_listenable_builder_n.dart'; // Импортируем ValueListenableBuilderN
 import 'package:threadfon/src/common/localization/localization.dart';
-import 'package:threadfon/src/features/threads/threads_wrapper_page.dart';
+import 'package:threadfon/src/features/01_selection_thread_type/view/thread_type_selection_page.dart';
+
 
 class App extends StatefulWidget {
   const App({
@@ -105,7 +106,7 @@ class _ThreadFonApp extends StatelessWidget {
           supportedLocales: Localization.supportedLocales,
           locale: Locale(locale),
           //
-          home: const ThreadsWrapperPage(),
+          home: const ThreadTypeSelectionPage(),
         );
       },
     );

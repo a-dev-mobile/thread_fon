@@ -9,19 +9,6 @@
 
 import 'package:flutter/widgets.dart';
 
-class $AssetsDbGen {
-  const $AssetsDbGen();
-
-  /// File path: assets/db/thread.db
-  String get threadDb => 'assets/db/thread.db';
-
-  /// File path: assets/db/thread.sqbpro
-  String get threadSqbpro => 'assets/db/thread.sqbpro';
-
-  /// List of all assets
-  List<String> get values => [threadDb, threadSqbpro];
-}
-
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
@@ -82,7 +69,6 @@ class $AssetsImagesTypeThreadGen {
 class Assets {
   Assets._();
 
-  static const $AssetsDbGen db = $AssetsDbGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsSvgGen svg = $AssetsSvgGen();
 }
@@ -117,7 +103,7 @@ class AssetGenImage {
     ImageRepeat repeat = ImageRepeat.noRepeat,
     Rect? centerSlice,
     bool matchTextDirection = false,
-    bool gaplessPlayback = false,
+    bool gaplessPlayback = true,
     bool isAntiAlias = false,
     String? package,
     FilterQuality filterQuality = FilterQuality.low,
