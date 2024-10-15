@@ -11,7 +11,6 @@ import 'package:threadfon/src/common/app/value_listenable_builder_n.dart'; // И
 import 'package:threadfon/src/common/localization/localization.dart';
 import 'package:threadfon/src/features/01_selection_thread_type/view/thread_type_selection_page.dart';
 
-
 class App extends StatefulWidget {
   const App({
     super.key,

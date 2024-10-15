@@ -28,7 +28,8 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
       final databaseService = DatabaseProvider.of(context);
       final localStorage = LocalStorageProvider.of(context);
       final repository = InfoRepositoryImpl(databaseService: databaseService);
-      _controller = InfoController(repository: repository, localStorage: localStorage);
+      _controller =
+          InfoController(repository: repository, localStorage: localStorage);
       _controller
         ..addListener(_updateState)
         ..load();
@@ -91,7 +92,8 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
                   return ListTile(
                     title: Text(data.description),
                     onTap: () {
-                      _controller.updateUserSelection(id: data.id, info: data.info);
+                      _controller.updateUserSelection(
+                          id: data.id, info: data.info);
                     },
                   );
                 },

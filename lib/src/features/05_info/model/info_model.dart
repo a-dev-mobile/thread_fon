@@ -11,5 +11,6 @@ class InfoModel with _$InfoModel {
     required int id,
   }) = _InfoModel;
 
-  factory InfoModel.fromJson(Map<String, dynamic> json) => _$InfoModelFromJson(json);
+  factory InfoModel.fromJson(Map<String, dynamic> json) =>
+      _$InfoModelFromJson(json);
 }

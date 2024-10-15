@@ -19,13 +19,13 @@ DECLARE
     thread_suffix text;
 BEGIN
     -- Валидация типа резьбы
-    IF p_thread_type NOT IN ('female', 'male') THEN
-        RAISE EXCEPTION 'Недопустимый тип резьбы. Используйте ''female'' или ''male''.';
+    IF p_thread_type NOT IN ('f', 'm') THEN
+        RAISE EXCEPTION 'Недопустимый тип резьбы. Используйте ''f'' или ''m''.';
     END IF;
 
     -- Определяем суффикс для фильтрации ключей JSON
     thread_suffix := CASE 
-                        WHEN p_thread_type = 'female' THEN '_f' 
+                        WHEN p_thread_type = 'f' THEN '_f' 
                         ELSE '_m' 
                      END;
 
@@ -55,12 +55,12 @@ BEGIN
             row_data.id AS id, 
             FORMAT('M %s x %s - %s', row_data.diameter, row_data.pitch, 
                    CASE 
-                       WHEN p_thread_type = 'female' THEN UPPER(tol)
+                       WHEN p_thread_type = 'f' THEN UPPER(tol)
                        ELSE tol
                    END
             ) AS description,
             CASE 
-                WHEN p_thread_type = 'female' THEN UPPER(tol)
+                WHEN p_thread_type = 'f' THEN UPPER(tol)
                 ELSE tol
             END AS tolerance
         FROM unnest(tol_array) AS tol;

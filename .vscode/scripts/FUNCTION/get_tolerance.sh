@@ -16,10 +16,10 @@ DB_PORT="5432"
 
 echo ""
 echo "female"
-psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -c "SELECT * FROM metric.get_tolerance(12, 'female');"
+psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -c "SELECT * FROM metric.get_tolerance(12, 'f');"
 echo ""
 echo "male"
-psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -c "SELECT * FROM metric.get_tolerance(12, 'male');"
+psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -c "SELECT * FROM metric.get_tolerance(12, 'm');"
 # psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -c "SELECT * FROM metric.get_tolerance(5.5, 'male');"
 
 echo ""

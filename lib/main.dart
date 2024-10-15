@@ -59,7 +59,7 @@ Future<void> main() async {
 
         // Инициализация DatabaseService
         final databaseService = DatabaseService(
-          host: '134.255.232.136',
+          host: 'thread.wayofdt.de',
           database: 'dev_thread_db',
           username: 'readonly_user',
           password: '123123',

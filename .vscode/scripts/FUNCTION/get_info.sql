@@ -19,20 +19,16 @@ RETURNS TABLE (
     major_diam_min double precision, -- Минимальное значение внешнего диаметра
     major_diam_avg double precision, -- Среднее значение внешнего диаметра
     major_diam_max double precision, -- Максимальное значение внешнего диаметра
+    pitch_diam_d2 double precision,
     pitch_diam_min double precision, -- Минимальное значение диаметра по шагу
     pitch_diam_avg double precision, -- Среднее значение диаметра по шагу
     pitch_diam_max double precision, -- Максимальное значение диаметра по шагу
     minor_diam_min double precision, -- Минимальное значение малого диаметра
     minor_diam_avg double precision, -- Среднее значение малого диаметра
     minor_diam_max double precision, -- Максимальное значение малого диаметра
-    pitch_diam_d2 double precision,
     minor_diam_d1 double precision,
     minor_diam_d3 double precision,
     h double precision,
-    h_5_8 double precision,
-    h_3_8 double precision,
-    h_4 double precision,
-    h_8 double precision,
     d_es double precision,
     d_ei double precision,
     d1_es double precision,
@@ -138,20 +134,16 @@ BEGIN
         major_diam_min, 
         major_diam_avg, -- Новая колонка для среднего значения внешнего диаметра
         major_diam_max,
+        row_data.pitch_diam_d2,
         pitch_diam_min, 
         pitch_diam_avg, -- Новая колонка для среднего значения диаметра по шагу
         pitch_diam_max,
         minor_diam_min,  
         minor_diam_avg, -- Новая колонка для среднего значения малого диаметра
         minor_diam_max,
-        row_data.pitch_diam_d2,
         row_data.minor_diam_d1,
         row_data.minor_diam_d3,
         row_data.h,
-        row_data.h_5_8,
-        row_data.h_3_8,
-        row_data.h_4,
-        row_data.h_8,
         d_es,
         d_ei,
         d1_es,

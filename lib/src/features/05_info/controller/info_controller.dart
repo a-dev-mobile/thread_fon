@@ -13,7 +13,9 @@ part 'info_state.dart';
 final _logger = L('info_controller');
 
 class InfoController with ChangeNotifier {
-  InfoController({required InfoRepositoryImpl repository, required LocalStorage localStorage})
+  InfoController(
+      {required InfoRepositoryImpl repository,
+      required LocalStorage localStorage})
       : _repository = repository,
         _localStorage = localStorage;
   InfoState _state = const InfoState();
@@ -37,7 +39,8 @@ class InfoController with ChangeNotifier {
     final userSelection = await _localStorage.getUserSelection();
 
     try {
-      final model = await _repository.fetchInfo(userSelection.id!, userSelection.threadType!);
+      final model = await _repository.fetchInfo(
+          userSelection.id!, userSelection.threadType!);
       _updateState(status: EnumScreenStatus.success, model: model);
     } on Exception catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
@@ -47,7 +50,8 @@ class InfoController with ChangeNotifier {
         error: ErrorState(
           exception: e,
           stackTrace: s.toString().isNotEmpty ? s : StackTrace.current,
-          msgUser: 'An error occurred while loading infos. Please try again later.',
+          msgUser:
+              'An error occurred while loading infos. Please try again later.',
         ),
       );
     }
@@ -68,12 +72,14 @@ class InfoController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateUserSelection({required int id, required String info}) async {
+  Future<void> updateUserSelection(
+      {required int id, required String info}) async {
     _updateState(status: EnumScreenStatus.loadingNavigating);
     try {
-      await _localStorage.updateUserSelection((userSelection) => userSelection.copyWith(
-            id: id,
-          ));
+      await _localStorage
+          .updateUserSelection((userSelection) => userSelection.copyWith(
+                id: id,
+              ));
 
       _updateState(status: EnumScreenStatus.navigating);
       await Future<void>.delayed(const Duration(seconds: 1));
@@ -84,7 +90,8 @@ class InfoController with ChangeNotifier {
         error: ErrorState(
           exception: e,
           stackTrace: s,
-          msgUser: 'An error occurred while updating your selection. Please try again.',
+          msgUser:
+              'An error occurred while updating your selection. Please try again.',
         ),
       );
     }
