@@ -15,6 +15,7 @@ class UserSelection with _$UserSelection {
     EnumMetricThreadRange? rangeMain,
     EnumInstrumentThreadRange? rangeSub,
     String? tolerance,
+    String? fullName,
   }) = _UserSelection;
 
   factory UserSelection.fromJson(Map<String, dynamic> json) =>

@@ -94,7 +94,7 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
                     title: Text(data.description),
                     onTap: () {
                       _controller.updateUserSelection(
-                          id: data.id, tolerance: data.tolerance);
+                          id: data.id, tolerance: data.tolerance, description: data.description);
                     },
                   );
                 },

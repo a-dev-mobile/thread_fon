@@ -90,10 +90,9 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
                 itemBuilder: (context, index) {
                   final data = _controller.state.model[index];
                   return ListTile(
-                    title: Text(data.description),
+                    title: Text(data.toString()),
                     onTap: () {
-                      _controller.updateUserSelection(
-                          id: data.id, info: data.info);
+                      _controller.updateUserSelection(data);
                     },
                   );
                 },

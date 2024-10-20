@@ -1,1 +1,0 @@
-/home/dmitriy/Documents/DEV/MY_GITHUB/scripts/services/thread_web/setup_thread_web.sh

@@ -12,11 +12,11 @@ class ThreadTypeRepositoryImpl implements IThreadTypeRepository {
 
     return [
       const ThreadTypeModel(
-        enumThreadType: EnumThreadType.female,
+        enumThreadType: EnumThreadType.f,
         svgAssetPath: 'assets/svg/gaika.svg',
       ),
       const ThreadTypeModel(
-        enumThreadType: EnumThreadType.male,
+        enumThreadType: EnumThreadType.m,
         svgAssetPath: 'assets/svg/bolt.svg',
       ),
     ];

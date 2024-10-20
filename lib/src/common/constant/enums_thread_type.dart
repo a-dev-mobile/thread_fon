@@ -1,4 +1,4 @@
 enum EnumThreadType {
-  male,
-  female,
+  m,
+  f,
 }

@@ -2,10 +2,6 @@
 FLUTTER = fvm flutter
 DART = fvm dart
 
-.PHONY: help get clean fluttergen gen-build gen-watch fix format \
-        get-mstaffapi-client get-service-desk get-ota-update \
-        gen-service-desk gen-all update gen-localization init
-
 ########################
 # Общая помощь
 ########################
@@ -70,6 +66,21 @@ get-all: clean get
 build-android:
 	$(FLUTTER) build apk --release 
 
+# Очистка кеша и получение зависимостей для всего проекта
+refresh-all: cache-clean clean get-all
+
+# Обновление всех зависимостей для всего проекта
+upgrade-all: upgrade clean get-all
+
+
+# Очистка кеша pub
+cache-clean:
+	$(FLUTTER) pub cache clean
+
+# Обновление зависимостей
+upgrade:
+	$(FLUTTER) pub upgrade
+	
 ########################
 # Инициализация проекта
 ########################

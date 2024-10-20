@@ -14,9 +14,7 @@ part 'tolerance_state.dart';
 final _logger = L('tolerance_controller');
 
 class ToleranceController with ChangeNotifier {
-  ToleranceController(
-      {required ToleranceRepositoryImpl repository,
-      required LocalStorage localStorage})
+  ToleranceController({required ToleranceRepositoryImpl repository, required LocalStorage localStorage})
       : _repository = repository,
         _localStorage = localStorage;
   ToleranceState _state = const ToleranceState();
@@ -40,8 +38,7 @@ class ToleranceController with ChangeNotifier {
     final userSelection = await _localStorage.getUserSelection();
 
     try {
-      final model = await _repository.fetchTolerances(
-          userSelection.id!, userSelection.threadType!);
+      final model = await _repository.fetchTolerances(userSelection.id!, userSelection.threadType!);
       _updateState(status: EnumScreenStatus.success, model: model);
     } on Exception catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
@@ -51,8 +48,7 @@ class ToleranceController with ChangeNotifier {
         error: ErrorState(
           exception: e,
           stackTrace: s.toString().isNotEmpty ? s : StackTrace.current,
-          msgUser:
-              'An error occurred while loading tolerances. Please try again later.',
+          msgUser: 'An error occurred while loading tolerances. Please try again later.',
         ),
       );
     }
@@ -73,12 +69,11 @@ class ToleranceController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateUserSelection(
-      {required int id, required String tolerance}) async {
+  Future<void> updateUserSelection({required int id, required String tolerance, required String description}) async {
     _updateState(status: EnumScreenStatus.loadingNavigating);
     try {
-      await _localStorage.updateUserSelection((userSelection) =>
-          userSelection.copyWith(id: id, tolerance: tolerance));
+      await _localStorage.updateUserSelection(
+          (userSelection) => userSelection.copyWith(id: id, tolerance: tolerance, fullName: description));
 
       _updateState(status: EnumScreenStatus.navigating);
       await Future<void>.delayed(const Duration(seconds: 1));
@@ -89,8 +84,7 @@ class ToleranceController with ChangeNotifier {
         error: ErrorState(
           exception: e,
           stackTrace: s,
-          msgUser:
-              'An error occurred while updating your selection. Please try again.',
+          msgUser: 'An error occurred while updating your selection. Please try again.',
         ),
       );
     }

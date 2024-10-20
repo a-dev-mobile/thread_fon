@@ -39,8 +39,7 @@ class InfoController with ChangeNotifier {
     final userSelection = await _localStorage.getUserSelection();
 
     try {
-      final model = await _repository.fetchInfo(
-          userSelection.id!, userSelection.threadType!);
+      final model = await _repository.fetchInfo(userSelection);
       _updateState(status: EnumScreenStatus.success, model: model);
     } on Exception catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
@@ -72,13 +71,13 @@ class InfoController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateUserSelection(
-      {required int id, required String info}) async {
+  Future<void> updateUserSelection(InfoModel data, 
+      ) async {
     _updateState(status: EnumScreenStatus.loadingNavigating);
     try {
       await _localStorage
           .updateUserSelection((userSelection) => userSelection.copyWith(
-                id: id,
+                id: data.id,
               ));
 
       _updateState(status: EnumScreenStatus.navigating);
