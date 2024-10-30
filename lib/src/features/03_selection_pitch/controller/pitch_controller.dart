@@ -4,7 +4,6 @@ import 'package:threadfon/src/common/constant/enum_screen_status.dart';
 import 'package:threadfon/src/common/data/local_storage.dart';
 import 'package:threadfon/src/common/error/error_state.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
-
 import 'package:threadfon/src/features/03_selection_pitch/data/pitch_repository_impl.dart';
 import 'package:threadfon/src/features/03_selection_pitch/model/pitch_model.dart';
 
@@ -14,9 +13,7 @@ part 'pitch_state.dart';
 final _logger = L('pitch_controller');
 
 class PitchController with ChangeNotifier {
-  PitchController(
-      {required PitchRepositoryImpl repository,
-      required LocalStorage localStorage})
+  PitchController({required PitchRepositoryImpl repository, required LocalStorage localStorage})
       : _repository = repository,
         _localStorage = localStorage;
   PitchState _state = const PitchState();
@@ -40,7 +37,7 @@ class PitchController with ChangeNotifier {
     final userSelection = await _localStorage.getUserSelection();
 
     try {
-      final model = await _repository.fetchPitchs(userSelection.diameter!);
+      final model = await _repository.fetchPitch(userSelection.diameter!);
       _updateState(status: EnumScreenStatus.success, model: model);
     } on Exception catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
@@ -50,8 +47,7 @@ class PitchController with ChangeNotifier {
         error: ErrorState(
           exception: e,
           stackTrace: s.toString().isNotEmpty ? s : StackTrace.current,
-          msgUser:
-              'An error occurred while loading pitchs. Please try again later.',
+          msgUser: 'An error occurred while loading pitchs. Please try again later.',
         ),
       );
     }
@@ -75,8 +71,7 @@ class PitchController with ChangeNotifier {
   Future<void> updateUserSelection({required int id}) async {
     _updateState(status: EnumScreenStatus.loadingNavigating);
     try {
-      await _localStorage.updateUserSelection(
-          (userSelection) => userSelection.copyWith(id: id));
+      await _localStorage.updateUserSelection((userSelection) => userSelection.copyWith(id: id));
 
       _updateState(status: EnumScreenStatus.navigating);
       await Future<void>.delayed(const Duration(seconds: 1));
@@ -87,8 +82,7 @@ class PitchController with ChangeNotifier {
         error: ErrorState(
           exception: e,
           stackTrace: s,
-          msgUser:
-              'An error occurred while updating your selection. Please try again.',
+          msgUser: 'An error occurred while updating your selection. Please try again.',
         ),
       );
     }

@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'pitch_model.freezed.dart';
 part 'pitch_model.g.dart';
 
-enum EnumTypeRow {
+enum EnumPitchDataType {
   @JsonValue(1)
   header,
   @JsonValue(2)
@@ -29,8 +29,8 @@ enum EnumInstrumentThreadRange {
 @freezed
 class PitchModel with _$PitchModel {
   const factory PitchModel({
-    @JsonKey(name: 'type') required EnumTypeRow enumTypeRow,
-    @JsonKey(name: 'description') required String description,
+    @JsonKey(name: 'type') required EnumPitchDataType enumPitchDataType,
+   required String info,
     int? id,
   }) = _PitchModel;
 

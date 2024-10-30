@@ -3,6 +3,7 @@ import 'package:threadfon/src/common/constant/enum_screen_status.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
+import 'package:threadfon/src/common/services/api_provider.dart';
 import 'package:threadfon/src/features/02_selection_diameter/database_provider.dart';
 import 'package:threadfon/src/features/04_selection_tolerance/controller/tolerance_controller.dart';
 import 'package:threadfon/src/features/04_selection_tolerance/data/tolerance_repository_impl.dart';
@@ -25,10 +26,10 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isControllerInitialized) {
-      final databaseService = DatabaseProvider.of(context);
+      final apiService = ApiProvider.of(context);
       final localStorage = LocalStorageProvider.of(context);
       final repository =
-          ToleranceRepositoryImpl(databaseService: databaseService);
+          ToleranceRepositoryImpl(apiService: apiService);
       _controller = ToleranceController(
           repository: repository, localStorage: localStorage);
       _controller
@@ -91,10 +92,12 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
                 itemBuilder: (context, index) {
                   final data = _controller.state.model[index];
                   return ListTile(
-                    title: Text(data.description),
+                    title: Text(data.info),
                     onTap: () {
                       _controller.updateUserSelection(
-                          id: data.id, tolerance: data.tolerance, description: data.description);
+                         
+                          tolerance: data.tolerance,
+                          description: data.info);
                     },
                   );
                 },

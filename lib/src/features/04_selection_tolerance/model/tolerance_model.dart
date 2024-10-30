@@ -6,9 +6,8 @@ part 'tolerance_model.g.dart';
 @freezed
 class ToleranceModel with _$ToleranceModel {
   const factory ToleranceModel({
-    required String description,
+    required String info,
     required String tolerance,
-    required int id,
   }) = _ToleranceModel;
 
   factory ToleranceModel.fromJson(Map<String, dynamic> json) =>

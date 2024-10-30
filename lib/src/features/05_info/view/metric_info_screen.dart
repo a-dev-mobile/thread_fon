@@ -3,6 +3,7 @@ import 'package:threadfon/src/common/constant/enum_screen_status.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
+import 'package:threadfon/src/common/services/api_provider.dart';
 import 'package:threadfon/src/features/02_selection_diameter/database_provider.dart';
 import 'package:threadfon/src/features/02_selection_diameter/view/metric_diameter_screen.dart';
 import 'package:threadfon/src/features/05_info/controller/info_controller.dart';
@@ -25,9 +26,9 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isControllerInitialized) {
-      final databaseService = DatabaseProvider.of(context);
+      final apiService = ApiProvider.of(context);
       final localStorage = LocalStorageProvider.of(context);
-      final repository = InfoRepositoryImpl(databaseService: databaseService);
+      final repository = InfoRepositoryImpl(apiService: apiService);
       _controller =
           InfoController(repository: repository, localStorage: localStorage);
       _controller

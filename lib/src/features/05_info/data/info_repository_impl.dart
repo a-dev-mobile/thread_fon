@@ -1,58 +1,51 @@
 import 'dart:async';
 
-import 'package:postgres/postgres.dart';
+import 'package:threadfon/src/common/constant/enums_thread_type.dart';
 import 'package:threadfon/src/common/data/user_selection.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
-import 'package:threadfon/src/features/02_selection_diameter/database_service.dart';
+import 'package:threadfon/src/common/services/api_service.dart';
+
 import 'package:threadfon/src/features/05_info/model/info_model.dart';
 
 final _logger = L('info_repository_impl');
 
 class InfoRepositoryImpl {
   InfoRepositoryImpl({
-    required DatabaseService databaseService,
-  }) : _databaseService = databaseService;
+    required ApiService apiService,
+  }) : _apiService = apiService;
 
-  final DatabaseService _databaseService;
+  final ApiService _apiService;
 
-  Future<List<InfoModel>> fetchInfo(UserSelection userSelection) async {
-    final connection = await _databaseService.openConnection();
-
-    // Запуск команды "SET TRANSACTION READ WRITE" и выполнение запроса в фоне
-
+  Future<List<InfoModel>> fetchInfo({required String tolerance, required String threadType, required int id}) async {
     try {
-      final query =
-          "SELECT * FROM metric.get_info(${userSelection.id}, '${userSelection.threadType!.name}', '${userSelection.tolerance!}' );";
+      final response = await _apiService.get(
+        'https://thread.wayofdt.de/v1/metric/info',
+        queryParameters: {
+          'tolerance': tolerance,
+          'id': id,
+          'type': threadType,
+        },
+      );
 
-    
-      final result = await _databaseService.fetchResults(connection, query);
-
-      final data = result.map((row) {
-        final rowMap = row.toColumnMap();
-        return InfoModel.fromJson(rowMap);
-      }).toList();
-
-      return data;
-    } finally {
-    await _runAnalytics(connection, userSelection);
-      await _databaseService.closeConnection(connection);
-    }
-  }
-
-  // Фоновая задача для выполнения SQL-запроса
-  Future<void> _runAnalytics(Connection connection, UserSelection userSelection) async {
-    // Установить транзакцию на запись
-    const setTransactionQuery = "SET TRANSACTION READ WRITE;";
-    const backgroundQuery = "$setTransactionQuery SELECT analytics.update_or_insert_thread('M10');";
-    try {
-
-      await _databaseService.executeQuery(connection, backgroundQuery);
-      _logger.i('Background query executed successfully.', includeStackTrace: false);
-
-      await _databaseService.executeQuery(connection, backgroundQuery);
-    } catch (e) {
-      // Обработка ошибки, если необходимо
-      _logger.e('Error in background task: ', error: e);
+      if (response.statusCode == 200) {
+        final List<dynamic> rawData = response.data as List<dynamic>;
+        final List<InfoModel> listModel =
+            rawData.map((json) => InfoModel.fromJson(json as Map<String, dynamic>)).toList();
+        return listModel;
+      } else {
+        _logger.e(
+          'Failed to fetch diameters',
+          error: 'Status code: ${response.statusCode}',
+        );
+        throw Exception('Failed to fetch diameters');
+      }
+    } catch (error, stackTrace) {
+      _logger.e(
+        'Error fetching diameters',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
     }
   }
 }

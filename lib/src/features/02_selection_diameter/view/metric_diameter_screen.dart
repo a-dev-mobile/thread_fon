@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:threadfon/src/common/constant/enum_screen_status.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
+import 'package:threadfon/src/common/services/api_provider.dart';
 import 'package:threadfon/src/features/02_selection_diameter/controller/diameter_controller.dart';
 import 'package:threadfon/src/features/02_selection_diameter/data/diameter_repository_impl.dart';
 import 'package:threadfon/src/features/02_selection_diameter/database_provider.dart';
@@ -35,12 +36,10 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isControllerInitialized) {
-      final databaseService = DatabaseProvider.of(context);
+      final apiService =ApiProvider.of(context);
       final localStorage = LocalStorageProvider.of(context);
-      final repository =
-          DiameterRepositoryImpl(databaseService: databaseService);
-      _controller = DiameterController(
-          repository: repository, localStorage: localStorage);
+      final repository = DiameterRepositoryImpl(apiService: apiService);
+      _controller = DiameterController(repository: repository, localStorage: localStorage);
       _controller.addListener(_updateState);
       _controller.loadData();
       _isControllerInitialized = true;
@@ -104,10 +103,9 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
                   itemBuilder: (context, index) {
                     final data = _controller.state.diameters[index];
                     return ListTile(
-                      title: Text(data.description),
+                      title: Text(data.info),
                       onTap: () {
-                        _controller.updateUserSelection(
-                            id: data.id, diameter: data.diameter);
+                        _controller.updateUserSelection(id: data.id, diameter: data.diameter);
                       },
                     );
                   },

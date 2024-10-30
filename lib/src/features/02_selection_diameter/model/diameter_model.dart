@@ -7,7 +7,7 @@ part 'diameter_model.g.dart';
 class DiameterModel with _$DiameterModel {
   const factory DiameterModel({
     required int id,
-    required String description,
+    required String info,
     required double diameter,
   }) = _DiameterModel;
 

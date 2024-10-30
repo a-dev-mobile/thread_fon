@@ -3,7 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/src/common/constant/enum_screen_status.dart'; // Добавьте импорт EnumStatus
 import 'package:threadfon/src/common/data/local_storage.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
-import 'package:threadfon/src/features/02_selection_diameter/data/i_diameter_repository.dart';
+import 'package:threadfon/src/features/02_selection_diameter/data/diameter_repository_impl.dart';
+
 import 'package:threadfon/src/features/02_selection_diameter/model/diameter_model.dart';
 
 part 'diameter_controller.freezed.dart';
@@ -14,13 +15,13 @@ final _logger = L('diameter_controller');
 
 class DiameterController with ChangeNotifier {
   DiameterController(
-      {required IDiameterRepository repository,
+      {required DiameterRepositoryImpl repository,
       required LocalStorage localStorage})
       : _repository = repository,
         _localStorage = localStorage;
   DiameterState _state = const DiameterState();
 
-  final IDiameterRepository _repository;
+  final DiameterRepositoryImpl _repository;
   final LocalStorage _localStorage;
 
   bool _isDisposed = false;

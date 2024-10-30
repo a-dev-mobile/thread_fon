@@ -3,7 +3,7 @@ import 'package:threadfon/src/features/01_selection_thread_type/data/i_thread_ty
 import 'package:threadfon/src/features/01_selection_thread_type/model/thread_type_model.dart';
 
 class ThreadTypeRepositoryImpl implements IThreadTypeRepository {
-  // Placeholder for any dependencies, such as a DatabaseService
+  // Placeholder for any dependencies, such as a ApiService
 
   @override
   Future<List<ThreadTypeModel>> fetchThreadTypes() async {

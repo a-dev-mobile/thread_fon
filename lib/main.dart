@@ -11,9 +11,10 @@ import 'package:threadfon/src/common/app/app.dart';
 import 'package:threadfon/src/common/data/local_storage.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
+import 'package:threadfon/src/common/services/api_provider.dart';
+import 'package:threadfon/src/common/services/api_service.dart';
 import 'package:threadfon/src/common/util/file_copy.dart';
 import 'package:threadfon/src/features/02_selection_diameter/database_provider.dart'; // Импорт DatabaseProvider
-import 'package:threadfon/src/features/02_selection_diameter/database_service.dart'; // Импорт DatabaseService
 
 final _l = L('main');
 
@@ -46,8 +47,7 @@ Future<void> main() async {
             AppErrorHandler().recordError(exception, stackTrace);
           } else {
             // В режиме разработки логируем ошибку для отладки
-            _l.e('FlutterError.onError',
-                error: exception, stackTrace: stackTrace);
+            _l.e('FlutterError.onError', error: exception, stackTrace: stackTrace);
           }
         };
 
@@ -57,13 +57,6 @@ Future<void> main() async {
           DeviceOrientation.portraitDown,
         ]);
 
-        // Инициализация DatabaseService
-        final databaseService = DatabaseService(
-          host: 'thread.wayofdt.de',
-          database: 'dev_thread_db',
-          username: 'readonly_user',
-          password: '123123',
-        );
 /* 
 DB_USER="postgres"
 export PGPASSWORD="v5dIY8UaX28kpkf6o6ZhoTAPYT6MYcaKxRh9Zg7dwZQfNEXI8c"
@@ -84,8 +77,8 @@ DB_PORT="5432"
  */
         // Запуск приложения с провайдерами
         runApp(
-          DatabaseProvider(
-            databaseService: databaseService,
+          ApiProvider(
+            apiService: ApiService(),
             child: LocalStorageProvider(
               localStorage: localStorage,
               child: const App(),
@@ -114,8 +107,7 @@ DB_PORT="5432"
           AppErrorHandler().recordError(error, stack);
         } else {
           // В режиме разработки логируем ошибку для отладки
-          _l.e('🚑 PlatformDispatcher.onError',
-              error: error, stackTrace: stack);
+          _l.e('🚑 PlatformDispatcher.onError', error: error, stackTrace: stack);
         }
 
         return true;

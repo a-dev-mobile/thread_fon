@@ -1,33 +1,44 @@
 import 'dart:async';
 
-import 'package:threadfon/src/features/02_selection_diameter/data/i_diameter_repository.dart';
-import 'package:threadfon/src/features/02_selection_diameter/database_service.dart';
+import 'package:threadfon/src/common/log/l_setup.dart';
+import 'package:threadfon/src/common/services/api_service.dart';
 import 'package:threadfon/src/features/02_selection_diameter/model/diameter_model.dart';
 
-class DiameterRepositoryImpl implements IDiameterRepository {
+final _logger = L('diameter_repository_impl');
+
+class DiameterRepositoryImpl {
   DiameterRepositoryImpl({
-    required DatabaseService databaseService,
-  }) : _databaseService = databaseService;
+    required ApiService apiService,
+  }) : _apiService = apiService;
 
-  final DatabaseService _databaseService;
+  final ApiService _apiService;
 
-  @override
-  Future<List<DiameterModel>> fetchDiameters() async {
-    final connection = await _databaseService.openConnection();
+  Future<List<DiameterModel>> fetchDiameters([String order = 'asc']) async {
     try {
-      final result = await _databaseService.fetchResults(
-        connection,
-        "SELECT * FROM metric.get_diameters('ASC');",
+      final response = await _apiService.get(
+        'https://thread.wayofdt.de/v1/metric/diameters',
+        queryParameters: {'order': order},
       );
 
-      final diameters = result.map((row) {
-        final rowMap = row.toColumnMap();
-        return DiameterModel.fromJson(rowMap);
-      }).toList();
-
-      return diameters;
-    } finally {
-      await _databaseService.closeConnection(connection);
+      if (response.statusCode == 200) {
+        final List<dynamic> rawData = response.data as List<dynamic>;
+        final List<DiameterModel> listModel =
+            rawData.map((json) => DiameterModel.fromJson(json as Map<String, dynamic>)).toList();
+        return listModel;
+      } else {
+        _logger.e(
+          'Failed to fetch diameters',
+          error: 'Status code: ${response.statusCode}',
+        );
+        throw Exception('Failed to fetch diameters');
+      }
+    } catch (error, stackTrace) {
+      _logger.e(
+        'Error fetching diameters',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
     }
   }
 }

@@ -38,7 +38,7 @@ class ToleranceController with ChangeNotifier {
     final userSelection = await _localStorage.getUserSelection();
 
     try {
-      final model = await _repository.fetchTolerances(userSelection.id!, userSelection.threadType!);
+      final model = await _repository.fetchTolerances(userSelection.id!, userSelection.threadType!.name);
       _updateState(status: EnumScreenStatus.success, model: model);
     } on Exception catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
@@ -69,11 +69,11 @@ class ToleranceController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateUserSelection({required int id, required String tolerance, required String description}) async {
+  Future<void> updateUserSelection({required String tolerance, required String description}) async {
     _updateState(status: EnumScreenStatus.loadingNavigating);
     try {
-      await _localStorage.updateUserSelection(
-          (userSelection) => userSelection.copyWith(id: id, tolerance: tolerance, fullName: description));
+      await _localStorage
+          .updateUserSelection((userSelection) => userSelection.copyWith(tolerance: tolerance, fullName: description));
 
       _updateState(status: EnumScreenStatus.navigating);
       await Future<void>.delayed(const Duration(seconds: 1));
