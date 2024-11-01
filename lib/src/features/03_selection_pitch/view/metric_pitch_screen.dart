@@ -4,8 +4,6 @@ import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/services/api_provider.dart';
-import 'package:threadfon/src/features/02_selection_diameter/database_provider.dart';
-import 'package:threadfon/src/features/02_selection_diameter/view/metric_diameter_screen.dart';
 import 'package:threadfon/src/features/03_selection_pitch/controller/pitch_controller.dart';
 import 'package:threadfon/src/features/03_selection_pitch/data/pitch_repository_impl.dart';
 import 'package:threadfon/src/features/04_selection_tolerance/view/metric_tolerance_screen.dart';
@@ -95,7 +93,7 @@ class _MetricPitchScreenState extends State<MetricPitchScreen> {
                   return ListTile(
                     title: Text(data.info),
                     onTap: () {
-                      _controller.updateUserSelection(id: data.id!);
+                      _controller.updateUserSelection(id: data.id!,pitch: data.pitch!);
                     },
                   );
                 },

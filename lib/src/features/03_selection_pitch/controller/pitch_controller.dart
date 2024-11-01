@@ -68,10 +68,10 @@ class PitchController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateUserSelection({required int id}) async {
+  Future<void> updateUserSelection({required int id, required double pitch}) async {
     _updateState(status: EnumScreenStatus.loadingNavigating);
     try {
-      await _localStorage.updateUserSelection((userSelection) => userSelection.copyWith(id: id));
+      await _localStorage.updateUserSelection((userSelection) => userSelection.copyWith(id: id, pitch: pitch));
 
       _updateState(status: EnumScreenStatus.navigating);
       await Future<void>.delayed(const Duration(seconds: 1));

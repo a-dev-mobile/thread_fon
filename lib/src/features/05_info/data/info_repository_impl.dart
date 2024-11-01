@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:threadfon/src/common/constant/enums_thread_type.dart';
-import 'package:threadfon/src/common/data/user_selection.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/services/api_service.dart';
 
@@ -16,13 +14,14 @@ class InfoRepositoryImpl {
 
   final ApiService _apiService;
 
-  Future<List<InfoModel>> fetchInfo({required String tolerance, required String threadType, required int id}) async {
+  Future<List<InfoModel>> fetchInfo({required String tolerance, required String threadType, required double pitch, required double diameter}) async {
     try {
       final response = await _apiService.get(
         'https://thread.wayofdt.de/v1/metric/info',
         queryParameters: {
           'tolerance': tolerance,
-          'id': id,
+          'diameter': diameter,
+          'pitch': pitch,
           'type': threadType,
         },
       );

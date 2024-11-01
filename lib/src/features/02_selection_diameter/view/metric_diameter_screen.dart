@@ -5,7 +5,6 @@ import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/services/api_provider.dart';
 import 'package:threadfon/src/features/02_selection_diameter/controller/diameter_controller.dart';
 import 'package:threadfon/src/features/02_selection_diameter/data/diameter_repository_impl.dart';
-import 'package:threadfon/src/features/02_selection_diameter/database_provider.dart';
 import 'package:threadfon/src/features/03_selection_pitch/view/metric_pitch_screen.dart';
 
 final _l = L('metric_thread_diameter_screen');

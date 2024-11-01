@@ -4,7 +4,6 @@ import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/services/api_provider.dart';
-import 'package:threadfon/src/features/02_selection_diameter/database_provider.dart';
 import 'package:threadfon/src/features/04_selection_tolerance/controller/tolerance_controller.dart';
 import 'package:threadfon/src/features/04_selection_tolerance/data/tolerance_repository_impl.dart';
 import 'package:threadfon/src/features/05_info/view/metric_info_screen.dart';

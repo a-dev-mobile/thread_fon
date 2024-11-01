@@ -14,7 +14,7 @@ import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/services/api_provider.dart';
 import 'package:threadfon/src/common/services/api_service.dart';
 import 'package:threadfon/src/common/util/file_copy.dart';
-import 'package:threadfon/src/features/02_selection_diameter/database_provider.dart'; // Импорт DatabaseProvider
+// Импорт DatabaseProvider
 
 final _l = L('main');
 
@@ -52,10 +52,10 @@ Future<void> main() async {
         };
 
         // Установка предпочтительной ориентации экрана
-        await SystemChrome.setPreferredOrientations([
-          DeviceOrientation.portraitUp,
-          DeviceOrientation.portraitDown,
-        ]);
+        // await SystemChrome.setPreferredOrientations([
+        //   DeviceOrientation.portraitUp,
+        //   DeviceOrientation.portraitDown,
+        // ]);
 
 /* 
 DB_USER="postgres"

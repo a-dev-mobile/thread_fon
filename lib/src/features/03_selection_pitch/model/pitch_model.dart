@@ -31,6 +31,7 @@ class PitchModel with _$PitchModel {
   const factory PitchModel({
     @JsonKey(name: 'type') required EnumPitchDataType enumPitchDataType,
    required String info,
+    double? pitch,
     int? id,
   }) = _PitchModel;
 

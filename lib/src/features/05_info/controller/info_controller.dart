@@ -38,7 +38,8 @@ class InfoController with ChangeNotifier {
 
     try {
       final model = await _repository.fetchInfo(
-        id: userSelection.id!,
+        diameter: userSelection.diameter!,
+        pitch: userSelection.pitch!,
         threadType: userSelection.threadType!.name,
         tolerance: userSelection.tolerance!,
       );

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:threadfon/src/common/constant/enum_screen_status.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/services/api_provider.dart';
-import 'package:threadfon/src/features/02_selection_diameter/database_provider.dart';
 import 'package:threadfon/src/features/02_selection_diameter/view/metric_diameter_screen.dart';
 import 'package:threadfon/src/features/05_info/controller/info_controller.dart';
 import 'package:threadfon/src/features/05_info/data/info_repository_impl.dart';
@@ -29,8 +29,7 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
       final apiService = ApiProvider.of(context);
       final localStorage = LocalStorageProvider.of(context);
       final repository = InfoRepositoryImpl(apiService: apiService);
-      _controller =
-          InfoController(repository: repository, localStorage: localStorage);
+      _controller = InfoController(repository: repository, localStorage: localStorage);
       _controller
         ..addListener(_updateState)
         ..load();
@@ -86,17 +85,21 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
                 body: Center(child: LinearProgressIndicator()),
               );
             case EnumScreenStatus.success:
-              return ListView.builder(
-                itemCount: _controller.state.model.length,
-                itemBuilder: (context, index) {
-                  final data = _controller.state.model[index];
-                  return ListTile(
-                    title: Text(data.toString()),
-                    onTap: () {
-                      _controller.updateUserSelection(data);
-                    },
-                  );
-                },
+              return Column(
+                children: [
+                  Expanded(
+                    child: InteractiveViewer(
+                      minScale: 0.5, // Минимальный масштаб
+                      maxScale: 10.0, // Максимальный масштаб
+                      child: SvgPicture.network(
+                        'https://thread.wayofdt.de/v1/metric/thread-svg?diameter=10.00&pitch=1.5&type=m&tolerance=4g',
+                        color: Colors.white,
+                        placeholderBuilder: (BuildContext context) => const Center(child: CircularProgressIndicator()),
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                ],
               );
           }
         },
