@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 import 'package:threadfon/src/common/services/api_service.dart';
 
@@ -41,6 +42,43 @@ class InfoRepositoryImpl {
     } catch (error, stackTrace) {
       _logger.e(
         'Error fetching diameters',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+   Future<String> fetchSvgData({
+    required String tolerance,
+    required String threadType,
+    required double pitch,
+    required double diameter,
+  }) async {
+    try {
+      final response = await _apiService.get(
+        'https://thread.wayofdt.de/v1/metric/thread-svg',
+        queryParameters: {
+          'tolerance': tolerance,
+          'diameter': diameter,
+          'pitch': pitch,
+          'type': threadType,
+        },
+        options: Options(responseType: ResponseType.plain),
+      );
+
+      if (response.statusCode == 200) {
+        final svgData = response.data as String;
+        return svgData;
+      } else {
+        _logger.e(
+          'Failed to fetch SVG data',
+          error: 'Status code: ${response.statusCode}',
+        );
+        throw Exception('Failed to fetch SVG data');
+      }
+    } catch (error, stackTrace) {
+      _logger.e(
+        'Error fetching SVG data',
         error: error,
         stackTrace: stackTrace,
       );

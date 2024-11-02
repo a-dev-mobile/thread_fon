@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:threadfon/src/common/app/flex_theme.dart';
 import 'package:threadfon/src/common/app/future_builder_n.dart';
-import 'package:threadfon/src/common/app/language_notifier.dart'; // Новый импорт
-import 'package:threadfon/src/common/app/theme_notifier.dart';
+import 'package:threadfon/src/common/notifier/language_notifier.dart'; // Новый импорт
+import 'package:threadfon/src/common/notifier/theme_notifier.dart';
 import 'package:threadfon/src/common/app/value_listenable_builder_n.dart'; // Импортируем ValueListenableBuilderN
 import 'package:threadfon/src/common/localization/localization.dart';
 import 'package:threadfon/src/features/01_selection_thread_type/view/thread_type_selection_page.dart';

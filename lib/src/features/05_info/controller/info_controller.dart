@@ -43,16 +43,22 @@ class InfoController with ChangeNotifier {
         threadType: userSelection.threadType!.name,
         tolerance: userSelection.tolerance!,
       );
-      _updateState(status: EnumScreenStatus.success, model: model);
+            final svgData = await _repository.fetchSvgData(
+        diameter: userSelection.diameter!,
+        pitch: userSelection.pitch!,
+        threadType: userSelection.threadType!.name,
+        tolerance: userSelection.tolerance!,
+      );
+      _updateState(status: EnumScreenStatus.success, model: model, svgData: svgData);
     } on Exception catch (e, s) {
-      _logger.e('Error loading diameters', error: e, stackTrace: s);
+      _logger.e('Error loading info', error: e, stackTrace: s);
 
       _updateState(
         status: EnumScreenStatus.error,
         error: ErrorState(
           exception: e,
           stackTrace: s.toString().isNotEmpty ? s : StackTrace.current,
-          msgUser: 'An error occurred while loading infos. Please try again later.',
+          msgUser: 'An error occurred while loading info. Please try again later.',
         ),
       );
     }
@@ -62,6 +68,7 @@ class InfoController with ChangeNotifier {
     EnumScreenStatus? status,
     List<InfoModel>? model,
     ErrorState? error,
+    String? svgData,
   }) {
     if (_isDisposed) return;
 
@@ -69,6 +76,7 @@ class InfoController with ChangeNotifier {
       model: model ?? _state.model,
       status: status ?? _state.status,
       error: error ?? _state.error,
+      svgData: svgData ?? _state.svgData,
     );
     notifyListeners();
   }

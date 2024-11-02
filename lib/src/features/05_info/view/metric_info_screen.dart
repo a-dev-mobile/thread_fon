@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:threadfon/src/common/notifier/theme_notifier.dart';
+
 import 'package:threadfon/src/common/constant/enum_screen_status.dart';
 import 'package:threadfon/src/common/data/local_storage_provider.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
@@ -66,6 +68,8 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
   @override
   Widget build(BuildContext context) {
     _l.d('Building MetricInfoScreen', includeStackTrace: false);
+    final isDark = ThemeNotifier.watch(context) == ThemeMode.dark;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(Localization.of(context).threads_info),
@@ -87,17 +91,33 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
             case EnumScreenStatus.success:
               return Column(
                 children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _controller.state.model.length,
+                    itemBuilder: (context, index) {
+                      final data = _controller.state.model[index];
+                      return ListTile(
+                        title: Text(data.toString()),
+                        onTap: () {
+                          _controller.updateUserSelection(data);
+                        },
+                      );
+                    },
+                  ),
                   Expanded(
-                    child: InteractiveViewer(
-                      minScale: 0.5, // Минимальный масштаб
-                      maxScale: 10.0, // Максимальный масштаб
-                      child: SvgPicture.network(
-                        'https://thread.wayofdt.de/v1/metric/thread-svg?diameter=10.00&pitch=1.5&type=m&tolerance=4g',
-                        // color: Colors.white,
-                        placeholderBuilder: (BuildContext context) => const Center(child: CircularProgressIndicator()),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
+                    child: _controller.state.svgData == null
+                        ? const Center(child: CircularProgressIndicator())
+                        : InteractiveViewer(
+                            minScale: 0.5, 
+                            maxScale: 10.0,
+                            child: SvgPicture.string(
+                              _controller.state.svgData!,
+                              color: isDark ? Colors.white : null,
+                              placeholderBuilder: (BuildContext context) =>
+                                  const Center(child: CircularProgressIndicator()),
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                   ),
                 ],
               );

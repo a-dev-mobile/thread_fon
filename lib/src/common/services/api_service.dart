@@ -16,12 +16,13 @@ class ApiService {
               },
             )) {
     // Добавление интерсепторов
-    _dio.interceptors.add(LogInterceptor(responseBody: true));
+    // _dio.interceptors.add(LogInterceptor(responseBody: true));
     _dio.interceptors.add(CorrelationIdInterceptor());
   }
 
-  Future<Response> get(String path, {Map<String, dynamic>? queryParameters}) {
-    return _dio.get(path, queryParameters: queryParameters);
+  Future<Response> get(String path, {Map<String, dynamic>? queryParameters,  Options? options,
+  }) {
+    return _dio.get(path, queryParameters: queryParameters, options: options);
   }
 
   Future<Response> post(String path, {dynamic data}) {

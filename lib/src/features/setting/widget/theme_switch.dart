@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:threadfon/src/common/app/theme_notifier.dart';
+import 'package:threadfon/src/common/notifier/theme_notifier.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
 
 class ThemeSwitchWidget extends StatelessWidget {
@@ -9,26 +9,20 @@ class ThemeSwitchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Получаем экземпляр ThemeNotifier
-    final themeNotifier = ThemeNotifier.ofNotifier(context);
+    // Используем watch для получения текущего ThemeMode и обновления виджета при изменении темы
+    final themeMode = ThemeNotifier.watch(context);
 
-    if (themeNotifier == null) {
-      // Если ThemeNotifier не найден, можно вернуть пустой контейнер или обработать ошибку
-      return Container();
-    }
-
-    return ValueListenableBuilder<ThemeMode>(
-      valueListenable: themeNotifier.notifier!,
-      builder: (context, themeMode, _) => SwitchListTile(
-        title: Text(
-          Localization.of(context).dark_theme,
-        ),
-        onChanged: (value) {
-          var newThemeMode = value ? ThemeMode.dark : ThemeMode.light;
-          themeNotifier.setTheme(newThemeMode);
-        },
-        value: themeMode == ThemeMode.dark,
+    return SwitchListTile(
+      title: Text(
+        Localization.of(context).dark_theme,
       ),
+      value: themeMode == ThemeMode.dark,
+      onChanged: (value) {
+        // Используем read для изменения темы без обновления этого виджета
+        ThemeNotifier.read(context).setTheme(
+          value ? ThemeMode.dark : ThemeMode.light,
+        );
+      },
     );
   }
 }

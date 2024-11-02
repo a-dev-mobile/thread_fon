@@ -45,12 +45,12 @@ class LogBatcher {
     try {
       await _dio.post(
         'https://loki.wayofdt.de/loki/api/v1/push',
-        data: lokiPayload,
+        data: jsonEncode(lokiPayload),
         options: Options(headers: {'Content-Type': 'application/json'}),
       );
     } catch (e) {
-      // Обработка ошибки отправки
-      print('Ошибка при отправке логов в Loki: $e');
+      // Handle the error appropriately in your application
+      print('Error sending logs to Loki: $e');
     } finally {
       _logBuffer.clear();
     }
@@ -63,14 +63,20 @@ class LogBatcher {
 
       return {
         'stream': {
-          'Application': 'ThreadApp',
-          'Environment': kReleaseMode ? 'Production' : 'Development',
-          'Level': level,
+          'app': 'ThreadApp',
+          'environment': kReleaseMode ? 'Production' : 'Development',
+          'level': level,
         },
         'values': logs.map((log) {
-          final timestamp = (DateTime.now().microsecondsSinceEpoch * 1000).toString(); // Nanoseconds
-          final message = jsonEncode(log);
-          return [timestamp, message];
+          final timestampStr = log['Timestamp'].toString();
+          final message = log['MessageTemplate'];
+          final properties = log['Properties'] ?? {};
+
+          if (properties.isNotEmpty) {
+            return [timestampStr, message, properties];
+          } else {
+            return [timestampStr, message];
+          }
         }).toList(),
       };
     }).toList();

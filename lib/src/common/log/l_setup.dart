@@ -41,15 +41,14 @@ class L {
       return;
     }
 
-    final timestamp = DateTime.now();
+    final timestamp = DateTime.now().microsecondsSinceEpoch * 1000; // nanoseconds
     final logData = {
-      'Timestamp': timestamp.toIso8601String(),
-      'Level': level.toString().split('.').last,
+      'Timestamp': timestamp,
+      'level': level.toString().split('.').last,
       'MessageTemplate': '[$_className] $message',
       'Properties': {
-        'Error': error?.toString(),
-        'StackTrace':
-            includeStackTrace ? (stackTrace ?? StackTrace.current).toString() : null,
+        if (error != null) 'Error': error.toString(),
+        if (includeStackTrace && stackTrace != null) 'StackTrace': stackTrace.toString(),
         'SourceContext': _className,
        
       },

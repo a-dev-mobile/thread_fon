@@ -9,6 +9,19 @@ class ThemeNotifier extends InheritedNotifier<ValueNotifier<ThemeMode>> {
   }) : super(
           notifier: ValueNotifier<ThemeMode>(initialMode),
         );
+  // Метод для доступа к текущему ThemeMode с обновлением виджета
+  static ThemeMode watch(BuildContext context) {
+    final notifier = ThemeNotifier.of(context);
+    assert(notifier != null, 'No ThemeNotifier found in context');
+    return notifier!.value;
+  }
+
+  // Метод для доступа к ThemeNotifier без обновления виджета
+  static ThemeNotifier read(BuildContext context) {
+    final result = context.getElementForInheritedWidgetOfExactType<ThemeNotifier>()?.widget as ThemeNotifier?;
+    assert(result != null, 'No ThemeNotifier found in context');
+    return result!;
+  }
 
   // Метод для доступа к ValueNotifier<ThemeMode> из контекста
   static ValueNotifier<ThemeMode>? of(BuildContext context) {
@@ -16,10 +29,6 @@ class ThemeNotifier extends InheritedNotifier<ValueNotifier<ThemeMode>> {
     assert(result != null, 'No ThemeNotifier found in context');
     return result?.notifier;
   }
-
-  // Новый метод для доступа к ThemeNotifier
-  static ThemeNotifier? ofNotifier(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<ThemeNotifier>();
 
   // Метод для установки конкретной темы и сохранения в SharedPreferences
   Future<void> setTheme(ThemeMode mode) async {
@@ -40,10 +49,15 @@ class ThemeNotifier extends InheritedNotifier<ValueNotifier<ThemeMode>> {
   // Метод для загрузки темы из SharedPreferences
   static Future<ThemeMode> loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    final themeString = prefs.getString('theme_mode') ?? 'ThemeMode.system';
+    final themeString = prefs.getString('theme_mode') ?? 'ThemeMode.dark';
     return ThemeMode.values.firstWhere(
       (mode) => mode.toString() == themeString,
-      orElse: () => ThemeMode.system,
+      orElse: () => ThemeMode.dark,
     );
+  }
+
+  // Новый метод для быстрого получения текущей темы в виде bool
+  bool isDarkMode() {
+    return notifier?.value == ThemeMode.dark;
   }
 }
