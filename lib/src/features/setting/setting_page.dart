@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:threadfon/src/common/localization/localization.dart';
 // Package imports:
 
-import 'package:threadfon/src/common/widgets/my_divider.dart';
+
 import 'package:threadfon/src/features/setting/widget/about_app.dart';
 import 'package:threadfon/src/features/setting/widget/exit_app.dart';
 import 'package:threadfon/src/features/setting/widget/feed_back.dart';
@@ -25,15 +25,15 @@ class SettingPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ThemeSwitchWidget(),
-            MyDivider(),
+    
             LangSwitchWidget(),
-            MyDivider(),
+
             FeedbackWidget(),
-            MyDivider(),
+   
             RateAppWidget(),
-            MyDivider(),
+     
             AboutAppWidget(),
-            MyDivider(),
+       
             ExitAppWidget(),
           ],
         ),

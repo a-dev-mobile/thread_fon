@@ -1,14 +1,15 @@
 import 'dart:io' as io;
 
+import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
+import 'package:threadfon/src/common/log/log_batcher.dart';
 
 class CustomPrinter extends LogPrinter {
   CustomPrinter(this.className)
       : _prettyPrinterWithStack = PrettyPrinter(
           colors: false,
         ),
-        _prettyPrinterWithoutStack =
-            PrettyPrinter(colors: false, methodCount: 0);
+        _prettyPrinterWithoutStack = PrettyPrinter(colors: false, methodCount: 0);
 
   final String className;
   final PrettyPrinter _prettyPrinterWithStack;
@@ -16,9 +17,8 @@ class CustomPrinter extends LogPrinter {
 
   @override
   List<String> log(LogEvent event) {
-    final printer = event.stackTrace != null
-        ? _prettyPrinterWithStack
-        : _prettyPrinterWithoutStack;
+    final printer =
+        event.stackTrace != null ? _prettyPrinterWithStack : _prettyPrinterWithoutStack;
     final output = printer.log(event);
     return output.map((line) => '[$className] $line').toList();
   }
@@ -28,9 +28,35 @@ class L {
   L(String className)
       : _logger = Logger(
           printer: CustomPrinter(className),
-        );
+        ),
+        _className = className;
 
   final Logger _logger;
+  final String _className;
+
+  void _logToLoki(Level level, dynamic message,
+      {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
+    // In release mode, only log 'error' and 'fatal' levels to Loki
+    if (kReleaseMode && level.index < Level.error.index) {
+      return;
+    }
+
+    final timestamp = DateTime.now();
+    final logData = {
+      'Timestamp': timestamp.toIso8601String(),
+      'Level': level.toString().split('.').last,
+      'MessageTemplate': '[$_className] $message',
+      'Properties': {
+        'Error': error?.toString(),
+        'StackTrace':
+            includeStackTrace ? (stackTrace ?? StackTrace.current).toString() : null,
+        'SourceContext': _className,
+       
+      },
+    };
+
+    LogBatcher().addLog(level, logData);
+  }
 
   void t(dynamic message,
       {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
@@ -39,6 +65,8 @@ class L {
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
+    _logToLoki(Level.trace, message,
+        error: error, stackTrace: stackTrace, includeStackTrace: includeStackTrace);
   }
 
   void d(dynamic message,
@@ -48,6 +76,8 @@ class L {
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
+    _logToLoki(Level.debug, message,
+        error: error, stackTrace: stackTrace, includeStackTrace: includeStackTrace);
   }
 
   void i(dynamic message,
@@ -57,6 +87,8 @@ class L {
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
+    _logToLoki(Level.info, message,
+        error: error, stackTrace: stackTrace, includeStackTrace: includeStackTrace);
   }
 
   void w(dynamic message,
@@ -66,6 +98,8 @@ class L {
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
+    _logToLoki(Level.warning, message,
+        error: error, stackTrace: stackTrace, includeStackTrace: includeStackTrace);
   }
 
   void e(dynamic message,
@@ -75,8 +109,8 @@ class L {
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-    AppErrorHandler()
-        .recordError(error ?? message, stackTrace ?? StackTrace.current);
+    _logToLoki(Level.error, message,
+        error: error, stackTrace: stackTrace, includeStackTrace: includeStackTrace);
   }
 
   void f(dynamic message,
@@ -86,15 +120,10 @@ class L {
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-    AppErrorHandler()
-        .recordError(error ?? message, stackTrace ?? StackTrace.current);
+    _logToLoki(Level.fatal, message,
+        error: error, stackTrace: stackTrace, includeStackTrace: includeStackTrace);
   }
 }
 
-class AppErrorHandler {
-  Future<void> recordError(dynamic error, StackTrace stackTrace) async {
-    // Your implementation for error logging, e.g., sending to Firebase or Sentry.
-    io.stderr.writeln('Error recorded: $error');
-    io.stderr.writeln('StackTrace: $stackTrace');
-  }
-}
+
+

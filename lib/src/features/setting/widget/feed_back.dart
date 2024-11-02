@@ -14,17 +14,12 @@ class FeedbackWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BtnListTile(
         onTap: () {
-          launch(emailLaunchUri(context).toString());
+        
         },
         leading: const Icon(Icons.feedback_outlined),
         text: Localization.of(context).feedback,
         // trailing: const Icon(Icons.chevron_right),
       );
 
-  Uri emailLaunchUri(BuildContext context) => Uri(
-        scheme: 'mailto',
-        path: ConstCommon.email,
-        query:
-            '${Uri.encodeComponent('subject')}=${Uri.encodeComponent('${Localization.of(context).feedback} -> ${Localization.of(context).app_name}')}',
-      );
+
 }

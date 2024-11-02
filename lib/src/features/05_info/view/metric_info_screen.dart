@@ -93,7 +93,7 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
                       maxScale: 10.0, // Максимальный масштаб
                       child: SvgPicture.network(
                         'https://thread.wayofdt.de/v1/metric/thread-svg?diameter=10.00&pitch=1.5&type=m&tolerance=4g',
-                        color: Colors.white,
+                        // color: Colors.white,
                         placeholderBuilder: (BuildContext context) => const Center(child: CircularProgressIndicator()),
                         fit: BoxFit.contain,
                       ),

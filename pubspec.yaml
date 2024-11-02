@@ -78,9 +78,6 @@ flutter:
   assets:
     - assets/
     - assets/svg/
-    - assets/images/
-    - assets/images/type_thread/
-    - assets/images/m_thread/
 
 flutter_intl:
   enabled: true

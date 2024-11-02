@@ -1,12 +1,12 @@
-import 'dart:io';
+
 
 import 'package:flutter/material.dart';
 // Package imports:
 
-import 'package:threadfon/src/common/constant/common.dart';
+
 import 'package:threadfon/src/common/localization/localization.dart';
 import 'package:threadfon/src/common/widgets/button/btn_list_tile.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 class RateAppWidget extends StatelessWidget {
   const RateAppWidget({
@@ -26,9 +26,8 @@ class RateAppWidget extends StatelessWidget {
       );
 
   Future<void> launchURL() async {
-    final url =
-        Platform.isIOS ? ConstCommon.appStoreUrl : ConstCommon.playStoreUrl;
+  
 
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+ 
   }
 }

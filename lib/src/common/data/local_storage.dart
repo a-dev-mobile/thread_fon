@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:threadfon/src/common/constant/storage.dart';
+
 import 'package:threadfon/src/common/data/user_selection.dart';
 import 'package:threadfon/src/common/log/l_setup.dart';
 
@@ -37,7 +37,7 @@ class LocalStorage {
           _userAgent,
           _targetUrl,
           _userSelectionKey,
-          ConstStorage.keyPathDB,
+      
         },
       ),
     );
@@ -55,18 +55,6 @@ class LocalStorage {
   Future<void> setAppId(String? value) =>
       _setValue<String>(key: _appId, value: value ?? '');
 
-  // ******************************
-  // Методы для работы с keyPathDB
-
-  Future<String> getPathDB({bool forceRefresh = false}) async =>
-      (await _getValue<String>(
-        key: ConstStorage.keyPathDB,
-        forceRefresh: forceRefresh,
-      )) ??
-      '';
-
-  Future<void> setPathDB(String? value) =>
-      _setValue<String>(key: ConstStorage.keyPathDB, value: value ?? '');
 
   // ******************************
   // Методы для работы с _userSelection
