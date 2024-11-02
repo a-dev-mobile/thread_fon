@@ -9,7 +9,7 @@ import 'package:threadfon/app/theme/theme.dart';
 import 'package:threadfon/app/theme/theme_notifier.dart';
 import 'package:threadfon/core/widgets/value_listenable_builder_n.dart'; // Импортируем ValueListenableBuilderN
 import 'package:threadfon/localization/localization.dart';
-import 'package:threadfon/features/01_thread_type_selection/view/thread_type_selection_screen.dart';
+import 'package:threadfon/features/thread_type_selection/views/thread_type_selection_screen.dart';
 
 class App extends StatefulWidget {
   const App({

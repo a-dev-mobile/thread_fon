@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/core/constant/enums_thread_type.dart';
-import 'package:threadfon/features/03_selection_pitch/model/pitch_model.dart';
+
+import 'package:threadfon/features/pitch_selection/models/pitch_model.dart';
 
 part 'user_selection.freezed.dart';
 part 'user_selection.g.dart'; // Если вы планируете использовать JSON сериализацию
