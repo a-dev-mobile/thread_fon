@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 
-import 'package:threadfon/src/common/app/app.dart';
-import 'package:threadfon/src/common/data/local_storage.dart';
-import 'package:threadfon/src/common/data/local_storage_provider.dart';
-import 'package:threadfon/src/common/log/l_setup.dart';
-import 'package:threadfon/src/common/services/api_provider.dart';
-import 'package:threadfon/src/common/services/api_service.dart';
+import 'package:threadfon/app/app.dart';
+import 'package:threadfon/core/services/local_storage/local_storage.dart';
+import 'package:threadfon/core/services/local_storage/local_storage_provider.dart';
+import 'package:threadfon/core/services/logging/logger.dart';
+import 'package:threadfon/core/services/api_service/api_provider.dart';
+import 'package:threadfon/core/services/api_service/api_service.dart';
 
 // Импорт LogBatcher
-import 'package:threadfon/src/common/log/log_batcher.dart';
+import 'package:threadfon/core/services/logging/log_batcher.dart';
 
 final _l = L('main');
 

@@ -83,11 +83,11 @@ flutter_intl:
   enabled: true
   class_name: GeneratedLocalization
   main_locale: en
-  arb_dir: lib/src/common/localization
-  output_dir: lib/src/common/localization/generated
+  arb_dir: lib/localization
+  output_dir: lib/localization/generated
   use_deferred_loading: false
 
 flutter_gen:
-  output: lib/src/common/constant/
+  output: lib/core/constant
   line_length: 120
   #
