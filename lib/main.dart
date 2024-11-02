@@ -3,19 +3,15 @@ import 'dart:isolate';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-
-
 import 'package:threadfon/app/app.dart';
-import 'package:threadfon/core/services/local_storage/local_storage.dart';
-import 'package:threadfon/core/services/local_storage/local_storage_provider.dart';
-import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/services/api_service/api_provider.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
-
+import 'package:threadfon/core/services/local_storage/local_storage.dart';
+import 'package:threadfon/core/services/local_storage/local_storage_provider.dart';
 // Импорт LogBatcher
 import 'package:threadfon/core/services/logging/log_batcher.dart';
+import 'package:threadfon/core/services/logging/logger.dart';
 
 final _l = L('main');
 
@@ -27,8 +23,8 @@ Future<void> main() async {
       var widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
       FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-      // Инициализируем LogBatcher (необязательно, так как это singleton, но можно для явности)
-      final logBatcher = LogBatcher();
+      // Инициализация LogBatcher (singleton)
+      LogBatcher();
 
       try {
         // Инициализация локального хранилища
@@ -37,17 +33,15 @@ Future<void> main() async {
 
         // Настройка глобального обработчика ошибок Flutter
         FlutterError.onError = (details) {
-          final exception = details.exception;
-          final stackTrace = details.stack ?? StackTrace.current;
-
           if (!kReleaseMode) {
             // В режиме разработки выводим ошибку в консоль
             FlutterError.dumpErrorToConsole(details);
           }
 
           // Log the error
-          _l.e('FlutterError.onError', error: exception, stackTrace: stackTrace);
+          _l.e('FlutterError.onError', error: details.exception, stackTrace: details.stack ?? StackTrace.current);
         };
+
 
         // Установка предпочтительной ориентации экрана
         // await SystemChrome.setPreferredOrientations([
@@ -61,7 +55,7 @@ Future<void> main() async {
             apiService: ApiService(),
             child: LocalStorageProvider(
               localStorage: localStorage,
-              child: const App(),
+              child: const MyApp(),
             ),
           ),
         );
@@ -87,7 +81,7 @@ Future<void> main() async {
           final error = errorAndStacktrace.first;
           final stackTrace = errorAndStacktrace.last as StackTrace;
 
-          _l.e('Isolate Error: $error', stackTrace: stackTrace);
+          _l.e('Isolate error',error: error, stackTrace: stackTrace);
         }).sendPort,
       );
 
@@ -105,8 +99,7 @@ Future<void> main() async {
 class _AppLifecycleObserver extends WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.detached ||
-        state == AppLifecycleState.inactive) {
+    if (state == AppLifecycleState.detached || state == AppLifecycleState.inactive) {
       // Call dispose() when the app is closing
       LogBatcher().dispose();
     }

@@ -10,14 +10,14 @@ import 'package:threadfon/features/thread_type_selection/repositories/thread_typ
 import 'package:threadfon/features/thread_type_selection/widgets/thread_type_choice_card.dart';
 import 'package:threadfon/localization/localization.dart';
 
-class ThreadTypeSelectionPage extends StatefulWidget {
-  const ThreadTypeSelectionPage({super.key});
+class ThreadTypeSelectionScreen extends StatefulWidget {
+  const ThreadTypeSelectionScreen({super.key});
 
   @override
-  _ThreadTypeSelectionPageState createState() => _ThreadTypeSelectionPageState();
+  _ThreadTypeSelectionScreenState createState() => _ThreadTypeSelectionScreenState();
 }
 
-class _ThreadTypeSelectionPageState extends State<ThreadTypeSelectionPage> {
+class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
   late final ThreadTypeController _controller;
   bool _isControllerInitialized = false;
 

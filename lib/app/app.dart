@@ -3,71 +3,60 @@
 import 'package:flutter/material.dart';
 // Импорт необходимых пакетов
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:threadfon/core/widgets/future_builder_n.dart';
 import 'package:threadfon/app/language/language_notifier.dart'; // Новый импорт
 import 'package:threadfon/app/theme/theme.dart';
 import 'package:threadfon/app/theme/theme_notifier.dart';
+import 'package:threadfon/core/widgets/future_builder_n.dart';
 import 'package:threadfon/core/widgets/value_listenable_builder_n.dart'; // Импортируем ValueListenableBuilderN
-import 'package:threadfon/localization/localization.dart';
 import 'package:threadfon/features/thread_type_selection/views/thread_type_selection_screen.dart';
+import 'package:threadfon/localization/localization.dart';
 
-class App extends StatefulWidget {
-  const App({
-    super.key,
-  });
-
-  @override
-  _AppState createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  late Future<ThemeMode> _themeModeFuture;
-  late Future<String> _localeFuture;
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
-  void initState() {
-    super.initState();
-    _themeModeFuture = ThemeNotifier.loadTheme();
-    _localeFuture = LanguageNotifier.loadLocale();
-  }
-
-  @override
-  Widget build(BuildContext context) => FutureBuilderN<dynamic>(
-        futures: [_themeModeFuture, _localeFuture],
-        builder: (context, data, error) {
-          if (error != null) {
-            return MaterialApp(
-              home: Scaffold(
-                body: Center(child: Text('Ошибка: $error')),
-              ),
-            );
-          }
-          final themeMode = data[0] as ThemeMode;
-          final locale = data[1] as String;
-
-          return ThemeNotifier(
-            initialMode: themeMode,
-            child: LanguageNotifier(
-              initialLocale: locale,
-              child: const _ThreadFonApp(),
+  Widget build(BuildContext context) {
+    return FutureBuilderN<dynamic>(
+      futures: [
+        ThemeNotifier.loadTheme(),    // data[0]
+        LanguageNotifier.loadLocale() // data[1],
+      ],
+      builder: (context, data, error) {
+        if (error != null) {
+          return MaterialApp(
+            home: Scaffold(
+              body: Center(child: Text('Ошибка: $error')),
             ),
           );
-        },
-        loadingWidget: const MaterialApp(
-          home: Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+        }
+
+        final themeMode = data[0] as ThemeMode;
+        final locale = data[1] as String;
+
+        return ThemeNotifier(
+          initialMode: themeMode,
+          child: LanguageNotifier(
+            initialLocale: locale,
+            child: const _ThreadApp(),
           ),
+        );
+      },
+      loadingWidget: const MaterialApp(
+        home: Scaffold(
+          body: Center(child: CircularProgressIndicator()),
         ),
-        errorWidget: const MaterialApp(
-          home: Scaffold(
-            body: Center(child: Text('Не удалось загрузить настройки')),
-          ),
+      ),
+      errorWidget: const MaterialApp(
+        home: Scaffold(
+          body: Center(child: Text('Не удалось загрузить настройки')),
         ),
-      );
+      ),
+    );
+  }
 }
 
-class _ThreadFonApp extends StatelessWidget {
-  const _ThreadFonApp();
+class _ThreadApp extends StatelessWidget {
+  const _ThreadApp();
 
   @override
   Widget build(BuildContext context) {
@@ -104,8 +93,9 @@ class _ThreadFonApp extends StatelessWidget {
           ],
           supportedLocales: Localization.supportedLocales,
           locale: Locale(locale),
+
           //
-          home: const ThreadTypeSelectionPage(),
+          home: const ThreadTypeSelectionScreen(),
         );
       },
     );
