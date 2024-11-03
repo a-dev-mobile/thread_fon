@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,7 +9,7 @@ import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/models/user_selection.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 
-final _l = L('local_storage');
+final _logger = LogService('local_storage');
 
 /// Класс для работы с локальным хранилищем, включая асинхронное и кешированное хранилище.
 /// Обеспечивает сохранение и получение данных с возможностью кеширования и обработки ошибок.
@@ -34,17 +35,10 @@ class LocalStorage {
     _sharedPreferences = await SharedPreferences.getInstance();
     _cachePreferences = await SharedPreferencesWithCache.create(
       cacheOptions: const SharedPreferencesWithCacheOptions(
-        allowList: <String>{
-          _appId,
-          _userAgent,
-          _targetUrl,
-          _userSelectionKey,
-          _themeStateKey,
-          _languageStateKey
-        },
+        allowList: <String>{_appId, _userAgent, _targetUrl, _userSelectionKey, _themeStateKey, _languageStateKey},
       ),
     );
-    _l.i('INITIALIZE LocalStorage', includeStackTrace: false);
+    _logger.i('INITIALIZE LocalStorage', includeStackTrace: false);
   }
 
   // ******************************
@@ -133,15 +127,17 @@ class LocalStorage {
     final jsonString = await _getValue<String>(
       key: _themeStateKey,
       forceRefresh: forceRefresh,
-      defaultValue: '{}',
+      defaultValue: null,
     );
+    final defaultThemeState = ThemeState(themeMode: ThemeMode.dark);
+
     try {
       return jsonString != null
           ? ThemeState.fromJson(json.decode(jsonString) as Map<String, dynamic>)
-          : const ThemeState();
+          : defaultThemeState;
     } on Exception catch (e, s) {
       await _recordError(e, s, 'GET_THEME_STATE', _themeStateKey, jsonString);
-      return const ThemeState();
+      return defaultThemeState;
     }
   }
 
@@ -156,7 +152,6 @@ class LocalStorage {
 
   // ******************************
 
-
   // ******************************
   // Методы для работы с _themeMode
   static const String _languageStateKey = '_languageStateKey';
@@ -165,15 +160,21 @@ class LocalStorage {
     final jsonString = await _getValue<String>(
       key: _languageStateKey,
       forceRefresh: forceRefresh,
-      defaultValue: '{}',
+      defaultValue: null,
     );
+
+    final defaultLanguageState = LanguageState(
+        enumLang: EnumLang.values.firstWhere(
+      (e) => e.name == PlatformDispatcher.instance.locale.languageCode,
+      orElse: () => EnumLang.en,
+    ));
     try {
       return jsonString != null
           ? LanguageState.fromJson(json.decode(jsonString) as Map<String, dynamic>)
-          : const LanguageState();
+          : defaultLanguageState;
     } on Exception catch (e, s) {
       await _recordError(e, s, 'GET_LANGUAGE_STATE', _languageStateKey, jsonString);
-      return const LanguageState();
+      return defaultLanguageState;
     }
   }
 
@@ -187,7 +188,6 @@ class LocalStorage {
   }
 
   // ******************************
-
 
   // Универсальные методы для хранения и получения данных
 
@@ -353,7 +353,7 @@ class LocalStorage {
   /// Логирование действия, если включен режим отображения логов.
   Future<void> _log(String action, String key, dynamic value) async {
     if (_isShowLog) {
-      _l.i('$action > $key, Value: $value', includeStackTrace: false);
+      _logger.i('$action > $key, Value: $value', includeStackTrace: false);
     }
   }
 
@@ -365,7 +365,7 @@ class LocalStorage {
     String key,
     dynamic value,
   ) async {
-    _l.e(
+    _logger.e(
       '$action > $key, Value: $value',
       error: exception,
       stackTrace: stackTrace,

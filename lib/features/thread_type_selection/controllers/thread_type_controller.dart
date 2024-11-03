@@ -10,7 +10,7 @@ part 'thread_type_controller.freezed.dart';
 part 'thread_type_controller.g.dart';
 part 'thread_type_state.dart';
 
-final _l = L('thread_type_controller');
+final _logger = LogService('thread_type_controller');
 
 class ThreadTypeController with ChangeNotifier {
   ThreadTypeController({
@@ -39,7 +39,7 @@ class ThreadTypeController with ChangeNotifier {
       final threadTypes = await _repository.fetchThreadTypes();
       _updateState(status: EnumScreenStatus.success, threadTypes: threadTypes);
     } on Exception catch (e, s) {
-      _l.e('Error loading thread types', error: e, stackTrace: s);
+      _logger.e('Error loading thread types', error: e, stackTrace: s);
       _updateState(status: EnumScreenStatus.error, error: e.toString());
     }
   }

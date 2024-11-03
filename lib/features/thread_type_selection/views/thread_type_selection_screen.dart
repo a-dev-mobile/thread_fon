@@ -5,12 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
-import 'package:threadfon/core/constant/enums_thread_type.dart';
+import 'package:threadfon/core/constant/enum_thread_type.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/features/diameter_selection/views/metric_diameter_screen.dart';
 import 'package:threadfon/features/thread_type_selection/controllers/thread_type_controller.dart';
 import 'package:threadfon/features/thread_type_selection/repositories/thread_type_repository.dart';
 import 'package:threadfon/features/thread_type_selection/widgets/thread_type_choice_card.dart';
+import 'package:threadfon/localization/generated/l10n.dart';
+import 'package:threadfon/localization/l10n.dart';
 import 'package:threadfon/localization/localization.dart';
 
 class ThreadTypeSelectionScreen extends StatefulWidget {
@@ -68,6 +70,7 @@ class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     switch (_controller.state.status) {
       case EnumScreenStatus.initial:
       case EnumScreenStatus.loading:
@@ -85,7 +88,7 @@ class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
       case EnumScreenStatus.success:
         return Scaffold(
           appBar: AppBar(
-            title: Text(Localization.of(context).thread_type),
+            title: Text(l.thread_type),
           ),
           floatingActionButton: FloatingActionButton(onPressed: () {
             context.read<LanguageBloc>().toggle();
@@ -98,8 +101,8 @@ class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
                   onTap: () => _controller.updateUserSelection(threadType),
                   svgAssetPath: threadType.svgAssetPath,
                   label: threadType.enumThreadType == EnumThreadType.f
-                      ? Localization.of(context).internal_thread
-                      : Localization.of(context).external_thread,
+                      ? l.internal_thread
+                      : l.external_thread,
                 ),
               );
             }).toList(),

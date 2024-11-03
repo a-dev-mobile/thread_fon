@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
-import 'package:threadfon/core/services/api_service/api_provider.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
-import 'package:threadfon/core/services/local_storage/local_storage_provider.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/diameter_selection/controllers/diameter_controller.dart';
 import 'package:threadfon/features/diameter_selection/repositories/diameter_repository.dart';
 import 'package:threadfon/features/pitch_selection/views/metric_pitch_screen.dart';
-import 'package:threadfon/main.dart';
 
-final _l = L('metric_thread_diameter_screen');
+final _logger = LogService('metric_thread_diameter_screen');
 
 // Создаем глобальный PageStorageBucket
 final PageStorageBucket _pageBucket = PageStorageBucket();
@@ -39,7 +36,7 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isControllerInitialized) {
-      final apiService =  context.read<ApiService>();
+      final apiService = context.read<ApiService>();
       final localStorage = context.read<LocalStorage>();
       final repository = DiameterRepository(apiService: apiService);
       _controller = DiameterController(repository: repository, localStorage: localStorage);
@@ -78,7 +75,7 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _l.d('Building MetricDiameterScreen', includeStackTrace: false);
+    _logger.d('Building MetricDiameterScreen', includeStackTrace: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Выберите Диаметр резьбы'),

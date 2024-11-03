@@ -1,5 +1,5 @@
 import 'package:threadfon/core/constant/assets.gen.dart';
-import 'package:threadfon/core/constant/enums_thread_type.dart';
+import 'package:threadfon/core/constant/enum_thread_type.dart';
 
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 

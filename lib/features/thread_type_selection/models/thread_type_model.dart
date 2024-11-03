@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:threadfon/core/constant/enums_thread_type.dart';
+import 'package:threadfon/core/constant/enum_thread_type.dart';
 
 part 'thread_type_model.freezed.dart';
 part 'thread_type_model.g.dart';

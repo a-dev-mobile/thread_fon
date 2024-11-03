@@ -4,7 +4,7 @@ import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/tolerance_selection/models/tolerance_model.dart';
 
-final _l = L('tolerance_repository');
+final _logger = LogService('tolerance_repository');
 
 class ToleranceRepository {
   ToleranceRepository({
@@ -32,14 +32,14 @@ class ToleranceRepository {
             rawData.map((json) => ToleranceModel.fromJson(json as Map<String, dynamic>)).toList();
         return listModel;
       } else {
-        _l.e(
+        _logger.e(
           'Failed to fetch diameters',
           error: 'Status code: ${response.statusCode}',
         );
         throw Exception('Failed to fetch diameters');
       }
     } catch (error, stackTrace) {
-      _l.e(
+      _logger.e(
         'Error fetching diameters',
         error: error,
         stackTrace: stackTrace,

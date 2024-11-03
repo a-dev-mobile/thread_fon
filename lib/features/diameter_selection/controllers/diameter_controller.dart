@@ -10,7 +10,7 @@ part 'diameter_controller.freezed.dart';
 part 'diameter_controller.g.dart';
 part 'diameter_state.dart';
 
-final _l = L('diameter_controller');
+final _logger = LogService('diameter_controller');
 
 class DiameterController with ChangeNotifier {
   DiameterController({required DiameterRepository repository, required LocalStorage localStorage})
@@ -37,7 +37,7 @@ class DiameterController with ChangeNotifier {
       final diameters = await _repository.fetchDiameters();
       _updateState(status: EnumScreenStatus.success, diameters: diameters);
     } on Exception catch (e, s) {
-      _l.e('Error loading diameters', error: e, stackTrace: s);
+      _logger.e('Error loading diameters', error: e, stackTrace: s);
       _updateState(status: EnumScreenStatus.error, error: e.toString());
     }
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:threadfon/features/setting/widgets/theme_switch.dart';
+import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/localization.dart';
 import 'package:threadfon/features/setting/widgets/lang_switch.dart';
 
@@ -14,7 +15,7 @@ class SettingPage extends StatelessWidget {
   ) =>
       Scaffold(
         appBar: AppBar(
-          title: Text(Localization.of(context).setting),
+          title: Text(GeneratedLocalization().setting),
         ),
         body: const Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

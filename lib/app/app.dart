@@ -7,16 +7,20 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:threadfon/app/language/language_bloc.dart'; // Новый импорт
 import 'package:threadfon/app/theme/theme.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
+import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/widgets/future_builder_n.dart';
 import 'package:threadfon/core/widgets/value_listenable_builder_n.dart'; // Импортируем ValueListenableBuilderN
 import 'package:threadfon/features/thread_type_selection/views/thread_type_selection_screen.dart';
+import 'package:threadfon/localization/l10n.dart';
 import 'package:threadfon/localization/localization.dart';
+import 'package:threadfon/localization/generated/l10n.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  const MyApp({super.key, required this.enumLang, required this.themeMode});
+  final EnumLang enumLang;
+  final ThemeMode themeMode;
   @override
   Widget build(BuildContext context) {
     final apiService = context.read<ApiService>();
@@ -26,11 +30,11 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           lazy: false,
-          create: (context) => ThemeBloc(storage: storage)..load(),
+          create: (context) => ThemeBloc(storage: storage, themeMode: themeMode),
         ),
         BlocProvider(
           lazy: false,
-          create: (context) => LanguageBloc(storage: storage)..load(),
+          create: (context) => LanguageBloc(storage: storage, enumLang: enumLang),
         ),
       ],
       child: const _ThreadApp(),
@@ -43,14 +47,16 @@ class _ThreadApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final languageBloc = context.watch<LanguageBloc>();
-    final themeBloc = context.watch<ThemeBloc>();
+    final languageState = context.watch<LanguageBloc>().state;
+    final themeState = context.watch<ThemeBloc>().state;
 
+// final l = context.l10n;
     return MaterialApp(
-      onGenerateTitle: (context) => Localization.of(context).app_name,
+      // onGenerateTitle: (context) =>  Localization.of(context).app_name,
+      // onGenerateTitle: (context) => l.app_name,
       debugShowCheckedModeBanner: false,
       //
-      themeMode: themeBloc.state.themeMode,
+      themeMode: themeState.themeMode,
       theme: AppTheme.lightThemeData(),
       darkTheme: AppTheme.darkThemeData(),
       //
@@ -58,10 +64,10 @@ class _ThreadApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-        Localization.delegate,
+        AppLocalizationDelegate(),
       ],
-      supportedLocales: Localization.supportedLocales,
-      locale: Locale(languageBloc.state.enumLang!.name),
+      supportedLocales: AppLocalizationDelegate().supportedLocales,
+      locale: Locale(languageState.enumLang.name),
 
       //
       home: const ThreadTypeSelectionScreen(),

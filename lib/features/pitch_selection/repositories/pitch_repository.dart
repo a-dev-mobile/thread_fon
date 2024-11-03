@@ -4,7 +4,7 @@ import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/pitch_selection/models/pitch_model.dart';
 
-final _l = L('pitch_repository');
+final _logger = LogService('pitch_repository');
 
 class PitchRepository {
   PitchRepository({
@@ -29,14 +29,14 @@ class PitchRepository {
             rawData.map((json) => PitchModel.fromJson(json as Map<String, dynamic>)).toList();
         return listModel;
       } else {
-        _l.e(
+        _logger.e(
           'Failed to fetch  Pitch',
           error: 'Status code: ${response.statusCode}',
         );
         throw Exception('Failed to fetch Pitch');
       }
     } catch (error, stackTrace) {
-      _l.e(
+      _logger.e(
         'Error fetching Pitch',
         error: error,
         stackTrace: stackTrace,

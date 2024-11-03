@@ -10,7 +10,7 @@ import 'package:threadfon/features/tolerance_selection/repositories/tolerance_re
 part 'tolerance_controller.freezed.dart';
 part 'tolerance_state.dart';
 
-final _l = L('tolerance_controller');
+final _logger = LogService('tolerance_controller');
 
 class ToleranceController with ChangeNotifier {
   ToleranceController({required ToleranceRepository repository, required LocalStorage localStorage})
@@ -40,7 +40,7 @@ class ToleranceController with ChangeNotifier {
       final model = await _repository.fetchTolerances(userSelection.id!, userSelection.threadType!.name);
       _updateState(status: EnumScreenStatus.success, model: model);
     } on Exception catch (e, s) {
-      _l.e('Error loading diameters', error: e, stackTrace: s);
+      _logger.e('Error loading diameters', error: e, stackTrace: s);
 
       _updateState(
         status: EnumScreenStatus.error,

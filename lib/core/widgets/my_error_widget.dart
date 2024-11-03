@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/localization.dart';
 // Package imports:
 
@@ -10,6 +11,6 @@ class MyErrorWidget extends StatelessWidget {
   final String errorMsg;
   @override
   Widget build(BuildContext context) => Center(
-        child: Text('${Localization.of(context).generalError} > $errorMsg'),
+        child: Text('${GeneratedLocalization().generalError} > $errorMsg'),
       );
 }

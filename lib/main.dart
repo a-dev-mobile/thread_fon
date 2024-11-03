@@ -6,16 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:threadfon/app/app.dart';
-import 'package:threadfon/core/services/logging/app_bloc_observer.dart';
-import 'package:threadfon/core/services/api_service/api_provider.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
-import 'package:threadfon/core/services/local_storage/local_storage_provider.dart';
+import 'package:threadfon/core/services/logging/app_bloc_observer.dart';
 // Импорт LogBatcher
 import 'package:threadfon/core/services/logging/log_batcher.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 
-final _l = L('main');
+final _logger = LogService('main');
 
 Future<void> main() async {
   // Обернуть всё в runZonedGuarded, включая инициализацию Flutter bindings
@@ -41,7 +39,7 @@ Future<void> main() async {
           }
 
           // Log the error
-          _l.e('FlutterError.onError', error: details.exception, stackTrace: details.stack ?? StackTrace.current);
+          _logger.e('FlutterError.onError', error: details.exception, stackTrace: details.stack ?? StackTrace.current);
         };
 
         // Установка предпочтительной ориентации экрана
@@ -49,7 +47,8 @@ Future<void> main() async {
         //   DeviceOrientation.portraitUp,
         //   DeviceOrientation.portraitDown,
         // ]);
-
+        var languageState = await localStorage.getLanguageState();
+        var themeState = await localStorage.getThemeState();
         // Запуск приложения с провайдерами
         Bloc.observer = const AppBlocObserver();
         runApp(
@@ -62,22 +61,25 @@ Future<void> main() async {
                 create: (context) => ApiService(),
               ),
             ],
-            child: const MyApp(),
+            child: MyApp(
+              enumLang: languageState.enumLang,
+              themeMode: themeState.themeMode,
+            ),
           ),
         );
       } on Exception catch (e, s) {
         // Log exceptions from the try-catch block
-        _l.e('Exception in main', error: e, stackTrace: s);
+        _logger.e('Exception in main', error: e, stackTrace: s);
       } finally {
         // Удаление splash-экрана и логирование закрытия
         FlutterNativeSplash.remove();
-        _l.t('** close NATIVE splash**', includeStackTrace: false);
+        _logger.t('** close NATIVE splash**', includeStackTrace: false);
       }
 
       // Обработка всех необработанных асинхронных ошибок
       PlatformDispatcher.instance.onError = (error, stack) {
         // Log the error
-        _l.e('🚑 PlatformDispatcher.onError', error: error, stackTrace: stack);
+        _logger.e('🚑 PlatformDispatcher.onError', error: error, stackTrace: stack);
         return true;
       };
 
@@ -87,7 +89,7 @@ Future<void> main() async {
           final error = errorAndStacktrace.first;
           final stackTrace = errorAndStacktrace.last as StackTrace;
 
-          _l.e('Isolate error', error: error, stackTrace: stackTrace);
+          _logger.e('Isolate error', error: error, stackTrace: stackTrace);
         }).sendPort,
       );
 
@@ -96,7 +98,7 @@ Future<void> main() async {
     },
     (error, stack) {
       // Log errors from runZonedGuarded
-      _l.e('runZonedGuarded', error: error, stackTrace: stack);
+      _logger.e('runZonedGuarded', error: error, stackTrace: stack);
     },
   );
 }

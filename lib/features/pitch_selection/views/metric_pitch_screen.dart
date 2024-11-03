@@ -8,9 +8,10 @@ import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/pitch_selection/controllers/pitch_controller.dart';
 import 'package:threadfon/features/pitch_selection/repositories/pitch_repository.dart';
 import 'package:threadfon/features/tolerance_selection/views/metric_tolerance_screen.dart';
-import 'package:threadfon/localization/localization.dart';
+import 'package:threadfon/localization/generated/l10n.dart';
+import 'package:threadfon/localization/l10n.dart';
 
-final _l = L('metric_pitch_screen');
+final _logger = LogService('metric_pitch_screen');
 
 class MetricPitchScreen extends StatefulWidget {
   const MetricPitchScreen({
@@ -34,7 +35,7 @@ class _MetricPitchScreenState extends State<MetricPitchScreen> {
       final apiService = context.read<ApiService>();
       final localStorage = context.read<LocalStorage>();
       final repository = PitchRepository(apiService: apiService);
-      _controller = PitchController(repository: repository, localStorage: localStorage, language: lang.state.enumLang!);
+      _controller = PitchController(repository: repository, localStorage: localStorage, language: lang.state.enumLang);
       _controller
         ..addListener(_updateState)
         ..loadData();
@@ -70,12 +71,11 @@ class _MetricPitchScreenState extends State<MetricPitchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _l.d('Building MetricPitchScreen', includeStackTrace: false);
-
-
+    _logger.d('Building MetricPitchScreen', includeStackTrace: false);
+    final l = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(Localization.of(context).thread_pitch),
+        title: Text(l.thread_pitch),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

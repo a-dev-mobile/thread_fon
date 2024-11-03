@@ -11,7 +11,7 @@ import 'package:threadfon/features/pitch_selection/repositories/pitch_repository
 part 'pitch_controller.freezed.dart';
 part 'pitch_state.dart';
 
-final _l = L('pitch_controller');
+final _logger = LogService('pitch_controller');
 
 class PitchController with ChangeNotifier {
   PitchController({
@@ -43,12 +43,10 @@ class PitchController with ChangeNotifier {
     final userSelection = await _localStorage.getUserSelection();
 
     try {
-      final model = await _repository.fetchPitch(
-        userSelection.diameter!, _language.name
-      );
+      final model = await _repository.fetchPitch(userSelection.diameter!, _language.name);
       _updateState(status: EnumScreenStatus.success, model: model);
     } on Exception catch (e, s) {
-      _l.e('Error loading diameters', error: e, stackTrace: s);
+      _logger.e('Error loading diameters', error: e, stackTrace: s);
 
       _updateState(
         status: EnumScreenStatus.error,

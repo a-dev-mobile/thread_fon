@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/localization.dart';
 // Package imports:
 
@@ -9,5 +10,5 @@ class MyLoadWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      Center(child: Text(Localization.of(context).loadingMessage));
+      Center(child: Text(GeneratedLocalization().loadingMessage));
 }

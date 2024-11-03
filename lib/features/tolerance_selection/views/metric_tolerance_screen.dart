@@ -3,16 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
-import 'package:threadfon/core/services/local_storage/local_storage_provider.dart';
-import 'package:threadfon/features/tolerance_selection/repositories/tolerance_repository.dart';
-import 'package:threadfon/localization/localization.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
-import 'package:threadfon/core/services/api_service/api_provider.dart';
-import 'package:threadfon/features/tolerance_selection/controllers/tolerance_controller.dart';
-
 import 'package:threadfon/features/info/views/metric_info_screen.dart';
+import 'package:threadfon/features/tolerance_selection/controllers/tolerance_controller.dart';
+import 'package:threadfon/features/tolerance_selection/repositories/tolerance_repository.dart';
+import 'package:threadfon/localization/l10n.dart';
 
-final _l = L('metric_tolerance_screen');
+final _logger = LogService('metric_tolerance_screen');
 
 class MetricToleranceScreen extends StatefulWidget {
   const MetricToleranceScreen({super.key});
@@ -31,10 +28,8 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
     if (!_isControllerInitialized) {
       final apiService = context.read<ApiService>();
       final localStorage = context.read<LocalStorage>();
-      final repository =
-          ToleranceRepository(apiService: apiService);
-      _controller = ToleranceController(
-          repository: repository, localStorage: localStorage);
+      final repository = ToleranceRepository(apiService: apiService);
+      _controller = ToleranceController(repository: repository, localStorage: localStorage);
       _controller
         ..addListener(_updateState)
         ..loadTolerances();
@@ -70,10 +65,11 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _l.d('Building MetricToleranceScreen', includeStackTrace: false);
+    _logger.d('Building MetricToleranceScreen', includeStackTrace: false);
+    final l = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(Localization.of(context).thread_tolerance),
+        title: Text(l.thread_tolerance),
       ),
       body: Builder(
         builder: (context) {
@@ -97,10 +93,7 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
                   return ListTile(
                     title: Text(data.info),
                     onTap: () {
-                      _controller.updateUserSelection(
-                         
-                          tolerance: data.tolerance,
-                          description: data.info);
+                      _controller.updateUserSelection(tolerance: data.tolerance, description: data.info);
                     },
                   );
                 },

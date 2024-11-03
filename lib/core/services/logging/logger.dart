@@ -21,14 +21,14 @@ class CustomPrinter extends LogPrinter {
   }
 }
 
-class L {
-  L(String fileName)
-      : _l = Logger(
+class LogService {
+  LogService(String fileName)
+      : _logger = Logger(
           printer: CustomPrinter(fileName),
         ),
         _fileName = fileName;
 
-  final Logger _l;
+  final Logger _logger;
   final String _fileName;
 
   void _logToLoki(Level level, dynamic message,
@@ -54,7 +54,7 @@ class L {
   }
 
   void t(dynamic message, {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
-    _l.t(
+    _logger.t(
       message,
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
@@ -63,7 +63,7 @@ class L {
   }
 
   void d(dynamic message, {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
-    _l.d(
+    _logger.d(
       message,
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
@@ -72,7 +72,7 @@ class L {
   }
 
   void i(dynamic message, {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
-    _l.i(
+    _logger.i(
       message,
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
@@ -81,7 +81,7 @@ class L {
   }
 
   void w(dynamic message, {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
-    _l.w(
+    _logger.w(
       message,
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
@@ -90,7 +90,7 @@ class L {
   }
 
   void e(dynamic message, {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
-    _l.e(
+    _logger.e(
       message,
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
@@ -99,7 +99,7 @@ class L {
   }
 
   void f(dynamic message, {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
-    _l.f(
+    _logger.f(
       message,
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,

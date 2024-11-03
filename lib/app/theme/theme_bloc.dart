@@ -10,24 +10,21 @@ part 'theme_state.dart';
 class ThemeBloc extends Cubit<ThemeState> {
   ThemeBloc({
     required LocalStorage storage,
+    required ThemeMode themeMode,
   })  : _storage = storage,
-        super(ThemeState());
+        super(ThemeState(themeMode: themeMode));
 
   final LocalStorage _storage;
-  Future<void> load() async {
-    var theme = await _storage.getThemeState();
-    emit(theme);
-  }
 
   // Метод для установки конкретной темы и сохранения в SharedPreferences
-  Future<void> setTheme(ThemeMode mode) async {
+  void setTheme(ThemeMode mode) {
     final newState = state.copyWith(themeMode: mode);
     emit(newState);
     _storage.setThemeState(newState);
   }
 
   // Метод для переключения темы и сохранения в SharedPreferences
-  Future<void> toggle() async {
+  void toggle() {
     if (state.themeMode == ThemeMode.dark) {
       setTheme(ThemeMode.light);
     } else {
