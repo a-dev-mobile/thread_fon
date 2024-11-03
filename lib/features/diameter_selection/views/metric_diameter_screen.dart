@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
 import 'package:threadfon/core/services/api_service/api_provider.dart';
+import 'package:threadfon/core/services/api_service/api_service.dart';
+import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/local_storage/local_storage_provider.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/diameter_selection/controllers/diameter_controller.dart';
 import 'package:threadfon/features/diameter_selection/repositories/diameter_repository.dart';
 import 'package:threadfon/features/pitch_selection/views/metric_pitch_screen.dart';
+import 'package:threadfon/main.dart';
 
 final _l = L('metric_thread_diameter_screen');
 
@@ -35,8 +39,8 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isControllerInitialized) {
-      final apiService = ApiProvider.of(context);
-      final localStorage = LocalStorageProvider.of(context);
+      final apiService =  context.read<ApiService>();
+      final localStorage = context.read<LocalStorage>();
       final repository = DiameterRepository(apiService: apiService);
       _controller = DiameterController(repository: repository, localStorage: localStorage);
       _controller.addListener(_updateState);

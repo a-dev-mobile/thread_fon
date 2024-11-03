@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:threadfon/app/theme/theme_notifier.dart';
+import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
-import 'package:threadfon/core/services/api_service/api_provider.dart';
-import 'package:threadfon/core/services/local_storage/local_storage_provider.dart';
+import 'package:threadfon/core/services/api_service/api_service.dart';
+import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/diameter_selection/views/metric_diameter_screen.dart';
 import 'package:threadfon/features/info/controllers/info_controller.dart';
@@ -27,8 +28,8 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isControllerInitialized) {
-      final apiService = ApiProvider.of(context);
-      final localStorage = LocalStorageProvider.of(context);
+      final apiService = context.read<ApiService>();
+      final localStorage = context.read<LocalStorage>();
       final repository = InfoRepository(apiService: apiService);
       _controller = InfoController(repository: repository, localStorage: localStorage);
       _controller
@@ -67,7 +68,6 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
   @override
   Widget build(BuildContext context) {
     _l.d('Building MetricInfoScreen', includeStackTrace: false);
-    final isDark = ThemeNotifier.watch(context) == ThemeMode.dark;
 
     return Scaffold(
       appBar: AppBar(
@@ -109,13 +109,16 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
                         : InteractiveViewer(
                             minScale: 0.5,
                             maxScale: 10.0,
-                            child: SvgPicture.string(
-                              _controller.state.svgData!,
-                              color: isDark ? Colors.white : null,
-                              placeholderBuilder: (BuildContext context) =>
-                                  const Center(child: CircularProgressIndicator()),
-                              fit: BoxFit.contain,
-                            ),
+                            child: Builder(builder: (context) {
+                              final isDark = context.select((ThemeBloc bloc) => bloc.state.themeMode == ThemeMode.dark);
+                              return SvgPicture.string(
+                                _controller.state.svgData!,
+                                color: isDark ? Colors.white : null,
+                                placeholderBuilder: (BuildContext context) =>
+                                    const Center(child: CircularProgressIndicator()),
+                                fit: BoxFit.contain,
+                              );
+                            }),
                           ),
                   ),
                 ],

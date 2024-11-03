@@ -22,11 +22,11 @@ class CustomPrinter extends LogPrinter {
 }
 
 class L {
-  L(String className)
+  L(String fileName)
       : _l = Logger(
-          printer: CustomPrinter(className),
+          printer: CustomPrinter(fileName),
         ),
-        _fileName = className;
+        _fileName = fileName;
 
   final Logger _l;
   final String _fileName;

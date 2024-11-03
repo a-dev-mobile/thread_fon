@@ -1,11 +1,14 @@
 // app.dart
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // Импорт необходимых пакетов
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:threadfon/app/language/language_notifier.dart'; // Новый импорт
+import 'package:threadfon/app/language/language_bloc.dart'; // Новый импорт
 import 'package:threadfon/app/theme/theme.dart';
-import 'package:threadfon/app/theme/theme_notifier.dart';
+import 'package:threadfon/app/theme/theme_bloc.dart';
+import 'package:threadfon/core/services/api_service/api_service.dart';
+import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/widgets/future_builder_n.dart';
 import 'package:threadfon/core/widgets/value_listenable_builder_n.dart'; // Импортируем ValueListenableBuilderN
 import 'package:threadfon/features/thread_type_selection/views/thread_type_selection_screen.dart';
@@ -16,41 +19,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilderN<dynamic>(
-      futures: [
-        ThemeNotifier.loadTheme(),    // data[0]
-        LanguageNotifier.loadLocale() // data[1],
+    final apiService = context.read<ApiService>();
+    final storage = context.read<LocalStorage>();
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          lazy: false,
+          create: (context) => ThemeBloc(storage: storage)..load(),
+        ),
+        BlocProvider(
+          lazy: false,
+          create: (context) => LanguageBloc(storage: storage)..load(),
+        ),
       ],
-      builder: (context, data, error) {
-        if (error != null) {
-          return MaterialApp(
-            home: Scaffold(
-              body: Center(child: Text('Ошибка: $error')),
-            ),
-          );
-        }
-
-        final themeMode = data[0] as ThemeMode;
-        final locale = data[1] as EnumLang;
-
-        return ThemeNotifier(
-          initialMode: themeMode,
-          child: LanguageNotifier(
-            initialLocale: locale,
-            child: const _ThreadApp(),
-          ),
-        );
-      },
-      loadingWidget: const MaterialApp(
-        home: Scaffold(
-          body: Center(child: CircularProgressIndicator()),
-        ),
-      ),
-      errorWidget: const MaterialApp(
-        home: Scaffold(
-          body: Center(child: Text('Не удалось загрузить настройки')),
-        ),
-      ),
+      child: const _ThreadApp(),
     );
   }
 }
@@ -60,44 +43,28 @@ class _ThreadApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Получаем ValueNotifier<ThemeMode> из ThemeNotifier
-    final themeModeNotifier = ThemeNotifier.of(context);
+    final languageBloc = context.watch<LanguageBloc>();
+    final themeBloc = context.watch<ThemeBloc>();
 
-    // Получаем ValueNotifier<String> из LanguageNotifier
-    final languageNotifier = LanguageNotifier.of(context);
+    return MaterialApp(
+      onGenerateTitle: (context) => Localization.of(context).app_name,
+      debugShowCheckedModeBanner: false,
+      //
+      themeMode: themeBloc.state.themeMode,
+      theme: AppTheme.lightThemeData(),
+      darkTheme: AppTheme.darkThemeData(),
+      //
+      localizationsDelegates: const <LocalizationsDelegate<Object?>>[
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        Localization.delegate,
+      ],
+      supportedLocales: Localization.supportedLocales,
+      locale: Locale(languageBloc.state.enumLang!.name),
 
-    if (themeModeNotifier == null || languageNotifier == null) {
-      // Если Notifier'ы не найдены, можно вернуть пустой контейнер или обработать ошибку
-      return const SizedBox.shrink();
-    }
-
-    return ValueListenableBuilderN<dynamic>(
-      listenable: [themeModeNotifier, languageNotifier],
-      builder: (context, values, child) {
-        final themeMode = values[0] as ThemeMode;
-        final locale = values[1] as EnumLang;
-
-        return MaterialApp(
-          onGenerateTitle: (context) => Localization.of(context).app_name,
-          debugShowCheckedModeBanner: false,
-          //
-          themeMode: themeMode,
-          theme: AppTheme.lightThemeData(),
-          darkTheme: AppTheme.darkThemeData(),
-          //
-          localizationsDelegates: const <LocalizationsDelegate<Object?>>[
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            Localization.delegate,
-          ],
-          supportedLocales: Localization.supportedLocales,
-          locale: Locale(locale.name),
-
-          //
-          home: const ThreadTypeSelectionScreen(),
-        );
-      },
+      //
+      home: const ThreadTypeSelectionScreen(),
     );
   }
 }

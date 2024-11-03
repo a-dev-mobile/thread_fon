@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:threadfon/app/language/language_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
-import 'package:threadfon/core/services/api_service/api_provider.dart';
-import 'package:threadfon/core/services/local_storage/local_storage_provider.dart';
+import 'package:threadfon/core/services/api_service/api_service.dart';
+import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/pitch_selection/controllers/pitch_controller.dart';
 import 'package:threadfon/features/pitch_selection/repositories/pitch_repository.dart';
@@ -27,13 +28,13 @@ class _MetricPitchScreenState extends State<MetricPitchScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final lang = LanguageNotifier.watch(context);
+    final lang = context.watch<LanguageBloc>();
 
     if (!_isControllerInitialized) {
-      final apiService = ApiProvider.of(context);
-      final localStorage = LocalStorageProvider.of(context);
+      final apiService = context.read<ApiService>();
+      final localStorage = context.read<LocalStorage>();
       final repository = PitchRepository(apiService: apiService);
-      _controller = PitchController(repository: repository, localStorage: localStorage, language: lang);
+      _controller = PitchController(repository: repository, localStorage: localStorage, language: lang.state.enumLang!);
       _controller
         ..addListener(_updateState)
         ..loadData();
@@ -70,7 +71,6 @@ class _MetricPitchScreenState extends State<MetricPitchScreen> {
   @override
   Widget build(BuildContext context) {
     _l.d('Building MetricPitchScreen', includeStackTrace: false);
-    final lang = LanguageNotifier.watch(context);
 
 
     return Scaffold(
@@ -79,7 +79,7 @@ class _MetricPitchScreenState extends State<MetricPitchScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          LanguageNotifier.read(context).toggleLocale;
+          // LanguageBloc.read(context).toggleLocale;
         },
         child: const Icon(Icons.refresh),
       ),

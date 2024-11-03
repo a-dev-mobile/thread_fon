@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
+import 'package:threadfon/core/services/api_service/api_service.dart';
+import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/local_storage/local_storage_provider.dart';
 import 'package:threadfon/features/tolerance_selection/repositories/tolerance_repository.dart';
 import 'package:threadfon/localization/localization.dart';
@@ -26,8 +29,8 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isControllerInitialized) {
-      final apiService = ApiProvider.of(context);
-      final localStorage = LocalStorageProvider.of(context);
+      final apiService = context.read<ApiService>();
+      final localStorage = context.read<LocalStorage>();
       final repository =
           ToleranceRepository(apiService: apiService);
       _controller = ToleranceController(

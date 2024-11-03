@@ -1,11 +1,12 @@
 // Package imports:
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:threadfon/app/language/language_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
 import 'package:threadfon/core/constant/enums_thread_type.dart';
-import 'package:threadfon/core/services/local_storage/local_storage_provider.dart';
+import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/features/diameter_selection/views/metric_diameter_screen.dart';
 import 'package:threadfon/features/thread_type_selection/controllers/thread_type_controller.dart';
 import 'package:threadfon/features/thread_type_selection/repositories/thread_type_repository.dart';
@@ -27,7 +28,7 @@ class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isControllerInitialized) {
-      final localStorage = LocalStorageProvider.of(context);
+      final localStorage = context.read<LocalStorage>();
       final repository = ThreadTypeRepository();
       _controller = ThreadTypeController(
         repository: repository,
@@ -67,8 +68,6 @@ class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final currentLang = LanguageNotifier.watch(context);
-
     switch (_controller.state.status) {
       case EnumScreenStatus.initial:
       case EnumScreenStatus.loading:
@@ -88,6 +87,10 @@ class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
           appBar: AppBar(
             title: Text(Localization.of(context).thread_type),
           ),
+          floatingActionButton: FloatingActionButton(onPressed: () {
+            context.read<LanguageBloc>().toggle();
+            context.read<ThemeBloc>().toggle();
+          }),
           body: Column(
             children: _controller.state.threadTypes.map((threadType) {
               return Expanded(

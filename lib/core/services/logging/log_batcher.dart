@@ -49,8 +49,10 @@ class LogBatcher {
         options: Options(headers: {'Content-Type': 'application/json'}),
       );
     } catch (e) {
-      // Handle the error appropriately in your application
-      print('Error sending logs to Loki: $e');
+      // Обработка ошибок отправки
+      if (kDebugMode) {
+        print('Ошибка отправки логов в Loki: $e');
+      }
     } finally {
       _logBuffer.clear();
     }
@@ -86,5 +88,8 @@ class LogBatcher {
 
   void dispose() {
     _timer?.cancel();
+        if (_logBuffer.isNotEmpty) {
+      _sendLogs();
+    }
   }
 }

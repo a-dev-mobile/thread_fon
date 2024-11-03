@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/models/user_selection.dart';
-
-
 import 'package:threadfon/core/services/logging/logger.dart';
 
 final _l = L('local_storage');
@@ -38,7 +39,8 @@ class LocalStorage {
           _userAgent,
           _targetUrl,
           _userSelectionKey,
-      
+          _themeStateKey,
+          _languageStateKey
         },
       ),
     );
@@ -53,9 +55,7 @@ class LocalStorage {
         forceRefresh: forceRefresh,
       );
 
-  Future<void> setAppId(String? value) =>
-      _setValue<String>(key: _appId, value: value ?? '');
-
+  Future<void> setAppId(String? value) => _setValue<String>(key: _appId, value: value ?? '');
 
   // ******************************
   // Методы для работы с _userSelection
@@ -68,12 +68,10 @@ class LocalStorage {
     );
     try {
       return jsonString != null
-          ? UserSelection.fromJson(
-              json.decode(jsonString) as Map<String, dynamic>)
+          ? UserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
           : const UserSelection();
     } on Exception catch (e, s) {
-      await _recordError(
-          e, s, 'GET_USER_SELECTION', _userSelectionKey, jsonString);
+      await _recordError(e, s, 'GET_USER_SELECTION', _userSelectionKey, jsonString);
       return const UserSelection();
     }
   }
@@ -103,36 +101,94 @@ class LocalStorage {
 
       await _log('UPDATE_USER_SELECTION', _userSelectionKey, updatedSelection);
     } on Exception catch (e, s) {
-      await _recordError(
-          e, s, 'UPDATE_USER_SELECTION', _userSelectionKey, null);
+      await _recordError(e, s, 'UPDATE_USER_SELECTION', _userSelectionKey, null);
     }
   }
   // ******************************
   // Методы для работы с _userAgent
 
-  Future<String?> getUserAgent({bool forceRefresh = false}) =>
-      _getValue<String>(
+  Future<String?> getUserAgent({bool forceRefresh = false}) => _getValue<String>(
         key: _userAgent,
         forceRefresh: forceRefresh,
       );
 
-  Future<void> setUserAgent(String? value) =>
-      _setValue<String>(key: _userAgent, value: value ?? '');
+  Future<void> setUserAgent(String? value) => _setValue<String>(key: _userAgent, value: value ?? '');
 
   // ******************************
   // Методы для работы с _targetUrl
 
-  Future<String?> getTargetUrl({bool forceRefresh = false}) =>
-      _getValue<String>(
+  Future<String?> getTargetUrl({bool forceRefresh = false}) => _getValue<String>(
         key: _targetUrl,
         forceRefresh: forceRefresh,
         defaultValue: 'https://unknown.com?utm_source=organic_mob',
       );
 
-  Future<void> setTargetUrl(String? value) =>
-      _setValue<String>(key: _targetUrl, value: value ?? '');
+  Future<void> setTargetUrl(String? value) => _setValue<String>(key: _targetUrl, value: value ?? '');
 
   // ******************************
+  // Методы для работы с _themeMode
+  static const String _themeStateKey = '_themeState';
+
+  Future<ThemeState> getThemeState({bool forceRefresh = false}) async {
+    final jsonString = await _getValue<String>(
+      key: _themeStateKey,
+      forceRefresh: forceRefresh,
+      defaultValue: '{}',
+    );
+    try {
+      return jsonString != null
+          ? ThemeState.fromJson(json.decode(jsonString) as Map<String, dynamic>)
+          : const ThemeState();
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'GET_THEME_STATE', _themeStateKey, jsonString);
+      return const ThemeState();
+    }
+  }
+
+  Future<void> setThemeState(ThemeState value) async {
+    try {
+      final jsonString = json.encode(value.toJson());
+      await _setValue<String>(key: _themeStateKey, value: jsonString);
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'SET_THEME_STATE', _themeStateKey, value);
+    }
+  }
+
+  // ******************************
+
+
+  // ******************************
+  // Методы для работы с _themeMode
+  static const String _languageStateKey = '_languageStateKey';
+
+  Future<LanguageState> getLanguageState({bool forceRefresh = false}) async {
+    final jsonString = await _getValue<String>(
+      key: _languageStateKey,
+      forceRefresh: forceRefresh,
+      defaultValue: '{}',
+    );
+    try {
+      return jsonString != null
+          ? LanguageState.fromJson(json.decode(jsonString) as Map<String, dynamic>)
+          : const LanguageState();
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'GET_LANGUAGE_STATE', _languageStateKey, jsonString);
+      return const LanguageState();
+    }
+  }
+
+  Future<void> setLanguageState(LanguageState value) async {
+    try {
+      final jsonString = json.encode(value.toJson());
+      await _setValue<String>(key: _languageStateKey, value: jsonString);
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'SET_LANGUAGE_STATE', _languageStateKey, value);
+    }
+  }
+
+  // ******************************
+
+
   // Универсальные методы для хранения и получения данных
 
   /// Универсальный метод для сохранения значения в хранилище.
@@ -143,11 +199,7 @@ class LocalStorage {
     try {
       _ensureInitialized();
 
-      if (value is String ||
-          value is bool ||
-          value is int ||
-          value is double ||
-          value is List<String>) {
+      if (value is String || value is bool || value is int || value is double || value is List<String>) {
         if (value is String) {
           await _sharedPreferences!.setString(key, value);
         } else if (value is bool) {
@@ -197,8 +249,7 @@ class LocalStorage {
         return _getFromSharedPreferences<T>(key, defaultValue);
       }
 
-      if (forceRefresh ||
-          DateTime.now().difference(_lastCacheUpdate) > _cacheDuration) {
+      if (forceRefresh || DateTime.now().difference(_lastCacheUpdate) > _cacheDuration) {
         await _cachePreferences!.reloadCache();
         _lastCacheUpdate = DateTime.now();
       }
@@ -254,8 +305,7 @@ class LocalStorage {
       return _cachePreferences!.containsKey(key);
     } on Exception catch (e) {
       if (e is ArgumentError) {
-        await _log('WARN', key,
-            'Key is not included in the PreferencesFilter allowlist');
+        await _log('WARN', key, 'Key is not included in the PreferencesFilter allowlist');
         return false;
       }
       rethrow; // Если это не ArgumentError, выбрасываем дальше
@@ -281,17 +331,16 @@ class LocalStorage {
   /// Метод для получения JSON-объекта из хранилища.
   Future<Map<String, dynamic>?> getJson({
     required String key,
-    bool forceRefresh = false,
+    required bool forceRefresh,
+    defaultValue = const <String, dynamic>{},
   }) async {
     final jsonString = await _getValue<String>(
       key: key,
       forceRefresh: forceRefresh,
-      defaultValue: '{}',
+      defaultValue: defaultValue,
     );
     try {
-      return jsonString != null
-          ? json.decode(jsonString) as Map<String, dynamic>
-          : null;
+      return jsonString != null ? json.decode(jsonString) as Map<String, dynamic> : null;
     } on Exception catch (e, s) {
       await _recordError(e, s, 'GET_JSON', key, jsonString);
       return null;
@@ -343,8 +392,7 @@ class LocalStorage {
   /// Проверка инициализации хранилищ
   void _ensureInitialized() {
     if (_sharedPreferences == null || _cachePreferences == null) {
-      throw Exception(
-          'LocalStorage not initialized. Call initialize() before using.');
+      throw Exception('LocalStorage not initialized. Call initialize() before using.');
     }
   }
 }

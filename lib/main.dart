@@ -3,8 +3,10 @@ import 'dart:isolate';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:threadfon/app/app.dart';
+import 'package:threadfon/core/services/logging/app_bloc_observer.dart';
 import 'package:threadfon/core/services/api_service/api_provider.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
@@ -42,7 +44,6 @@ Future<void> main() async {
           _l.e('FlutterError.onError', error: details.exception, stackTrace: details.stack ?? StackTrace.current);
         };
 
-
         // Установка предпочтительной ориентации экрана
         // await SystemChrome.setPreferredOrientations([
         //   DeviceOrientation.portraitUp,
@@ -50,13 +51,18 @@ Future<void> main() async {
         // ]);
 
         // Запуск приложения с провайдерами
+        Bloc.observer = const AppBlocObserver();
         runApp(
-          ApiProvider(
-            apiService: ApiService(),
-            child: LocalStorageProvider(
-              localStorage: localStorage,
-              child: const MyApp(),
-            ),
+          MultiRepositoryProvider(
+            providers: [
+              RepositoryProvider.value(
+                value: localStorage,
+              ),
+              RepositoryProvider(
+                create: (context) => ApiService(),
+              ),
+            ],
+            child: const MyApp(),
           ),
         );
       } on Exception catch (e, s) {
@@ -81,7 +87,7 @@ Future<void> main() async {
           final error = errorAndStacktrace.first;
           final stackTrace = errorAndStacktrace.last as StackTrace;
 
-          _l.e('Isolate error',error: error, stackTrace: stackTrace);
+          _l.e('Isolate error', error: error, stackTrace: stackTrace);
         }).sendPort,
       );
 

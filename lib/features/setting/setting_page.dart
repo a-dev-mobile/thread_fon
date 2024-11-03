@@ -19,9 +19,9 @@ class SettingPage extends StatelessWidget {
         body: const Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ThemeSwitchWidget(),
+            // ThemeSwitchWidget(),
     
-            LangSwitchWidget(),
+            // LangSwitchWidget(),
 
           ],
         ),
