@@ -5,88 +5,58 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
+import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/constant/enum_thread_type.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
+import 'package:threadfon/core/widgets/my_error_widget.dart';
+import 'package:threadfon/core/widgets/my_load_widget.dart';
 import 'package:threadfon/features/diameter_selection/views/metric_diameter_screen.dart';
-import 'package:threadfon/features/thread_type_selection/controllers/thread_type_controller.dart';
-import 'package:threadfon/features/thread_type_selection/repositories/thread_type_repository.dart';
+import 'package:threadfon/features/thread_type_selection/bloc/thread_type_bloc.dart';
+
 import 'package:threadfon/features/thread_type_selection/widgets/thread_type_choice_card.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n.dart';
 import 'package:threadfon/localization/localization.dart';
 
-class ThreadTypeSelectionScreen extends StatefulWidget {
+class ThreadTypeSelectionScreen extends StatelessWidget {
   const ThreadTypeSelectionScreen({super.key});
 
   @override
-  State<ThreadTypeSelectionScreen> createState() => _ThreadTypeSelectionScreenState();
+  Widget build(BuildContext context) {
+
+
+    return BlocProvider(
+      create: (context) => ThreadTypeBloc(
+        localStorage: context.read<LocalStorage>(),
+        languageBloc: context.read<LanguageBloc>(), 
+      )..load(),
+      child: const _ThreadTypeSelectionView(),
+    );
+  }
 }
 
-class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
-  late final ThreadTypeController _controller;
-  bool _isControllerInitialized = false;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isControllerInitialized) {
-      final localStorage = context.read<LocalStorage>();
-      final repository = ThreadTypeRepository();
-      _controller = ThreadTypeController(
-        repository: repository,
-        localStorage: localStorage,
-      );
-      _controller
-        ..addListener(_updateState)
-        ..loadThreadTypes();
-      _isControllerInitialized = true;
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller
-      ..removeListener(_updateState)
-      ..dispose();
-    super.dispose();
-  }
-
-  void _updateState() {
-    if (mounted) {
-      if (_controller.state.status == EnumScreenStatus.navigating) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (context) => const MetricDiameterScreen(),
-            ),
-          );
-        });
-        return;
-      }
-      setState(() {});
-    }
-  }
+class _ThreadTypeSelectionView extends StatelessWidget {
+  const _ThreadTypeSelectionView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.watch<ThreadTypeBloc>();
     final l = context.l10n;
-    print(l.app_name);
-    switch (_controller.state.status) {
-      case EnumScreenStatus.initial:
-      case EnumScreenStatus.loading:
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+
+    switch (bloc.state.status) {
+      case EnumStatus.init:
+      case EnumStatus.load:
+      case EnumStatus.prepareNavigating:
+        return const MyLoadWidget();
+
+      case EnumStatus.error:
+        final errorMsg = bloc.state.errorMsg ?? 'An error occurred';
+        return MyErrorWidget(
+          errorMsg: errorMsg,
+          onRetry: () => bloc.load(),
         );
-      case EnumScreenStatus.loadingNavigating:
-        return const Scaffold(
-          body: Center(child: LinearProgressIndicator()),
-        );
-      case EnumScreenStatus.error:
-        return Scaffold(
-          body: Center(child: Text('Error: ${_controller.state.error}')),
-        );
-      case EnumScreenStatus.success:
+
+      case EnumStatus.success:
         return Scaffold(
           appBar: AppBar(
             title: Text(l.thread_type),
@@ -96,21 +66,22 @@ class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
             context.read<ThemeBloc>().toggle();
           }),
           body: Column(
-            children: _controller.state.threadTypes.map((threadType) {
+            children: bloc.state.threadTypes.map((threadType) {
               return Expanded(
                 child: ThreadTypeChoiceCard(
-                  onTap: () => _controller.updateUserSelection(threadType),
+                  onTap: () => bloc.updateUserSelection(threadType),
                   svgAssetPath: threadType.svgAssetPath,
-                  label: threadType.enumThreadType == EnumThreadType.f ? l.internal_thread : l.external_thread,
+                  label: threadType.enumThreadType == EnumThreadType.f
+                      ? l.internal_thread
+                      : l.external_thread,
                 ),
               );
             }).toList(),
           ),
         );
-      case EnumScreenStatus.navigating:
-        // This case is handled in _updateState()
+
+      default:
         return const SizedBox.shrink();
-      // TODO: Handle this case.
     }
   }
 }

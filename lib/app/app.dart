@@ -70,7 +70,7 @@ class _ThreadApp extends StatelessWidget {
       locale: Locale(languageState.enumLang.name),
 
       //
-      home: const ThreadTypeSelectionScreen(),
+      home:  ThreadTypeSelectionScreen(),
     );
   }
 }

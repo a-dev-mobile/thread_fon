@@ -42,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "diam_major": MessageLookupByLibrary.simpleMessage("Major diameter"),
         "diam_middle": MessageLookupByLibrary.simpleMessage("Pitch diameter"),
         "diam_minor": MessageLookupByLibrary.simpleMessage("Minor diameter"),
+        "error": MessageLookupByLibrary.simpleMessage("Error"),
         "exit_app": MessageLookupByLibrary.simpleMessage("Exit app"),
         "exit_app_warning": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to quit the app?"),
@@ -74,6 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "no_data": MessageLookupByLibrary.simpleMessage("No data"),
         "nuts": MessageLookupByLibrary.simpleMessage("Nuts"),
         "rate_app": MessageLookupByLibrary.simpleMessage("Rate app"),
+        "repeat": MessageLookupByLibrary.simpleMessage("Repeat"),
         "setting": MessageLookupByLibrary.simpleMessage("Settings"),
         "thank_you": MessageLookupByLibrary.simpleMessage(
             "Thank You for choosing our application"),

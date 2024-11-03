@@ -42,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "diam_middle": MessageLookupByLibrary.simpleMessage("Средний диаметр"),
         "diam_minor":
             MessageLookupByLibrary.simpleMessage("Внутренний диаметр"),
+        "error": MessageLookupByLibrary.simpleMessage("Ошибка"),
         "exit_app": MessageLookupByLibrary.simpleMessage("Выход из приложения"),
         "exit_app_warning": MessageLookupByLibrary.simpleMessage(
             "Вы уверены, что хотите выйти из приложения?"),
@@ -74,6 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "no_data": MessageLookupByLibrary.simpleMessage("Нет данных"),
         "nuts": MessageLookupByLibrary.simpleMessage("Гайка"),
         "rate_app": MessageLookupByLibrary.simpleMessage("Оценить приложение"),
+        "repeat": MessageLookupByLibrary.simpleMessage("Повторить"),
         "setting": MessageLookupByLibrary.simpleMessage("Настройки"),
         "thank_you": MessageLookupByLibrary.simpleMessage(
             "Спасибо Вам, что пользуетесь нашим приложением"),

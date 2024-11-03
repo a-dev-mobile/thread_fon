@@ -5,6 +5,8 @@
   "localeCode": "ru_RU",
   "languageCode": "ru",
   "language": "Russia",
+  "error": "Ошибка",
+  "repeat": "Повторить",
   "main": "Главная",
   "setting": "Настройки",
   "app_lang": "Язык приложения",
