@@ -50,23 +50,23 @@ class _ThreadApp extends StatelessWidget {
     final languageState = context.watch<LanguageBloc>().state;
     final themeState = context.watch<ThemeBloc>().state;
 
-// final l = context.l10n;
+
     return MaterialApp(
-      // onGenerateTitle: (context) =>  Localization.of(context).app_name,
-      // onGenerateTitle: (context) => l.app_name,
+
+      onGenerateTitle: (BuildContext context) => context.l10n.app_name,
       debugShowCheckedModeBanner: false,
       //
       themeMode: themeState.themeMode,
       theme: AppTheme.lightThemeData(),
       darkTheme: AppTheme.darkThemeData(),
-      //
-      localizationsDelegates: const <LocalizationsDelegate<Object?>>[
+      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-        AppLocalizationDelegate(),
+        GeneratedLocalization.delegate, 
+        AppLocalizationDelegate(), 
       ],
-      supportedLocales: AppLocalizationDelegate().supportedLocales,
+      supportedLocales: GeneratedLocalization.delegate.supportedLocales, 
       locale: Locale(languageState.enumLang.name),
 
       //

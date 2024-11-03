@@ -71,6 +71,7 @@ class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    print(l.app_name);
     switch (_controller.state.status) {
       case EnumScreenStatus.initial:
       case EnumScreenStatus.loading:
@@ -100,9 +101,7 @@ class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
                 child: ThreadTypeChoiceCard(
                   onTap: () => _controller.updateUserSelection(threadType),
                   svgAssetPath: threadType.svgAssetPath,
-                  label: threadType.enumThreadType == EnumThreadType.f
-                      ? l.internal_thread
-                      : l.external_thread,
+                  label: threadType.enumThreadType == EnumThreadType.f ? l.internal_thread : l.external_thread,
                 ),
               );
             }).toList(),
