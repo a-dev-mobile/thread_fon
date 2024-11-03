@@ -11,5 +11,6 @@ sealed class LanguageState with _$LanguageState {
     required EnumLang enumLang,
   }) = _LanguageState;
 
-  factory LanguageState.fromJson(Map<String, Object?> json) => _$LanguageStateFromJson(json);
+  factory LanguageState.fromJson(Map<String, Object?> json) =>
+      _$LanguageStateFromJson(json);
 }

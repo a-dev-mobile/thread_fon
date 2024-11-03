@@ -35,7 +35,7 @@ class ThreadTypeSelectionScreen extends StatelessWidget {
 }
 
 class _ThreadTypeSelectionView extends StatelessWidget {
-  const _ThreadTypeSelectionView({super.key});
+  const _ThreadTypeSelectionView();
 
   @override
   Widget build(BuildContext context) {
@@ -76,8 +76,10 @@ class _ThreadTypeSelectionView extends StatelessWidget {
                 return GridView.builder(
                   padding: const EdgeInsets.all(8),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    childAspectRatio: 5 / 4,
+                    crossAxisCount: 2, // Изменено на 2 для лучшей адаптивности
+                    mainAxisSpacing: 8.0,
+                    crossAxisSpacing: 8.0,
+                    childAspectRatio: 3 / 4,
                   ),
                   itemCount: state.threadTypes.length,
                   itemBuilder: (context, index) {
@@ -88,7 +90,9 @@ class _ThreadTypeSelectionView extends StatelessWidget {
                     return ThreadTypeChoiceCard(
                       svgAssetPath: threadType.svgAssetPath,
                       label: label,
-                      onTap: () => context.read<ThreadTypeBloc>().selectThreadType(threadType),
+                      onTap: () => context
+                          .read<ThreadTypeBloc>()
+                          .selectThreadType(threadType),
                     );
                   },
                 );

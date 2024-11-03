@@ -7,7 +7,8 @@ class CustomPrinter extends LogPrinter {
       : _prettyPrinterWithStack = PrettyPrinter(
           colors: false,
         ),
-        _prettyPrinterWithoutStack = PrettyPrinter(colors: false, methodCount: 0);
+        _prettyPrinterWithoutStack =
+            PrettyPrinter(colors: false, methodCount: 0);
 
   final String fileName;
   final PrettyPrinter _prettyPrinterWithStack;
@@ -15,7 +16,9 @@ class CustomPrinter extends LogPrinter {
 
   @override
   List<String> log(LogEvent event) {
-    final printer = event.stackTrace != null ? _prettyPrinterWithStack : _prettyPrinterWithoutStack;
+    final printer = event.stackTrace != null
+        ? _prettyPrinterWithStack
+        : _prettyPrinterWithoutStack;
     final output = printer.log(event);
     return output.map((line) => '[$fileName] $line').toList();
   }
@@ -38,14 +41,16 @@ class LogService {
       return;
     }
 
-    final timestamp = DateTime.now().microsecondsSinceEpoch * 1000; // nanoseconds
+    final timestamp =
+        DateTime.now().microsecondsSinceEpoch * 1000; // nanoseconds
     final logData = {
       'timestamp': timestamp,
       'level': level.toString().split('.').last,
       'message': message,
       'properties': {
         if (error != null) 'error': error.toString(),
-        if (includeStackTrace && stackTrace != null) 'stackTrace': stackTrace.toString(),
+        if (includeStackTrace && stackTrace != null)
+          'stackTrace': stackTrace.toString(),
         'file': _fileName,
       },
     };
@@ -53,57 +58,81 @@ class LogService {
     LogBatcher().addLog(level, logData);
   }
 
-  void t(dynamic message, {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
+  void t(dynamic message,
+      {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
     _logger.t(
       message,
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-    _logToLoki(Level.trace, message, error: error, stackTrace: stackTrace, includeStackTrace: includeStackTrace);
+    _logToLoki(Level.trace, message,
+        error: error,
+        stackTrace: stackTrace,
+        includeStackTrace: includeStackTrace);
   }
 
-  void d(dynamic message, {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
+  void d(dynamic message,
+      {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
     _logger.d(
       message,
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-    _logToLoki(Level.debug, message, error: error, stackTrace: stackTrace, includeStackTrace: includeStackTrace);
+    _logToLoki(Level.debug, message,
+        error: error,
+        stackTrace: stackTrace,
+        includeStackTrace: includeStackTrace);
   }
 
-  void i(dynamic message, {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
+  void i(dynamic message,
+      {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
     _logger.i(
       message,
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-    _logToLoki(Level.info, message, error: error, stackTrace: stackTrace, includeStackTrace: includeStackTrace);
+    _logToLoki(Level.info, message,
+        error: error,
+        stackTrace: stackTrace,
+        includeStackTrace: includeStackTrace);
   }
 
-  void w(dynamic message, {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
+  void w(dynamic message,
+      {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
     _logger.w(
       message,
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-    _logToLoki(Level.warning, message, error: error, stackTrace: stackTrace, includeStackTrace: includeStackTrace);
+    _logToLoki(Level.warning, message,
+        error: error,
+        stackTrace: stackTrace,
+        includeStackTrace: includeStackTrace);
   }
 
-  void e(dynamic message, {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
+  void e(dynamic message,
+      {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
     _logger.e(
       message,
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-    _logToLoki(Level.error, message, error: error, stackTrace: stackTrace, includeStackTrace: includeStackTrace);
+    _logToLoki(Level.error, message,
+        error: error,
+        stackTrace: stackTrace,
+        includeStackTrace: includeStackTrace);
   }
 
-  void f(dynamic message, {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
+  void f(dynamic message,
+      {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
     _logger.f(
       message,
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-    _logToLoki(Level.fatal, message, error: error, stackTrace: stackTrace, includeStackTrace: includeStackTrace);
+    _logToLoki(Level.fatal, message,
+        error: error,
+        stackTrace: stackTrace,
+        includeStackTrace: includeStackTrace);
   }
 }

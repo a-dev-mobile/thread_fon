@@ -8,11 +8,11 @@
 
 
   "error": "Error",
-  "repeat": "Repeat",
+  "retry": "Retry",
 
   "select_diameter": "Сhoose diameter",
-
-
+  "select_tolerance": "Сhoose tolerance",
+  "select_pitch": "Сhoose pitch",
   "setting": "Settings",
   "app_lang": "Application language",
   "lang_ru": "Russian",

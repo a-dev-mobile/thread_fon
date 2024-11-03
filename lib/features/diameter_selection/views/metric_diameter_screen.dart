@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
@@ -6,16 +8,14 @@ import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
+import 'package:threadfon/core/widgets/my_load_widget.dart';
 import 'package:threadfon/features/diameter_selection/bloc/diameter_bloc.dart';
 import 'package:threadfon/features/diameter_selection/repositories/diameter_repository.dart';
 import 'package:threadfon/features/diameter_selection/widget/diameter_choice_card.dart';
-import 'package:threadfon/features/pitch_selection/views/metric_pitch_screen.dart';
+import 'package:threadfon/features/pitch_selection/views/pitch_selection_screen.dart';
 import 'package:threadfon/localization/l10n.dart';
 
 final _logger = LogService('metric_diameter_screen');
-
-// Создаем глобальный PageStorageBucket
-final PageStorageBucket _pageBucket = PageStorageBucket();
 
 class MetricDiameterScreen extends StatelessWidget {
   const MetricDiameterScreen({super.key});
@@ -39,8 +39,62 @@ class MetricDiameterScreen extends StatelessWidget {
   }
 }
 
-class _MetricDiameterView extends StatelessWidget {
-  const _MetricDiameterView({super.key});
+class _MetricDiameterView extends StatefulWidget {
+  const _MetricDiameterView();
+
+  @override
+  State<_MetricDiameterView> createState() => _MetricDiameterViewState();
+}
+
+class _MetricDiameterViewState extends State<_MetricDiameterView> {
+  late ScrollController _scrollController;
+  Timer? _throttleTimer; // Таймер для троттлинга
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+
+    // Добавляем слушатель для сохранения положения скролла при изменении
+    _scrollController.addListener(_onScroll);
+  }
+
+  // Метод-обработчик скролла с троттлингом
+  void _onScroll() {
+    if (_throttleTimer?.isActive ?? false) return;
+
+    _throttleTimer = Timer(const Duration(seconds: 1), () {
+      _saveScrollPosition();
+    });
+  }
+
+  Future<void> _loadScrollPosition() async {
+    final localStorage = context.read<LocalStorage>();
+    final savedPosition = await localStorage.getScrollPosition();
+
+    if (savedPosition != null && savedPosition > 0) {
+      // Сохраняем позицию для последующего использования
+      // Мы будем вызывать jumpTo позже, когда список будет построен
+      _savedScrollPosition = savedPosition;
+    }
+
+    setState(() {});
+  }
+
+  void _saveScrollPosition() {
+    final localStorage = context.read<LocalStorage>();
+    localStorage.setScrollPosition(_scrollController.offset);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _throttleTimer?.cancel(); // Отменяем таймер при уничтожении виджета
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  double? _savedScrollPosition;
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +102,25 @@ class _MetricDiameterView extends StatelessWidget {
 
     return BlocListener<DiameterBloc, DiameterState>(
       listenWhen: (previous, current) => previous.status != current.status,
-      listener: (context, state) {
+      listener: (context, state) async {
+        await _loadScrollPosition();
+
+        if (state.status == EnumStatus.success) {
+          if (_savedScrollPosition != null) {
+            // Используем addPostFrameCallback, чтобы убедиться, что ListView построен
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (_scrollController.hasClients) {
+                _scrollController.jumpTo(_savedScrollPosition!);
+              }
+            });
+          }
+        }
+
         if (state.status == EnumStatus.navigating) {
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (_) => const MetricPitchScreen(),
+              builder: (_) => const PitchSelectionScreen(),
             ),
           );
         }
@@ -69,7 +136,7 @@ class _MetricDiameterView extends StatelessWidget {
               case EnumStatus.loading:
               case EnumStatus.preparingNavigation:
               case EnumStatus.navigating:
-                return const Center(child: CircularProgressIndicator());
+                return const MyLoadWidget();
 
               case EnumStatus.error:
                 return MyErrorWidget(
@@ -78,6 +145,7 @@ class _MetricDiameterView extends StatelessWidget {
                 );
               case EnumStatus.success:
                 return ListView.builder(
+                  controller: _scrollController,
                   itemCount: state.diameters.length,
                   itemBuilder: (context, index) {
                     final diameter = state.diameters[index];

@@ -7,13 +7,14 @@ import 'package:threadfon/features/pitch_selection/models/pitch_model.dart';
 final _logger = LogService('pitch_repository');
 
 class PitchRepository {
-  PitchRepository({
-    required ApiService apiService,
-  }) : _apiService = apiService;
-
   final ApiService _apiService;
 
-  Future<List<PitchModel>> fetchPitch(double diameter, String language) async {
+  PitchRepository({required ApiService apiService}) : _apiService = apiService;
+
+  Future<List<PitchModel>> fetchPitch({
+    required double diameter,
+    required String language,
+  }) async {
     try {
       final response = await _apiService.get(
         'https://thread.wayofdt.de/v1/metric/pitch',
@@ -25,19 +26,19 @@ class PitchRepository {
 
       if (response.statusCode == 200) {
         final List<dynamic> rawData = response.data as List<dynamic>;
-        final List<PitchModel> listModel =
-            rawData.map((json) => PitchModel.fromJson(json as Map<String, dynamic>)).toList();
-        return listModel;
+        return rawData
+            .map((json) => PitchModel.fromJson(json as Map<String, dynamic>))
+            .toList();
       } else {
         _logger.e(
-          'Failed to fetch  Pitch',
+          'Failed to fetch pitch',
           error: 'Status code: ${response.statusCode}',
         );
-        throw Exception('Failed to fetch Pitch');
+        throw Exception('Failed to fetch pitch');
       }
     } catch (error, stackTrace) {
       _logger.e(
-        'Error fetching Pitch',
+        'Error fetching pitch',
         error: error,
         stackTrace: stackTrace,
       );

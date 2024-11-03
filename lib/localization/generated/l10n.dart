@@ -101,11 +101,11 @@ class GeneratedLocalization {
     );
   }
 
-  /// `Repeat`
-  String get repeat {
+  /// `Retry`
+  String get retry {
     return Intl.message(
-      'Repeat',
-      name: 'repeat',
+      'Retry',
+      name: 'retry',
       desc: '',
       args: [],
     );
@@ -116,6 +116,26 @@ class GeneratedLocalization {
     return Intl.message(
       'Сhoose diameter',
       name: 'select_diameter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Сhoose tolerance`
+  String get select_tolerance {
+    return Intl.message(
+      'Сhoose tolerance',
+      name: 'select_tolerance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Сhoose pitch`
+  String get select_pitch {
+    return Intl.message(
+      'Сhoose pitch',
+      name: 'select_pitch',
       desc: '',
       args: [],
     );

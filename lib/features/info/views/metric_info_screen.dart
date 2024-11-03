@@ -31,7 +31,8 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
       final apiService = context.read<ApiService>();
       final localStorage = context.read<LocalStorage>();
       final repository = InfoRepository(apiService: apiService);
-      _controller = InfoController(repository: repository, localStorage: localStorage);
+      _controller =
+          InfoController(repository: repository, localStorage: localStorage);
       _controller
         ..addListener(_updateState)
         ..load();
@@ -110,12 +111,14 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
                             minScale: 0.5,
                             maxScale: 10.0,
                             child: Builder(builder: (context) {
-                              final isDark = context.select((ThemeBloc bloc) => bloc.state.themeMode == ThemeMode.dark);
+                              final isDark = context.select((ThemeBloc bloc) =>
+                                  bloc.state.themeMode == ThemeMode.dark);
                               return SvgPicture.string(
                                 _controller.state.svgData!,
                                 color: isDark ? Colors.white : null,
                                 placeholderBuilder: (BuildContext context) =>
-                                    const Center(child: CircularProgressIndicator()),
+                                    const Center(
+                                        child: CircularProgressIndicator()),
                                 fit: BoxFit.contain,
                               );
                             }),

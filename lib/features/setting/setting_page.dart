@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:threadfon/features/setting/widgets/theme_switch.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
-import 'package:threadfon/localization/localization.dart';
-import 'package:threadfon/features/setting/widgets/lang_switch.dart';
-
 
 class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
@@ -21,9 +17,8 @@ class SettingPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // ThemeSwitchWidget(),
-    
-            // LangSwitchWidget(),
 
+            // LangSwitchWidget(),
           ],
         ),
       );

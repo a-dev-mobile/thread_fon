@@ -8,5 +8,6 @@ class ThreadTypeState with _$ThreadTypeState {
     String? errorMsg,
   }) = _ThreadTypeState;
 
-  factory ThreadTypeState.fromJson(Map<String, dynamic> json) => _$ThreadTypeStateFromJson(json);
+  factory ThreadTypeState.fromJson(Map<String, dynamic> json) =>
+      _$ThreadTypeStateFromJson(json);
 }

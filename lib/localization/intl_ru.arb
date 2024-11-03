@@ -6,9 +6,11 @@
   "languageCode": "ru",
   "language": "Russia",
   "error": "Ошибка",
-  "repeat": "Повторить",
+  "retry": "Повторить",
   
   "select_diameter": "Выберите диаметр",
+  "select_tolerance": "Выберите допуск",
+  "select_pitch": "Выберите шаг",
 
 
 

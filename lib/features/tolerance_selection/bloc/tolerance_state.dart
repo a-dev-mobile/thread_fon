@@ -1,0 +1,13 @@
+part of 'tolerance_bloc.dart';
+
+@freezed
+class ToleranceState with _$ToleranceState {
+  const factory ToleranceState({
+    @Default([]) List<ToleranceModel> tolerances,
+    @Default(EnumStatus.initial) EnumStatus status,
+    String? errorMsg,
+  }) = _ToleranceState;
+
+  factory ToleranceState.fromJson(Map<String, dynamic> json) =>
+      _$ToleranceStateFromJson(json);
+}

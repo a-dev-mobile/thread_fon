@@ -75,9 +75,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "no_data": MessageLookupByLibrary.simpleMessage("No data"),
         "nuts": MessageLookupByLibrary.simpleMessage("Nuts"),
         "rate_app": MessageLookupByLibrary.simpleMessage("Rate app"),
-        "repeat": MessageLookupByLibrary.simpleMessage("Repeat"),
+        "retry": MessageLookupByLibrary.simpleMessage("Retry"),
         "select_diameter":
             MessageLookupByLibrary.simpleMessage("Сhoose diameter"),
+        "select_pitch": MessageLookupByLibrary.simpleMessage("Сhoose pitch"),
+        "select_tolerance":
+            MessageLookupByLibrary.simpleMessage("Сhoose tolerance"),
         "setting": MessageLookupByLibrary.simpleMessage("Settings"),
         "thank_you": MessageLookupByLibrary.simpleMessage(
             "Thank You for choosing our application"),

@@ -11,31 +11,29 @@ class ThreadTypeChoiceCard extends StatelessWidget {
     required this.svgAssetPath,
     required this.label,
     required this.onTap,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ChoiceCard(
       onTap: onTap,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: SvgPicture.asset(svgAssetPath),
-            ),
+          SvgPicture.asset(
+            svgAssetPath,
+            height: 80,
+            width: 80,
+            fit: BoxFit.contain,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              label.toUpperCase(),
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-              textAlign: TextAlign.center,
-            ),
+          const SizedBox(height: 12),
+          Text(
+            label.toUpperCase(),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

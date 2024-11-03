@@ -1,9 +1,6 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n.dart';
-import 'package:threadfon/localization/localization.dart';
 
 class MyLoadWidget extends StatelessWidget {
   const MyLoadWidget({super.key});

@@ -15,7 +15,10 @@ class InfoRepository {
   final ApiService _apiService;
 
   Future<List<InfoModel>> fetchInfo(
-      {required String tolerance, required String threadType, required double pitch, required double diameter}) async {
+      {required String tolerance,
+      required String threadType,
+      required double pitch,
+      required double diameter}) async {
     try {
       final response = await _apiService.get(
         'https://thread.wayofdt.de/v1/metric/info',
@@ -29,8 +32,9 @@ class InfoRepository {
 
       if (response.statusCode == 200) {
         final List<dynamic> rawData = response.data as List<dynamic>;
-        final List<InfoModel> listModel =
-            rawData.map((json) => InfoModel.fromJson(json as Map<String, dynamic>)).toList();
+        final List<InfoModel> listModel = rawData
+            .map((json) => InfoModel.fromJson(json as Map<String, dynamic>))
+            .toList();
         return listModel;
       } else {
         _logger.e(

@@ -58,7 +58,8 @@ class LogBatcher {
     }
   }
 
-  Map<String, dynamic> _constructLokiPayload(Map<String, List<Map<String, dynamic>>> logsByLevel) {
+  Map<String, dynamic> _constructLokiPayload(
+      Map<String, List<Map<String, dynamic>>> logsByLevel) {
     final streams = logsByLevel.entries.map((entry) {
       final level = entry.key;
       final logs = entry.value;
@@ -88,7 +89,7 @@ class LogBatcher {
 
   void dispose() {
     _timer?.cancel();
-        if (_logBuffer.isNotEmpty) {
+    if (_logBuffer.isNotEmpty) {
       _sendLogs();
     }
   }

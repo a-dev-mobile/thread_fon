@@ -20,7 +20,10 @@ class ApiService {
     _dio.interceptors.add(CorrelationIdInterceptor());
   }
 
-  Future<Response> get(String path, {Map<String, dynamic>? queryParameters,  Options? options,
+  Future<Response> get(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    Options? options,
   }) {
     return _dio.get(path, queryParameters: queryParameters, options: options);
   }

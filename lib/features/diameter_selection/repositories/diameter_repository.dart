@@ -9,7 +9,8 @@ final _logger = LogService('diameter_repository');
 class DiameterRepository {
   final ApiService _apiService;
 
-  DiameterRepository({required ApiService apiService}) : _apiService = apiService;
+  DiameterRepository({required ApiService apiService})
+      : _apiService = apiService;
 
   Future<List<DiameterModel>> fetchDiameters({String order = 'asc'}) async {
     try {
@@ -24,11 +25,13 @@ class DiameterRepository {
             .map((json) => DiameterModel.fromJson(json as Map<String, dynamic>))
             .toList();
       } else {
-        _logger.e('Failed to fetch diameters. Status code: ${response.statusCode}');
+        _logger.e(
+            'Failed to fetch diameters. Status code: ${response.statusCode}');
         throw Exception('Failed to fetch diameters');
       }
     } catch (error, stackTrace) {
-      _logger.e('Error fetching diameters', error: error, stackTrace: stackTrace);
+      _logger.e('Error fetching diameters',
+          error: error, stackTrace: stackTrace);
       rethrow;
     }
   }

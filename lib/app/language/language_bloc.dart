@@ -1,4 +1,3 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -15,8 +14,6 @@ class LanguageBloc extends Cubit<LanguageState> {
   })  : _storage = storage,
         super(LanguageState(enumLang: enumLang));
   final LocalStorage _storage;
-
-
 
   Future<void> setLanguage(EnumLang value) async {
     final newState = state.copyWith(enumLang: value);

@@ -32,7 +32,8 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> {
     try {
       final threadTypes = await _repository.fetchThreadTypes();
 
-      emit(state.copyWith(status: EnumStatus.success, threadTypes: threadTypes));
+      emit(
+          state.copyWith(status: EnumStatus.success, threadTypes: threadTypes));
     } on Exception catch (e, s) {
       _logger.e('Error loading thread types', error: e, stackTrace: s);
       _setErrorState();
@@ -51,7 +52,8 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> {
       await Future.delayed(const Duration(seconds: 1));
       emit(state.copyWith(status: EnumStatus.success));
     } catch (e, s) {
-      _logger.e('Error updating thread type selection', error: e, stackTrace: s);
+      _logger.e('Error updating thread type selection',
+          error: e, stackTrace: s);
       _setErrorState();
     }
   }

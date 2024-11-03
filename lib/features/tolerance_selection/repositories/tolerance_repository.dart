@@ -7,16 +7,15 @@ import 'package:threadfon/features/tolerance_selection/models/tolerance_model.da
 final _logger = LogService('tolerance_repository');
 
 class ToleranceRepository {
-  ToleranceRepository({
-    required ApiService apiService,
-  }) : _apiService = apiService;
-
   final ApiService _apiService;
 
-  Future<List<ToleranceModel>> fetchTolerances(
-    int id,
-    String threadType,
-  ) async {
+  ToleranceRepository({required ApiService apiService})
+      : _apiService = apiService;
+
+  Future<List<ToleranceModel>> fetchTolerances({
+    required int id,
+    required String threadType,
+  }) async {
     try {
       final response = await _apiService.get(
         'https://thread.wayofdt.de/v1/metric/tolerance',
@@ -28,19 +27,20 @@ class ToleranceRepository {
 
       if (response.statusCode == 200) {
         final List<dynamic> rawData = response.data as List<dynamic>;
-        final List<ToleranceModel> listModel =
-            rawData.map((json) => ToleranceModel.fromJson(json as Map<String, dynamic>)).toList();
-        return listModel;
+        return rawData
+            .map(
+                (json) => ToleranceModel.fromJson(json as Map<String, dynamic>))
+            .toList();
       } else {
         _logger.e(
-          'Failed to fetch diameters',
+          'Failed to fetch tolerances',
           error: 'Status code: ${response.statusCode}',
         );
-        throw Exception('Failed to fetch diameters');
+        throw Exception('Failed to fetch tolerances');
       }
     } catch (error, stackTrace) {
       _logger.e(
-        'Error fetching diameters',
+        'Error fetching tolerances',
         error: error,
         stackTrace: stackTrace,
       );

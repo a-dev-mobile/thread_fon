@@ -6,6 +6,6 @@ class InfoState with _$InfoState {
     @Default([]) List<InfoModel> model,
     @Default(EnumScreenStatus.initial) EnumScreenStatus status,
     ErrorState? error,
-    String? svgData, 
+    String? svgData,
   }) = _InfoState;
 }
