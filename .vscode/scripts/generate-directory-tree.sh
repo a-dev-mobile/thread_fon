@@ -4,7 +4,8 @@
 source /home/dmitriy/.venv/bin/activate
 
 # Аргументы
-PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon"
+PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/thread_type_selection"
+PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/diameter_selection"
 FILE_NAMES=(
     "*.dart"
 )
@@ -37,8 +38,9 @@ EXCLUDE_STRINGS=(
     "part '"
 )
 LOG_LEVEL="INFO"
-OUTPUT_FILE="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/directory_structure.log"  # Полный путь для избежания путаницы
+OUTPUT_FILE="directory_structure.log" 
 DISPLAY="all"
+DISPLAY="content"
 
 # Запуск скрипта с аргументами
 python /home/dmitriy/Documents/DEV/MY_GITHUB/scripts/scripts/personal/generate_directory_tree.py \

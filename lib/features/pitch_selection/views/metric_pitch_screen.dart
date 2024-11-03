@@ -8,7 +8,6 @@ import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/pitch_selection/controllers/pitch_controller.dart';
 import 'package:threadfon/features/pitch_selection/repositories/pitch_repository.dart';
 import 'package:threadfon/features/tolerance_selection/views/metric_tolerance_screen.dart';
-import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n.dart';
 
 final _logger = LogService('metric_pitch_screen');
@@ -72,10 +71,10 @@ class _MetricPitchScreenState extends State<MetricPitchScreen> {
   @override
   Widget build(BuildContext context) {
     _logger.d('Building MetricPitchScreen', includeStackTrace: false);
-    final l = context.l10n;
+    final localization = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.thread_pitch),
+        title: Text(localization.thread_pitch),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

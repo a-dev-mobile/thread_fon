@@ -111,6 +111,16 @@ class GeneratedLocalization {
     );
   }
 
+  /// `Сhoose diameter`
+  String get select_diameter {
+    return Intl.message(
+      'Сhoose diameter',
+      name: 'select_diameter',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get setting {
     return Intl.message(

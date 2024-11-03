@@ -7,6 +7,11 @@
   "language": "Russia",
   "error": "Ошибка",
   "repeat": "Повторить",
+  
+  "select_diameter": "Выберите диаметр",
+
+
+
   "main": "Главная",
   "setting": "Настройки",
   "app_lang": "Язык приложения",

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:threadfon/core/constant/enum_thread_type.dart';
+
 
 part 'thread_type_model.freezed.dart';
 part 'thread_type_model.g.dart';
@@ -14,3 +14,5 @@ class ThreadTypeModel with _$ThreadTypeModel {
   factory ThreadTypeModel.fromJson(Map<String, dynamic> json) =>
       _$ThreadTypeModelFromJson(json);
 }
+
+enum EnumThreadType { f, m }

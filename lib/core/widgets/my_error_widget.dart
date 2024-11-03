@@ -4,8 +4,8 @@ import 'package:threadfon/localization/l10n.dart';
 import 'package:threadfon/localization/localization.dart';
 // Package imports:
 
-class MyErrorWidget extends StatelessWidget {
-  final String errorMsg;
+class MyErrorWidget extends StatefulWidget {
+  final String? errorMsg;
   final VoidCallback onRetry;
 
   const MyErrorWidget({
@@ -15,32 +15,58 @@ class MyErrorWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-        final l = context.l10n;
-    // Используем Future.microtask, чтобы показать диалог после построения виджета
-    Future.microtask(() {
-      showDialog(
-        context: context,
-        barrierDismissible: false, // Запретить закрытие диалога при нажатии вне его
-        builder: (context) {
-          return AlertDialog(
-            title:  Text(l.error),
-            content: Text(errorMsg),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Закрыть диалог
-                  onRetry(); // Вызвать колбэк повторной попытки
-                },
-                child:  Text(l.repeat),
-              ),
-            ],
-          );
-        },
-      );
+  _MyErrorWidgetState createState() => _MyErrorWidgetState();
+}
+
+class _MyErrorWidgetState extends State<MyErrorWidget> {
+  bool _isDialogShown = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Используем WidgetsBinding, чтобы убедиться, что контекст доступен
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showErrorDialog();
+    });
+  }
+
+  void _showErrorDialog() {
+    if (_isDialogShown) return;
+
+    setState(() {
+      _isDialogShown = true;
     });
 
-    // Возвращаем пустой виджет, так как диалог уже отображается
-    return const SizedBox.shrink();
+    final localization = context.l10n;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(localization.error),
+          content: Text(widget.errorMsg ?? localization.generalError),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                widget.onRetry();
+              },
+              child: Text(localization.repeat),
+            ),
+          ],
+        );
+      },
+    ).then((_) {
+      setState(() {
+        _isDialogShown = false;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Возвращаем основной контент виджета, например, сообщение об ошибке
+    return Scaffold();
   }
 }

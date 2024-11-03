@@ -1,0 +1,12 @@
+part of 'diameter_bloc.dart';
+
+@freezed
+class DiameterState with _$DiameterState {
+  const factory DiameterState({
+    @Default([]) List<DiameterModel> diameters,
+    @Default(EnumStatus.initial) EnumStatus status,
+    String? errorMsg,
+  }) = _DiameterState;
+
+  factory DiameterState.fromJson(Map<String, dynamic> json) => _$DiameterStateFromJson(json);
+}

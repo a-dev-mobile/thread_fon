@@ -66,10 +66,10 @@ class _MetricToleranceScreenState extends State<MetricToleranceScreen> {
   @override
   Widget build(BuildContext context) {
     _logger.d('Building MetricToleranceScreen', includeStackTrace: false);
-    final l = context.l10n;
+    final localization = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.thread_tolerance),
+        title: Text(localization.thread_tolerance),
       ),
       body: Builder(
         builder: (context) {

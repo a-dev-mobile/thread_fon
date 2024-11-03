@@ -9,6 +9,10 @@
 
   "error": "Error",
   "repeat": "Repeat",
+
+  "select_diameter": "Сhoose diameter",
+
+
   "setting": "Settings",
   "app_lang": "Application language",
   "lang_ru": "Russian",

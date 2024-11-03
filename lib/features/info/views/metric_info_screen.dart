@@ -9,7 +9,6 @@ import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/diameter_selection/views/metric_diameter_screen.dart';
 import 'package:threadfon/features/info/controllers/info_controller.dart';
 import 'package:threadfon/features/info/repositories/info_repository.dart';
-import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n.dart';
 
 final _logger = LogService('metric_info_screen');
@@ -69,10 +68,10 @@ class _MetricInfoScreenState extends State<MetricInfoScreen> {
   @override
   Widget build(BuildContext context) {
     _logger.d('Building MetricInfoScreen', includeStackTrace: false);
-    final l = context.l10n;
+    final localization = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.threads_info),
+        title: Text(localization.threads_info),
       ),
       body: Builder(
         builder: (context) {

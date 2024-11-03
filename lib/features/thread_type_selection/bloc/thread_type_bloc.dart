@@ -1,14 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
-import 'package:threadfon/core/constant/assets.gen.dart';
-import 'package:threadfon/core/constant/enum_screen_status.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
-import 'package:threadfon/core/constant/enum_thread_type.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
+import 'package:threadfon/features/thread_type_selection/repositories/thread_type_repository.dart';
 
 part 'thread_type_bloc.freezed.dart';
 part 'thread_type_bloc.g.dart';
@@ -18,24 +15,23 @@ final _logger = LogService('thread_type_bloc');
 
 class ThreadTypeBloc extends Cubit<ThreadTypeState> {
   ThreadTypeBloc({
+    required ThreadTypeRepository repository,
     required LocalStorage localStorage,
     required LanguageBloc languageBloc,
-  })  :
-   _localStorage = localStorage,
-   _languageBloc = languageBloc,
-        super(ThreadTypeState());
+  })  : _localStorage = localStorage,
+        _repository = repository,
+        _languageBloc = languageBloc,
+        super(const ThreadTypeState());
 
   final LocalStorage _localStorage;
   final LanguageBloc _languageBloc;
+  final ThreadTypeRepository _repository;
 
   Future<void> load() async {
-    emit(state.copyWith(status: EnumStatus.load));
+    emit(state.copyWith(status: EnumStatus.loading));
     try {
-      final threadTypes = await _fetchThreadTypes();
+      final threadTypes = await _repository.fetchThreadTypes();
 
-      if (DateTime.now().millisecondsSinceEpoch % 2 == 0) {
-        throw Exception('Error loading thread types');
-      }
       emit(state.copyWith(status: EnumStatus.success, threadTypes: threadTypes));
     } on Exception catch (e, s) {
       _logger.e('Error loading thread types', error: e, stackTrace: s);
@@ -43,30 +39,21 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> {
     }
   }
 
-  Future<void> updateUserSelection(ThreadTypeModel selectedThreadType) async {
-    emit(state.copyWith(status: EnumStatus.prepareNavigating));
-
-    await _localStorage.updateUserSelection(
-      (current) => current.copyWith(
-        threadType: selectedThreadType.enumThreadType,
-      ),
-    );
-    emit(state.copyWith(status: EnumStatus.navigating));
-    await Future<void>.delayed(const Duration(seconds: 1));
-    emit(state.copyWith(status: EnumStatus.success));
-  }
-
-  Future<List<ThreadTypeModel>> _fetchThreadTypes() async {
-    return [
-      ThreadTypeModel(
-        enumThreadType: EnumThreadType.f,
-        svgAssetPath: Assets.svg.gaika,
-      ),
-      ThreadTypeModel(
-        enumThreadType: EnumThreadType.m,
-        svgAssetPath: Assets.svg.bolt,
-      ),
-    ];
+  Future<void> selectThreadType(ThreadTypeModel selectedThreadType) async {
+    emit(state.copyWith(status: EnumStatus.preparingNavigation));
+    try {
+      await _localStorage.updateUserSelection(
+        (current) => current.copyWith(
+          threadType: selectedThreadType.enumThreadType,
+        ),
+      );
+      emit(state.copyWith(status: EnumStatus.navigating));
+      await Future.delayed(const Duration(seconds: 1));
+      emit(state.copyWith(status: EnumStatus.success));
+    } catch (e, s) {
+      _logger.e('Error updating thread type selection', error: e, stackTrace: s);
+      _setErrorState();
+    }
   }
 
   void _setErrorState() {
@@ -76,5 +63,4 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> {
         : 'Произошла ошибка при загрузке типов резьбы.';
     emit(state.copyWith(status: EnumStatus.error, errorMsg: errorMsg));
   }
-
 }

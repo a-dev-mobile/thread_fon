@@ -76,6 +76,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nuts": MessageLookupByLibrary.simpleMessage("Гайка"),
         "rate_app": MessageLookupByLibrary.simpleMessage("Оценить приложение"),
         "repeat": MessageLookupByLibrary.simpleMessage("Повторить"),
+        "select_diameter":
+            MessageLookupByLibrary.simpleMessage("Выберите диаметр"),
         "setting": MessageLookupByLibrary.simpleMessage("Настройки"),
         "thank_you": MessageLookupByLibrary.simpleMessage(
             "Спасибо Вам, что пользуетесь нашим приложением"),

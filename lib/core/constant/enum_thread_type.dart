@@ -1,4 +1,0 @@
-enum EnumThreadType {
-  m,
-  f,
-}
