@@ -3,15 +3,14 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
-
-import 'package:threadfon/features/thread_type_selection/repositories/thread_type_repository.dart';
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
+import 'package:threadfon/features/thread_type_selection/repositories/thread_type_repository.dart';
 
 part 'thread_type_controller.freezed.dart';
 part 'thread_type_controller.g.dart';
 part 'thread_type_state.dart';
 
-final _logger = L('thread_type_controller');
+final _l = L('thread_type_controller');
 
 class ThreadTypeController with ChangeNotifier {
   ThreadTypeController({
@@ -40,7 +39,7 @@ class ThreadTypeController with ChangeNotifier {
       final threadTypes = await _repository.fetchThreadTypes();
       _updateState(status: EnumScreenStatus.success, threadTypes: threadTypes);
     } on Exception catch (e, s) {
-      _logger.e('Error loading thread types', error: e, stackTrace: s);
+      _l.e('Error loading thread types', error: e, stackTrace: s);
       _updateState(status: EnumScreenStatus.error, error: e.toString());
     }
   }

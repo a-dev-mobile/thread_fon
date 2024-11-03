@@ -46,7 +46,7 @@ class LangSwitchWidget extends StatelessWidget {
           children: [
             SimpleDialogOption(
               onPressed: () {
-                languageNotifier.setLocale('ru');
+                languageNotifier.setLocale(EnumLang.ru);
                 Navigator.pop(context);
               },
               child: Text(
@@ -55,7 +55,7 @@ class LangSwitchWidget extends StatelessWidget {
             ),
             SimpleDialogOption(
               onPressed: () {
-                languageNotifier.setLocale('en');
+                languageNotifier.setLocale(EnumLang.en);
                 Navigator.pop(context);
               },
               child: Text(

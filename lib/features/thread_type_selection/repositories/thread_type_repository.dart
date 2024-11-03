@@ -1,3 +1,4 @@
+import 'package:threadfon/core/constant/assets.gen.dart';
 import 'package:threadfon/core/constant/enums_thread_type.dart';
 
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
@@ -10,13 +11,13 @@ class ThreadTypeRepository {
     // This can be replaced with actual database queries in the future.
 
     return [
-      const ThreadTypeModel(
+      ThreadTypeModel(
         enumThreadType: EnumThreadType.f,
-        svgAssetPath: 'assets/svg/gaika.svg',
+        svgAssetPath: Assets.svg.gaika,
       ),
-      const ThreadTypeModel(
+      ThreadTypeModel(
         enumThreadType: EnumThreadType.m,
-        svgAssetPath: 'assets/svg/bolt.svg',
+        svgAssetPath: Assets.svg.bolt,
       ),
     ];
   }

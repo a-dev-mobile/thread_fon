@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         }
 
         final themeMode = data[0] as ThemeMode;
-        final locale = data[1] as String;
+        final locale = data[1] as EnumLang;
 
         return ThemeNotifier(
           initialMode: themeMode,
@@ -75,7 +75,7 @@ class _ThreadApp extends StatelessWidget {
       listenable: [themeModeNotifier, languageNotifier],
       builder: (context, values, child) {
         final themeMode = values[0] as ThemeMode;
-        final locale = values[1] as String;
+        final locale = values[1] as EnumLang;
 
         return MaterialApp(
           onGenerateTitle: (context) => Localization.of(context).app_name,
@@ -92,7 +92,7 @@ class _ThreadApp extends StatelessWidget {
             Localization.delegate,
           ],
           supportedLocales: Localization.supportedLocales,
-          locale: Locale(locale),
+          locale: Locale(locale.name),
 
           //
           home: const ThreadTypeSelectionScreen(),

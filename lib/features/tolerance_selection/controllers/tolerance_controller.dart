@@ -3,17 +3,14 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
 import 'package:threadfon/core/models/error_state.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
-
 import 'package:threadfon/core/services/logging/logger.dart';
-
-
 import 'package:threadfon/features/tolerance_selection/models/tolerance_model.dart';
 import 'package:threadfon/features/tolerance_selection/repositories/tolerance_repository.dart';
 
 part 'tolerance_controller.freezed.dart';
 part 'tolerance_state.dart';
 
-final _logger = L('tolerance_controller');
+final _l = L('tolerance_controller');
 
 class ToleranceController with ChangeNotifier {
   ToleranceController({required ToleranceRepository repository, required LocalStorage localStorage})
@@ -43,7 +40,7 @@ class ToleranceController with ChangeNotifier {
       final model = await _repository.fetchTolerances(userSelection.id!, userSelection.threadType!.name);
       _updateState(status: EnumScreenStatus.success, model: model);
     } on Exception catch (e, s) {
-      _logger.e('Error loading diameters', error: e, stackTrace: s);
+      _l.e('Error loading diameters', error: e, stackTrace: s);
 
       _updateState(
         status: EnumScreenStatus.error,

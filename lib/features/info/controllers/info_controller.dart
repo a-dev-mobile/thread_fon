@@ -4,13 +4,13 @@ import 'package:threadfon/core/constant/enum_screen_status.dart';
 import 'package:threadfon/core/models/error_state.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
-import 'package:threadfon/features/info/repositories/info_repository.dart';
 import 'package:threadfon/features/info/models/info_model.dart';
+import 'package:threadfon/features/info/repositories/info_repository.dart';
 
 part 'info_controller.freezed.dart';
 part 'info_state.dart';
 
-final _logger = L('info_controller');
+final _l = L('info_controller');
 
 class InfoController with ChangeNotifier {
   InfoController({required InfoRepository repository, required LocalStorage localStorage})
@@ -51,7 +51,7 @@ class InfoController with ChangeNotifier {
       );
       _updateState(status: EnumScreenStatus.success, model: model, svgData: svgData);
     } on Exception catch (e, s) {
-      _logger.e('Error loading info', error: e, stackTrace: s);
+      _l.e('Error loading info', error: e, stackTrace: s);
 
       _updateState(
         status: EnumScreenStatus.error,

@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:threadfon/app/language/language_notifier.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
+import 'package:threadfon/core/constant/enums_thread_type.dart';
 import 'package:threadfon/core/services/local_storage/local_storage_provider.dart';
 import 'package:threadfon/features/diameter_selection/views/metric_diameter_screen.dart';
 import 'package:threadfon/features/thread_type_selection/controllers/thread_type_controller.dart';
@@ -14,7 +16,7 @@ class ThreadTypeSelectionScreen extends StatefulWidget {
   const ThreadTypeSelectionScreen({super.key});
 
   @override
-  _ThreadTypeSelectionScreenState createState() => _ThreadTypeSelectionScreenState();
+  State<ThreadTypeSelectionScreen> createState() => _ThreadTypeSelectionScreenState();
 }
 
 class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
@@ -65,6 +67,8 @@ class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final currentLang = LanguageNotifier.watch(context);
+
     switch (_controller.state.status) {
       case EnumScreenStatus.initial:
       case EnumScreenStatus.loading:
@@ -90,7 +94,9 @@ class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
                 child: ThreadTypeChoiceCard(
                   onTap: () => _controller.updateUserSelection(threadType),
                   svgAssetPath: threadType.svgAssetPath,
-                  label: 'threadType.name',
+                  label: threadType.enumThreadType == EnumThreadType.f
+                      ? Localization.of(context).internal_thread
+                      : Localization.of(context).external_thread,
                 ),
               );
             }).toList(),
@@ -103,5 +109,3 @@ class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
     }
   }
 }
-
-

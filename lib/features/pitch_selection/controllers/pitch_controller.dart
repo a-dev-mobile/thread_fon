@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:threadfon/app/language/language_notifier.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
 import 'package:threadfon/core/models/error_state.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
-
 import 'package:threadfon/features/pitch_selection/models/pitch_model.dart';
 import 'package:threadfon/features/pitch_selection/repositories/pitch_repository.dart';
 
 part 'pitch_controller.freezed.dart';
 part 'pitch_state.dart';
 
-final _logger = L('pitch_controller');
+final _l = L('pitch_controller');
 
 class PitchController with ChangeNotifier {
-  PitchController({required PitchRepository repository, required LocalStorage localStorage})
-      : _repository = repository,
-        _localStorage = localStorage;
+  PitchController({
+    required PitchRepository repository,
+    required LocalStorage localStorage,
+    required EnumLang language,
+  })  : _repository = repository,
+        _localStorage = localStorage,
+        _language = language;
   PitchState _state = const PitchState();
 
   final PitchRepository _repository;
   final LocalStorage _localStorage;
+  final EnumLang _language;
 
   bool _isDisposed = false;
 
@@ -38,10 +43,12 @@ class PitchController with ChangeNotifier {
     final userSelection = await _localStorage.getUserSelection();
 
     try {
-      final model = await _repository.fetchPitch(userSelection.diameter!);
+      final model = await _repository.fetchPitch(
+        userSelection.diameter!, _language.name
+      );
       _updateState(status: EnumScreenStatus.success, model: model);
     } on Exception catch (e, s) {
-      _logger.e('Error loading diameters', error: e, stackTrace: s);
+      _l.e('Error loading diameters', error: e, stackTrace: s);
 
       _updateState(
         status: EnumScreenStatus.error,

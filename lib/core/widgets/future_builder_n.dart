@@ -24,7 +24,7 @@ class FutureBuilderN<T> extends StatefulWidget {
   final bool loadInParallel;
 
   @override
-  _FutureBuilderNState<T> createState() => _FutureBuilderNState<T>();
+  State<FutureBuilderN<T>> createState() => _FutureBuilderNState<T>();
 }
 
 class _FutureBuilderNState<T> extends State<FutureBuilderN<T>> {

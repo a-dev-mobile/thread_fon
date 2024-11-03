@@ -68,9 +68,9 @@ class LogBatcher {
           'level': level,
         },
         'values': logs.map((log) {
-          final timestampStr = log['Timestamp'].toString();
-          final message = log['MessageTemplate'];
-          final properties = log['Properties'] ?? {};
+          final timestampStr = log['timestamp'].toString();
+          final message = log['message'];
+          final properties = log['properties'] ?? {};
 
           if (properties.isNotEmpty) {
             return [timestampStr, message, properties];

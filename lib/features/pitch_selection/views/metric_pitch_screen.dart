@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:threadfon/app/language/language_notifier.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
 import 'package:threadfon/core/services/api_service/api_provider.dart';
 import 'package:threadfon/core/services/local_storage/local_storage_provider.dart';
@@ -26,11 +27,13 @@ class _MetricPitchScreenState extends State<MetricPitchScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    final lang = LanguageNotifier.watch(context);
+
     if (!_isControllerInitialized) {
       final apiService = ApiProvider.of(context);
       final localStorage = LocalStorageProvider.of(context);
       final repository = PitchRepository(apiService: apiService);
-      _controller = PitchController(repository: repository, localStorage: localStorage);
+      _controller = PitchController(repository: repository, localStorage: localStorage, language: lang);
       _controller
         ..addListener(_updateState)
         ..loadData();
@@ -67,9 +70,18 @@ class _MetricPitchScreenState extends State<MetricPitchScreen> {
   @override
   Widget build(BuildContext context) {
     _l.d('Building MetricPitchScreen', includeStackTrace: false);
+    final lang = LanguageNotifier.watch(context);
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text(Localization.of(context).thread_pitch),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          LanguageNotifier.read(context).toggleLocale;
+        },
+        child: const Icon(Icons.refresh),
       ),
       body: Builder(
         builder: (context) {
