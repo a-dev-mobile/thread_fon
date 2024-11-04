@@ -76,14 +76,16 @@ class _ToleranceSelectionView extends StatelessWidget {
 
               case EnumStatus.success:
                 return ListView.separated(
-   
                   itemCount: state.tolerances.length,
-                  separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 8.0),
                   itemBuilder: (context, index) {
                     final tolerance = state.tolerances[index];
                     return ToleranceChoiceCard(
                       tolerance: tolerance,
-                      onTap: () => context.read<ToleranceBloc>().selectTolerance(tolerance),
+                      onTap: () => context
+                          .read<ToleranceBloc>()
+                          .selectTolerance(tolerance),
                     );
                   },
                 );

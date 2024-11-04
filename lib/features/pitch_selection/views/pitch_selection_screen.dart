@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
-import 'package:threadfon/core/constant/enum_screen_status.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
@@ -39,7 +38,7 @@ class PitchSelectionScreen extends StatelessWidget {
 }
 
 class _PitchSelectionView extends StatelessWidget {
-  const _PitchSelectionView({super.key});
+  const _PitchSelectionView();
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +77,9 @@ class _PitchSelectionView extends StatelessWidget {
 
               case EnumStatus.success:
                 return ListView.separated(
-        
                   itemCount: state.pitches.length,
-                  separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 8.0),
                   itemBuilder: (context, index) {
                     final pitch = state.pitches[index];
                     return PitchChoiceCard(

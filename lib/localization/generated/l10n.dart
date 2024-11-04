@@ -141,6 +141,246 @@ class GeneratedLocalization {
     );
   }
 
+  /// `diameter`
+  String get diameter {
+    return Intl.message(
+      'diameter',
+      name: 'diameter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pitch`
+  String get pitch {
+    return Intl.message(
+      'pitch',
+      name: 'pitch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `tolerance`
+  String get tolerance {
+    return Intl.message(
+      'tolerance',
+      name: 'tolerance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `type_pitch`
+  String get type_pitch {
+    return Intl.message(
+      'type_pitch',
+      name: 'type_pitch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `diameters`
+  String get diameters {
+    return Intl.message(
+      'diameters',
+      name: 'diameters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `major_diam_min`
+  String get major_diam_min {
+    return Intl.message(
+      'major_diam_min',
+      name: 'major_diam_min',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `major_diam_avg`
+  String get major_diam_avg {
+    return Intl.message(
+      'major_diam_avg',
+      name: 'major_diam_avg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `major_diam_max`
+  String get major_diam_max {
+    return Intl.message(
+      'major_diam_max',
+      name: 'major_diam_max',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pitch_diam_d2`
+  String get pitch_diam_d2 {
+    return Intl.message(
+      'pitch_diam_d2',
+      name: 'pitch_diam_d2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pitch_diam_min`
+  String get pitch_diam_min {
+    return Intl.message(
+      'pitch_diam_min',
+      name: 'pitch_diam_min',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pitch_diam_avg`
+  String get pitch_diam_avg {
+    return Intl.message(
+      'pitch_diam_avg',
+      name: 'pitch_diam_avg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pitch_diam_max`
+  String get pitch_diam_max {
+    return Intl.message(
+      'pitch_diam_max',
+      name: 'pitch_diam_max',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `minor_diam_min`
+  String get minor_diam_min {
+    return Intl.message(
+      'minor_diam_min',
+      name: 'minor_diam_min',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `minor_diam_avg`
+  String get minor_diam_avg {
+    return Intl.message(
+      'minor_diam_avg',
+      name: 'minor_diam_avg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `minor_diam_max`
+  String get minor_diam_max {
+    return Intl.message(
+      'minor_diam_max',
+      name: 'minor_diam_max',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `minor_diam_d1`
+  String get minor_diam_d1 {
+    return Intl.message(
+      'minor_diam_d1',
+      name: 'minor_diam_d1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `minor_diam_d3`
+  String get minor_diam_d3 {
+    return Intl.message(
+      'minor_diam_d3',
+      name: 'minor_diam_d3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `h`
+  String get h {
+    return Intl.message(
+      'h',
+      name: 'h',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `d_es`
+  String get d_es {
+    return Intl.message(
+      'd_es',
+      name: 'd_es',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `d_ei`
+  String get d_ei {
+    return Intl.message(
+      'd_ei',
+      name: 'd_ei',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `d1_es`
+  String get d1_es {
+    return Intl.message(
+      'd1_es',
+      name: 'd1_es',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `d1_ei`
+  String get d1_ei {
+    return Intl.message(
+      'd1_ei',
+      name: 'd1_ei',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `d2_es`
+  String get d2_es {
+    return Intl.message(
+      'd2_es',
+      name: 'd2_es',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `d2_ei`
+  String get d2_ei {
+    return Intl.message(
+      'd2_ei',
+      name: 'd2_ei',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get setting {
     return Intl.message(

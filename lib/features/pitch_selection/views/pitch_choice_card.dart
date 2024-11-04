@@ -18,7 +18,8 @@ class PitchChoiceCard extends StatelessWidget {
       isHeader: pitch.enumPitchDataType == EnumPitchDataType.header,
       onTap: pitch.enumPitchDataType == EnumPitchDataType.value ? onTap : null,
       child: pitch.enumPitchDataType == EnumPitchDataType.header
-          ? Text(pitch.info,
+          ? Text(
+              pitch.info,
               textAlign: TextAlign.center,
             )
           : Text(

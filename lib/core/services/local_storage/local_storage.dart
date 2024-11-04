@@ -50,7 +50,7 @@ class LocalStorage {
   }
 
   // ******************************
-  
+
   // Ключи для сохранения скролла
   static const String _scrollPositionKey = 'scroll_position_';
 

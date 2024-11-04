@@ -13,6 +13,37 @@
   "select_pitch": "Выберите шаг",
 
 
+  "diameter": "diameter",
+  "pitch": "pitch",
+  "tolerance": "tolerance",
+  "type_pitch": "type_pitch",
+  "diameters": "diameters",
+  "diameters": "diameters",
+  "major_diam_min": "major_diam_min",
+  "major_diam_avg": "major_diam_avg",
+
+
+  "major_diam_max":"major_diam_max",
+  "pitch_diam_d2":"pitch_diam_d2",
+  "pitch_diam_min":"pitch_diam_min",
+  "pitch_diam_avg":"pitch_diam_avg",
+  "pitch_diam_max":"pitch_diam_max",
+  "minor_diam_min":"minor_diam_min",
+  "minor_diam_avg":"minor_diam_avg",
+  "minor_diam_max":"minor_diam_max",
+  "minor_diam_d1":"minor_diam_d1",
+  "minor_diam_d3":"minor_diam_d3",
+
+
+   "h":"h",
+   "d_es":"d_es",
+   "d_ei":"d_ei",
+   "d1_es":"d1_es",
+   "d1_ei":"d1_ei",
+   "d2_es":"d2_es",
+   "d2_ei":"d2_ei",
+
+
 
   "main": "Главная",
   "setting": "Настройки",

@@ -14,11 +14,12 @@ class InfoRepository {
 
   final ApiService _apiService;
 
-  Future<List<InfoModel>> fetchInfo(
-      {required String tolerance,
-      required String threadType,
-      required double pitch,
-      required double diameter}) async {
+  Future<InfoModel> fetchInfo({
+    required String tolerance,
+    required String threadType,
+    required double pitch,
+    required double diameter,
+  }) async {
     try {
       final response = await _apiService.get(
         'https://thread.wayofdt.de/v1/metric/info',
@@ -31,21 +32,18 @@ class InfoRepository {
       );
 
       if (response.statusCode == 200) {
-        final List<dynamic> rawData = response.data as List<dynamic>;
-        final List<InfoModel> listModel = rawData
-            .map((json) => InfoModel.fromJson(json as Map<String, dynamic>))
-            .toList();
-        return listModel;
+        final Map<String, dynamic> rawData = response.data as Map<String, dynamic>;
+        return InfoModel.fromJson(rawData);
       } else {
         _logger.e(
-          'Failed to fetch diameters',
+          'Failed to fetch info',
           error: 'Status code: ${response.statusCode}',
         );
-        throw Exception('Failed to fetch diameters');
+        throw Exception('Failed to fetch info');
       }
     } catch (error, stackTrace) {
       _logger.e(
-        'Error fetching diameters',
+        'Error fetching info',
         error: error,
         stackTrace: stackTrace,
       );

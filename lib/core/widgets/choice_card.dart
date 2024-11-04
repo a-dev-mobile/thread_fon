@@ -18,7 +18,7 @@ class ChoiceCard extends StatelessWidget {
       // Стиль для заголовков
       return Container(
         width: double.infinity,
-        color: Theme.of(context).colorScheme.surfaceVariant,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
         child: DefaultTextStyle(
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
@@ -31,7 +31,8 @@ class ChoiceCard extends StatelessWidget {
     } else {
       // Стиль для кликабельных элементов
       return Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         elevation: 2.0,
         margin: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
         child: InkWell(

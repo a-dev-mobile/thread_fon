@@ -17,6 +17,7 @@ import 'package:threadfon/localization/l10n.dart';
 
 final _logger = LogService('metric_diameter_screen');
 
+final 
 class MetricDiameterScreen extends StatelessWidget {
   const MetricDiameterScreen({super.key});
 
@@ -151,7 +152,8 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
                     final diameter = state.diameters[index];
                     return DiameterChoiceCard(
                       info: diameter.info,
-                      onTap: () => context.read<DiameterBloc>().selectDiameter(diameter),
+                      onTap: () =>
+                          context.read<DiameterBloc>().selectDiameter(diameter),
                     );
                   },
                 );

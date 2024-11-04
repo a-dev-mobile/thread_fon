@@ -1,133 +1,128 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_screen_status.dart';
+import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
+import 'package:threadfon/core/widgets/my_error_widget.dart';
+import 'package:threadfon/core/widgets/my_load_widget.dart';
 import 'package:threadfon/features/diameter_selection/views/metric_diameter_screen.dart';
-import 'package:threadfon/features/info/controllers/info_controller.dart';
+import 'package:threadfon/features/info/bloc/info_bloc.dart';
 import 'package:threadfon/features/info/repositories/info_repository.dart';
+import 'package:threadfon/features/info/views/info_choice_card.dart';
+import 'package:threadfon/features/info/views/info_display_card.dart';
+import 'package:threadfon/features/pitch_selection/views/pitch_selection_screen.dart';
 import 'package:threadfon/localization/l10n.dart';
 
 final _logger = LogService('metric_info_screen');
 
-class MetricInfoScreen extends StatefulWidget {
+class MetricInfoScreen extends StatelessWidget {
   const MetricInfoScreen({super.key});
 
   @override
-  State<MetricInfoScreen> createState() => _MetricInfoScreenState();
+  Widget build(BuildContext context) {
+    final apiService = context.read<ApiService>();
+    final infoRepository = InfoRepository(apiService: apiService);
+    final localStorage = context.read<LocalStorage>();
+    final languageBloc = context.read<LanguageBloc>();
+
+    return BlocProvider(
+      create: (_) => InfoBloc(
+        repository: infoRepository,
+        localStorage: localStorage,
+        languageBloc: languageBloc,
+      )..load(),
+      child: const _MetricInfoView(),
+    );
+  }
 }
 
-class _MetricInfoScreenState extends State<MetricInfoScreen> {
-  late final InfoController _controller;
-  bool _isControllerInitialized = false;
+class _MetricInfoView extends StatefulWidget {
+  const _MetricInfoView();
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isControllerInitialized) {
-      final apiService = context.read<ApiService>();
-      final localStorage = context.read<LocalStorage>();
-      final repository = InfoRepository(apiService: apiService);
-      _controller =
-          InfoController(repository: repository, localStorage: localStorage);
-      _controller
-        ..addListener(_updateState)
-        ..load();
-      _isControllerInitialized = true;
-    }
-  }
+  State<_MetricInfoView> createState() => _MetricInfoViewState();
+}
+
+class _MetricInfoViewState extends State<_MetricInfoView> {
+
 
   @override
-  void dispose() {
-    _controller
-      ..removeListener(_updateState)
-      ..dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+ 
   }
 
-  void _updateState() {
-    if (mounted) {
-      if (_controller.state.status == EnumScreenStatus.navigating) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (context) => const MetricDiameterScreen(),
-            ),
-          );
-        });
-        return;
-      }
 
-      setState(() {});
-    }
-  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
-    _logger.d('Building MetricInfoScreen', includeStackTrace: false);
     final localization = context.l10n;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(localization.threads_info),
-      ),
-      body: Builder(
-        builder: (context) {
-          switch (_controller.state.status) {
-            case EnumScreenStatus.initial:
-            case EnumScreenStatus.loading:
-            case EnumScreenStatus.navigating:
-              return const Center(child: CircularProgressIndicator());
-            case EnumScreenStatus.error:
-              return Center(child: Text('Error: ${_controller.state.error}'));
 
-            case EnumScreenStatus.loadingNavigating:
-              return const Scaffold(
-                body: Center(child: LinearProgressIndicator()),
-              );
-            case EnumScreenStatus.success:
-              return Column(
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: _controller.state.model.length,
-                    itemBuilder: (context, index) {
-                      final data = _controller.state.model[index];
-                      return ListTile(
-                        title: Text(data.toString()),
-                        onTap: () {
-                          _controller.updateUserSelection(data);
-                        },
-                      );
-                    },
-                  ),
-                  Expanded(
-                    child: _controller.state.svgData == null
-                        ? const Center(child: CircularProgressIndicator())
-                        : InteractiveViewer(
-                            minScale: 0.5,
-                            maxScale: 10.0,
-                            child: Builder(builder: (context) {
-                              final isDark = context.select((ThemeBloc bloc) =>
-                                  bloc.state.themeMode == ThemeMode.dark);
-                              return SvgPicture.string(
-                                _controller.state.svgData!,
-                                color: isDark ? Colors.white : null,
-                                placeholderBuilder: (BuildContext context) =>
-                                    const Center(
-                                        child: CircularProgressIndicator()),
-                                fit: BoxFit.contain,
-                              );
-                            }),
-                          ),
-                  ),
-                ],
-              );
-          }
-        },
+    return BlocListener<InfoBloc, InfoState>(
+      listenWhen: (previous, current) => previous.status != current.status,
+      listener: (context, state) async {
+    
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(localization.threads_info),
+        ),
+        body: BlocBuilder<InfoBloc, InfoState>(
+          builder: (context, state) {
+            switch (state.status) {
+              case EnumStatus.initial:
+              case EnumStatus.loading:
+              case EnumStatus.preparingNavigation:
+              case EnumStatus.navigating:
+                return const MyLoadWidget();
+
+              case EnumStatus.error:
+                return MyErrorWidget(
+                  errorMsg: state.errorMsg,
+                  onRetry: () => context.read<InfoBloc>().load(),
+                );
+              case EnumStatus.success:
+                if (state.model == null) {
+                  return const Center(child: Text('No data available.'));
+                }
+
+                return Column(
+                  children: [
+                    InfoDisplayCard(
+                      info: state.model!,
+                      onTap: () => context.read<InfoBloc>().selectInfo(),
+                    ),
+                    Expanded(
+                      child: state.svgData == null
+                          ? const Center(child: CircularProgressIndicator())
+                          : InteractiveViewer(
+                              minScale: 0.5,
+                              maxScale: 10.0,
+                              child: Builder(builder: (context) {
+                                final isDark = context.select((ThemeBloc bloc) =>
+                                    bloc.state.themeMode == ThemeMode.dark);
+                                return SvgPicture.string(
+                                  state.svgData!,
+                                  color: isDark ? Colors.white : null,
+                               
+                                  fit: BoxFit.contain,
+                                );
+                              }),
+                            ),
+                    ),
+                  ],
+                );
+            }
+          },
+        ),
       ),
     );
   }

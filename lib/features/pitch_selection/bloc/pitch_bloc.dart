@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
-import 'package:threadfon/core/constant/enum_screen_status.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
-import 'package:threadfon/core/models/error_state.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/pitch_selection/models/pitch_model.dart';
@@ -53,7 +50,6 @@ class PitchBloc extends Cubit<PitchState> {
         (current) => current.copyWith(
           id: selectedPitch.id,
           pitch: selectedPitch.pitch,
-         
         ),
       );
       emit(state.copyWith(status: EnumStatus.navigating));

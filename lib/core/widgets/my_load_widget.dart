@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:threadfon/localization/l10n.dart';
 
