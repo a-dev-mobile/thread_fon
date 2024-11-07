@@ -43,7 +43,7 @@ class PitchBloc extends Cubit<PitchState> {
   }
 
   Future<void> selectPitch(PitchModel selectedPitch) async {
-    emit(state.copyWith(status: EnumStatus.preparingNavigation));
+    emit(state.copyWith(status: EnumStatus.loading));
 
     try {
       await _localStorage.updateUserSelection(

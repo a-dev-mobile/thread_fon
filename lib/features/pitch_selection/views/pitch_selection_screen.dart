@@ -63,9 +63,7 @@ class _PitchSelectionView extends StatelessWidget {
         body: BlocBuilder<PitchBloc, PitchState>(
           builder: (context, state) {
             switch (state.status) {
-              case EnumStatus.initial:
               case EnumStatus.loading:
-              case EnumStatus.preparingNavigation:
               case EnumStatus.navigating:
                 return const MyLoadWidget();
 
@@ -78,8 +76,7 @@ class _PitchSelectionView extends StatelessWidget {
               case EnumStatus.success:
                 return ListView.separated(
                   itemCount: state.pitches.length,
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 8.0),
+                  separatorBuilder: (context, index) => const SizedBox(height: 8.0),
                   itemBuilder: (context, index) {
                     final pitch = state.pitches[index];
                     return PitchChoiceCard(

@@ -4,7 +4,7 @@ part of 'tolerance_bloc.dart';
 class ToleranceState with _$ToleranceState {
   const factory ToleranceState({
     @Default([]) List<ToleranceModel> tolerances,
-    @Default(EnumStatus.initial) EnumStatus status,
+    @Default(EnumStatus.loading) EnumStatus status,
     String? errorMsg,
   }) = _ToleranceState;
 

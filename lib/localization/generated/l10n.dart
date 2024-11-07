@@ -511,6 +511,16 @@ class GeneratedLocalization {
     );
   }
 
+  /// `Нет данных для отображения`
+  String get no_svg_data {
+    return Intl.message(
+      'Нет данных для отображения',
+      name: 'no_svg_data',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get setting {
     return Intl.message(

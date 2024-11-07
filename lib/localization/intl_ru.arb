@@ -88,6 +88,9 @@
   "thread_diam": "Диаметр",
   "thread_diam_nom": "Диаметр (номинальный)",
   "thread_pitch": "Шаг",
+  "no_svg_data": "Нет данных для отображения",
+
+
 
   "thread_class_tolerance": "Класс допуска",
   "thread_pitch_coarse": "Основной шаг (Крупный)",

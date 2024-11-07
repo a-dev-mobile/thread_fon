@@ -108,6 +108,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Допуск минорного диаметра"),
         "no": MessageLookupByLibrary.simpleMessage("Нет"),
         "no_data": MessageLookupByLibrary.simpleMessage("Нет данных"),
+        "no_svg_data":
+            MessageLookupByLibrary.simpleMessage("Нет данных для отображения"),
         "nuts": MessageLookupByLibrary.simpleMessage("Гайка"),
         "pitch": MessageLookupByLibrary.simpleMessage("Шаг"),
         "pitch_diam": MessageLookupByLibrary.simpleMessage("Диаметр пича"),

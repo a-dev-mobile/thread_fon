@@ -39,7 +39,7 @@ class DiameterBloc extends Cubit<DiameterState> {
   }
 
   Future<void> selectDiameter(DiameterModel selectedDiameter) async {
-    emit(state.copyWith(status: EnumStatus.preparingNavigation));
+    emit(state.copyWith(status: EnumStatus.loading));
 
     try {
       await _localStorage.updateUserSelection(

@@ -62,9 +62,7 @@ class _ToleranceSelectionView extends StatelessWidget {
         body: BlocBuilder<ToleranceBloc, ToleranceState>(
           builder: (context, state) {
             switch (state.status) {
-              case EnumStatus.initial:
               case EnumStatus.loading:
-              case EnumStatus.preparingNavigation:
               case EnumStatus.navigating:
                 return const MyLoadWidget();
 

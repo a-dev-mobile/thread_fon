@@ -132,9 +132,7 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
         body: BlocBuilder<DiameterBloc, DiameterState>(
           builder: (context, state) {
             switch (state.status) {
-              case EnumStatus.initial:
               case EnumStatus.loading:
-              case EnumStatus.preparingNavigation:
               case EnumStatus.navigating:
                 return const MyLoadWidget();
 

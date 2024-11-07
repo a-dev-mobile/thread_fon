@@ -57,7 +57,7 @@ class InfoBloc extends Cubit<InfoState> {
   }
 
   Future<void> selectInfo() async {
-    emit(state.copyWith(status: EnumStatus.preparingNavigation));
+    emit(state.copyWith(status: EnumStatus.loading));
 
     try {
       await _localStorage.updateUserSelection(

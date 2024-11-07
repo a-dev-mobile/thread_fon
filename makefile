@@ -62,16 +62,27 @@ gen-all: clean get gen-build gen-localization
 # Задача для получения всех зависимостей
 get-all: clean get 
 
-# Задача для сборки Android-приложения
+########################
+# Сборка Android-приложения
+########################
+
+# Задача для сборки релизного APK и копирования в указанную папку
 build-android:
-	$(FLUTTER) build apk --release 
+	@echo "Генерация всех необходимых файлов..."
+	$(MAKE) gen-all
+	@echo "Сборка релизного APK..."
+	$(FLUTTER) build apk --release
+	@echo "Создание целевой директории, если она не существует..."
+	mkdir -p /home/dmitriy/server-spb-my-1-hdd-1tb_1/DEV/APK/thread-fon/
+	@echo "Копирование APK-файлов с заменой существующих..."
+	cp -f build/app/outputs/flutter-apk/app-*.apk /home/dmitriy/server-spb-my-1-hdd-1tb_1/DEV/APK/thread-fon/
+	@echo "Сборка и копирование APK завершены успешно."
 
 # Очистка кеша и получение зависимостей для всего проекта
 refresh-all: cache-clean clean get-all
 
 # Обновление всех зависимостей для всего проекта
 upgrade-all: upgrade clean get-all
-
 
 # Очистка кеша pub
 cache-clean:
@@ -80,7 +91,7 @@ cache-clean:
 # Обновление зависимостей
 upgrade:
 	$(FLUTTER) pub upgrade
-	
+    	
 ########################
 # Инициализация проекта
 ########################
@@ -93,4 +104,3 @@ init:
 	$(MAKE) gen-all
 	$(MAKE) format
 	$(MAKE) fix
-

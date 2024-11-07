@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
@@ -11,6 +12,7 @@ import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/core/widgets/my_load_widget.dart';
 import 'package:threadfon/features/info/bloc/info_bloc.dart';
 import 'package:threadfon/features/info/repositories/info_repository.dart';
+import 'package:threadfon/features/info/views/full_screen_svg_view.dart';
 import 'package:threadfon/features/info/views/info_diameters_parameters.dart';
 import 'package:threadfon/features/info/views/info_main_parameters.dart';
 import 'package:threadfon/localization/l10n.dart';
@@ -65,9 +67,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
         body: BlocBuilder<InfoBloc, InfoState>(
           builder: (context, state) {
             switch (state.status) {
-              case EnumStatus.initial:
               case EnumStatus.loading:
-              case EnumStatus.preparingNavigation:
               case EnumStatus.navigating:
                 return const MyLoadWidget();
 
@@ -85,40 +85,47 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                   slivers: [
                     SliverAppBar(
                       title: Text(localization.threads_info),
-                      floating: true, // Позволяет AppBar появляться при прокрутке вверх
-                      snap: true, // Анимация появления AppBar
-                      // pinned: false, // Если установить true, AppBar будет частично видим при прокрутке вниз
-                      // можно добавить другие параметры по необходимости
+                      floating: true,
+                      snap: true,
+                      actions: [
+                        IconButton(
+                          icon: const Icon(FontAwesomeIcons.compassDrafting),
+                          onPressed: () {
+                            if (state.svgData != null) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FullScreenSvgView(
+                                    svgData: state.svgData!,
+                                    designation: state.model!.designation,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(localization.no_svg_data),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                      ],
                     ),
                     SliverPadding(
-                      padding: const EdgeInsets.symmetric(vertical:  16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                       sliver: SliverList(
                         delegate: SliverChildListDelegate([
                           InfoMainParameters(
                             info: state.model!,
-                        
                           ),
-                          Divider() ,
-                          InteractiveViewer(
-              
-                            minScale: 0.5,
-                            maxScale: 10.0,
-                            child: Builder(builder: (context) {
-                              final isDark = context.select((ThemeBloc bloc) => bloc.state.themeMode == ThemeMode.dark);
-                              return SvgPicture.string(
-                                state.svgData!,
-                                color: isDark ? Colors.white : null,
-                                fit: BoxFit.contain,
-                              );
-                            }),
-                          ),
+                          Divider(),
+                          
                           InfoDiametersParameters(
                             info: state.model!,
                           ),
-                                 Divider(),
-                                 Divider(),
-                          
-                          
+                          Divider(),
+
                         ]),
                       ),
                     ),

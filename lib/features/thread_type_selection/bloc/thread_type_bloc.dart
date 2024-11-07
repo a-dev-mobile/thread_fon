@@ -41,7 +41,7 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> {
   }
 
   Future<void> selectThreadType(ThreadTypeModel selectedThreadType) async {
-    emit(state.copyWith(status: EnumStatus.preparingNavigation));
+    emit(state.copyWith(status: EnumStatus.loading));
     try {
       await _localStorage.updateUserSelection(
         (current) => current.copyWith(
