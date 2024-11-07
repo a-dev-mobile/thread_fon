@@ -57,6 +57,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             context.read<LanguageBloc>().toggle();
+            context.read<ThemeBloc>().toggle();
             context.read<InfoBloc>().load();
           },
           child: const Icon(Icons.navigate_next),
@@ -99,6 +100,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                           ),
                           Divider() ,
                           InteractiveViewer(
+              
                             minScale: 0.5,
                             maxScale: 10.0,
                             child: Builder(builder: (context) {

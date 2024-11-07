@@ -42,12 +42,90 @@ class InfoDiametersParameters extends StatelessWidget {
             ],
           ),
 
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                info.majorDiamMin.toPrecisionString(3),
+              ),
+              Text(
+                info.majorDiamAvg.toPrecisionString(3),
+              ),
+              Text(
+                info.majorDiamMax.toPrecisionString(3),
+              ),
+            ],
+          ),
 
+          Divider(),
+             Text(
+            localization.diam_middle, // Заголовок секции
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                localization.tolerance,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              _buildDiameterItem(context, info.pitchDiamD2, info.d2Es, info.d2Ei),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                info.pitchDiamMin.toPrecisionString(3),
+              ),
+              Text(
+                info.pitchDiamAvg.toPrecisionString(3),
+              ),
+              Text(
+                info.pitchDiamMax.toPrecisionString(3),
+              ),
+            ],
+          ),
+          // ============================
+             Divider(),
+          Text(
+            localization.diam_minor, // Заголовок секции
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                localization.tolerance,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              _buildDiameterItem(context, info.minorDiamD1, info.d1Es, info.d1Ei),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                info.minorDiamMin.toPrecisionString(3),
+              ),
+              Text(
+                info.minorDiamAvg.toPrecisionString(3),
+              ),
+              Text(
+                info.minorDiamMax.toPrecisionString(3),
+              ),
+            ],
+          ),
 
-          
-          // _buildDiameterSection(context, localization, info),
-
-              _buildDiameterItem(context, info.diameter, info.dEs, info.dEi),
+        
           const Divider(height: 32.0),
 
           // Дополнительная информация
@@ -68,17 +146,17 @@ class InfoDiametersParameters extends StatelessWidget {
     return Row(
       children: [
         Text(
-          diameter.toPrecisionString(3), 
+          diameter.toPrecisionString(3),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         Column(
           children: [
             Text(
-              dEs?.toPrecisionString(3) ?? '', 
+              dEs?.toPrecisionString(3) ?? '',
               style: Theme.of(context).textTheme.bodySmall,
             ),
             Text(
-              dEi?.toPrecisionString(3) ?? '', 
+              dEi?.toPrecisionString(3) ?? '',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
