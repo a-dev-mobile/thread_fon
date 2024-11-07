@@ -15,12 +15,7 @@
   "select_pitch": "Сhoose pitch",
  
  
-  "diameter": "diameter",
-  "pitch": "pitch",
-  "tolerance": "tolerance",
-  "type_pitch": "type_pitch",
-  "diameters": "diameters",
-  "diameters": "diameters",
+
   "major_diam_min": "major_diam_min",
   "major_diam_avg": "major_diam_avg",
 
@@ -38,20 +33,31 @@
 
 
    "h":"h",
-   "d_es":"d_es",
-   "d_ei":"d_ei",
-   "d1_es":"d1_es",
-   "d1_ei":"d1_ei",
-   "d2_es":"d2_es",
-   "d2_ei":"d2_ei",
+   "threads_info": "Информация о резьбе",
+   "diameter": "Диаметр",
+   "pitch": "Шаг",
+   "tolerance": "Допуск",
+   "type_pitch": "Тип шага",
+   "thread_depth": "Глубина",
+   "diameters": "Диаметры",
+   "major_diam": "Основной диаметр",
+   "major_diam_tolerance": "Допуск основного диаметра",
+   "pitch_diam": "Диаметр пича",
+   "pitch_diam_tolerance": "Допуск диаметра пича",
+   "minor_diam": "Минорный диаметр",
+   "minor_diam_tolerance": "Допуск минорного диаметра",
+   "additional_info": "Дополнительная информация",
+   "d_es": "D_es",
+   "d_es_tolerance": "Допуск D_es",
+   "d_ei": "D_ei",
+   "d_ei_tolerance": "Допуск D_ei",
+   "d1_es": "D1_es",
+   "d1_es_tolerance": "Допуск D1_es",
+   "d2_ei": "D2_ei",
+   "d2_ei_tolerance": "Допуск D2_ei",
+   "d2_es": "D2_es",
+   "d2_es_tolerance": "Допуск D2_es",
 
-
- 
- 
- 
- 
- 
- 
  
  
   "setting": "Settings",
@@ -62,7 +68,7 @@
   "generalError": "Oops, something went wrong!\nTry again\n",
   "launch": "Launch",
   "app_name": "ThreadFon",
-  "threads_info": "Information",
+
   "m_thread": "Metric thread",
   "m_thread_female_description": "M - Metric cylindrical internal thread",
   "m_thread_male_description": "M - Metric cylindrical external thread",
@@ -75,7 +81,7 @@
   "thread_diam": "Diameter",
   "thread_diam_nom": "Diameter (nominal)",
   "thread_pitch": "Pitch",
-  "thread_depth": "Depth",
+
   "thread_class_tolerance": "Tolerance class",
   "thread_pitch_coarse": "Coarse pitch",
   "thread_pitch_fine": "Fine pitch",

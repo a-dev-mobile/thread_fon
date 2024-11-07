@@ -141,56 +141,6 @@ class GeneratedLocalization {
     );
   }
 
-  /// `diameter`
-  String get diameter {
-    return Intl.message(
-      'diameter',
-      name: 'diameter',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `pitch`
-  String get pitch {
-    return Intl.message(
-      'pitch',
-      name: 'pitch',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `tolerance`
-  String get tolerance {
-    return Intl.message(
-      'tolerance',
-      name: 'tolerance',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `type_pitch`
-  String get type_pitch {
-    return Intl.message(
-      'type_pitch',
-      name: 'type_pitch',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `diameters`
-  String get diameters {
-    return Intl.message(
-      'diameters',
-      name: 'diameters',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `major_diam_min`
   String get major_diam_min {
     return Intl.message(
@@ -321,61 +271,241 @@ class GeneratedLocalization {
     );
   }
 
-  /// `d_es`
+  /// `Информация о резьбе`
+  String get threads_info {
+    return Intl.message(
+      'Информация о резьбе',
+      name: 'threads_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Диаметр`
+  String get diameter {
+    return Intl.message(
+      'Диаметр',
+      name: 'diameter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Шаг`
+  String get pitch {
+    return Intl.message(
+      'Шаг',
+      name: 'pitch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Допуск`
+  String get tolerance {
+    return Intl.message(
+      'Допуск',
+      name: 'tolerance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Тип шага`
+  String get type_pitch {
+    return Intl.message(
+      'Тип шага',
+      name: 'type_pitch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Глубина`
+  String get thread_depth {
+    return Intl.message(
+      'Глубина',
+      name: 'thread_depth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Диаметры`
+  String get diameters {
+    return Intl.message(
+      'Диаметры',
+      name: 'diameters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Основной диаметр`
+  String get major_diam {
+    return Intl.message(
+      'Основной диаметр',
+      name: 'major_diam',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Допуск основного диаметра`
+  String get major_diam_tolerance {
+    return Intl.message(
+      'Допуск основного диаметра',
+      name: 'major_diam_tolerance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Диаметр пича`
+  String get pitch_diam {
+    return Intl.message(
+      'Диаметр пича',
+      name: 'pitch_diam',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Допуск диаметра пича`
+  String get pitch_diam_tolerance {
+    return Intl.message(
+      'Допуск диаметра пича',
+      name: 'pitch_diam_tolerance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Минорный диаметр`
+  String get minor_diam {
+    return Intl.message(
+      'Минорный диаметр',
+      name: 'minor_diam',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Допуск минорного диаметра`
+  String get minor_diam_tolerance {
+    return Intl.message(
+      'Допуск минорного диаметра',
+      name: 'minor_diam_tolerance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Дополнительная информация`
+  String get additional_info {
+    return Intl.message(
+      'Дополнительная информация',
+      name: 'additional_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `D_es`
   String get d_es {
     return Intl.message(
-      'd_es',
+      'D_es',
       name: 'd_es',
       desc: '',
       args: [],
     );
   }
 
-  /// `d_ei`
+  /// `Допуск D_es`
+  String get d_es_tolerance {
+    return Intl.message(
+      'Допуск D_es',
+      name: 'd_es_tolerance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `D_ei`
   String get d_ei {
     return Intl.message(
-      'd_ei',
+      'D_ei',
       name: 'd_ei',
       desc: '',
       args: [],
     );
   }
 
-  /// `d1_es`
+  /// `Допуск D_ei`
+  String get d_ei_tolerance {
+    return Intl.message(
+      'Допуск D_ei',
+      name: 'd_ei_tolerance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `D1_es`
   String get d1_es {
     return Intl.message(
-      'd1_es',
+      'D1_es',
       name: 'd1_es',
       desc: '',
       args: [],
     );
   }
 
-  /// `d1_ei`
-  String get d1_ei {
+  /// `Допуск D1_es`
+  String get d1_es_tolerance {
     return Intl.message(
-      'd1_ei',
-      name: 'd1_ei',
+      'Допуск D1_es',
+      name: 'd1_es_tolerance',
       desc: '',
       args: [],
     );
   }
 
-  /// `d2_es`
+  /// `D2_ei`
+  String get d2_ei {
+    return Intl.message(
+      'D2_ei',
+      name: 'd2_ei',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Допуск D2_ei`
+  String get d2_ei_tolerance {
+    return Intl.message(
+      'Допуск D2_ei',
+      name: 'd2_ei_tolerance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `D2_es`
   String get d2_es {
     return Intl.message(
-      'd2_es',
+      'D2_es',
       name: 'd2_es',
       desc: '',
       args: [],
     );
   }
 
-  /// `d2_ei`
-  String get d2_ei {
+  /// `Допуск D2_es`
+  String get d2_es_tolerance {
     return Intl.message(
-      'd2_ei',
-      name: 'd2_ei',
+      'Допуск D2_es',
+      name: 'd2_es_tolerance',
       desc: '',
       args: [],
     );
@@ -456,16 +586,6 @@ class GeneratedLocalization {
     return Intl.message(
       'ThreadFon',
       name: 'app_name',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Information`
-  String get threads_info {
-    return Intl.message(
-      'Information',
-      name: 'threads_info',
       desc: '',
       args: [],
     );
@@ -586,16 +706,6 @@ class GeneratedLocalization {
     return Intl.message(
       'Pitch',
       name: 'thread_pitch',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Depth`
-  String get thread_depth {
-    return Intl.message(
-      'Depth',
-      name: 'thread_depth',
       desc: '',
       args: [],
     );

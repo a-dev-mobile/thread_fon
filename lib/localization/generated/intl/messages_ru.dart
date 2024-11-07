@@ -23,15 +23,21 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("О приложении"),
+        "additional_info":
+            MessageLookupByLibrary.simpleMessage("Дополнительная информация"),
         "app_lang": MessageLookupByLibrary.simpleMessage("Язык приложения"),
         "app_name": MessageLookupByLibrary.simpleMessage("Резьбофон"),
         "bolt": MessageLookupByLibrary.simpleMessage("Болт"),
-        "d1_ei": MessageLookupByLibrary.simpleMessage("d1_ei"),
-        "d1_es": MessageLookupByLibrary.simpleMessage("d1_es"),
-        "d2_ei": MessageLookupByLibrary.simpleMessage("d2_ei"),
-        "d2_es": MessageLookupByLibrary.simpleMessage("d2_es"),
-        "d_ei": MessageLookupByLibrary.simpleMessage("d_ei"),
-        "d_es": MessageLookupByLibrary.simpleMessage("d_es"),
+        "d1_es": MessageLookupByLibrary.simpleMessage("D1_es"),
+        "d1_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D1_es"),
+        "d2_ei": MessageLookupByLibrary.simpleMessage("D2_ei"),
+        "d2_ei_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D2_ei"),
+        "d2_es": MessageLookupByLibrary.simpleMessage("D2_es"),
+        "d2_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D2_es"),
+        "d_ei": MessageLookupByLibrary.simpleMessage("D_ei"),
+        "d_ei_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D_ei"),
+        "d_es": MessageLookupByLibrary.simpleMessage("D_es"),
+        "d_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D_es"),
         "dark_theme": MessageLookupByLibrary.simpleMessage("Темная тема"),
         "dialog_about_app_1":
             MessageLookupByLibrary.simpleMessage("-допуски наружнего диаметра"),
@@ -48,8 +54,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "diam_middle": MessageLookupByLibrary.simpleMessage("Средний диаметр"),
         "diam_minor":
             MessageLookupByLibrary.simpleMessage("Внутренний диаметр"),
-        "diameter": MessageLookupByLibrary.simpleMessage("diameter"),
-        "diameters": MessageLookupByLibrary.simpleMessage("diameters"),
+        "diameter": MessageLookupByLibrary.simpleMessage("Диаметр"),
+        "diameters": MessageLookupByLibrary.simpleMessage("Диаметры"),
         "error": MessageLookupByLibrary.simpleMessage("Ошибка"),
         "exit_app": MessageLookupByLibrary.simpleMessage("Выход из приложения"),
         "exit_app_warning": MessageLookupByLibrary.simpleMessage(
@@ -77,15 +83,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "m_thread_male_description": MessageLookupByLibrary.simpleMessage(
             "M - Метрическая цилиндрическая наружная резьба"),
         "main": MessageLookupByLibrary.simpleMessage("Главная"),
+        "major_diam": MessageLookupByLibrary.simpleMessage("Основной диаметр"),
         "major_diam_avg":
             MessageLookupByLibrary.simpleMessage("major_diam_avg"),
         "major_diam_max":
             MessageLookupByLibrary.simpleMessage("major_diam_max"),
         "major_diam_min":
             MessageLookupByLibrary.simpleMessage("major_diam_min"),
+        "major_diam_tolerance":
+            MessageLookupByLibrary.simpleMessage("Допуск основного диаметра"),
         "max": MessageLookupByLibrary.simpleMessage("макс."),
         "mean": MessageLookupByLibrary.simpleMessage("сред."),
         "min": MessageLookupByLibrary.simpleMessage("мин."),
+        "minor_diam": MessageLookupByLibrary.simpleMessage("Минорный диаметр"),
         "minor_diam_avg":
             MessageLookupByLibrary.simpleMessage("minor_diam_avg"),
         "minor_diam_d1": MessageLookupByLibrary.simpleMessage("minor_diam_d1"),
@@ -94,10 +104,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("minor_diam_max"),
         "minor_diam_min":
             MessageLookupByLibrary.simpleMessage("minor_diam_min"),
+        "minor_diam_tolerance":
+            MessageLookupByLibrary.simpleMessage("Допуск минорного диаметра"),
         "no": MessageLookupByLibrary.simpleMessage("Нет"),
         "no_data": MessageLookupByLibrary.simpleMessage("Нет данных"),
         "nuts": MessageLookupByLibrary.simpleMessage("Гайка"),
-        "pitch": MessageLookupByLibrary.simpleMessage("pitch"),
+        "pitch": MessageLookupByLibrary.simpleMessage("Шаг"),
+        "pitch_diam": MessageLookupByLibrary.simpleMessage("Диаметр пича"),
         "pitch_diam_avg":
             MessageLookupByLibrary.simpleMessage("pitch_diam_avg"),
         "pitch_diam_d2": MessageLookupByLibrary.simpleMessage("pitch_diam_d2"),
@@ -105,6 +118,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("pitch_diam_max"),
         "pitch_diam_min":
             MessageLookupByLibrary.simpleMessage("pitch_diam_min"),
+        "pitch_diam_tolerance":
+            MessageLookupByLibrary.simpleMessage("Допуск диаметра пича"),
         "rate_app": MessageLookupByLibrary.simpleMessage("Оценить приложение"),
         "retry": MessageLookupByLibrary.simpleMessage("Повторить"),
         "select_diameter":
@@ -131,9 +146,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Супер мелкий шаг"),
         "thread_tolerance": MessageLookupByLibrary.simpleMessage("Допуск"),
         "thread_type": MessageLookupByLibrary.simpleMessage("Тип резьбы"),
-        "threads_info": MessageLookupByLibrary.simpleMessage("Информация"),
-        "tolerance": MessageLookupByLibrary.simpleMessage("tolerance"),
-        "type_pitch": MessageLookupByLibrary.simpleMessage("type_pitch"),
+        "threads_info":
+            MessageLookupByLibrary.simpleMessage("Информация о резьбе"),
+        "tolerance": MessageLookupByLibrary.simpleMessage("Допуск"),
+        "type_pitch": MessageLookupByLibrary.simpleMessage("Тип шага"),
         "version": MessageLookupByLibrary.simpleMessage("Версия"),
         "yes": MessageLookupByLibrary.simpleMessage("Да")
       };

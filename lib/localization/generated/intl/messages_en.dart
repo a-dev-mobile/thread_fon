@@ -23,16 +23,22 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("About App"),
+        "additional_info":
+            MessageLookupByLibrary.simpleMessage("Дополнительная информация"),
         "app_lang":
             MessageLookupByLibrary.simpleMessage("Application language"),
         "app_name": MessageLookupByLibrary.simpleMessage("ThreadFon"),
         "bolt": MessageLookupByLibrary.simpleMessage("Bolt"),
-        "d1_ei": MessageLookupByLibrary.simpleMessage("d1_ei"),
-        "d1_es": MessageLookupByLibrary.simpleMessage("d1_es"),
-        "d2_ei": MessageLookupByLibrary.simpleMessage("d2_ei"),
-        "d2_es": MessageLookupByLibrary.simpleMessage("d2_es"),
-        "d_ei": MessageLookupByLibrary.simpleMessage("d_ei"),
-        "d_es": MessageLookupByLibrary.simpleMessage("d_es"),
+        "d1_es": MessageLookupByLibrary.simpleMessage("D1_es"),
+        "d1_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D1_es"),
+        "d2_ei": MessageLookupByLibrary.simpleMessage("D2_ei"),
+        "d2_ei_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D2_ei"),
+        "d2_es": MessageLookupByLibrary.simpleMessage("D2_es"),
+        "d2_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D2_es"),
+        "d_ei": MessageLookupByLibrary.simpleMessage("D_ei"),
+        "d_ei_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D_ei"),
+        "d_es": MessageLookupByLibrary.simpleMessage("D_es"),
+        "d_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D_es"),
         "dark_theme": MessageLookupByLibrary.simpleMessage("Dark theme"),
         "dialog_about_app_1":
             MessageLookupByLibrary.simpleMessage("-Major diameter tolerances"),
@@ -48,8 +54,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "diam_major": MessageLookupByLibrary.simpleMessage("Major diameter"),
         "diam_middle": MessageLookupByLibrary.simpleMessage("Pitch diameter"),
         "diam_minor": MessageLookupByLibrary.simpleMessage("Minor diameter"),
-        "diameter": MessageLookupByLibrary.simpleMessage("diameter"),
-        "diameters": MessageLookupByLibrary.simpleMessage("diameters"),
+        "diameter": MessageLookupByLibrary.simpleMessage("Диаметр"),
+        "diameters": MessageLookupByLibrary.simpleMessage("Диаметры"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
         "exit_app": MessageLookupByLibrary.simpleMessage("Exit app"),
         "exit_app_warning": MessageLookupByLibrary.simpleMessage(
@@ -77,15 +83,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "m_thread_male_description": MessageLookupByLibrary.simpleMessage(
             "M - Metric cylindrical external thread"),
         "main": MessageLookupByLibrary.simpleMessage("Home"),
+        "major_diam": MessageLookupByLibrary.simpleMessage("Основной диаметр"),
         "major_diam_avg":
             MessageLookupByLibrary.simpleMessage("major_diam_avg"),
         "major_diam_max":
             MessageLookupByLibrary.simpleMessage("major_diam_max"),
         "major_diam_min":
             MessageLookupByLibrary.simpleMessage("major_diam_min"),
+        "major_diam_tolerance":
+            MessageLookupByLibrary.simpleMessage("Допуск основного диаметра"),
         "max": MessageLookupByLibrary.simpleMessage("max"),
         "mean": MessageLookupByLibrary.simpleMessage("mean"),
         "min": MessageLookupByLibrary.simpleMessage("min"),
+        "minor_diam": MessageLookupByLibrary.simpleMessage("Минорный диаметр"),
         "minor_diam_avg":
             MessageLookupByLibrary.simpleMessage("minor_diam_avg"),
         "minor_diam_d1": MessageLookupByLibrary.simpleMessage("minor_diam_d1"),
@@ -94,10 +104,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("minor_diam_max"),
         "minor_diam_min":
             MessageLookupByLibrary.simpleMessage("minor_diam_min"),
+        "minor_diam_tolerance":
+            MessageLookupByLibrary.simpleMessage("Допуск минорного диаметра"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "no_data": MessageLookupByLibrary.simpleMessage("No data"),
         "nuts": MessageLookupByLibrary.simpleMessage("Nuts"),
-        "pitch": MessageLookupByLibrary.simpleMessage("pitch"),
+        "pitch": MessageLookupByLibrary.simpleMessage("Шаг"),
+        "pitch_diam": MessageLookupByLibrary.simpleMessage("Диаметр пича"),
         "pitch_diam_avg":
             MessageLookupByLibrary.simpleMessage("pitch_diam_avg"),
         "pitch_diam_d2": MessageLookupByLibrary.simpleMessage("pitch_diam_d2"),
@@ -105,6 +118,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("pitch_diam_max"),
         "pitch_diam_min":
             MessageLookupByLibrary.simpleMessage("pitch_diam_min"),
+        "pitch_diam_tolerance":
+            MessageLookupByLibrary.simpleMessage("Допуск диаметра пича"),
         "rate_app": MessageLookupByLibrary.simpleMessage("Rate app"),
         "retry": MessageLookupByLibrary.simpleMessage("Retry"),
         "select_diameter":
@@ -117,7 +132,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Thank You for choosing our application"),
         "thread_class_tolerance":
             MessageLookupByLibrary.simpleMessage("Tolerance class"),
-        "thread_depth": MessageLookupByLibrary.simpleMessage("Depth"),
+        "thread_depth": MessageLookupByLibrary.simpleMessage("Глубина"),
         "thread_designation":
             MessageLookupByLibrary.simpleMessage("Designation"),
         "thread_diam": MessageLookupByLibrary.simpleMessage("Diameter"),
@@ -131,9 +146,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Extra fine pitch"),
         "thread_tolerance": MessageLookupByLibrary.simpleMessage("Tolerance"),
         "thread_type": MessageLookupByLibrary.simpleMessage("Thread type"),
-        "threads_info": MessageLookupByLibrary.simpleMessage("Information"),
-        "tolerance": MessageLookupByLibrary.simpleMessage("tolerance"),
-        "type_pitch": MessageLookupByLibrary.simpleMessage("type_pitch"),
+        "threads_info":
+            MessageLookupByLibrary.simpleMessage("Информация о резьбе"),
+        "tolerance": MessageLookupByLibrary.simpleMessage("Допуск"),
+        "type_pitch": MessageLookupByLibrary.simpleMessage("Тип шага"),
         "version": MessageLookupByLibrary.simpleMessage("Version"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes")
       };

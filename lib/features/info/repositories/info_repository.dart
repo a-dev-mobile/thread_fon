@@ -17,6 +17,7 @@ class InfoRepository {
   Future<InfoModel> fetchInfo({
     required String tolerance,
     required String threadType,
+    required String language,
     required double pitch,
     required double diameter,
   }) async {
@@ -28,6 +29,7 @@ class InfoRepository {
           'diameter': diameter,
           'pitch': pitch,
           'type': threadType,
+          'language': language,
         },
       );
 

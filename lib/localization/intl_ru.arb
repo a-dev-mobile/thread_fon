@@ -13,12 +13,7 @@
   "select_pitch": "Выберите шаг",
 
 
-  "diameter": "diameter",
-  "pitch": "pitch",
-  "tolerance": "tolerance",
-  "type_pitch": "type_pitch",
-  "diameters": "diameters",
-  "diameters": "diameters",
+
   "major_diam_min": "major_diam_min",
   "major_diam_avg": "major_diam_avg",
 
@@ -36,12 +31,38 @@
 
 
    "h":"h",
-   "d_es":"d_es",
-   "d_ei":"d_ei",
-   "d1_es":"d1_es",
-   "d1_ei":"d1_ei",
-   "d2_es":"d2_es",
-   "d2_ei":"d2_ei",
+
+
+
+   "threads_info": "Информация о резьбе",
+   "diameter": "Диаметр",
+   "pitch": "Шаг",
+   "tolerance": "Допуск",
+   "type_pitch": "Тип шага",
+   "thread_depth": "Глубина",
+   "diameters": "Диаметры",
+   "major_diam": "Основной диаметр",
+   "major_diam_tolerance": "Допуск основного диаметра",
+   "pitch_diam": "Диаметр пича",
+   "pitch_diam_tolerance": "Допуск диаметра пича",
+   "minor_diam": "Минорный диаметр",
+   "minor_diam_tolerance": "Допуск минорного диаметра",
+   "additional_info": "Дополнительная информация",
+   "d_es": "D_es",
+   "d_es_tolerance": "Допуск D_es",
+   "d_ei": "D_ei",
+   "d_ei_tolerance": "Допуск D_ei",
+   "d1_es": "D1_es",
+   "d1_es_tolerance": "Допуск D1_es",
+   "d2_ei": "D2_ei",
+   "d2_ei_tolerance": "Допуск D2_ei",
+   "d2_es": "D2_es",
+   "d2_es_tolerance": "Допуск D2_es",
+
+
+
+
+
 
 
 
@@ -54,7 +75,7 @@
   "generalError": "Упс, Что то случилось!\nПопробуйте еще раз\n",
   "launch": "Запуск",
   "app_name": "Резьбофон",
-  "threads_info": "Информация",
+
   "m_thread": "Метрическая резьба",
   "m_thread_female_description": "M - Метрическая цилиндрическая внутренняя резьба",
   "m_thread_male_description": "M - Метрическая цилиндрическая наружная резьба",
@@ -67,7 +88,7 @@
   "thread_diam": "Диаметр",
   "thread_diam_nom": "Диаметр (номинальный)",
   "thread_pitch": "Шаг",
-  "thread_depth": "Глубина",
+
   "thread_class_tolerance": "Класс допуска",
   "thread_pitch_coarse": "Основной шаг (Крупный)",
   "thread_pitch_fine": "Мелкий шаг",

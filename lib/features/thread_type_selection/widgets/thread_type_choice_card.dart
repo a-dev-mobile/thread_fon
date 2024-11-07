@@ -23,9 +23,9 @@ class ThreadTypeChoiceCard extends StatelessWidget {
         children: [
           SvgPicture.asset(
             svgAssetPath,
-            height: 80,
-            width: 80,
-            fit: BoxFit.contain,
+            // height: 80,
+            // width: 80,
+            // fit: BoxFit.contain,
           ),
           const SizedBox(height: 12),
           Text(

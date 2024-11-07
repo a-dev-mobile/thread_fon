@@ -7,7 +7,7 @@ import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/core/widgets/my_load_widget.dart';
-import 'package:threadfon/features/info/views/metric_info_screen.dart';
+import 'package:threadfon/features/info/views/info_screen.dart';
 import 'package:threadfon/features/tolerance_selection/bloc/tolerance_bloc.dart';
 import 'package:threadfon/features/tolerance_selection/repositories/tolerance_repository.dart';
 import 'package:threadfon/features/tolerance_selection/views/tolerance_choice_card.dart';
@@ -50,7 +50,7 @@ class _ToleranceSelectionView extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (context) => const MetricInfoScreen(),
+              builder: (context) => const InfoScreen(),
             ),
           );
         }
@@ -77,15 +77,12 @@ class _ToleranceSelectionView extends StatelessWidget {
               case EnumStatus.success:
                 return ListView.separated(
                   itemCount: state.tolerances.length,
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 8.0),
+                  separatorBuilder: (context, index) => const SizedBox(height: 8.0),
                   itemBuilder: (context, index) {
                     final tolerance = state.tolerances[index];
                     return ToleranceChoiceCard(
                       tolerance: tolerance,
-                      onTap: () => context
-                          .read<ToleranceBloc>()
-                          .selectTolerance(tolerance),
+                      onTap: () => context.read<ToleranceBloc>().selectTolerance(tolerance),
                     );
                   },
                 );

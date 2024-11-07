@@ -11,14 +11,13 @@ import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/core/widgets/my_load_widget.dart';
 import 'package:threadfon/features/diameter_selection/bloc/diameter_bloc.dart';
 import 'package:threadfon/features/diameter_selection/repositories/diameter_repository.dart';
-import 'package:threadfon/features/diameter_selection/widget/diameter_choice_card.dart';
+import 'package:threadfon/features/diameter_selection/views/widget/diameter_choice_card.dart';
 import 'package:threadfon/features/pitch_selection/views/pitch_selection_screen.dart';
 import 'package:threadfon/localization/l10n.dart';
 
 final _logger = LogService('metric_diameter_screen');
 
-final 
-class MetricDiameterScreen extends StatelessWidget {
+final class MetricDiameterScreen extends StatelessWidget {
   const MetricDiameterScreen({super.key});
 
   @override
@@ -145,15 +144,15 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
                   onRetry: () => context.read<DiameterBloc>().loadDiameters(),
                 );
               case EnumStatus.success:
-                return ListView.builder(
+                return ListView.separated(
                   controller: _scrollController,
                   itemCount: state.diameters.length,
+                  separatorBuilder: (context, index) => const SizedBox(height: 8.0),
                   itemBuilder: (context, index) {
                     final diameter = state.diameters[index];
                     return DiameterChoiceCard(
                       info: diameter.info,
-                      onTap: () =>
-                          context.read<DiameterBloc>().selectDiameter(diameter),
+                      onTap: () => context.read<DiameterBloc>().selectDiameter(diameter),
                     );
                   },
                 );

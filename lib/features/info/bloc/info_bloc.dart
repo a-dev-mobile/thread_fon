@@ -37,6 +37,7 @@ class InfoBloc extends Cubit<InfoState> {
         pitch: userSelection.pitch!,
         threadType: userSelection.threadType!.name,
         tolerance: userSelection.tolerance!,
+        language: _languageBloc.state.enumLang.name,
       );
       final svgData = await _repository.fetchSvgData(
         diameter: userSelection.diameter!,

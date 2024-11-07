@@ -73,26 +73,24 @@ class _ThreadTypeSelectionView extends StatelessWidget {
                 );
 
               case EnumStatus.success:
-                return GridView.builder(
-                  padding: const EdgeInsets.all(8),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Изменено на 2 для лучшей адаптивности
-                    mainAxisSpacing: 8.0,
-                    crossAxisSpacing: 8.0,
-                    childAspectRatio: 3 / 4,
-                  ),
+                return ListView.builder(
+                  shrinkWrap: false,
+                  // padding: const EdgeInsets.all(8),
+                
                   itemCount: state.threadTypes.length,
                   itemBuilder: (context, index) {
                     final threadType = state.threadTypes[index];
                     final label = threadType.enumThreadType == EnumThreadType.f
                         ? localization.internal_thread
                         : localization.external_thread;
-                    return ThreadTypeChoiceCard(
-                      svgAssetPath: threadType.svgAssetPath,
-                      label: label,
-                      onTap: () => context
-                          .read<ThreadTypeBloc>()
-                          .selectThreadType(threadType),
+                    return Expanded(
+                      child: ThreadTypeChoiceCard(
+                        svgAssetPath: threadType.svgAssetPath,
+                        label: label,
+                        onTap: () => context
+                            .read<ThreadTypeBloc>()
+                            .selectThreadType(threadType),
+                      ),
                     );
                   },
                 );
