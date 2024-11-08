@@ -2,7 +2,7 @@
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:threadfon/localization/l10n.dart';
+import 'package:threadfon/localization/l10n_extension.dart';
 
 class BlurredOverlay extends StatelessWidget {
   const BlurredOverlay({super.key});

@@ -14,7 +14,7 @@ import 'package:threadfon/features/pitch_selection/models/pitch_model.dart';
 import 'package:threadfon/features/pitch_selection/repositories/pitch_repository.dart';
 import 'package:threadfon/features/pitch_selection/views/pitch_choice_card.dart';
 import 'package:threadfon/features/tolerance_selection/views/tolerance_selection_screen.dart';
-import 'package:threadfon/localization/l10n.dart';
+import 'package:threadfon/localization/l10n_extension.dart';
 
 final _logger = LogService('metric_pitch_screen');
 

@@ -13,7 +13,7 @@ import 'package:threadfon/features/info/views/info_screen.dart';
 import 'package:threadfon/features/tolerance_selection/bloc/tolerance_bloc.dart';
 import 'package:threadfon/features/tolerance_selection/repositories/tolerance_repository.dart';
 import 'package:threadfon/features/tolerance_selection/views/tolerance_choice_card.dart';
-import 'package:threadfon/localization/l10n.dart';
+import 'package:threadfon/localization/l10n_extension.dart';
 
 final _logger = LogService('metric_tolerance_screen');
 

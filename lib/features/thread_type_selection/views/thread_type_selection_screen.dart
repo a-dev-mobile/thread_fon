@@ -14,7 +14,7 @@ import 'package:threadfon/features/thread_type_selection/bloc/thread_type_bloc.d
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/features/thread_type_selection/repositories/thread_type_repository.dart';
 import 'package:threadfon/features/thread_type_selection/widgets/thread_type_choice_card.dart';
-import 'package:threadfon/localization/l10n.dart';
+import 'package:threadfon/localization/l10n_extension.dart';
 
 class ThreadTypeSelectionScreen extends StatelessWidget {
   const ThreadTypeSelectionScreen({super.key});

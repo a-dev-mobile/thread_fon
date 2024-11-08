@@ -15,7 +15,7 @@ import 'package:threadfon/features/diameter_selection/bloc/diameter_bloc.dart';
 import 'package:threadfon/features/diameter_selection/repositories/diameter_repository.dart';
 import 'package:threadfon/features/diameter_selection/views/widget/diameter_choice_card.dart';
 import 'package:threadfon/features/pitch_selection/views/pitch_selection_screen.dart';
-import 'package:threadfon/localization/l10n.dart';
+import 'package:threadfon/localization/l10n_extension.dart';
 
 final _logger = LogService('metric_diameter_screen');
 

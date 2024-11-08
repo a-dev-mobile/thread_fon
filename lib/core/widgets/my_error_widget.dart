@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:threadfon/core/widgets/choice_card.dart';
-import 'package:threadfon/localization/l10n.dart';
+import 'package:threadfon/localization/l10n_extension.dart';
 // Package imports:
 
 class MyErrorWidget extends StatelessWidget {
@@ -20,7 +20,7 @@ class MyErrorWidget extends StatelessWidget {
     return Center(
       child: ChoiceCard(
         isHeader: false,
-        onTap: null, // Не кликабельно
+        onTap: null, 
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
           child: Column(

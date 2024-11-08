@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:threadfon/localization/l10n.dart';
+import 'package:threadfon/localization/l10n_extension.dart';
 
 class MyLoadWidget extends StatelessWidget {
   const MyLoadWidget({super.key});

@@ -11,7 +11,7 @@ import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 // Импортируем ValueListenableBuilderN
 import 'package:threadfon/features/thread_type_selection/views/thread_type_selection_screen.dart';
-import 'package:threadfon/localization/l10n.dart';
+import 'package:threadfon/localization/l10n_extension.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
 
 class MyApp extends StatelessWidget {

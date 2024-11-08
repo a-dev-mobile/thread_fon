@@ -3,7 +3,7 @@ import 'package:threadfon/core/utils/double_extension.dart';
 import 'package:threadfon/core/widgets/choice_card.dart';
 import 'package:threadfon/features/info/models/info_model.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
-import 'package:threadfon/localization/l10n.dart';
+import 'package:threadfon/localization/l10n_extension.dart';
 
 class InfoMainParameters extends StatelessWidget {
   final InfoModel info;
