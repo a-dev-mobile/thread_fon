@@ -4,7 +4,8 @@ part of 'pitch_bloc.dart';
 class PitchState with _$PitchState {
   const factory PitchState({
     @Default([]) List<PitchModel> pitches,
-    @Default(EnumStatus.loading) EnumStatus status,
+    @Default(EnumPageStatus.loading) EnumPageStatus enumPageStatus,
+            @Default(EnumNavigationStatus.initial) EnumNavigationStatus enumNavigationStatus,
     String? errorMsg,
   }) = _PitchState;
 

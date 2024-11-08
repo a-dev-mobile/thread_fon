@@ -1,12 +1,14 @@
-import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
+import 'package:threadfon/core/widgets/blurred_overlay.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/core/widgets/my_load_widget.dart';
 import 'package:threadfon/features/diameter_selection/bloc/diameter_bloc.dart';
@@ -17,7 +19,7 @@ import 'package:threadfon/localization/l10n.dart';
 
 final _logger = LogService('metric_diameter_screen');
 
-final class MetricDiameterScreen extends StatelessWidget {
+class MetricDiameterScreen extends StatelessWidget {
   const MetricDiameterScreen({super.key});
 
   @override
@@ -47,115 +49,72 @@ class _MetricDiameterView extends StatefulWidget {
 }
 
 class _MetricDiameterViewState extends State<_MetricDiameterView> {
-  late ScrollController _scrollController;
-  Timer? _throttleTimer; // Таймер для троттлинга
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
-
-    // Добавляем слушатель для сохранения положения скролла при изменении
-    _scrollController.addListener(_onScroll);
-  }
-
-  // Метод-обработчик скролла с троттлингом
-  void _onScroll() {
-    if (_throttleTimer?.isActive ?? false) return;
-
-    _throttleTimer = Timer(const Duration(seconds: 1), () {
-      _saveScrollPosition();
-    });
-  }
-
-  Future<void> _loadScrollPosition() async {
-    final localStorage = context.read<LocalStorage>();
-    final savedPosition = await localStorage.getScrollPosition();
-
-    if (savedPosition != null && savedPosition > 0) {
-      // Сохраняем позицию для последующего использования
-      // Мы будем вызывать jumpTo позже, когда список будет построен
-      _savedScrollPosition = savedPosition;
-    }
-
-    setState(() {});
-  }
-
-  void _saveScrollPosition() {
-    final localStorage = context.read<LocalStorage>();
-    localStorage.setScrollPosition(_scrollController.offset);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.removeListener(_onScroll);
-    _throttleTimer?.cancel(); // Отменяем таймер при уничтожении виджета
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  double? _savedScrollPosition;
-
   @override
   Widget build(BuildContext context) {
     final localization = context.l10n;
 
     return BlocListener<DiameterBloc, DiameterState>(
-      listenWhen: (previous, current) => previous.status != current.status,
+      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
-        await _loadScrollPosition();
-
-        if (state.status == EnumStatus.success) {
-          if (_savedScrollPosition != null) {
-            // Используем addPostFrameCallback, чтобы убедиться, что ListView построен
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (_scrollController.hasClients) {
-                _scrollController.jumpTo(_savedScrollPosition!);
-              }
-            });
-          }
-        }
-
-        if (state.status == EnumStatus.navigating) {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (_) => const PitchSelectionScreen(),
-            ),
-          );
+        switch (state.enumNavigationStatus) {
+          case EnumNavigationStatus.preparation:
+          // await saveScrollPosition();
+          case EnumNavigationStatus.initial:
+            break;
+          case EnumNavigationStatus.navigation:
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (_) => const PitchSelectionScreen(),
+              ),
+            );
         }
       },
       child: Scaffold(
         appBar: AppBar(
           title: Text(localization.select_diameter),
         ),
-        body: BlocBuilder<DiameterBloc, DiameterState>(
-          builder: (context, state) {
-            switch (state.status) {
-              case EnumStatus.loading:
-              case EnumStatus.navigating:
-                return const MyLoadWidget();
+        body: Stack(
+          children: [
+            // Основной контент
+            BlocBuilder<DiameterBloc, DiameterState>(
+              builder: (context, state) {
+                switch (state.enumPageStatus) {
+                  case EnumPageStatus.initial:
+                  case EnumPageStatus.loading:
+                    return const MyLoadWidget();
 
-              case EnumStatus.error:
-                return MyErrorWidget(
-                  errorMsg: state.errorMsg,
-                  onRetry: () => context.read<DiameterBloc>().loadDiameters(),
-                );
-              case EnumStatus.success:
-                return ListView.separated(
-                  controller: _scrollController,
-                  itemCount: state.diameters.length,
-                  separatorBuilder: (context, index) => const SizedBox(height: 8.0),
-                  itemBuilder: (context, index) {
-                    final diameter = state.diameters[index];
-                    return DiameterChoiceCard(
-                      info: diameter.info,
-                      onTap: () => context.read<DiameterBloc>().selectDiameter(diameter),
+                  case EnumPageStatus.error:
+                    return MyErrorWidget(
+                      errorMsg: state.errorMsg,
+                      onRetry: () => context.read<DiameterBloc>().loadDiameters(),
                     );
-                  },
-                );
-            }
-          },
+                  case EnumPageStatus.success:
+                    return ListView.separated(
+                      itemCount: state.diameters.length,
+                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+                      itemBuilder: (context, index) {
+                        final diameter = state.diameters[index];
+                        return DiameterChoiceCard(
+                          info: diameter.info,
+                          onTap: () => context.read<DiameterBloc>().preparationNavigation(diameter),
+                        );
+                      },
+                    );
+                }
+              },
+            ),
+            // Блюр-оверлей
+            BlocBuilder<DiameterBloc, DiameterState>(
+              builder: (context, state) {
+                if (state.enumNavigationStatus.isPreparation) {
+                  return const BlurredOverlay();
+                } else {
+                  return const SizedBox.shrink();
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

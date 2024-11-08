@@ -49,7 +49,8 @@ class _FullScreenSvgViewState extends State<FullScreenSvgView> {
 
         children: [
           PhotoView.customChild(
-            enableRotation: true,
+            enableRotation: false,
+            
             backgroundDecoration: BoxDecoration(
               color: Theme.of(context).scaffoldBackgroundColor,
             ),
@@ -72,31 +73,7 @@ class _FullScreenSvgViewState extends State<FullScreenSvgView> {
             ),
           ),
           // Positioning designation vertically on the left, centered
-          Positioned(
-            left: -40,
-            top: 0,
-            bottom: 0,
-            child: Center(
-              child: Transform.rotate(
-                angle: -math.pi / 2, // Rotate 90 degrees counterclockwise
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-                  decoration: BoxDecoration(
-                    color: Colors.black54,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Text(
-                    widget.designation,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          
         ],
       ),
     );

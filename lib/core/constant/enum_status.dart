@@ -1,6 +1,8 @@
 /// Статусы
-enum EnumStatus {
+enum EnumPageStatus {
 
+  /// Страница в процессе загрузки данных
+  initial,
 
   /// Страница в процессе загрузки данных
   loading,
@@ -10,16 +12,11 @@ enum EnumStatus {
 
   /// Произошла ошибка при загрузке данных
   error,
-
-
-  navigating, // Переход на следующий экран
 }
 
-extension $EnumStatus on EnumStatus {
-
-  bool get isLoad => this == EnumStatus.loading;
-  bool get isError => this == EnumStatus.error;
-  bool get isSuccess => this == EnumStatus.success;
-  bool get isNavigating => this == EnumStatus.navigating;
-
+extension $EnumStatus on EnumPageStatus {
+  bool get isLoad => this == EnumPageStatus.loading;
+  bool get isError => this == EnumPageStatus.error;
+  bool get isSuccess => this == EnumPageStatus.success;
+  bool get isInitial => this == EnumPageStatus.initial;
 }

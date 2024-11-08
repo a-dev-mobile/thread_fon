@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:threadfon/core/utils/double_extension.dart';
 import 'package:threadfon/core/widgets/choice_card.dart';
 import 'package:threadfon/features/info/models/info_model.dart';
+import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n.dart';
 
@@ -58,7 +59,7 @@ class InfoDiametersParameters extends StatelessWidget {
           ),
 
           Divider(),
-             Text(
+          Text(
             localization.diam_middle, // Заголовок секции
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -91,7 +92,7 @@ class InfoDiametersParameters extends StatelessWidget {
             ],
           ),
           // ============================
-             Divider(),
+          Divider(),
           Text(
             localization.diam_minor, // Заголовок секции
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -125,7 +126,8 @@ class InfoDiametersParameters extends StatelessWidget {
             ],
           ),
 
-        
+          Divider(),
+
           const Divider(height: 32.0),
 
           // Дополнительная информация
@@ -136,13 +138,33 @@ class InfoDiametersParameters extends StatelessWidget {
                 ),
           ),
           const SizedBox(height: 8.0),
+          if (info.threadType == EnumThreadType.male)
+            _itemAddInfo(context, 'Внутренний диаметр резьбы по дну впадины (d3)', info.minorDiamD3),
+
           _buildAdditionalInfo(context, localization, info),
         ],
       ),
     );
   }
 
-  Row _buildDiameterItem(BuildContext context, double diameter, double? dEs, double? dEi) {
+  Row _itemAddInfo(BuildContext context, String label, double value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+        _buildDiameterItem(context, value),
+      ],
+    );
+  }
+
+  Row _buildDiameterItem(BuildContext context, double diameter, [double? dEs, double? dEi]) {
     return Row(
       children: [
         Text(

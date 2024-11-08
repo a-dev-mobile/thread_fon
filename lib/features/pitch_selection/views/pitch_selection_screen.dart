@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
+import 'package:threadfon/core/widgets/blurred_overlay.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/core/widgets/my_load_widget.dart';
 import 'package:threadfon/features/pitch_selection/bloc/pitch_bloc.dart';
@@ -45,50 +47,69 @@ class _PitchSelectionView extends StatelessWidget {
     final localization = context.l10n;
 
     return BlocListener<PitchBloc, PitchState>(
-      listenWhen: (previous, current) => previous.status != current.status,
+      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
-        if (state.status == EnumStatus.navigating) {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (_) => const ToleranceSelectionScreen(),
-            ),
-          );
+        switch (state.enumNavigationStatus) {
+          case EnumNavigationStatus.preparation:
+          case EnumNavigationStatus.initial:
+            // await saveScrollPosition();
+            break;
+
+          case EnumNavigationStatus.navigation:
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (_) => const ToleranceSelectionScreen(),
+              ),
+            );
         }
       },
       child: Scaffold(
         appBar: AppBar(
           title: Text(localization.select_pitch),
         ),
-        body: BlocBuilder<PitchBloc, PitchState>(
-          builder: (context, state) {
-            switch (state.status) {
-              case EnumStatus.loading:
-              case EnumStatus.navigating:
-                return const MyLoadWidget();
+        body: Stack(
+          children: [
+            BlocBuilder<PitchBloc, PitchState>(
+              builder: (context, state) {
+                switch (state.enumPageStatus) {
+                  case EnumPageStatus.loading:
+                  case EnumPageStatus.initial:
+                    return const MyLoadWidget();
 
-              case EnumStatus.error:
-                return MyErrorWidget(
-                  errorMsg: state.errorMsg,
-                  onRetry: () => context.read<PitchBloc>().loadPitch(),
-                );
-
-              case EnumStatus.success:
-                return ListView.separated(
-                  itemCount: state.pitches.length,
-                  separatorBuilder: (context, index) => const SizedBox(height: 8.0),
-                  itemBuilder: (context, index) {
-                    final pitch = state.pitches[index];
-                    return PitchChoiceCard(
-                      pitch: pitch,
-                      onTap: pitch.enumPitchDataType == EnumPitchDataType.value
-                          ? () => context.read<PitchBloc>().selectPitch(pitch)
-                          : null,
+                  case EnumPageStatus.error:
+                    return MyErrorWidget(
+                      errorMsg: state.errorMsg,
+                      onRetry: () => context.read<PitchBloc>().loadPitch(),
                     );
-                  },
-                );
-            }
-          },
+
+                  case EnumPageStatus.success:
+                    return ListView.separated(
+                      itemCount: state.pitches.length,
+                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+                      itemBuilder: (context, index) {
+                        final pitch = state.pitches[index];
+                        return PitchChoiceCard(
+                          pitch: pitch,
+                          onTap: pitch.enumPitchDataType == EnumPitchDataType.value
+                              ? () => context.read<PitchBloc>().preparationNavigation(pitch)
+                              : null,
+                        );
+                      },
+                    );
+                }
+              },
+            ),
+            BlocBuilder<PitchBloc, PitchState>(
+              builder: (context, state) {
+                if (state.enumNavigationStatus.isPreparation) {
+                  return const BlurredOverlay();
+                } else {
+                  return const SizedBox.shrink();
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

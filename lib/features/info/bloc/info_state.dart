@@ -5,7 +5,9 @@ class InfoState with _$InfoState {
   const factory InfoState({
     InfoModel? model,
     String? svgData,
-    @Default(EnumStatus.loading) EnumStatus status,
+    @Default(EnumPageStatus.loading) EnumPageStatus enumPageStatus,
+
+    @Default(EnumNavigationStatus.initial) EnumNavigationStatus enumNavigationStatus,
     String? errorMsg,
   }) = _InfoState;
 

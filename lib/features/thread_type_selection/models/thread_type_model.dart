@@ -14,4 +14,10 @@ class ThreadTypeModel with _$ThreadTypeModel {
       _$ThreadTypeModelFromJson(json);
 }
 
-enum EnumThreadType { f, m }
+// enum EnumThreadType { f, m }
+enum EnumThreadType {
+  @JsonValue('male')
+  male,
+  @JsonValue('female')
+  female,
+}

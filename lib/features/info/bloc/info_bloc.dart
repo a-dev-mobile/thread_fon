@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
@@ -28,7 +29,7 @@ class InfoBloc extends Cubit<InfoState> {
   final LanguageBloc _languageBloc;
 
   Future<void> load() async {
-    emit(state.copyWith(status: EnumStatus.loading));
+    emit(state.copyWith(enumPageStatus: EnumPageStatus.loading));
     final userSelection = await _localStorage.getUserSelection();
 
     try {
@@ -46,7 +47,7 @@ class InfoBloc extends Cubit<InfoState> {
         tolerance: userSelection.tolerance!,
       );
       emit(state.copyWith(
-        status: EnumStatus.success,
+        enumPageStatus: EnumPageStatus.success,
         model: model,
         svgData: svgData,
       ));
@@ -56,19 +57,19 @@ class InfoBloc extends Cubit<InfoState> {
     }
   }
 
-  Future<void> selectInfo() async {
-    emit(state.copyWith(status: EnumStatus.loading));
+  Future<void> preparationNavigation() async {
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
 
     try {
       await _localStorage.updateUserSelection(
         (current) => current.copyWith(
           id: state.model?.id,
-          // Добавьте другие необходимые поля, если необходимо
+   
         ),
       );
-      emit(state.copyWith(status: EnumStatus.navigating));
-      await Future<void>.delayed(const Duration(seconds: 1));
-      emit(state.copyWith(status: EnumStatus.success));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
       _setErrorState();
@@ -80,6 +81,6 @@ class InfoBloc extends Cubit<InfoState> {
     final errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading info.'
         : 'Произошла ошибка при загрузке информации.';
-    emit(state.copyWith(status: EnumStatus.error, errorMsg: errorMsg));
+    emit(state.copyWith(enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg));
   }
 }

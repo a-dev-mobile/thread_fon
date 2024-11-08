@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
@@ -28,18 +29,18 @@ class DiameterBloc extends Cubit<DiameterState> {
   final LanguageBloc _languageBloc;
 
   Future<void> loadDiameters() async {
-    emit(state.copyWith(status: EnumStatus.loading));
+    emit(state.copyWith(enumPageStatus: EnumPageStatus.loading));
     try {
       final diameters = await _repository.fetchDiameters();
-      emit(state.copyWith(status: EnumStatus.success, diameters: diameters));
+      emit(state.copyWith(enumPageStatus: EnumPageStatus.success, diameters: diameters));
     } catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
       _setErrorState();
     }
   }
 
-  Future<void> selectDiameter(DiameterModel selectedDiameter) async {
-    emit(state.copyWith(status: EnumStatus.loading));
+  Future<void> preparationNavigation(DiameterModel selectedDiameter) async {
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
 
     try {
       await _localStorage.updateUserSelection(
@@ -48,9 +49,9 @@ class DiameterBloc extends Cubit<DiameterState> {
           diameter: selectedDiameter.diameter,
         ),
       );
-      emit(state.copyWith(status: EnumStatus.navigating));
-      await Future<void>.delayed(const Duration(seconds: 1));
-      emit(state.copyWith(status: EnumStatus.success));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
       _setErrorState();
@@ -62,6 +63,6 @@ class DiameterBloc extends Cubit<DiameterState> {
     final errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading diameters.'
         : 'Произошла ошибка при загрузке диаметров.';
-    emit(state.copyWith(status: EnumStatus.error, errorMsg: errorMsg));
+    emit(state.copyWith(enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg));
   }
 }

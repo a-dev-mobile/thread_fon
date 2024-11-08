@@ -4,7 +4,8 @@ part of 'thread_type_bloc.dart';
 class ThreadTypeState with _$ThreadTypeState {
   const factory ThreadTypeState({
     @Default([]) List<ThreadTypeModel> threadTypes,
-    @Default(EnumStatus.loading) EnumStatus status,
+    @Default(EnumPageStatus.loading) EnumPageStatus enumPageStatus,
+        @Default(EnumNavigationStatus.initial) EnumNavigationStatus enumNavigationStatus,
     String? errorMsg,
   }) = _ThreadTypeState;
 

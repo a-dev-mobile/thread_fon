@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
@@ -28,22 +29,22 @@ class PitchBloc extends Cubit<PitchState> {
   final LanguageBloc _languageBloc;
 
   Future<void> loadPitch() async {
-    emit(state.copyWith(status: EnumStatus.loading));
+    emit(state.copyWith(enumPageStatus: EnumPageStatus.loading));
     try {
       final userSelection = await _localStorage.getUserSelection();
       final pitchList = await _repository.fetchPitch(
         diameter: userSelection.diameter!,
         language: _languageBloc.state.enumLang.name,
       );
-      emit(state.copyWith(status: EnumStatus.success, pitches: pitchList));
+      emit(state.copyWith(enumPageStatus: EnumPageStatus.success, pitches: pitchList));
     } catch (e, s) {
       _logger.e('Error loading pitch', error: e, stackTrace: s);
       _setErrorState();
     }
   }
 
-  Future<void> selectPitch(PitchModel selectedPitch) async {
-    emit(state.copyWith(status: EnumStatus.loading));
+  Future<void> preparationNavigation(PitchModel selectedPitch) async {
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
 
     try {
       await _localStorage.updateUserSelection(
@@ -52,9 +53,9 @@ class PitchBloc extends Cubit<PitchState> {
           pitch: selectedPitch.pitch,
         ),
       );
-      emit(state.copyWith(status: EnumStatus.navigating));
-      await Future<void>.delayed(const Duration(seconds: 1));
-      emit(state.copyWith(status: EnumStatus.success));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
       _logger.e('Error updating pitch selection', error: e, stackTrace: s);
       _setErrorState();
@@ -66,6 +67,6 @@ class PitchBloc extends Cubit<PitchState> {
     final errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading pitches.'
         : 'Произошла ошибка при загрузке шагов резьбы.';
-    emit(state.copyWith(status: EnumStatus.error, errorMsg: errorMsg));
+    emit(state.copyWith(enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg));
   }
 }

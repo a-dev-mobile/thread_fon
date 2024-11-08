@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
+import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
+import 'package:threadfon/core/widgets/blurred_overlay.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/core/widgets/my_load_widget.dart';
 import 'package:threadfon/features/info/bloc/info_bloc.dart';
@@ -53,7 +54,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     final localization = context.l10n;
 
     return BlocListener<InfoBloc, InfoState>(
-      listenWhen: (previous, current) => previous.status != current.status,
+      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {},
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -64,75 +65,86 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
           },
           child: const Icon(Icons.navigate_next),
         ),
-        body: BlocBuilder<InfoBloc, InfoState>(
-          builder: (context, state) {
-            switch (state.status) {
-              case EnumStatus.loading:
-              case EnumStatus.navigating:
-                return const MyLoadWidget();
+        body: Stack(
+          children: [
+            BlocBuilder<InfoBloc, InfoState>(
+              builder: (context, state) {
+                switch (state.enumPageStatus) {
+                  case EnumPageStatus.loading:
+                  case EnumPageStatus.initial:
+                    return const MyLoadWidget();
 
-              case EnumStatus.error:
-                return MyErrorWidget(
-                  errorMsg: state.errorMsg,
-                  onRetry: () => context.read<InfoBloc>().load(),
-                );
-              case EnumStatus.success:
-                if (state.model == null) {
-                  return const Center(child: Text('No data available.'));
-                }
+                  case EnumPageStatus.error:
+                    return MyErrorWidget(
+                      errorMsg: state.errorMsg,
+                      onRetry: () => context.read<InfoBloc>().load(),
+                    );
+                  case EnumPageStatus.success:
+                    if (state.model == null) {
+                      return const Center(child: Text('No data available.'));
+                    }
 
-                return CustomScrollView(
-                  slivers: [
-                    SliverAppBar(
-                      title: Text(localization.threads_info),
-                      floating: true,
-                      snap: true,
-                      actions: [
-                        IconButton(
-                          icon: const Icon(FontAwesomeIcons.compassDrafting),
-                          onPressed: () {
-                            if (state.svgData != null) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => FullScreenSvgView(
-                                    svgData: state.svgData!,
-                                    designation: state.model!.designation,
-                                  ),
-                                ),
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(localization.no_svg_data),
-                                ),
-                              );
-                            }
-                          },
+                    return CustomScrollView(
+                      slivers: [
+                        SliverAppBar(
+                          title: Text(localization.threads_info),
+                          floating: true,
+                          snap: true,
+                          actions: [
+                            IconButton(
+                              icon: const Icon(FontAwesomeIcons.compassDrafting),
+                              onPressed: () {
+                                if (state.svgData != null) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => FullScreenSvgView(
+                                        svgData: state.svgData!,
+                                        designation: state.model!.designation,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(localization.no_svg_data),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                        SliverPadding(
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          sliver: SliverList(
+                            delegate: SliverChildListDelegate([
+                              InfoMainParameters(
+                                info: state.model!,
+                              ),
+                              Divider(),
+                              InfoDiametersParameters(
+                                info: state.model!,
+                              ),
+                              Divider(),
+                            ]),
+                          ),
                         ),
                       ],
-                    ),
-                    SliverPadding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      sliver: SliverList(
-                        delegate: SliverChildListDelegate([
-                          InfoMainParameters(
-                            info: state.model!,
-                          ),
-                          Divider(),
-                          
-                          InfoDiametersParameters(
-                            info: state.model!,
-                          ),
-                          Divider(),
-
-                        ]),
-                      ),
-                    ),
-                  ],
-                );
-            }
-          },
+                    );
+                }
+              },
+            ),
+            BlocBuilder<InfoBloc, InfoState>(
+              builder: (context, state) {
+                if (state.enumNavigationStatus.isPreparation) {
+                  return const BlurredOverlay();
+                } else {
+                  return const SizedBox.shrink();
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

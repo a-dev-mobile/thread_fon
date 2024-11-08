@@ -11,11 +11,11 @@ class ThreadTypeRepository {
       // В будущем можно добавить API вызовы или локальное хранилище
       return [
         ThreadTypeModel(
-          enumThreadType: EnumThreadType.f,
+          enumThreadType: EnumThreadType.female,
           svgAssetPath: Assets.svg.gaika,
         ),
         ThreadTypeModel(
-          enumThreadType: EnumThreadType.m,
+          enumThreadType: EnumThreadType.male,
           svgAssetPath: Assets.svg.bolt,
         ),
       ];

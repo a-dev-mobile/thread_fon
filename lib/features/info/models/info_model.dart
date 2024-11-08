@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 
 part 'info_model.freezed.dart';
 part 'info_model.g.dart';
@@ -12,7 +13,8 @@ class InfoModel with _$InfoModel {
     required String tolerance,
     required String designation,
     required String description,
-      @JsonKey(name: 'type_pitch_description')   required String typePitchDescription,
+        @JsonKey(name: 'thread_type') required EnumThreadType threadType,
+    @JsonKey(name: 'type_pitch_description') required String typePitchDescription,
     @JsonKey(name: 'type_pitch') required int typePitch,
     @JsonKey(name: 'range_main') int? rangeMain,
     @JsonKey(name: 'range_sub') double? rangeSub,
@@ -36,8 +38,8 @@ class InfoModel with _$InfoModel {
     @JsonKey(name: 'd1_ei') double? d1Ei,
     @JsonKey(name: 'd2_es') double? d2Es,
     @JsonKey(name: 'd2_ei') double? d2Ei,
+
   }) = _InfoModel;
 
-  factory InfoModel.fromJson(Map<String, dynamic> json) =>
-      _$InfoModelFromJson(json);
+  factory InfoModel.fromJson(Map<String, dynamic> json) => _$InfoModelFromJson(json);
 }
