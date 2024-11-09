@@ -49,7 +49,7 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> {
         ),
       );
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
-            await Future<void>.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
       _logger.e('Error updating thread type selection', error: e, stackTrace: s);
@@ -62,6 +62,7 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> {
     final errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading thread types.'
         : 'Произошла ошибка при загрузке типов резьбы.';
-    emit(state.copyWith(enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg));
+    emit(state.copyWith(
+        enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

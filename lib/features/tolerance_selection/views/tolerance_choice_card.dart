@@ -1,7 +1,7 @@
 // widgets/tolerance_choice_card.dart
 
 import 'package:flutter/material.dart';
-import 'package:threadfon/core/widgets/choice_card.dart';
+import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/tolerance_selection/models/tolerance_model.dart';
 
 class ToleranceChoiceCard extends StatelessWidget {
@@ -16,7 +16,7 @@ class ToleranceChoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChoiceCard(
+    return MyCard(
       onTap: onTap,
       child: Text(
         tolerance.info,

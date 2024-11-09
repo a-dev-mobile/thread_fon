@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:threadfon/core/utils/double_extension.dart';
-import 'package:threadfon/core/widgets/choice_card.dart';
+import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/info/models/info_model.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
@@ -8,10 +8,8 @@ import 'package:threadfon/localization/l10n_extension.dart';
 class InfoMainParameters extends StatelessWidget {
   final InfoModel info;
 
-
   const InfoMainParameters({
     required this.info,
-
     super.key,
   });
 
@@ -20,8 +18,8 @@ class InfoMainParameters extends StatelessWidget {
     // Получение локализованных строк, если необходимо
     final localization = context.l10n;
 
-    return ChoiceCard(
-       child: Column(
+    return MyCard(
+      child: Column(
         children: [
           // Заголовок карточки
           Text(
@@ -62,7 +60,6 @@ class InfoMainParameters extends StatelessWidget {
           _buildInfoRow(context, localization.thread_depth, info.threadDepth),
           _buildInfoRow(context, localization.thread_class_tolerance, info.tolerance),
           _buildInfoRow(context, localization.type_pitch, info.typePitchDescription),
-
         ],
       ),
     );

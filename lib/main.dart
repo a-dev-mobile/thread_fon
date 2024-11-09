@@ -12,6 +12,7 @@ import 'package:threadfon/core/services/logging/app_bloc_observer.dart';
 // Импорт LogBatcher
 import 'package:threadfon/core/services/logging/log_batcher.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
+import 'package:threadfon/core/widgets/restart_widget.dart';
 
 final _logger = LogService('main');
 
@@ -54,18 +55,20 @@ Future<void> main() async {
         // Запуск приложения с провайдерами
         Bloc.observer = const AppBlocObserver();
         runApp(
-          MultiRepositoryProvider(
-            providers: [
-              RepositoryProvider.value(
-                value: localStorage,
+          RestartWidget(
+            child: MultiRepositoryProvider(
+              providers: [
+                RepositoryProvider.value(
+                  value: localStorage,
+                ),
+                RepositoryProvider(
+                  create: (context) => ApiService(),
+                ),
+              ],
+              child: MyApp(
+                enumLang: languageState.enumLang,
+                themeMode: themeState.themeMode,
               ),
-              RepositoryProvider(
-                create: (context) => ApiService(),
-              ),
-            ],
-            child: MyApp(
-              enumLang: languageState.enumLang,
-              themeMode: themeState.themeMode,
             ),
           ),
         );

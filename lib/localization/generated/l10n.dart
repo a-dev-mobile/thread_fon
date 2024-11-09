@@ -91,26 +91,6 @@ class GeneratedLocalization {
     );
   }
 
-  /// `Error`
-  String get error {
-    return Intl.message(
-      'Error',
-      name: 'error',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Retry`
-  String get retry {
-    return Intl.message(
-      'Retry',
-      name: 'retry',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Сhoose diameter`
   String get select_diameter {
     return Intl.message(
@@ -516,6 +496,36 @@ class GeneratedLocalization {
     return Intl.message(
       'Нет данных для отображения',
       name: 'no_svg_data',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error`
+  String get error {
+    return Intl.message(
+      'Error',
+      name: 'error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message(
+      'Retry',
+      name: 'retry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Restart App`
+  String get restartApp {
+    return Intl.message(
+      'Restart App',
+      name: 'restartApp',
       desc: '',
       args: [],
     );

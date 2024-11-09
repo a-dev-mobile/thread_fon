@@ -123,6 +123,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pitch_diam_tolerance":
             MessageLookupByLibrary.simpleMessage("Допуск диаметра пича"),
         "rate_app": MessageLookupByLibrary.simpleMessage("Rate app"),
+        "restartApp": MessageLookupByLibrary.simpleMessage("Restart App"),
         "retry": MessageLookupByLibrary.simpleMessage("Retry"),
         "select_diameter":
             MessageLookupByLibrary.simpleMessage("Сhoose diameter"),

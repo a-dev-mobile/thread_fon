@@ -63,6 +63,8 @@ class DiameterBloc extends Cubit<DiameterState> {
     final errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading diameters.'
         : 'Произошла ошибка при загрузке диаметров.';
-    emit(state.copyWith(enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg));
+    emit(state.copyWith(
+        enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
+
   }
 }

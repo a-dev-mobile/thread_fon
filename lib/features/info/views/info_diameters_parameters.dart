@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:threadfon/core/utils/double_extension.dart';
-import 'package:threadfon/core/widgets/choice_card.dart';
+import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/info/models/info_model.dart';
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
@@ -18,7 +18,7 @@ class InfoDiametersParameters extends StatelessWidget {
     // Получение локализованных строк, если необходимо
     final localization = context.l10n;
 
-    return ChoiceCard(
+    return MyCard(
       onTap: null,
       child: Column(
         children: [
@@ -139,8 +139,6 @@ class InfoDiametersParameters extends StatelessWidget {
           const SizedBox(height: 8.0),
           if (info.threadType == EnumThreadType.male)
             _itemAddInfo(context, 'Внутренний диаметр резьбы по дну впадины (d3)', info.minorDiamD3),
-
-      
         ],
       ),
     );
@@ -185,8 +183,4 @@ class InfoDiametersParameters extends StatelessWidget {
       ],
     );
   }
-
-
-
-
 }

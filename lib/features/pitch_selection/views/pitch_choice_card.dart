@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:threadfon/core/widgets/choice_card.dart';
+import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/pitch_selection/models/pitch_model.dart';
 
 class PitchChoiceCard extends StatelessWidget {
@@ -14,21 +14,21 @@ class PitchChoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChoiceCard(
-      isHeader: pitch.enumPitchDataType == EnumPitchDataType.header,
-      onTap: pitch.enumPitchDataType == EnumPitchDataType.value ? onTap : null,
-      child: pitch.enumPitchDataType == EnumPitchDataType.header
-          ? Text(
-              pitch.info,
-              textAlign: TextAlign.center,
-            )
-          : Text(
+    return pitch.enumPitchDataType == EnumPitchDataType.header
+        ? Text(
+            pitch.info,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineLarge?.copyWith(),
+          )
+        : MyCard(
+            onTap: onTap ,
+            child: Text(
               pitch.info,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
               textAlign: TextAlign.center,
             ),
-    );
+          );
   }
 }

@@ -54,8 +54,8 @@ class _ThreadApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //
       themeMode: themeState.themeMode,
-      theme: AppTheme.lightThemeData(),
-      darkTheme: AppTheme.darkThemeData(),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

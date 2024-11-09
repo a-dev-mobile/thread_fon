@@ -5,8 +5,7 @@
   "localeCode": "ru_RU",
   "languageCode": "ru",
   "language": "Russia",
-  "error": "Ошибка",
-  "retry": "Повторить",
+
   
   "select_diameter": "Выберите диаметр",
   "select_tolerance": "Выберите допуск",
@@ -72,7 +71,6 @@
   "lang_ru": "Русский",
   "lang_en": "Английский",
   "dark_theme": "Темная тема",
-  "generalError": "Упс, Что то случилось!\nПопробуйте еще раз\n",
   "launch": "Запуск",
   "app_name": "Резьбофон",
 
@@ -125,5 +123,14 @@
   "no": "Нет",
   
 
-  "no_data": "Нет данных"
+  "no_data": "Нет данных",
+
+
+
+  "error": "Ошибка",
+  "generalError": "Произошла непредвиденная ошибка.",
+  "retry": "Повторить",
+  "restartApp": "Перезапустить приложение"
+
+
 }

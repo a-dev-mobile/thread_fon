@@ -66,6 +66,7 @@ class ToleranceBloc extends Cubit<ToleranceState> {
     final errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading tolerances.'
         : 'Произошла ошибка при загрузке допусков.';
-    emit(state.copyWith(enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg));
+    emit(state.copyWith(
+        enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

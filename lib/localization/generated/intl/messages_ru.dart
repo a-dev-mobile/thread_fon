@@ -64,7 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "feedback": MessageLookupByLibrary.simpleMessage("Обратная связь"),
         "g_thread_abrv": MessageLookupByLibrary.simpleMessage("G"),
         "generalError": MessageLookupByLibrary.simpleMessage(
-            "Упс, Что то случилось!\nПопробуйте еще раз\n"),
+            "Произошла непредвиденная ошибка."),
         "h": MessageLookupByLibrary.simpleMessage("h"),
         "internal_thread": MessageLookupByLibrary.simpleMessage("внутренняя"),
         "lang_en": MessageLookupByLibrary.simpleMessage("Английский"),
@@ -123,6 +123,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pitch_diam_tolerance":
             MessageLookupByLibrary.simpleMessage("Допуск диаметра пича"),
         "rate_app": MessageLookupByLibrary.simpleMessage("Оценить приложение"),
+        "restartApp":
+            MessageLookupByLibrary.simpleMessage("Перезапустить приложение"),
         "retry": MessageLookupByLibrary.simpleMessage("Повторить"),
         "select_diameter":
             MessageLookupByLibrary.simpleMessage("Выберите диаметр"),

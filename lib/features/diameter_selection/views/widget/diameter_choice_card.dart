@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:threadfon/core/widgets/choice_card.dart';
+import 'package:threadfon/core/widgets/my_card.dart';
 
 class DiameterChoiceCard extends StatelessWidget {
   final String info;
@@ -13,7 +13,7 @@ class DiameterChoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChoiceCard(
+    return MyCard(
       onTap: onTap,
       child: Text(
         info,

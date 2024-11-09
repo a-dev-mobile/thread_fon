@@ -7,8 +7,7 @@
   "main": "Home",
 
 
-  "error": "Error",
-  "retry": "Retry",
+
 
   "select_diameter": "Сhoose diameter",
   "select_tolerance": "Сhoose tolerance",
@@ -60,6 +59,13 @@
    "no_svg_data": "Нет данных для отображения",
  
  
+   
+   "error": "Error",
+
+   "retry": "Retry",
+   "restartApp": "Restart App",
+  
+
   "setting": "Settings",
   "app_lang": "Application language",
   "lang_ru": "Russian",

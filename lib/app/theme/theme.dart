@@ -1,40 +1,57 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppTheme {
-  static ThemeData lightThemeData() {
-    return FlexThemeData.light(
-      scheme: FlexScheme.ebonyClay,
-      surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-      blendLevel: 7,
-      subThemesData: const FlexSubThemesData(
-        blendOnLevel: 10,
-        blendOnColors: false,
-        useTextTheme: true,
-        alignedDropdown: true,
-        useInputDecoratorThemeInDialogs: true,
-      ),
-      visualDensity: FlexColorScheme.comfortablePlatformDensity,
-      useMaterial3: false,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    );
-  }
-
-  static ThemeData darkThemeData() {
-    return FlexThemeData.dark(
-      scheme: FlexScheme.ebonyClay,
-      surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-      blendLevel: 13,
-      subThemesData: const FlexSubThemesData(
-        blendOnLevel: 20,
-        useTextTheme: true,
-        alignedDropdown: true,
-        useInputDecoratorThemeInDialogs: true,
-      ),
-      visualDensity: FlexColorScheme.comfortablePlatformDensity,
-      useMaterial3: false,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    );
-  }
+/// The [AppTheme] defines light and dark themes for the app.
+///
+/// Theme setup for FlexColorScheme package v8.
+/// Use same major flex_color_scheme package version. If you use a
+/// lower minor version, some properties may not be supported.
+/// In that case, remove them after copying this theme to your
+/// app or upgrade package to version 8.0.0.
+///
+/// Use in [MaterialApp] like this:
+///
+/// MaterialApp(
+///  theme: AppTheme.light,
+///  darkTheme: AppTheme.dark,
+///  :
+/// );
+sealed class AppTheme {
+  // The defined light theme.
+  static ThemeData light = FlexThemeData.light(
+    scheme: FlexScheme.ebonyClay,
+    subThemesData: const FlexSubThemesData(
+      interactionEffects: true,
+      tintedDisabledControls: true,
+      useM2StyleDividerInM3: true,
+      inputDecoratorIsFilled: true,
+      inputDecoratorBorderType: FlexInputBorderType.outline,
+      alignedDropdown: true,
+      navigationRailUseIndicator: true,
+      navigationRailLabelType: NavigationRailLabelType.all,
+    ),
+    visualDensity: FlexColorScheme.comfortablePlatformDensity,
+    cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
+          fontFamily: GoogleFonts.montserrat().fontFamily,
+  );
+  // The defined dark theme.
+  static ThemeData dark = FlexThemeData.dark(
+    scheme: FlexScheme.ebonyClay,
+    subThemesData: const FlexSubThemesData(
+      interactionEffects: true,
+      tintedDisabledControls: true,
+      blendOnColors: true,
+      useM2StyleDividerInM3: true,
+      inputDecoratorIsFilled: true,
+      inputDecoratorBorderType: FlexInputBorderType.outline,
+      alignedDropdown: true,
+      navigationRailUseIndicator: true,
+      navigationRailLabelType: NavigationRailLabelType.all,
+    ),
+    visualDensity: FlexColorScheme.comfortablePlatformDensity,
+    cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
+          fontFamily: GoogleFonts.montserrat().fontFamily,
+  );
 }

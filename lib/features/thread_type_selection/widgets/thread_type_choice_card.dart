@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:threadfon/core/widgets/choice_card.dart';
+import 'package:threadfon/core/widgets/my_card.dart';
 
 class ThreadTypeChoiceCard extends StatelessWidget {
   final String svgAssetPath;
@@ -16,7 +16,7 @@ class ThreadTypeChoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChoiceCard(
+    return MyCard(
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

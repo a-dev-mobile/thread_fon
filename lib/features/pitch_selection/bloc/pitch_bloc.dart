@@ -67,6 +67,7 @@ class PitchBloc extends Cubit<PitchState> {
     final errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading pitches.'
         : 'Произошла ошибка при загрузке шагов резьбы.';
-    emit(state.copyWith(enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg));
+    emit(state.copyWith(
+        enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

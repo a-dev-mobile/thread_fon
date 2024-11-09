@@ -64,7 +64,6 @@ class InfoBloc extends Cubit<InfoState> {
       await _localStorage.updateUserSelection(
         (current) => current.copyWith(
           id: state.model?.id,
-   
         ),
       );
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
@@ -81,6 +80,7 @@ class InfoBloc extends Cubit<InfoState> {
     final errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading info.'
         : 'Произошла ошибка при загрузке информации.';
-    emit(state.copyWith(enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg));
+    emit(state.copyWith(
+        enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }
