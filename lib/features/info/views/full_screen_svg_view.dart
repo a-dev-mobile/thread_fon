@@ -42,7 +42,7 @@ class _FullScreenSvgViewState extends State<FullScreenSvgView> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+  
 
     return Scaffold(
       body: Stack(
@@ -57,7 +57,7 @@ class _FullScreenSvgViewState extends State<FullScreenSvgView> {
 
             child: SvgPicture.string(
               widget.svgData,
-              color: isDark ? Colors.white : null,
+             
               fit: BoxFit.contain,
             ),
           ),

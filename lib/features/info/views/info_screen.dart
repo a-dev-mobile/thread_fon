@@ -29,12 +29,14 @@ class InfoScreen extends StatelessWidget {
     final infoRepository = InfoRepository(apiService: apiService);
     final localStorage = context.read<LocalStorage>();
     final languageBloc = context.read<LanguageBloc>();
+    final themeBloc = context.read<ThemeBloc>();
 
     return BlocProvider(
       create: (_) => InfoBloc(
         repository: infoRepository,
         localStorage: localStorage,
         languageBloc: languageBloc,
+        themeBloc: themeBloc,
       )..load(),
       child: const _MetricInfoView(),
     );

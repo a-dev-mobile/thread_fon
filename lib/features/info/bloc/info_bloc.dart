@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
@@ -19,12 +20,15 @@ class InfoBloc extends Cubit<InfoState> {
     required InfoRepository repository,
     required LocalStorage localStorage,
     required LanguageBloc languageBloc,
+    required ThemeBloc themeBloc,
   })  : _repository = repository,
         _localStorage = localStorage,
         _languageBloc = languageBloc,
+        _themeBloc = themeBloc,
         super(const InfoState());
 
   final InfoRepository _repository;
+  final ThemeBloc _themeBloc;
   final LocalStorage _localStorage;
   final LanguageBloc _languageBloc;
 
@@ -39,12 +43,17 @@ class InfoBloc extends Cubit<InfoState> {
         threadType: userSelection.threadType!.name,
         tolerance: userSelection.tolerance!,
         language: _languageBloc.state.enumLang.name,
+        units: 'metric',
+        precision: 3,
       );
       final svgData = await _repository.fetchSvgData(
         diameter: userSelection.diameter!,
         pitch: userSelection.pitch!,
         threadType: userSelection.threadType!.name,
         tolerance: userSelection.tolerance!,
+        theme: _themeBloc.state.themeMode.name,
+        units: 'metric',
+        precision: 3,
       );
       emit(state.copyWith(
         enumPageStatus: EnumPageStatus.success,

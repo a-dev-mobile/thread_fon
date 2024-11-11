@@ -18,7 +18,9 @@ class InfoRepository {
     required String tolerance,
     required String threadType,
     required String language,
+    required String units,
     required double pitch,
+    required int precision,
     required double diameter,
   }) async {
     try {
@@ -30,6 +32,7 @@ class InfoRepository {
           'pitch': pitch,
           'type': threadType,
           'language': language,
+          'precision': precision,
         },
       );
 
@@ -58,15 +61,21 @@ class InfoRepository {
     required String threadType,
     required double pitch,
     required double diameter,
+    required String theme,
+    required String units,
+    required int precision,
   }) async {
     try {
       final response = await _apiService.get(
         'https://thread.wayofdt.de/v1/metric/thread-svg',
         queryParameters: {
           'tolerance': tolerance,
-          'diameter': diameter,
-          'pitch': pitch,
           'type': threadType,
+          'pitch': pitch,
+          'diameter': diameter,
+          'theme': theme,
+          'units': units,
+          'precision': precision,
         },
         options: Options(responseType: ResponseType.plain),
       );
