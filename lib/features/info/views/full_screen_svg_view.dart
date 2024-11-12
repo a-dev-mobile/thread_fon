@@ -7,12 +7,12 @@ import 'package:flutter/services.dart';
 
 class FullScreenSvgView extends StatefulWidget {
   final String svgData;
-  final String designation; // Добавлено поле designation
+
 
   const FullScreenSvgView({
     Key? key,
     required this.svgData,
-    required this.designation, // Обновлен конструктор
+
   }) : super(key: key);
 
   @override
@@ -23,7 +23,7 @@ class _FullScreenSvgViewState extends State<FullScreenSvgView> {
   @override
   void initState() {
     super.initState();
-    // Устанавливаем горизонтальную ориентацию
+    // Lock orientation to landscape
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
@@ -32,48 +32,37 @@ class _FullScreenSvgViewState extends State<FullScreenSvgView> {
 
   @override
   void dispose() {
-    // Возвращаем ориентацию к портретной
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    // Unlock orientation
+    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-  
-
     return Scaffold(
       body: Stack(
-
         children: [
           PhotoView.customChild(
             enableRotation: false,
-            
             backgroundDecoration: BoxDecoration(
               color: Theme.of(context).scaffoldBackgroundColor,
             ),
-
             child: SvgPicture.string(
               widget.svgData,
-             
               fit: BoxFit.contain,
             ),
           ),
-          // Кнопка "Назад" в верхнем левом углу
+          // Back button
           Positioned(
             top: MediaQuery.of(context).padding.top + 8.0,
             left: 8.0,
             child: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
           ),
-          // Positioning designation vertically on the left, centered
-          
         ],
       ),
     );
