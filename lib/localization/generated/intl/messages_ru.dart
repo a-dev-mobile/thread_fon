@@ -27,8 +27,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Дополнительная информация"),
         "app_lang": MessageLookupByLibrary.simpleMessage("Язык приложения"),
         "app_name": MessageLookupByLibrary.simpleMessage("Резьбофон"),
+        "apply": MessageLookupByLibrary.simpleMessage("Применить"),
         "avg": MessageLookupByLibrary.simpleMessage("ср"),
         "bolt": MessageLookupByLibrary.simpleMessage("Болт"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Отмена"),
         "d1_es": MessageLookupByLibrary.simpleMessage("D1_es"),
         "d1_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D1_es"),
         "d2_ei": MessageLookupByLibrary.simpleMessage("D2_ei"),
@@ -124,6 +126,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("pitch_diam_min"),
         "pitch_diam_tolerance":
             MessageLookupByLibrary.simpleMessage("Допуск диаметра пича"),
+        "precision": MessageLookupByLibrary.simpleMessage("Точность"),
         "rate_app": MessageLookupByLibrary.simpleMessage("Оценить приложение"),
         "restartApp":
             MessageLookupByLibrary.simpleMessage("Перезапустить приложение"),

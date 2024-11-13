@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/core/constant/enum_units.dart';
 import 'package:threadfon/core/utils/double_extension.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
+import 'package:threadfon/features/info/bloc/info_bloc.dart';
 import 'package:threadfon/features/info/models/info_model.dart';
 import 'package:threadfon/features/info/views/info_row.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
@@ -20,7 +22,8 @@ class InfoMainParameters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = context.l10n;
-
+    final units = context.read<InfoBloc>().state.units;
+    final unitsText = units == EnumUnits.mm ? localization.mm : localization.inch;
 
     return MyCard(
       child: Column(
@@ -53,6 +56,16 @@ class InfoMainParameters extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
           ),
+          // Добавьте этот блок кода
+          const SizedBox(height: 8.0),
+          Text(
+            '${localization.units}: $unitsText',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          // Конец добавления
           const SizedBox(height: 16.0),
           const Divider(),
           InfoRow(

@@ -5,6 +5,7 @@ import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/constant/enum_units.dart';
+import 'package:threadfon/core/models/user_selection.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/info/models/info_model.dart';
@@ -44,26 +45,59 @@ class InfoBloc extends Cubit<InfoState> {
         threadType: userSelection.threadType!.name,
         tolerance: userSelection.tolerance!,
         language: _languageBloc.state.enumLang.name,
-        units: state.units.name,
-        precision: state.precision,
+        units: userSelection.units.name,
+        precision: userSelection.precision,
       );
+
+      emit(state.copyWith(
+        enumPageStatus: EnumPageStatus.success,
+        model: model,
+        units: userSelection.units,
+        precision: userSelection.precision,
+      ));
+
+      // Start fetching SVG data in the background
+      _fetchSvgData(userSelection);
+    } catch (e, s) {
+      _logger.e('Error loading info', error: e, stackTrace: s);
+      _setErrorState();
+    }
+  }
+
+// New method to fetch SVG data
+  Future<void> _fetchSvgData(UserSelection userSelection) async {
+    try {
       final svgData = await _repository.fetchSvgData(
         diameter: userSelection.diameter!,
         pitch: userSelection.pitch!,
         threadType: userSelection.threadType!.name,
         tolerance: userSelection.tolerance!,
         theme: _themeBloc.state.themeMode.name,
-        units: state.units.name,
-        precision: state.precision,
+        units: userSelection.units.name,
+        precision: userSelection.precision,
+        showDimensions: true, // Fetch SVG with dimensions
       );
+
+      final svgDataNoDimensions = await _repository.fetchSvgData(
+        diameter: userSelection.diameter!,
+        pitch: userSelection.pitch!,
+        threadType: userSelection.threadType!.name,
+        tolerance: userSelection.tolerance!,
+        theme: _themeBloc.state.themeMode.name,
+        units: userSelection.units.name,
+        precision: userSelection.precision,
+        showDimensions: false, // Fetch SVG without dimensions
+      );
+
+      // Update the state with SVG data
       emit(state.copyWith(
-        enumPageStatus: EnumPageStatus.success,
-        model: model,
         svgData: svgData,
+        svgDataNoDimensions: svgDataNoDimensions,
+        isSvgDataLoaded: true,
       ));
     } catch (e, s) {
-      _logger.e('Error loading info', error: e, stackTrace: s);
-      _setErrorState();
+      _logger.e('Error fetching SVG data', error: e, stackTrace: s);
+      // Optionally handle SVG fetch errors
     }
   }
 
@@ -85,9 +119,9 @@ class InfoBloc extends Cubit<InfoState> {
     }
   }
 
-  void updateUnitsPrecision({required EnumUnits units, required int precision}) {
-    emit(state.copyWith(units: units, precision: precision));
-    load();
+  Future<void> updateUnitsPrecision({required EnumUnits units, required int precision}) async {
+    await _localStorage.updateUserSelection((current) => current.copyWith(units: units, precision: precision));
+    await load();
   }
 
   void _setErrorState() {

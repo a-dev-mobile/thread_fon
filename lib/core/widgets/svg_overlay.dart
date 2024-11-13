@@ -3,30 +3,37 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:threadfon/localization/l10n_extension.dart';
 import 'overlay_button.dart';
 
 class SvgOverlay extends StatelessWidget {
   final String svgData;
-  final VoidCallback onClose;
-  final VoidCallback onExpand;
+
   final double overlayHeight;
   final double svgAspectRatio;
   final double svgWidth;
   final double svgHeight;
+  final VoidCallback onClose;
+  final VoidCallback onExpand;
+  final VoidCallback onSwitchSvg;
+  final bool showDimensions;
 
   const SvgOverlay({
     Key? key,
     required this.svgData,
-    required this.onClose,
-    required this.onExpand,
     required this.overlayHeight,
     required this.svgAspectRatio,
     required this.svgWidth,
     required this.svgHeight,
+    required this.onClose,
+    required this.onExpand,
+    required this.onSwitchSvg,
+    required this.showDimensions,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final localization = context.l10n;
     return Positioned(
       bottom: 0,
       left: 0,
@@ -42,47 +49,56 @@ class SvgOverlay extends StatelessWidget {
             ),
             border: Border(
               top: BorderSide(
-          color: Theme.of(context).dividerColor,
-          width: 1.0,
+                color: Theme.of(context).dividerColor,
+                width: 1.0,
               ),
             ),
           ),
           child: Stack(
             children: [
               AspectRatio(
-          aspectRatio: svgAspectRatio,
-          child: PhotoView.customChild(
-            childSize: Size(svgWidth, svgHeight),
-            minScale: PhotoViewComputedScale.contained * 1,
-            maxScale: PhotoViewComputedScale.covered * 3,
-            initialScale: PhotoViewComputedScale.contained,
-            enableRotation: false,
-            backgroundDecoration: const BoxDecoration(
-              color: Colors.transparent,
-            ),
-            child: SvgPicture.string(
-              svgData,
-              fit: BoxFit.contain,
-            ),
-          ),
+                aspectRatio: svgAspectRatio,
+                child: PhotoView.customChild(
+                  childSize: Size(svgWidth, svgHeight),
+                  minScale: PhotoViewComputedScale.contained * 1,
+                  maxScale: PhotoViewComputedScale.covered * 3,
+                  initialScale: PhotoViewComputedScale.contained,
+                  enableRotation: false,
+                  backgroundDecoration: const BoxDecoration(
+                    color: Colors.transparent,
+                  ),
+                  child: SvgPicture.string(
+                    svgData,
+                    fit: BoxFit.contain,
+                  ),
+                ),
               ),
               // Expand Button
               Positioned(
-          left: 0.0,
-          top: 0.0,
-          child: OverlayButton(
-            icon: FontAwesomeIcons.expand,
-            onPressed: onExpand,
-          ),
+                left: 0.0,
+                top: 0.0,
+                child: OverlayButton(
+                  icon: FontAwesomeIcons.expand,
+                  onPressed: onExpand,
+                ),
+              ),
+              Positioned(
+                left: 0.0,
+                
+                bottom: 0.0,
+                child: OverlayButton(
+                  icon: showDimensions ? Icons.layers : Icons.layers_clear,
+                  onPressed: onSwitchSvg,
+                ),
               ),
               // Close Button
               Positioned(
-          right: 0.0,
-          top: 0.0,
-          child: OverlayButton(
-            icon: Icons.close,
-            onPressed: onClose,
-          ),
+                right: 0.0,
+                top: 0.0,
+                child: OverlayButton(
+                  icon: Icons.close,
+                  onPressed: onClose,
+                ),
               ),
             ],
           ),

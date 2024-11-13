@@ -28,8 +28,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "app_lang":
             MessageLookupByLibrary.simpleMessage("Application language"),
         "app_name": MessageLookupByLibrary.simpleMessage("ThreadFon"),
+        "apply": MessageLookupByLibrary.simpleMessage("Apply"),
         "avg": MessageLookupByLibrary.simpleMessage("avg"),
         "bolt": MessageLookupByLibrary.simpleMessage("Bolt"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "d1_es": MessageLookupByLibrary.simpleMessage("D1_es"),
         "d1_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D1_es"),
         "d2_ei": MessageLookupByLibrary.simpleMessage("D2_ei"),
@@ -125,6 +127,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("pitch_diam_min"),
         "pitch_diam_tolerance":
             MessageLookupByLibrary.simpleMessage("Допуск диаметра пича"),
+        "precision": MessageLookupByLibrary.simpleMessage("Precision"),
         "rate_app": MessageLookupByLibrary.simpleMessage("Rate app"),
         "restartApp": MessageLookupByLibrary.simpleMessage("Restart App"),
         "retry": MessageLookupByLibrary.simpleMessage("Retry"),

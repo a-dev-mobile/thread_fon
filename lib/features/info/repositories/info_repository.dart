@@ -65,6 +65,7 @@ class InfoRepository {
     required String theme,
     required String units,
     required int precision,
+      bool showDimensions = true,
   }) async {
     try {
       final response = await _apiService.get(
@@ -77,6 +78,7 @@ class InfoRepository {
           'theme': theme,
           'units': units,
           'precision': precision,
+                  'showDimensions': showDimensions.toString(), 
         },
         options: Options(responseType: ResponseType.plain),
       );

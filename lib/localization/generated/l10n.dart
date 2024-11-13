@@ -1090,6 +1090,36 @@ class GeneratedLocalization {
       args: [],
     );
   }
+
+  /// `Precision`
+  String get precision {
+    return Intl.message(
+      'Precision',
+      name: 'precision',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply`
+  String get apply {
+    return Intl.message(
+      'Apply',
+      name: 'apply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate

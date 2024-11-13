@@ -74,12 +74,12 @@ class InfoDiametersParameters extends StatelessWidget {
 
 class _DiameterSection extends StatelessWidget {
   final String title;
-  final double diameter;
-  final double? dEs;
-  final double? dEi;
-  final double min;
-  final double avg;
-  final double max;
+  final num diameter;
+  final num? dEs;
+  final num? dEi;
+  final num min;
+  final num avg;
+  final num max;
 
   const _DiameterSection({
     required this.title,
@@ -136,9 +136,9 @@ class _DiameterSection extends StatelessWidget {
 }
 
 class _DiameterItem extends StatelessWidget {
-  final double diameter;
-  final double? dEs;
-  final double? dEi;
+  final num diameter;
+  final num? dEs;
+  final num? dEi;
 
   const _DiameterItem({
     required this.diameter,
@@ -176,7 +176,7 @@ class _DiameterItem extends StatelessWidget {
 }
 
 class _ValueItem extends StatelessWidget {
-  final double value;
+  final num value;
   final String label;
 
   const _ValueItem({required this.value, required this.label});
@@ -200,7 +200,7 @@ class _ValueItem extends StatelessWidget {
 
 class _AdditionalInfoItem extends StatelessWidget {
   final String label;
-  final double value;
+  final num value;
 
   const _AdditionalInfoItem({
     required this.label,

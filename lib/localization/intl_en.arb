@@ -129,5 +129,8 @@
   "no_data": "No data",
     "avg": "avg",
     "max": "max",
-    "min": "min"
+    "min": "min",
+    "precision": "Precision",
+    "apply": "Apply",
+    "cancel": "Cancel"
 }
