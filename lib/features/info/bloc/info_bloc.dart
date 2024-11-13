@@ -4,6 +4,7 @@ import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
+import 'package:threadfon/core/constant/enum_units.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/info/models/info_model.dart';
@@ -43,8 +44,8 @@ class InfoBloc extends Cubit<InfoState> {
         threadType: userSelection.threadType!.name,
         tolerance: userSelection.tolerance!,
         language: _languageBloc.state.enumLang.name,
-        units: 'metric',
-        precision: 3,
+        units: state.units.name,
+        precision: state.precision,
       );
       final svgData = await _repository.fetchSvgData(
         diameter: userSelection.diameter!,
@@ -52,8 +53,8 @@ class InfoBloc extends Cubit<InfoState> {
         threadType: userSelection.threadType!.name,
         tolerance: userSelection.tolerance!,
         theme: _themeBloc.state.themeMode.name,
-        units: 'metric',
-        precision: 3,
+        units: state.units.name,
+        precision: state.precision,
       );
       emit(state.copyWith(
         enumPageStatus: EnumPageStatus.success,
@@ -82,6 +83,11 @@ class InfoBloc extends Cubit<InfoState> {
       _logger.e('Error updating selection', error: e, stackTrace: s);
       _setErrorState();
     }
+  }
+
+  void updateUnitsPrecision({required EnumUnits units, required int precision}) {
+    emit(state.copyWith(units: units, precision: precision));
+    load();
   }
 
   void _setErrorState() {

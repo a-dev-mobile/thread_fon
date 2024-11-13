@@ -33,54 +33,58 @@ class SvgOverlay extends StatelessWidget {
       right: 0,
       height: overlayHeight,
       child: ClipRRect(
-   
-        child: Card.outlined(
-               margin: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
-            
-             
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16.0),
+              topRight: Radius.circular(16.0),
             ),
-            child: Stack(
-              children: [
-                AspectRatio(
-                  aspectRatio: svgAspectRatio,
-                  child: PhotoView.customChild(
-                    childSize: Size(svgWidth, svgHeight),
-                    minScale: PhotoViewComputedScale.contained * 1,
-                    maxScale: PhotoViewComputedScale.covered * 3,
-                    initialScale: PhotoViewComputedScale.contained,
-                    enableRotation: false,
-                    backgroundDecoration: const BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    child: SvgPicture.string(
-                      svgData,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-                // Expand Button
-                Positioned(
-                  left: 0.0, // Добавлено небольшое смещение для лучшего расположения
-                  top: 0.0,
-                  child: OverlayButton(
-                    icon: FontAwesomeIcons.expand,
-                    onPressed: onExpand,
-                  ),
-                ),
-                // Close Button
-                Positioned(
-                  right: 0.0, // Добавлено небольшое смещение для лучшего расположения
-                  top: 0.0,
-                  child: OverlayButton(
-                    icon: Icons.close,
-                    onPressed: onClose,
-                  ),
-                ),
-              ],
+            border: Border(
+              top: BorderSide(
+          color: Theme.of(context).dividerColor,
+          width: 1.0,
+              ),
             ),
+          ),
+          child: Stack(
+            children: [
+              AspectRatio(
+          aspectRatio: svgAspectRatio,
+          child: PhotoView.customChild(
+            childSize: Size(svgWidth, svgHeight),
+            minScale: PhotoViewComputedScale.contained * 1,
+            maxScale: PhotoViewComputedScale.covered * 3,
+            initialScale: PhotoViewComputedScale.contained,
+            enableRotation: false,
+            backgroundDecoration: const BoxDecoration(
+              color: Colors.transparent,
+            ),
+            child: SvgPicture.string(
+              svgData,
+              fit: BoxFit.contain,
+            ),
+          ),
+              ),
+              // Expand Button
+              Positioned(
+          left: 0.0,
+          top: 0.0,
+          child: OverlayButton(
+            icon: FontAwesomeIcons.expand,
+            onPressed: onExpand,
+          ),
+              ),
+              // Close Button
+              Positioned(
+          right: 0.0,
+          top: 0.0,
+          child: OverlayButton(
+            icon: Icons.close,
+            onPressed: onClose,
+          ),
+              ),
+            ],
           ),
         ),
       ),

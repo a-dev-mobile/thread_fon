@@ -32,6 +32,7 @@ class InfoRepository {
           'pitch': pitch,
           'type': threadType,
           'language': language,
+          'units': units,
           'precision': precision,
         },
       );

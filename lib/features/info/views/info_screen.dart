@@ -5,6 +5,7 @@ import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
+import 'package:threadfon/core/constant/enum_units.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
@@ -18,9 +19,6 @@ import 'package:threadfon/features/info/views/full_screen_svg_view.dart';
 import 'package:threadfon/features/info/views/info_diameters_parameters.dart';
 import 'package:threadfon/features/info/views/info_main_parameters.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:threadfon/src/common/localization/generated/l10n.dart';
 
 final _logger = LogService('info_screen');
 
@@ -68,8 +66,9 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     final maxOverlayHeight = screenHeight * 0.4;
     final overlayHeight = calculatedOverlayHeight > maxOverlayHeight ? maxOverlayHeight : calculatedOverlayHeight;
 
-    final state = context.watch<InfoBloc>().state;
+    context.select((InfoBloc bloc) => bloc.state.enumPageStatus);
 
+    final state = context.read<InfoBloc>().state;
     return BlocListener<InfoBloc, InfoState>(
       listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
@@ -85,7 +84,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
           child: const Icon(Icons.navigate_next),
         ),
         body: Stack(
-          clipBehavior: Clip.none, 
+          clipBehavior: Clip.none,
           children: [
             // Main scrollable content
             _buildMainContent(state, context, overlayHeight, svgWidth, svgHeight),
@@ -161,6 +160,26 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                     }
                   },
                 ),
+                IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return UnitsPrecisionDialog(
+                          units: state.units,
+                          precision: state.precision,
+                          onApply: (selectedUnits, selectedPrecision) {
+                            context.read<InfoBloc>().updateUnitsPrecision(
+                                  units: selectedUnits,
+                                  precision: selectedPrecision,
+                                );
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
               ],
             ),
             SliverPadding(
@@ -188,5 +207,105 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
           ],
         );
     }
+  }
+}
+
+class UnitsPrecisionDialog extends StatefulWidget {
+  final EnumUnits units;
+  final int precision;
+  final void Function(EnumUnits units, int precision) onApply;
+
+  const UnitsPrecisionDialog({
+    Key? key,
+    required this.units,
+    required this.precision,
+    required this.onApply,
+  }) : super(key: key);
+
+  @override
+  _UnitsPrecisionDialogState createState() => _UnitsPrecisionDialogState();
+}
+
+class _UnitsPrecisionDialogState extends State<UnitsPrecisionDialog> {
+  late EnumUnits _selectedUnits;
+  late int _selectedPrecision;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedUnits = widget.units;
+    _selectedPrecision = widget.precision;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = context.l10n;
+    return AlertDialog(
+      title: Text(localization.settings),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Units selection
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(localization.units),
+              DropdownButton<EnumUnits>(
+                value: _selectedUnits,
+                items: EnumUnits.values.map((EnumUnits units) {
+                  return DropdownMenuItem<EnumUnits>(
+                    value: units,
+                    child: Text(units == EnumUnits.mm ? localization.mm : localization.inch),
+                  );
+                }).toList(),
+                onChanged: (EnumUnits? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _selectedUnits = newValue;
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+          // Precision selection
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('localization.precision'),
+              DropdownButton<int>(
+                value: _selectedPrecision,
+                items: [1, 2, 3, 4, 5].map((int value) {
+                  return DropdownMenuItem<int>(
+                    value: value,
+                    child: Text(value.toString()),
+                  );
+                }).toList(),
+                onChanged: (int? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _selectedPrecision = newValue;
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text('localization.cancel'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            widget.onApply(_selectedUnits, _selectedPrecision);
+            Navigator.of(context).pop();
+          },
+          child: Text('localization.apply'),
+        ),
+      ],
+    );
   }
 }

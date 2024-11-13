@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "app_lang":
             MessageLookupByLibrary.simpleMessage("Application language"),
         "app_name": MessageLookupByLibrary.simpleMessage("ThreadFon"),
+        "avg": MessageLookupByLibrary.simpleMessage("avg"),
         "bolt": MessageLookupByLibrary.simpleMessage("Bolt"),
         "d1_es": MessageLookupByLibrary.simpleMessage("D1_es"),
         "d1_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D1_es"),
@@ -66,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "generalError": MessageLookupByLibrary.simpleMessage(
             "Oops, something went wrong!\nTry again\n"),
         "h": MessageLookupByLibrary.simpleMessage("h"),
+        "inch": MessageLookupByLibrary.simpleMessage("inch"),
         "internal_thread": MessageLookupByLibrary.simpleMessage("internal"),
         "lang_en": MessageLookupByLibrary.simpleMessage("English"),
         "lang_ru": MessageLookupByLibrary.simpleMessage("Russian"),
@@ -106,6 +108,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("minor_diam_min"),
         "minor_diam_tolerance":
             MessageLookupByLibrary.simpleMessage("Допуск минорного диаметра"),
+        "mm": MessageLookupByLibrary.simpleMessage("mm"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "no_data": MessageLookupByLibrary.simpleMessage("No data"),
         "no_svg_data":
@@ -131,6 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "select_tolerance":
             MessageLookupByLibrary.simpleMessage("Сhoose tolerance"),
         "setting": MessageLookupByLibrary.simpleMessage("Settings"),
+        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "thank_you": MessageLookupByLibrary.simpleMessage(
             "Thank You for choosing our application"),
         "thread_class_tolerance":
@@ -153,6 +157,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Информация о резьбе"),
         "tolerance": MessageLookupByLibrary.simpleMessage("Допуск"),
         "type_pitch": MessageLookupByLibrary.simpleMessage("Тип шага"),
+        "units": MessageLookupByLibrary.simpleMessage("Units"),
         "version": MessageLookupByLibrary.simpleMessage("Version"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes")
       };

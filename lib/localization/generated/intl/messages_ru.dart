@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Дополнительная информация"),
         "app_lang": MessageLookupByLibrary.simpleMessage("Язык приложения"),
         "app_name": MessageLookupByLibrary.simpleMessage("Резьбофон"),
+        "avg": MessageLookupByLibrary.simpleMessage("ср"),
         "bolt": MessageLookupByLibrary.simpleMessage("Болт"),
         "d1_es": MessageLookupByLibrary.simpleMessage("D1_es"),
         "d1_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D1_es"),
@@ -65,7 +66,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "g_thread_abrv": MessageLookupByLibrary.simpleMessage("G"),
         "generalError": MessageLookupByLibrary.simpleMessage(
             "Произошла непредвиденная ошибка."),
-        "h": MessageLookupByLibrary.simpleMessage("h"),
+        "inch": MessageLookupByLibrary.simpleMessage("дюйм"),
         "internal_thread": MessageLookupByLibrary.simpleMessage("внутренняя"),
         "lang_en": MessageLookupByLibrary.simpleMessage("Английский"),
         "lang_ru": MessageLookupByLibrary.simpleMessage("Русский"),
@@ -92,9 +93,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("major_diam_min"),
         "major_diam_tolerance":
             MessageLookupByLibrary.simpleMessage("Допуск основного диаметра"),
-        "max": MessageLookupByLibrary.simpleMessage("макс."),
+        "max": MessageLookupByLibrary.simpleMessage("макс"),
         "mean": MessageLookupByLibrary.simpleMessage("сред."),
-        "min": MessageLookupByLibrary.simpleMessage("мин."),
+        "min": MessageLookupByLibrary.simpleMessage("мин"),
         "minor_diam": MessageLookupByLibrary.simpleMessage("Минорный диаметр"),
         "minor_diam_avg":
             MessageLookupByLibrary.simpleMessage("minor_diam_avg"),
@@ -106,6 +107,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("minor_diam_min"),
         "minor_diam_tolerance":
             MessageLookupByLibrary.simpleMessage("Допуск минорного диаметра"),
+        "mm": MessageLookupByLibrary.simpleMessage("мм"),
         "no": MessageLookupByLibrary.simpleMessage("Нет"),
         "no_data": MessageLookupByLibrary.simpleMessage("Нет данных"),
         "no_svg_data":
@@ -132,6 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "select_tolerance":
             MessageLookupByLibrary.simpleMessage("Выберите допуск"),
         "setting": MessageLookupByLibrary.simpleMessage("Настройки"),
+        "settings": MessageLookupByLibrary.simpleMessage("Настройки"),
         "thank_you": MessageLookupByLibrary.simpleMessage(
             "Спасибо Вам, что пользуетесь нашим приложением"),
         "thread_class_tolerance":
@@ -154,6 +157,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Информация о резьбе"),
         "tolerance": MessageLookupByLibrary.simpleMessage("Допуск"),
         "type_pitch": MessageLookupByLibrary.simpleMessage("Тип шага"),
+        "units": MessageLookupByLibrary.simpleMessage("Единицы измерения"),
         "version": MessageLookupByLibrary.simpleMessage("Версия"),
         "yes": MessageLookupByLibrary.simpleMessage("Да")
       };

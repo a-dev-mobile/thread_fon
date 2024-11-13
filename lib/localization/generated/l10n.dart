@@ -841,26 +841,6 @@ class GeneratedLocalization {
     );
   }
 
-  /// `max`
-  String get max {
-    return Intl.message(
-      'max',
-      name: 'max',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `min`
-  String get min {
-    return Intl.message(
-      'min',
-      name: 'min',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `mean`
   String get mean {
     return Intl.message(
@@ -1031,11 +1011,81 @@ class GeneratedLocalization {
     );
   }
 
+  /// `Units`
+  String get units {
+    return Intl.message(
+      'Units',
+      name: 'units',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message(
+      'Settings',
+      name: 'settings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `mm`
+  String get mm {
+    return Intl.message(
+      'mm',
+      name: 'mm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `inch`
+  String get inch {
+    return Intl.message(
+      'inch',
+      name: 'inch',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `No data`
   String get no_data {
     return Intl.message(
       'No data',
       name: 'no_data',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `avg`
+  String get avg {
+    return Intl.message(
+      'avg',
+      name: 'avg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `max`
+  String get max {
+    return Intl.message(
+      'max',
+      name: 'max',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `min`
+  String get min {
+    return Intl.message(
+      'min',
+      name: 'min',
       desc: '',
       args: [],
     );

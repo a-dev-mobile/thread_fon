@@ -99,8 +99,7 @@
   "g_thread_abrv": "G",
   "nuts": "Nuts",
   "bolt": "Bolt",
-  "max": "max",
-  "min": "min",
+
   "mean": "mean",
   "loadingMessage": "Load...",
   "thank_you": "Thank You for choosing our application",
@@ -121,8 +120,14 @@
   "exit_app_warning": "Are you sure you want to quit the app?",
   "yes": "Yes",
   "no": "No",
+  "units": "Units",
+"settings": "Settings",
+"mm": "mm",
+"inch": "inch",
 
 
-
-  "no_data": "No data"
+  "no_data": "No data",
+    "avg": "avg",
+    "max": "max",
+    "min": "min"
 }
