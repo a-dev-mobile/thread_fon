@@ -32,16 +32,21 @@ class DiameterBloc extends Cubit<DiameterState> {
     emit(state.copyWith(enumPageStatus: EnumPageStatus.loading));
     try {
       final diameters = await _repository.fetchDiameters();
-      emit(state.copyWith(enumPageStatus: EnumPageStatus.success, diameters: diameters));
+      final scrollPosition =   await _localStorage.getScrollPosition();
+      emit(state.copyWith(
+        enumPageStatus: EnumPageStatus.success,
+        diameters: diameters,
+        scrollPosition: scrollPosition,
+      ));
     } catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
       _setErrorState();
     }
   }
 
-  Future<void> preparationNavigation(DiameterModel selectedDiameter) async {
+  Future<void> preparationNavigation(DiameterModel selectedDiameter, double scrollPosition ) async {
     emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
-
+    await _localStorage.setScrollPosition(scrollPosition);
     try {
       await _localStorage.updateUserSelection(
         (current) => current.copyWith(
@@ -65,6 +70,8 @@ class DiameterBloc extends Cubit<DiameterState> {
         : 'Произошла ошибка при загрузке диаметров.';
     emit(state.copyWith(
         enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
-
   }
+
+
+
 }

@@ -7,6 +7,7 @@ class DiameterState with _$DiameterState {
     @Default(EnumPageStatus.initial) EnumPageStatus enumPageStatus,
     @Default(EnumNavigationStatus.initial) EnumNavigationStatus enumNavigationStatus,
     String? errorMsg,
+    @Default(0.0) double scrollPosition, 
   }) = _DiameterState;
 
   factory DiameterState.fromJson(Map<String, dynamic> json) => _$DiameterStateFromJson(json);

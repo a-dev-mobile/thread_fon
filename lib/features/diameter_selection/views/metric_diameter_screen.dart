@@ -19,9 +19,14 @@ import 'package:threadfon/localization/l10n_extension.dart';
 
 final _logger = LogService('metric_diameter_screen');
 
-class MetricDiameterScreen extends StatelessWidget {
+class MetricDiameterScreen extends StatefulWidget {
   const MetricDiameterScreen({super.key});
 
+  @override
+  State<MetricDiameterScreen> createState() => _MetricDiameterScreenState();
+}
+
+class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
   @override
   Widget build(BuildContext context) {
     // Создаем экземпляр DiameterRepository здесь
@@ -49,6 +54,20 @@ class _MetricDiameterView extends StatefulWidget {
 }
 
 class _MetricDiameterViewState extends State<_MetricDiameterView> {
+  late ScrollController _scrollController;
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = context.l10n;
@@ -56,18 +75,13 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
     return BlocListener<DiameterBloc, DiameterState>(
       listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
-        switch (state.enumNavigationStatus) {
-          case EnumNavigationStatus.preparation:
-          // await saveScrollPosition();
-          case EnumNavigationStatus.initial:
-            break;
-          case EnumNavigationStatus.navigation:
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (_) => const PitchSelectionScreen(),
-              ),
-            );
+        if (state.enumNavigationStatus.isNavigation) {
+          Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (_) => const PitchSelectionScreen(),
+            ),
+          );
         }
       },
       child: Scaffold(
@@ -78,6 +92,7 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
           children: [
             // Основной контент
             BlocBuilder<DiameterBloc, DiameterState>(
+              buildWhen: (previous, current) => previous.enumPageStatus != current.enumPageStatus,
               builder: (context, state) {
                 switch (state.enumPageStatus) {
                   case EnumPageStatus.initial:
@@ -90,21 +105,28 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
                       onRetry: () => context.read<DiameterBloc>().loadDiameters(),
                     );
                   case EnumPageStatus.success:
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (_scrollController.hasClients) {
+                        _scrollController.jumpTo(state.scrollPosition);
+                      }
+                    });
                     return ListView.separated(
+                      controller: _scrollController,
                       itemCount: state.diameters.length,
                       separatorBuilder: (context, index) => const SizedBox(height: 8.0),
                       itemBuilder: (context, index) {
                         final diameter = state.diameters[index];
                         return DiameterChoiceCard(
                           info: diameter.info,
-                          onTap: () => context.read<DiameterBloc>().preparationNavigation(diameter),
+                          onTap: () => context
+                              .read<DiameterBloc>()
+                              .preparationNavigation(diameter, _scrollController.position.pixels),
                         );
                       },
                     );
                 }
               },
             ),
-            // Блюр-оверлей
             BlocBuilder<DiameterBloc, DiameterState>(
               builder: (context, state) {
                 if (state.enumNavigationStatus.isPreparation) {
