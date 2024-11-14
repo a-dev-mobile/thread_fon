@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 /// Use same major flex_color_scheme package version. If you use a
 /// lower minor version, some properties may not be supported.
 /// In that case, remove them after copying this theme to your
-/// app or upgrade package to version 8.0.0.
+/// app or upgrade package to version 8.0.1.
 ///
 /// Use in [MaterialApp] like this:
 ///
@@ -21,7 +21,7 @@ import 'package:google_fonts/google_fonts.dart';
 sealed class AppTheme {
   // The defined light theme.
   static ThemeData light = FlexThemeData.light(
-    scheme: FlexScheme.ebonyClay,
+    scheme: FlexScheme.bahamaBlue,
     subThemesData: const FlexSubThemesData(
       interactionEffects: true,
       tintedDisabledControls: true,
@@ -34,11 +34,11 @@ sealed class AppTheme {
     ),
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
-    fontFamily: GoogleFonts.montserrat().fontFamily,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
   );
   // The defined dark theme.
   static ThemeData dark = FlexThemeData.dark(
-    scheme: FlexScheme.ebonyClay,
+    scheme: FlexScheme.bahamaBlue,
     subThemesData: const FlexSubThemesData(
       interactionEffects: true,
       tintedDisabledControls: true,
@@ -52,6 +52,6 @@ sealed class AppTheme {
     ),
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
-    fontFamily: GoogleFonts.montserrat().fontFamily,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
   );
 }

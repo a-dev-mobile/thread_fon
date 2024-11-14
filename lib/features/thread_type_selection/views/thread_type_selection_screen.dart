@@ -6,6 +6,7 @@ import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
+import 'package:threadfon/core/widgets/base_screen.dart';
 import 'package:threadfon/core/widgets/blurred_overlay.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/core/widgets/my_load_widget.dart';
@@ -43,79 +44,71 @@ class _ThreadTypeSelectionView extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = context.l10n;
 
-    return BlocListener<ThreadTypeBloc, ThreadTypeState>(
-      listenWhen: (previous, current) =>
-          previous.enumNavigationStatus != current.enumNavigationStatus,
-      listener: (context, state) {
-        switch (state.enumNavigationStatus) {
-          case EnumNavigationStatus.preparation:
-          case EnumNavigationStatus.initial:
-            break;
+    return DrawerScreen(
+        title: localization.thread_type,
+        body: BlocListener<ThreadTypeBloc, ThreadTypeState>(
+          listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+          listener: (context, state) {
+            if (state.enumNavigationStatus.isNavigation) {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (_) => const MetricDiameterScreen(),
+                ),
+              );
+            }
+          },
+          child: Stack(
+            children: [
+              BlocBuilder<ThreadTypeBloc, ThreadTypeState>(
+                builder: (context, state) {
+                  switch (state.enumPageStatus) {
+                    case EnumPageStatus.initial:
+                    case EnumPageStatus.loading:
+                      return const MyLoadWidget();
 
-          case EnumNavigationStatus.navigation:
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (_) => const MetricDiameterScreen(),
-              ),
-            );
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(localization.thread_type),
-        ),
-        body: Stack(
-          children: [
-            BlocBuilder<ThreadTypeBloc, ThreadTypeState>(
-              builder: (context, state) {
-                switch (state.enumPageStatus) {
-                  case EnumPageStatus.initial:
-                  case EnumPageStatus.loading:
-                    return const MyLoadWidget();
+                    case EnumPageStatus.error:
+                      return MyErrorWidget(
+                        errorMsg: state.errorMsg,
+                        onRetry: () => context.read<ThreadTypeBloc>().load(),
+                      );
 
-                  case EnumPageStatus.error:
-                    return MyErrorWidget(
-                      errorMsg: state.errorMsg,
-                      onRetry: () => context.read<ThreadTypeBloc>().load(),
-                    );
-
-                  case EnumPageStatus.success:
-                    return ListView.builder(
-                      shrinkWrap: false,
-                      // padding: const EdgeInsets.all(8),
-
-                      itemCount: state.threadTypes.length,
-                      itemBuilder: (context, index) {
-                        final threadType = state.threadTypes[index];
-                        final label =
-                            threadType.enumThreadType == EnumThreadType.female
+                    case EnumPageStatus.success:
+                      return Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min, // Центрирует по вертикали
+                          children: state.threadTypes.map((threadType) {
+                            final label = threadType.enumThreadType == EnumThreadType.female
                                 ? localization.internal_thread
                                 : localization.external_thread;
-                        return ThreadTypeChoiceCard(
-                          svgAssetPath: threadType.svgAssetPath,
-                          label: label,
-                          onTap: () => context
-                              .read<ThreadTypeBloc>()
-                              .preparationNavigation(threadType),
-                        );
-                      },
-                    );
-                }
-              },
-            ),
-            BlocBuilder<ThreadTypeBloc, ThreadTypeState>(
-              builder: (context, state) {
-                if (state.enumNavigationStatus.isPreparation) {
-                  return const BlurredOverlay();
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: FractionallySizedBox(
+                                widthFactor: 0.8, // Устанавливает ширину 80% от ширины родителя
+                                child: ThreadTypeChoiceCard(
+                                  svgAssetPath: threadType.svgAssetPath,
+                                  label: label,
+                                  onTap: () => context.read<ThreadTypeBloc>().preparationNavigation(threadType),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      );
+                  }
+                },
+              ),
+              BlocBuilder<ThreadTypeBloc, ThreadTypeState>(
+                builder: (context, state) {
+                  if (state.enumNavigationStatus.isPreparation) {
+                    return const BlurredOverlay();
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
+            ],
+          ),
+        ));
   }
 }

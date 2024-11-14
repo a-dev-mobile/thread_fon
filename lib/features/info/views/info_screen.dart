@@ -80,14 +80,14 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
         // Handle side effects if needed
       },
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            context.read<LanguageBloc>().toggle();
-            context.read<ThemeBloc>().toggle();
-            context.read<InfoBloc>().load();
-          },
-          child: const Icon(Icons.navigate_next),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     context.read<LanguageBloc>().toggle();
+        //     context.read<ThemeBloc>().toggle();
+        //     context.read<InfoBloc>().load();
+        //   },
+        //   child: const Icon(Icons.navigate_next),
+        // ),
         body: Stack(
           clipBehavior: Clip.none,
           children: [
@@ -210,7 +210,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                   InfoDiametersParameters(
                     info: state.model!,
                   ),
-                  const Divider(),
+
                 ]),
               ),
             ),

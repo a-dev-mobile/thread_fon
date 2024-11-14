@@ -50,20 +50,20 @@ class InfoDiametersParameters extends StatelessWidget {
             avg: info.minorDiamAvg,
             max: info.minorDiamMax,
           ),
-          Divider(),
-          const SizedBox(height: 32.0),
-          Text(
-            localization.additional_info,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          const SizedBox(height: 8.0),
-          if (info.threadType == EnumThreadType.male)
-            _AdditionalInfoItem(
-              label: 'Внутренний диаметр резьбы по дну впадины (d3)',
-              value: info.minorDiamD3,
-            ),
+
+          // const SizedBox(height: 32.0),
+          // Text(
+          //   localization.additional_info,
+          //   style: Theme.of(context).textTheme.bodySmall?.copyWith(
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          // ),
+          // const SizedBox(height: 8.0),
+          // if (info.threadType == EnumThreadType.male)
+          //   _AdditionalInfoItem(
+          //     label: 'Внутренний диаметр резьбы по дну впадины (d3)',
+          //     value: info.minorDiamD3,
+          //   ),
         ],
       ),
     );
