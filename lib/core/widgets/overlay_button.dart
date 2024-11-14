@@ -6,10 +6,10 @@ class OverlayButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const OverlayButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   // Method to get button background color based on theme
   Color _getButtonBackgroundColor(BuildContext context) {

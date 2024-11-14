@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:path/path.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
@@ -66,14 +65,17 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     final svgAspectRatio = svgWidth / svgHeight;
     final calculatedOverlayHeight = screenWidth / svgAspectRatio;
     final maxOverlayHeight = screenHeight * 0.4;
-    final overlayHeight = calculatedOverlayHeight > maxOverlayHeight ? maxOverlayHeight : calculatedOverlayHeight;
+    final overlayHeight = calculatedOverlayHeight > maxOverlayHeight
+        ? maxOverlayHeight
+        : calculatedOverlayHeight;
 
     context.select((InfoBloc bloc) => bloc.state.enumPageStatus);
     final bloc = context.read<InfoBloc>();
 
     final state = bloc.state;
     return BlocListener<InfoBloc, InfoState>(
-      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) =>
+          previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
         // Handle side effects if needed
       },
@@ -90,11 +92,15 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
           clipBehavior: Clip.none,
           children: [
             // Main scrollable content
-            _buildMainContent(bloc, context, overlayHeight, svgWidth, svgHeight),
+            _buildMainContent(
+                bloc, context, overlayHeight, svgWidth, svgHeight),
             // SVG Overlay
-            if (_isSvgOverlayVisible && (state.svgData != null || state.svgDataNoDimensions != null))
+            if (_isSvgOverlayVisible &&
+                (state.svgData != null || state.svgDataNoDimensions != null))
               SvgOverlay(
-                svgData: _showDimensions ? state.svgData! : state.svgDataNoDimensions!,
+                svgData: _showDimensions
+                    ? state.svgData!
+                    : state.svgDataNoDimensions!,
                 overlayHeight: overlayHeight,
                 svgAspectRatio: svgAspectRatio,
                 svgWidth: svgWidth,
@@ -109,7 +115,9 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => FullScreenSvgView(
-                        svgData: _showDimensions ? state.svgData! : state.svgDataNoDimensions!,
+                        svgData: _showDimensions
+                            ? state.svgData!
+                            : state.svgDataNoDimensions!,
                       ),
                     ),
                   );
@@ -122,15 +130,16 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                 showDimensions: _showDimensions,
               ),
             // Blurred overlay when in preparation status
-            if (state.enumNavigationStatus.isPreparation) const BlurredOverlay(),
+            if (state.enumNavigationStatus.isPreparation)
+              const BlurredOverlay(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMainContent(
-      InfoBloc bloc, BuildContext context, double overlayHeight, double svgWidth, double svgHeight) {
+  Widget _buildMainContent(InfoBloc bloc, BuildContext context,
+      double overlayHeight, double svgWidth, double svgHeight) {
     final localization = context.l10n;
     final state = bloc.state;
 
@@ -154,7 +163,8 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
               snap: true,
               actions: [
                 Builder(builder: (context) {
-                final isSvgDataLoaded =   context.select((InfoBloc bloc) => bloc.state.isSvgDataLoaded);
+                  final isSvgDataLoaded = context
+                      .select((InfoBloc bloc) => bloc.state.isSvgDataLoaded);
                   if (isSvgDataLoaded) {
                     return IconButton(
                       icon: const Icon(FontAwesomeIcons.compassDrafting),
@@ -223,11 +233,11 @@ class UnitsPrecisionDialog extends StatefulWidget {
   final void Function(EnumUnits units, int precision) onApply;
 
   const UnitsPrecisionDialog({
-    Key? key,
+    super.key,
     required this.units,
     required this.precision,
     required this.onApply,
-  }) : super(key: key);
+  });
 
   @override
   _UnitsPrecisionDialogState createState() => _UnitsPrecisionDialogState();
@@ -262,7 +272,9 @@ class _UnitsPrecisionDialogState extends State<UnitsPrecisionDialog> {
                 items: EnumUnits.values.map((EnumUnits units) {
                   return DropdownMenuItem<EnumUnits>(
                     value: units,
-                    child: Text(units == EnumUnits.mm ? localization.mm : localization.inch),
+                    child: Text(units == EnumUnits.mm
+                        ? localization.mm
+                        : localization.inch),
                   );
                 }).toList(),
                 onChanged: (EnumUnits? newValue) {

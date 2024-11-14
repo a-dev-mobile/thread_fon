@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:threadfon/core/constant/enum_units.dart';
-import 'package:threadfon/core/utils/double_extension.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/info/models/info_model.dart';
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
@@ -121,11 +119,10 @@ class _DiameterSection extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 6.0),
-        
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _ValueItem(label: localization.min , value: min),
+            _ValueItem(label: localization.min, value: min),
             _ValueItem(label: localization.avg, value: avg),
             _ValueItem(label: localization.max, value: max),
           ],
@@ -163,10 +160,10 @@ class _DiameterItem extends StatelessWidget {
                 dEs != null && dEs != 0 ? dEs.toString() : '',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
-                Text(
-                  dEi != null && dEi != 0 ? dEi.toString() : '',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
+              Text(
+                dEi != null && dEi != 0 ? dEi.toString() : '',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
             ],
           ),
         ],

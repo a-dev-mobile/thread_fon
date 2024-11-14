@@ -14,7 +14,7 @@
 
 //   @override
 //   Widget build(BuildContext context) {
-  
+
 //       // Стиль для заголовков
 //       return Container(
 //         width: double.infinity,
@@ -27,6 +27,6 @@
 //           child: child,
 //         ),
 //       );
-    
+
 //   }
 // }

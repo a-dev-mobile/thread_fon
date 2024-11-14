@@ -19,7 +19,7 @@ class SvgOverlay extends StatelessWidget {
   final bool showDimensions;
 
   const SvgOverlay({
-    Key? key,
+    super.key,
     required this.svgData,
     required this.overlayHeight,
     required this.svgAspectRatio,
@@ -29,7 +29,7 @@ class SvgOverlay extends StatelessWidget {
     required this.onExpand,
     required this.onSwitchSvg,
     required this.showDimensions,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +84,6 @@ class SvgOverlay extends StatelessWidget {
               ),
               Positioned(
                 left: 0.0,
-                
                 bottom: 0.0,
                 child: OverlayButton(
                   icon: showDimensions ? Icons.layers : Icons.layers_clear,

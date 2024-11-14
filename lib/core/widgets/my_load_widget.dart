@@ -10,7 +10,6 @@ class MyLoadWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
           const SizedBox(height: 20),
           Text(
             context.l10n.loadingMessage,

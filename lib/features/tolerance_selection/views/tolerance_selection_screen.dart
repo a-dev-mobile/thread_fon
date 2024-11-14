@@ -46,7 +46,8 @@ class _ToleranceSelectionView extends StatelessWidget {
     final localization = context.l10n;
 
     return BlocListener<ToleranceBloc, ToleranceState>(
-      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) =>
+          previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
         switch (state.enumNavigationStatus) {
           case EnumNavigationStatus.preparation:
@@ -78,18 +79,22 @@ class _ToleranceSelectionView extends StatelessWidget {
                   case EnumPageStatus.error:
                     return MyErrorWidget(
                       errorMsg: state.errorMsg,
-                      onRetry: () => context.read<ToleranceBloc>().loadTolerances(),
+                      onRetry: () =>
+                          context.read<ToleranceBloc>().loadTolerances(),
                     );
 
                   case EnumPageStatus.success:
                     return ListView.separated(
                       itemCount: state.tolerances.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 8.0),
                       itemBuilder: (context, index) {
                         final tolerance = state.tolerances[index];
                         return ToleranceChoiceCard(
                           tolerance: tolerance,
-                          onTap: () => context.read<ToleranceBloc>().preparationNavigation(tolerance),
+                          onTap: () => context
+                              .read<ToleranceBloc>()
+                              .preparationNavigation(tolerance),
                         );
                       },
                     );

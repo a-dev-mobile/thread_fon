@@ -44,7 +44,8 @@ class _ThreadTypeSelectionView extends StatelessWidget {
     final localization = context.l10n;
 
     return BlocListener<ThreadTypeBloc, ThreadTypeState>(
-      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) =>
+          previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
         switch (state.enumNavigationStatus) {
           case EnumNavigationStatus.preparation:
@@ -87,13 +88,16 @@ class _ThreadTypeSelectionView extends StatelessWidget {
                       itemCount: state.threadTypes.length,
                       itemBuilder: (context, index) {
                         final threadType = state.threadTypes[index];
-                        final label = threadType.enumThreadType == EnumThreadType.female
-                            ? localization.internal_thread
-                            : localization.external_thread;
+                        final label =
+                            threadType.enumThreadType == EnumThreadType.female
+                                ? localization.internal_thread
+                                : localization.external_thread;
                         return ThreadTypeChoiceCard(
                           svgAssetPath: threadType.svgAssetPath,
                           label: label,
-                          onTap: () => context.read<ThreadTypeBloc>().preparationNavigation(threadType),
+                          onTap: () => context
+                              .read<ThreadTypeBloc>()
+                              .preparationNavigation(threadType),
                         );
                       },
                     );

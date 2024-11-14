@@ -34,7 +34,7 @@ sealed class AppTheme {
     ),
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
-          fontFamily: GoogleFonts.montserrat().fontFamily,
+    fontFamily: GoogleFonts.montserrat().fontFamily,
   );
   // The defined dark theme.
   static ThemeData dark = FlexThemeData.dark(
@@ -52,6 +52,6 @@ sealed class AppTheme {
     ),
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
-          fontFamily: GoogleFonts.montserrat().fontFamily,
+    fontFamily: GoogleFonts.montserrat().fontFamily,
   );
 }

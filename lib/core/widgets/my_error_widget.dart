@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
-import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/core/widgets/restart_widget.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 // Package imports:

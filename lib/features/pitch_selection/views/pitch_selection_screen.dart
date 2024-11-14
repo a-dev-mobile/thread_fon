@@ -47,7 +47,8 @@ class _PitchSelectionView extends StatelessWidget {
     final localization = context.l10n;
 
     return BlocListener<PitchBloc, PitchState>(
-      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) =>
+          previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
         switch (state.enumNavigationStatus) {
           case EnumNavigationStatus.preparation:
@@ -86,14 +87,18 @@ class _PitchSelectionView extends StatelessWidget {
                   case EnumPageStatus.success:
                     return ListView.separated(
                       itemCount: state.pitches.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 8.0),
                       itemBuilder: (context, index) {
                         final pitch = state.pitches[index];
                         return PitchChoiceCard(
                           pitch: pitch,
-                          onTap: pitch.enumPitchDataType == EnumPitchDataType.value
-                              ? () => context.read<PitchBloc>().preparationNavigation(pitch)
-                              : null,
+                          onTap:
+                              pitch.enumPitchDataType == EnumPitchDataType.value
+                                  ? () => context
+                                      .read<PitchBloc>()
+                                      .preparationNavigation(pitch)
+                                  : null,
                         );
                       },
                     );

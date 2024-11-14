@@ -7,7 +7,8 @@ extension DoubleExtension on double {
   String toPrecisionString(int decimalPlaces) {
     // Проверяем, что количество знаков не отрицательное
     if (decimalPlaces < 0) {
-      throw ArgumentError('Количество знаков после запятой не может быть отрицательным');
+      throw ArgumentError(
+          'Количество знаков после запятой не может быть отрицательным');
     }
 
     // Преобразуем число в строку с фиксированной точностью

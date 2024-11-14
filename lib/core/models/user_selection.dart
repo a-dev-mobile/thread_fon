@@ -22,5 +22,6 @@ class UserSelection with _$UserSelection {
     @Default(3) int precision,
   }) = _UserSelection;
 
-  factory UserSelection.fromJson(Map<String, dynamic> json) => _$UserSelectionFromJson(json);
+  factory UserSelection.fromJson(Map<String, dynamic> json) =>
+      _$UserSelectionFromJson(json);
 }

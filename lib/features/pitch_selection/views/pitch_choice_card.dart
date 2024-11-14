@@ -21,7 +21,7 @@ class PitchChoiceCard extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(),
           )
         : MyCard(
-            onTap: onTap ,
+            onTap: onTap,
             child: Text(
               pitch.info,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(

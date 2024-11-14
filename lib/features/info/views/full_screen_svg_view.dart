@@ -1,5 +1,4 @@
 // Создайте новый файл full_screen_svg_view.dart
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_view/photo_view.dart';
@@ -8,12 +7,10 @@ import 'package:flutter/services.dart';
 class FullScreenSvgView extends StatefulWidget {
   final String svgData;
 
-
   const FullScreenSvgView({
-    Key? key,
+    super.key,
     required this.svgData,
-
-  }) : super(key: key);
+  });
 
   @override
   _FullScreenSvgViewState createState() => _FullScreenSvgViewState();

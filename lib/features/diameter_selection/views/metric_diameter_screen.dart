@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,7 +58,6 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    
   }
 
   @override
@@ -73,7 +71,8 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
     final localization = context.l10n;
 
     return BlocListener<DiameterBloc, DiameterState>(
-      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) =>
+          previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
         if (state.enumNavigationStatus.isNavigation) {
           Navigator.push(
@@ -92,7 +91,8 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
           children: [
             // Основной контент
             BlocBuilder<DiameterBloc, DiameterState>(
-              buildWhen: (previous, current) => previous.enumPageStatus != current.enumPageStatus,
+              buildWhen: (previous, current) =>
+                  previous.enumPageStatus != current.enumPageStatus,
               builder: (context, state) {
                 switch (state.enumPageStatus) {
                   case EnumPageStatus.initial:
@@ -102,10 +102,11 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
                   case EnumPageStatus.error:
                     return MyErrorWidget(
                       errorMsg: state.errorMsg,
-                      onRetry: () => context.read<DiameterBloc>().loadDiameters(),
+                      onRetry: () =>
+                          context.read<DiameterBloc>().loadDiameters(),
                     );
                   case EnumPageStatus.success:
-  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
                       if (_scrollController.hasClients) {
                         _scrollController.jumpTo(state.scrollPosition);
                       }
@@ -113,14 +114,16 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
                     return ListView.separated(
                       controller: _scrollController,
                       itemCount: state.diameters.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 8.0),
                       itemBuilder: (context, index) {
                         final diameter = state.diameters[index];
                         return DiameterChoiceCard(
                           info: diameter.info,
                           onTap: () => context
                               .read<DiameterBloc>()
-                              .preparationNavigation(diameter, _scrollController.position.pixels),
+                              .preparationNavigation(
+                                  diameter, _scrollController.position.pixels),
                         );
                       },
                     );

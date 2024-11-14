@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:threadfon/core/widgets/my_load_widget.dart';
 
-
 /// {@template load_page}
 /// Widget with disabling user action during load
 /// {@endtemplate}

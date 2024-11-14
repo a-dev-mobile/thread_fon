@@ -32,7 +32,7 @@ class DiameterBloc extends Cubit<DiameterState> {
     emit(state.copyWith(enumPageStatus: EnumPageStatus.loading));
     try {
       final diameters = await _repository.fetchDiameters();
-      final scrollPosition =   await _localStorage.getScrollPosition();
+      final scrollPosition = await _localStorage.getScrollPosition();
       emit(state.copyWith(
         enumPageStatus: EnumPageStatus.success,
         diameters: diameters,
@@ -44,8 +44,10 @@ class DiameterBloc extends Cubit<DiameterState> {
     }
   }
 
-  Future<void> preparationNavigation(DiameterModel selectedDiameter, double scrollPosition ) async {
-    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
+  Future<void> preparationNavigation(
+      DiameterModel selectedDiameter, double scrollPosition) async {
+    emit(
+        state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
     await _localStorage.setScrollPosition(scrollPosition);
     try {
       await _localStorage.updateUserSelection(
@@ -54,7 +56,8 @@ class DiameterBloc extends Cubit<DiameterState> {
           diameter: selectedDiameter.diameter,
         ),
       );
-      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(
+          enumNavigationStatus: EnumNavigationStatus.navigation));
       await Future<void>.delayed(const Duration(milliseconds: 100));
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
@@ -69,9 +72,8 @@ class DiameterBloc extends Cubit<DiameterState> {
         ? 'An error occurred while loading diameters.'
         : 'Произошла ошибка при загрузке диаметров.';
     emit(state.copyWith(
-        enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumPageStatus.error,
+        errorMsg: errorMsg,
+        enumNavigationStatus: EnumNavigationStatus.initial));
   }
-
-
-
 }

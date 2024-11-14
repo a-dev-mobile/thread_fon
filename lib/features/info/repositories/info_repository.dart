@@ -38,7 +38,8 @@ class InfoRepository {
       );
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> rawData = response.data as Map<String, dynamic>;
+        final Map<String, dynamic> rawData =
+            response.data as Map<String, dynamic>;
         return InfoModel.fromJson(rawData);
       } else {
         _logger.e(
@@ -65,7 +66,7 @@ class InfoRepository {
     required String theme,
     required String units,
     required int precision,
-      bool showDimensions = true,
+    bool showDimensions = true,
   }) async {
     try {
       final response = await _apiService.get(
@@ -78,7 +79,7 @@ class InfoRepository {
           'theme': theme,
           'units': units,
           'precision': precision,
-                  'showDimensions': showDimensions.toString(), 
+          'showDimensions': showDimensions.toString(),
         },
         options: Options(responseType: ResponseType.plain),
       );

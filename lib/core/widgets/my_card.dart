@@ -4,11 +4,9 @@ class MyCard extends StatelessWidget {
   final Widget child;
   final VoidCallback? onTap;
 
-
   const MyCard({
     required this.child,
     this.onTap,
-
     super.key,
   });
 
