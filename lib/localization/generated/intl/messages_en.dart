@@ -13,9 +13,10 @@
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
-final messages = new MessageLookup();
+final messages = MessageLookup();
 
-typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
+typedef MessageIfAbsent = String Function(
+    String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
@@ -27,7 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Additional information"),
         "app_lang":
             MessageLookupByLibrary.simpleMessage("Application language"),
-        "app_name": MessageLookupByLibrary.simpleMessage("ThreadNest"),
+        "app_name": MessageLookupByLibrary.simpleMessage("ThreadFon"),
         "apply": MessageLookupByLibrary.simpleMessage("Apply"),
         "avg": MessageLookupByLibrary.simpleMessage("avg"),
         "bolt": MessageLookupByLibrary.simpleMessage("Bolt"),

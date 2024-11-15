@@ -210,7 +210,6 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                   InfoDiametersParameters(
                     info: state.model!,
                   ),
-
                 ]),
               ),
             ),

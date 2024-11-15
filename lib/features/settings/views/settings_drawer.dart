@@ -7,9 +7,8 @@ import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
-
 class SettingsDrawer extends StatelessWidget {
-  const SettingsDrawer({Key? key}) : super(key: key);
+  const SettingsDrawer({super.key});
 
   Future<void> _sendEmail(BuildContext context) async {
     final Uri emailUri = Uri(
@@ -168,7 +167,6 @@ class SettingsDrawer extends StatelessWidget {
             child: Text(
               '© ${DateTime.now().year} ThreadApp',
               style: TextStyle(
-            
                 fontSize: 12,
               ),
             ),

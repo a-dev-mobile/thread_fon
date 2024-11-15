@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 
@@ -26,7 +25,7 @@ class AppRouter {
             ),
         initialLocation: SplashScreen.path,
         // observers: <NavigatorObserver>[
-          // CustomRouterObserver(screenTrackerNotifier),
+        // CustomRouterObserver(screenTrackerNotifier),
         // ],
         debugLogDiagnostics: true,
         routes: [
@@ -38,12 +37,15 @@ class AppRouter {
               GoRoute(
                 path: SplashScreen.path,
                 name: SplashScreen.name,
-                pageBuilder: (context, state) => NoTransitionPage(child: const SplashScreen(), key: state.pageKey),
+                pageBuilder: (context, state) => NoTransitionPage(
+                    child: const SplashScreen(), key: state.pageKey),
               ),
-               GoRoute(
+              GoRoute(
                 path: ThreadTypeSelectionScreen.path,
                 name: ThreadTypeSelectionScreen.name,
-                pageBuilder: (context, state) => NoTransitionPage(child: const ThreadTypeSelectionScreen(), key: state.pageKey),
+                pageBuilder: (context, state) => NoTransitionPage(
+                    child: const ThreadTypeSelectionScreen(),
+                    key: state.pageKey),
               ),
             ],
             navigatorKey: _pageNavigatorKey,

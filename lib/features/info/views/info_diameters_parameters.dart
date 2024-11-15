@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/info/models/info_model.dart';
-import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
 class InfoDiametersParameters extends StatelessWidget {

@@ -8,12 +8,10 @@ import 'package:threadfon/app/language/language_bloc.dart'; // Новый имп
 import 'package:threadfon/app/router/router.dart';
 import 'package:threadfon/app/theme/theme.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
-import 'package:threadfon/core/services/connectivity/connectivity_banner.dart';
 import 'package:threadfon/core/services/connectivity/connectivity_bloc.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 // Импортируем ValueListenableBuilderN
-import 'package:threadfon/features/thread_type_selection/views/thread_type_selection_screen.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
 
@@ -30,11 +28,13 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           lazy: false,
-          create: (context) => ThemeBloc(storage: storage, themeMode: themeMode),
+          create: (context) =>
+              ThemeBloc(storage: storage, themeMode: themeMode),
         ),
         BlocProvider(
           lazy: false,
-          create: (context) => LanguageBloc(storage: storage, enumLang: enumLang),
+          create: (context) =>
+              LanguageBloc(storage: storage, enumLang: enumLang),
         ),
         BlocProvider(
           lazy: false,

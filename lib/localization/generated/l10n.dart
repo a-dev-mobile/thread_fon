@@ -111,10 +111,10 @@ class GeneratedLocalization {
     );
   }
 
-  /// `ThreadNest`
+  /// `ThreadFon`
   String get app_name {
     return Intl.message(
-      'ThreadNest',
+      'ThreadFon',
       name: 'app_name',
       desc: '',
       args: [],

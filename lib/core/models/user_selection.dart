@@ -20,10 +20,6 @@ class UserSelection with _$UserSelection {
     String? fullName,
     @Default(EnumUnits.mm) EnumUnits units,
     @Default(3) int precision,
-
-
-
-    
   }) = _UserSelection;
 
   factory UserSelection.fromJson(Map<String, dynamic> json) =>

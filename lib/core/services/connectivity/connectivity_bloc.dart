@@ -16,7 +16,8 @@ class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
     on<ConnectivityChanged>(_onConnectivityChanged);
 
     // Подписываемся на изменения подключения
-    _connectivitySubscription = _connectivity.onConnectivityChanged.listen((results) {
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen((results) {
       add(ConnectivityChanged(results));
     });
 
@@ -34,7 +35,8 @@ class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
     }
   }
 
-  void _onConnectivityChanged(ConnectivityChanged event, Emitter<ConnectivityState> emit) {
+  void _onConnectivityChanged(
+      ConnectivityChanged event, Emitter<ConnectivityState> emit) {
     if (event.connectivityResults.contains(ConnectivityResult.none)) {
       emit(ConnectivityOffline());
     } else {
