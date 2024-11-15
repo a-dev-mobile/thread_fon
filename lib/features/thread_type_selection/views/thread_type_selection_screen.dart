@@ -14,12 +14,13 @@ import 'package:threadfon/features/diameter_selection/views/metric_diameter_scre
 import 'package:threadfon/features/thread_type_selection/bloc/thread_type_bloc.dart';
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/features/thread_type_selection/repositories/thread_type_repository.dart';
-import 'package:threadfon/features/thread_type_selection/widgets/thread_type_choice_card.dart';
+import 'package:threadfon/features/thread_type_selection/views/widgets/thread_type_choice_card.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
 class ThreadTypeSelectionScreen extends StatelessWidget {
   const ThreadTypeSelectionScreen({super.key});
-
+  static const path = '/ThreadTypeSelectionScreen';
+  static const name = 'ThreadTypeSelectionScreen';
   @override
   Widget build(BuildContext context) {
     final threadTypeRepository = ThreadTypeRepository();

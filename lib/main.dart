@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:threadfon/app/app.dart';
+import 'package:threadfon/app/router/router.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/app_bloc_observer.dart';
@@ -40,9 +41,7 @@ Future<void> main() async {
           }
 
           // Log the error
-          _logger.e('FlutterError.onError',
-              error: details.exception,
-              stackTrace: details.stack ?? StackTrace.current);
+          _logger.e('FlutterError.onError', error: details.exception, stackTrace: details.stack ?? StackTrace.current);
         };
 
         // Установка предпочтительной ориентации экрана
@@ -64,6 +63,9 @@ Future<void> main() async {
                 RepositoryProvider(
                   create: (context) => ApiService(),
                 ),
+                RepositoryProvider(
+                  create: (context) => AppRouter(),
+                ),
               ],
               child: MyApp(
                 enumLang: languageState.enumLang,
@@ -84,8 +86,7 @@ Future<void> main() async {
       // Обработка всех необработанных асинхронных ошибок
       PlatformDispatcher.instance.onError = (error, stack) {
         // Log the error
-        _logger.e('🚑 PlatformDispatcher.onError',
-            error: error, stackTrace: stack);
+        _logger.e('🚑 PlatformDispatcher.onError', error: error, stackTrace: stack);
         return true;
       };
 
@@ -113,8 +114,7 @@ Future<void> main() async {
 class _AppLifecycleObserver extends WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.detached ||
-        state == AppLifecycleState.inactive) {
+    if (state == AppLifecycleState.detached || state == AppLifecycleState.inactive) {
       // Call dispose() when the app is closing
       LogBatcher().dispose();
     }

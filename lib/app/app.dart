@@ -5,8 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Импорт необходимых пакетов
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:threadfon/app/language/language_bloc.dart'; // Новый импорт
+import 'package:threadfon/app/router/router.dart';
 import 'package:threadfon/app/theme/theme.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
+import 'package:threadfon/core/services/connectivity/connectivity_banner.dart';
+import 'package:threadfon/core/services/connectivity/connectivity_bloc.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 // Импортируем ValueListenableBuilderN
@@ -20,20 +23,22 @@ class MyApp extends StatelessWidget {
   final ThemeMode themeMode;
   @override
   Widget build(BuildContext context) {
-    final apiService = context.read<ApiService>();
+    context.read<ApiService>();
     final storage = context.read<LocalStorage>();
 
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           lazy: false,
-          create: (context) =>
-              ThemeBloc(storage: storage, themeMode: themeMode),
+          create: (context) => ThemeBloc(storage: storage, themeMode: themeMode),
         ),
         BlocProvider(
           lazy: false,
-          create: (context) =>
-              LanguageBloc(storage: storage, enumLang: enumLang),
+          create: (context) => LanguageBloc(storage: storage, enumLang: enumLang),
+        ),
+        BlocProvider(
+          lazy: false,
+          create: (context) => ConnectivityBloc(),
         ),
       ],
       child: const _ThreadApp(),
@@ -48,8 +53,8 @@ class _ThreadApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final languageState = context.watch<LanguageBloc>().state;
     final themeState = context.watch<ThemeBloc>().state;
-
-    return MaterialApp(
+    final appRouter = context.read<AppRouter>();
+    return MaterialApp.router(
       onGenerateTitle: (BuildContext context) => context.l10n.app_name,
       debugShowCheckedModeBanner: false,
       //
@@ -67,7 +72,9 @@ class _ThreadApp extends StatelessWidget {
       locale: Locale(languageState.enumLang.name),
 
       //
-      home: ThreadTypeSelectionScreen(),
+      routeInformationProvider: appRouter.router.routeInformationProvider,
+      routeInformationParser: appRouter.router.routeInformationParser,
+      routerDelegate: appRouter.router.routerDelegate,
     );
   }
 }

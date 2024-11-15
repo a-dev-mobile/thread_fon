@@ -38,7 +38,7 @@ gen-watch:
 gen-localization:
 	$(DART) pub global activate intl_utils
 	$(DART) pub global run intl_utils:generate
-	$(FLUTTER) gen-l10n --arb-dir lib/src/common/localization --output-dir lib/src/common/localization/generated --template-arb-file intl_en.arb
+# $(FLUTTER) gen-l10n --arb-dir lib/src/common/localization --output-dir lib/src/common/localization/generated --template-arb-file intl_en.arb
 
 ########################
 # Исправление и форматирование
