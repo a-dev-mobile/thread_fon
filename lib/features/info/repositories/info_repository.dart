@@ -65,6 +65,7 @@ class InfoRepository {
     required double diameter,
     required String theme,
     required String units,
+    required String language,
     required int precision,
     bool showDimensions = true,
   }) async {
@@ -79,6 +80,7 @@ class InfoRepository {
           'theme': theme,
           'units': units,
           'precision': precision,
+          'language': language,
           'showDimensions': showDimensions.toString(),
         },
         options: Options(responseType: ResponseType.plain),

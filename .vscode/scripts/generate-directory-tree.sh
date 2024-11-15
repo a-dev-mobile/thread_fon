@@ -6,10 +6,10 @@ source /home/dmitriy/.venv/bin/activate
 # Аргументы
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/pitch_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/tolerance_selection"
-PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/info"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/thread_type_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/diameter_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/"
+PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/info"
 FILE_NAMES=(
     "*.dart"
 )
@@ -43,8 +43,8 @@ EXCLUDE_STRINGS=(
 )
 LOG_LEVEL="INFO"
 OUTPUT_FILE="directory_structure.log" 
-DISPLAY="content"
 DISPLAY="all"
+DISPLAY="content"
 
 # Запуск скрипта с аргументами
 python /home/dmitriy/Documents/DEV/MY_GITHUB/scripts/scripts/personal/generate_directory_tree.py \
