@@ -29,12 +29,11 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> {
   final ThreadTypeRepository _repository;
 
   Future<void> load() async {
-    emit(state.copyWith(enumPageStatus: EnumPageStatus.loading));
+    emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
       final threadTypes = await _repository.fetchThreadTypes();
 
-      emit(state.copyWith(
-          enumPageStatus: EnumPageStatus.success, threadTypes: threadTypes));
+      emit(state.copyWith(enumPageStatus: EnumStatus.success, threadTypes: threadTypes));
     } on Exception catch (e, s) {
       _logger.e('Error loading thread types', error: e, stackTrace: s);
       _setErrorState();
@@ -42,21 +41,18 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> {
   }
 
   Future<void> preparationNavigation(ThreadTypeModel selectedThreadType) async {
-    emit(
-        state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
     try {
       await _localStorage.updateUserSelection(
         (current) => current.copyWith(
           threadType: selectedThreadType.enumThreadType,
         ),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
       await Future<void>.delayed(const Duration(milliseconds: 100));
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
-      _logger.e('Error updating thread type selection',
-          error: e, stackTrace: s);
+      _logger.e('Error updating thread type selection', error: e, stackTrace: s);
       _setErrorState();
     }
   }
@@ -67,8 +63,6 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> {
         ? 'An error occurred while loading thread types.'
         : 'Произошла ошибка при загрузке типов резьбы.';
     emit(state.copyWith(
-        enumPageStatus: EnumPageStatus.error,
-        errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

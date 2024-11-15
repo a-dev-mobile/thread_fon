@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/info/models/info_model.dart';
+import 'package:threadfon/features/info/views/info_row.dart';
+import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
 class InfoDiametersParameters extends StatelessWidget {
@@ -20,18 +22,26 @@ class InfoDiametersParameters extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          if (info.threadType == EnumThreadType.female)
+            _DiameterSection(
+              title: '${localization.diam_minor} (D1)',
+              diameter: info.minorDiamD1,
+              dEs: info.d1Es,
+              dEi: info.d1Ei,
+              min: info.minorDiamMin,
+              avg: info.minorDiamAvg,
+              max: info.minorDiamMax,
+            ),
+          const SizedBox(height: 10.0),
+          if (info.holeDiameter != null) ...[
+            InfoRow(
+              label: localization.threadHoleDiameter,
+              value: info.holeDiameter.toString(),
+            ),
+            const SizedBox(height: 10.0),
+          ],
           _DiameterSection(
-            title: localization.diam_major,
-            diameter: info.diameter,
-            dEs: info.dEs,
-            dEi: info.dEi,
-            min: info.majorDiamMin,
-            avg: info.majorDiamAvg,
-            max: info.majorDiamMax,
-          ),
-          Divider(),
-          _DiameterSection(
-            title: localization.diam_middle,
+            title: '${localization.diam_middle} ${info.threadType == EnumThreadType.female ? '(D2)' : '(d2)'}',
             diameter: info.pitchDiamD2,
             dEs: info.d2Es,
             dEi: info.d2Ei,
@@ -39,30 +49,26 @@ class InfoDiametersParameters extends StatelessWidget {
             avg: info.pitchDiamAvg,
             max: info.pitchDiamMax,
           ),
-          Divider(),
-          _DiameterSection(
-            title: localization.diam_minor,
-            diameter: info.minorDiamD1,
-            dEs: info.d1Es,
-            dEi: info.d1Ei,
-            min: info.minorDiamMin,
-            avg: info.minorDiamAvg,
-            max: info.minorDiamMax,
-          ),
+          const SizedBox(height: 10.0),
+          if (info.threadType == EnumThreadType.female) ...[
 
-          // const SizedBox(height: 32.0),
-          // Text(
-          //   localization.additional_info,
-          //   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          //         fontWeight: FontWeight.bold,
-          //       ),
-          // ),
-          // const SizedBox(height: 8.0),
-          // if (info.threadType == EnumThreadType.male)
-          //   _AdditionalInfoItem(
-          //     label: 'Внутренний диаметр резьбы по дну впадины (d3)',
-          //     value: info.minorDiamD3,
-          //   ),
+            _DiameterSection(
+              title: '${localization.diam_major} (D)',
+              diameter: info.diameter,
+            ),
+          ],
+          if (info.threadType == EnumThreadType.male) ...[
+ 
+            _DiameterSection(
+              title: 'Внутренний диаметр по дну впадины (d3)',
+              diameter: info.minorDiamD3,
+              dEs: info.dEs,
+              dEi: info.d1Ei,
+              min: info.minorDiamMinD3,
+              avg: info.minorDiamAvgD3,
+              max: info.minorDiamMaxD3,
+            )
+          ],
         ],
       ),
     );
@@ -74,18 +80,18 @@ class _DiameterSection extends StatelessWidget {
   final num diameter;
   final num? dEs;
   final num? dEi;
-  final num min;
-  final num avg;
-  final num max;
+  final num? min;
+  final num? avg;
+  final num? max;
 
   const _DiameterSection({
     required this.title,
     required this.diameter,
     this.dEs,
     this.dEi,
-    required this.min,
-    required this.avg,
-    required this.max,
+    this.min,
+    this.avg,
+    this.max,
   });
 
   @override
@@ -94,38 +100,44 @@ class _DiameterSection extends StatelessWidget {
 
     return Column(
       children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.2,
               ),
-        ),
-        const SizedBox(height: 8.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              localization.tolerance,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
             ),
-            _DiameterItem(
-              diameter: diameter,
-              dEs: dEs,
-              dEi: dEi,
-            ),
-          ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              _DiameterItem(
+                diameter: diameter,
+                dEs: dEs,
+                dEi: dEi,
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 6.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _ValueItem(label: localization.min, value: min),
-            _ValueItem(label: localization.avg, value: avg),
-            _ValueItem(label: localization.max, value: max),
-          ],
-        ),
+        if (min != null && avg != null && max != null) ...[
+          const SizedBox(height: 6.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _ValueItem(label: localization.min, value: min!),
+              _ValueItem(label: localization.avg, value: avg!),
+              _ValueItem(label: localization.max, value: max!),
+            ],
+          ),
+        ]
       ],
     );
   }

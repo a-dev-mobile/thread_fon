@@ -46,8 +46,7 @@ class _ToleranceSelectionView extends StatelessWidget {
     final localization = context.l10n;
 
     return BlocListener<ToleranceBloc, ToleranceState>(
-      listenWhen: (previous, current) =>
-          previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
         switch (state.enumNavigationStatus) {
           case EnumNavigationStatus.preparation:
@@ -72,29 +71,25 @@ class _ToleranceSelectionView extends StatelessWidget {
             BlocBuilder<ToleranceBloc, ToleranceState>(
               builder: (context, state) {
                 switch (state.enumPageStatus) {
-                  case EnumPageStatus.loading:
-                  case EnumPageStatus.initial:
+                  case EnumStatus.loading:
+                  case EnumStatus.initial:
                     return const MyLoadWidget();
 
-                  case EnumPageStatus.error:
+                  case EnumStatus.error:
                     return MyErrorWidget(
                       errorMsg: state.errorMsg,
-                      onRetry: () =>
-                          context.read<ToleranceBloc>().loadTolerances(),
+                      onRetry: () => context.read<ToleranceBloc>().loadTolerances(),
                     );
 
-                  case EnumPageStatus.success:
+                  case EnumStatus.success:
                     return ListView.separated(
                       itemCount: state.tolerances.length,
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 8.0),
+                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
                       itemBuilder: (context, index) {
                         final tolerance = state.tolerances[index];
                         return ToleranceChoiceCard(
                           tolerance: tolerance,
-                          onTap: () => context
-                              .read<ToleranceBloc>()
-                              .preparationNavigation(tolerance),
+                          onTap: () => context.read<ToleranceBloc>().preparationNavigation(tolerance),
                         );
                       },
                     );

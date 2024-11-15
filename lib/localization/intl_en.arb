@@ -115,5 +115,14 @@
   "send_email": "Send email",
   "email_app_not_found": "No email application found.",
   "email_sending_failed": "Failed to send email.",
-  "leave_feedback": "Leave feedback"
+  "leave_feedback": "Leave feedback",
+  "heightOfFundamentalTriangle": "Height of the fundamental thread triangle (H)",
+  "workingHeightOfProfile": "Working height of the thread profile (5H/8)",
+  "crestTruncation": "Crest truncation (H/8)",
+  "rootTruncation": "Root truncation (H/4)",
+  "totalTruncation": "Total truncation (3H/8)",
+  "halfPitch": "Half pitch (P/2)",
+  "quarterPitch": "Quarter pitch (P/4)",
+  "eighthPitch": "Eighth of pitch (P/8)",
+  "threadHoleDiameter": "Hole diameter for thread"
 }

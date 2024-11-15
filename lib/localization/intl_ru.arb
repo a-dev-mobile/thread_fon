@@ -92,7 +92,7 @@
   "settings": "Настройки",
   "thank_you": "Спасибо Вам, что пользуетесь нашим приложением",
   "thread_class_tolerance": "Класс допуска",
-  "thread_depth": "Глубина",
+  "thread_depth": "Глубина резьбы",
   "thread_designation": "Обозначение",
   "thread_diam": "Диаметр",
   "thread_diam_nom": "Диаметр (номинальный)",
@@ -116,5 +116,14 @@
   "send_email": "Отправить email",
   "email_app_not_found": "Приложение для электронной почты не найдено.",
   "email_sending_failed": "Не удалось отправить электронное письмо.",
-  "leave_feedback": "Оставить отзыв"
+  "leave_feedback": "Оставить отзыв",
+  "heightOfFundamentalTriangle": "Высота исходного треугольника резьбы (H)",
+  "workingHeightOfProfile": "Рабочая высота профиля резьбы (5H/8)",
+  "crestTruncation": "Снятие на вершине резьбы (H/8)",
+  "rootTruncation": "Снятие на впадине резьбы (H/4)",
+  "totalTruncation": "Суммарное снятие (3H/8)",
+  "halfPitch": "Полушаг резьбы (P/2)",
+  "quarterPitch": "Четверть шага резьбы (P/4)",
+  "eighthPitch": "Одна восьмая шага резьбы (P/8)",
+   "threadHoleDiameter": "Диаметр отверстия под резьбу"
 }

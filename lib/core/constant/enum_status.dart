@@ -1,5 +1,5 @@
 /// Статусы
-enum EnumPageStatus {
+enum EnumStatus {
   /// Страница в процессе загрузки данных
   initial,
 
@@ -13,9 +13,9 @@ enum EnumPageStatus {
   error,
 }
 
-extension $EnumStatus on EnumPageStatus {
-  bool get isLoad => this == EnumPageStatus.loading;
-  bool get isError => this == EnumPageStatus.error;
-  bool get isSuccess => this == EnumPageStatus.success;
-  bool get isInitial => this == EnumPageStatus.initial;
+extension $EnumStatus on EnumStatus {
+  bool get isLoad => this == EnumStatus.loading;
+  bool get isError => this == EnumStatus.error;
+  bool get isSuccess => this == EnumStatus.success;
+  bool get isInitial => this == EnumStatus.initial;
 }

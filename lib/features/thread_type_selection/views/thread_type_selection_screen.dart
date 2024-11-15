@@ -48,8 +48,7 @@ class _ThreadTypeSelectionView extends StatelessWidget {
     return DrawerScreen(
         title: localization.thread_type,
         body: BlocListener<ThreadTypeBloc, ThreadTypeState>(
-          listenWhen: (previous, current) =>
-              previous.enumNavigationStatus != current.enumNavigationStatus,
+          listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
           listener: (context, state) {
             if (state.enumNavigationStatus.isNavigation) {
               Navigator.push(
@@ -65,38 +64,32 @@ class _ThreadTypeSelectionView extends StatelessWidget {
               BlocBuilder<ThreadTypeBloc, ThreadTypeState>(
                 builder: (context, state) {
                   switch (state.enumPageStatus) {
-                    case EnumPageStatus.initial:
-                    case EnumPageStatus.loading:
+                    case EnumStatus.initial:
+                    case EnumStatus.loading:
                       return const MyLoadWidget();
 
-                    case EnumPageStatus.error:
+                    case EnumStatus.error:
                       return MyErrorWidget(
                         errorMsg: state.errorMsg,
                         onRetry: () => context.read<ThreadTypeBloc>().load(),
                       );
 
-                    case EnumPageStatus.success:
+                    case EnumStatus.success:
                       return Center(
                         child: Column(
-                          mainAxisSize:
-                              MainAxisSize.min, // Центрирует по вертикали
+                          mainAxisSize: MainAxisSize.min, // Центрирует по вертикали
                           children: state.threadTypes.map((threadType) {
-                            final label = threadType.enumThreadType ==
-                                    EnumThreadType.female
+                            final label = threadType.enumThreadType == EnumThreadType.female
                                 ? localization.internal_thread
                                 : localization.external_thread;
                             return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: FractionallySizedBox(
-                                widthFactor:
-                                    0.8, // Устанавливает ширину 80% от ширины родителя
+                                widthFactor: 0.8, // Устанавливает ширину 80% от ширины родителя
                                 child: ThreadTypeChoiceCard(
                                   svgAssetPath: threadType.svgAssetPath,
                                   label: label,
-                                  onTap: () => context
-                                      .read<ThreadTypeBloc>()
-                                      .preparationNavigation(threadType),
+                                  onTap: () => context.read<ThreadTypeBloc>().preparationNavigation(threadType),
                                 ),
                               ),
                             );

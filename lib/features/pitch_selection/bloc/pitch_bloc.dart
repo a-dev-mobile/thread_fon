@@ -29,15 +29,14 @@ class PitchBloc extends Cubit<PitchState> {
   final LanguageBloc _languageBloc;
 
   Future<void> loadPitch() async {
-    emit(state.copyWith(enumPageStatus: EnumPageStatus.loading));
+    emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
       final userSelection = await _localStorage.getUserSelection();
       final pitchList = await _repository.fetchPitch(
         diameter: userSelection.diameter!,
         language: _languageBloc.state.enumLang.name,
       );
-      emit(state.copyWith(
-          enumPageStatus: EnumPageStatus.success, pitches: pitchList));
+      emit(state.copyWith(enumPageStatus: EnumStatus.success, pitches: pitchList));
     } catch (e, s) {
       _logger.e('Error loading pitch', error: e, stackTrace: s);
       _setErrorState();
@@ -45,8 +44,7 @@ class PitchBloc extends Cubit<PitchState> {
   }
 
   Future<void> preparationNavigation(PitchModel selectedPitch) async {
-    emit(
-        state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
 
     try {
       await _localStorage.updateUserSelection(
@@ -55,8 +53,7 @@ class PitchBloc extends Cubit<PitchState> {
           pitch: selectedPitch.pitch,
         ),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
       await Future<void>.delayed(const Duration(milliseconds: 100));
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
@@ -71,8 +68,6 @@ class PitchBloc extends Cubit<PitchState> {
         ? 'An error occurred while loading pitches.'
         : 'Произошла ошибка при загрузке шагов резьбы.';
     emit(state.copyWith(
-        enumPageStatus: EnumPageStatus.error,
-        errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

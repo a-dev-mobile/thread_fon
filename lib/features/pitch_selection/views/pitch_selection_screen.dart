@@ -47,8 +47,7 @@ class _PitchSelectionView extends StatelessWidget {
     final localization = context.l10n;
 
     return BlocListener<PitchBloc, PitchState>(
-      listenWhen: (previous, current) =>
-          previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
         switch (state.enumNavigationStatus) {
           case EnumNavigationStatus.preparation:
@@ -74,31 +73,27 @@ class _PitchSelectionView extends StatelessWidget {
             BlocBuilder<PitchBloc, PitchState>(
               builder: (context, state) {
                 switch (state.enumPageStatus) {
-                  case EnumPageStatus.loading:
-                  case EnumPageStatus.initial:
+                  case EnumStatus.loading:
+                  case EnumStatus.initial:
                     return const MyLoadWidget();
 
-                  case EnumPageStatus.error:
+                  case EnumStatus.error:
                     return MyErrorWidget(
                       errorMsg: state.errorMsg,
                       onRetry: () => context.read<PitchBloc>().loadPitch(),
                     );
 
-                  case EnumPageStatus.success:
+                  case EnumStatus.success:
                     return ListView.separated(
                       itemCount: state.pitches.length,
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 8.0),
+                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
                       itemBuilder: (context, index) {
                         final pitch = state.pitches[index];
                         return PitchChoiceCard(
                           pitch: pitch,
-                          onTap:
-                              pitch.enumPitchDataType == EnumPitchDataType.value
-                                  ? () => context
-                                      .read<PitchBloc>()
-                                      .preparationNavigation(pitch)
-                                  : null,
+                          onTap: pitch.enumPitchDataType == EnumPitchDataType.value
+                              ? () => context.read<PitchBloc>().preparationNavigation(pitch)
+                              : null,
                         );
                       },
                     );

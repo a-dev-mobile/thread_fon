@@ -17,6 +17,7 @@ import 'package:threadfon/features/info/bloc/info_bloc.dart';
 import 'package:threadfon/features/info/repositories/info_repository.dart';
 import 'package:threadfon/features/info/views/full_screen_svg_view.dart';
 import 'package:threadfon/features/info/views/info_diameters_parameters.dart';
+import 'package:threadfon/features/info/views/info_parameters.dart';
 import 'package:threadfon/features/info/views/info_main_parameters.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
@@ -65,17 +66,14 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     final svgAspectRatio = svgWidth / svgHeight;
     final calculatedOverlayHeight = screenWidth / svgAspectRatio;
     final maxOverlayHeight = screenHeight * 0.4;
-    final overlayHeight = calculatedOverlayHeight > maxOverlayHeight
-        ? maxOverlayHeight
-        : calculatedOverlayHeight;
+    final overlayHeight = calculatedOverlayHeight > maxOverlayHeight ? maxOverlayHeight : calculatedOverlayHeight;
 
-    context.select((InfoBloc bloc) => bloc.state.enumPageStatus);
-    final bloc = context.read<InfoBloc>();
-
+    // context.select((InfoBloc bloc) => bloc.state.enumPageStatus);
+    final bloc = context.watch<InfoBloc>();
+    _logger.d('--InfoScreen: build()');
     final state = bloc.state;
     return BlocListener<InfoBloc, InfoState>(
-      listenWhen: (previous, current) =>
-          previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
         // Handle side effects if needed
       },
@@ -92,15 +90,13 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
           clipBehavior: Clip.none,
           children: [
             // Main scrollable content
-            _buildMainContent(
-                bloc, context, overlayHeight, svgWidth, svgHeight),
+            _buildMainContent(bloc, context, overlayHeight, svgWidth, svgHeight),
             // SVG Overlay
-            if (_isSvgOverlayVisible &&
-                (state.svgData != null || state.svgDataNoDimensions != null))
+            if (_isSvgOverlayVisible)
               SvgOverlay(
-                svgData: _showDimensions
-                    ? state.svgData!
-                    : state.svgDataNoDimensions!,
+                svgData: _showDimensions ? state.svgData : state.svgDataNoDimensions!,
+                svgRequestStatus: state.svgRequestStatus,
+                svgErrorMsg: state.svgErrorMsg,
                 overlayHeight: overlayHeight,
                 svgAspectRatio: svgAspectRatio,
                 svgWidth: svgWidth,
@@ -115,9 +111,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => FullScreenSvgView(
-                        svgData: _showDimensions
-                            ? state.svgData!
-                            : state.svgDataNoDimensions!,
+                        svgData: _showDimensions ? state.svgData! : state.svgDataNoDimensions!,
                       ),
                     ),
                   );
@@ -130,31 +124,30 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                 showDimensions: _showDimensions,
               ),
             // Blurred overlay when in preparation status
-            if (state.enumNavigationStatus.isPreparation)
-              const BlurredOverlay(),
+            if (state.enumNavigationStatus.isPreparation) const BlurredOverlay(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMainContent(InfoBloc bloc, BuildContext context,
-      double overlayHeight, double svgWidth, double svgHeight) {
+  Widget _buildMainContent(
+      InfoBloc bloc, BuildContext context, double overlayHeight, double svgWidth, double svgHeight) {
     final localization = context.l10n;
     final state = bloc.state;
 
     switch (state.enumPageStatus) {
-      case EnumPageStatus.loading:
-      case EnumPageStatus.initial:
+      case EnumStatus.loading:
+      case EnumStatus.initial:
         return const Center(child: MyLoadWidget());
 
-      case EnumPageStatus.error:
+      case EnumStatus.error:
         return MyErrorWidget(
           errorMsg: state.errorMsg,
           onRetry: () => bloc.load(),
         );
 
-      case EnumPageStatus.success:
+      case EnumStatus.success:
         return CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -162,21 +155,14 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
               floating: true,
               snap: true,
               actions: [
-                Builder(builder: (context) {
-                  final isSvgDataLoaded = context
-                      .select((InfoBloc bloc) => bloc.state.isSvgDataLoaded);
-                  if (isSvgDataLoaded) {
-                    return IconButton(
-                      icon: const Icon(FontAwesomeIcons.compassDrafting),
-                      onPressed: () {
-                        setState(() {
-                          _isSvgOverlayVisible = !_isSvgOverlayVisible;
-                        });
-                      },
-                    );
-                  }
-                  return const SizedBox();
-                }),
+                IconButton(
+                  icon: const Icon(FontAwesomeIcons.compassDrafting),
+                  onPressed: () {
+                    setState(() {
+                      _isSvgOverlayVisible = !_isSvgOverlayVisible;
+                    });
+                  },
+                ),
                 IconButton(
                   icon: const Icon(Icons.settings),
                   onPressed: () {
@@ -208,6 +194,10 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                   ),
                   const Divider(),
                   InfoDiametersParameters(
+                    info: state.model!,
+                  ),
+                  const Divider(),
+                  InfoParameters(
                     info: state.model!,
                   ),
                 ]),
@@ -271,9 +261,7 @@ class _UnitsPrecisionDialogState extends State<UnitsPrecisionDialog> {
                 items: EnumUnits.values.map((EnumUnits units) {
                   return DropdownMenuItem<EnumUnits>(
                     value: units,
-                    child: Text(units == EnumUnits.mm
-                        ? localization.mm
-                        : localization.inch),
+                    child: Text(units == EnumUnits.mm ? localization.mm : localization.inch),
                   );
                 }).toList(),
                 onChanged: (EnumUnits? newValue) {

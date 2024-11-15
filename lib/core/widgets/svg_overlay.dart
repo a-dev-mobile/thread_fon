@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:threadfon/core/constant/enum_status.dart';
+import 'package:threadfon/core/widgets/my_load_widget.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 import 'overlay_button.dart';
 
 class SvgOverlay extends StatelessWidget {
-  final String svgData;
+    final String? svgData;
+  final EnumStatus svgRequestStatus;
+  final String? svgErrorMsg;
 
   final double overlayHeight;
   final double svgAspectRatio;
@@ -28,12 +32,29 @@ class SvgOverlay extends StatelessWidget {
     required this.onClose,
     required this.onExpand,
     required this.onSwitchSvg,
-    required this.showDimensions,
+    required this.showDimensions, required this.svgRequestStatus, this.svgErrorMsg,
   });
 
   @override
   Widget build(BuildContext context) {
+        Widget content;
     final localization = context.l10n;
+      switch (svgRequestStatus) {
+      case EnumStatus.initial:
+      case EnumStatus.loading:
+        content =MyLoadWidget();
+        break;
+      case EnumStatus.success:
+        content = SvgPicture.string(
+          svgData!,
+          fit: BoxFit.contain,
+        );
+        break;
+      case EnumStatus.error:
+        content = Center(child: Text(svgErrorMsg ?? 'Error loading SVG'));
+        break;
+
+    }
     return Positioned(
       bottom: 0,
       left: 0,
@@ -67,10 +88,7 @@ class SvgOverlay extends StatelessWidget {
                   backgroundDecoration: const BoxDecoration(
                     color: Colors.transparent,
                   ),
-                  child: SvgPicture.string(
-                    svgData,
-                    fit: BoxFit.contain,
-                  ),
+                  child: content,
                 ),
               ),
               // Expand Button

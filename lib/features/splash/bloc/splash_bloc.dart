@@ -24,11 +24,11 @@ class SplashBloc extends Cubit<SplashState> {
   final LocalStorage _storage;
 
   Future<void> load() async {
-    emit(state.copyWith(enumPageStatus: EnumPageStatus.loading));
+    emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     final userSelection = await _storage.getUserSelection();
 
     try {
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(Duration(seconds: 1));
 
       await preparationNavigation();
     } catch (e, s) {
@@ -38,12 +38,10 @@ class SplashBloc extends Cubit<SplashState> {
   }
 
   Future<void> preparationNavigation() async {
-    emit(
-        state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
 
     try {
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
       _setErrorState();
@@ -56,8 +54,6 @@ class SplashBloc extends Cubit<SplashState> {
         ? 'An error occurred while loading info.'
         : 'Произошла ошибка при загрузке информации.';
     emit(state.copyWith(
-        enumPageStatus: EnumPageStatus.error,
-        errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

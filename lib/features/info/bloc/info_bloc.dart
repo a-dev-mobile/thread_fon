@@ -35,7 +35,10 @@ class InfoBloc extends Cubit<InfoState> {
   final LanguageBloc _languageBloc;
 
   Future<void> load() async {
-    emit(state.copyWith(enumPageStatus: EnumPageStatus.loading));
+    emit(state.copyWith(
+      enumPageStatus: EnumStatus.loading,
+      svgRequestStatus: EnumStatus.loading,
+    ));
     final userSelection = await _localStorage.getUserSelection();
 
     try {
@@ -50,7 +53,7 @@ class InfoBloc extends Cubit<InfoState> {
       );
 
       emit(state.copyWith(
-        enumPageStatus: EnumPageStatus.success,
+        enumPageStatus: EnumStatus.success,
         model: model,
         units: userSelection.units,
         precision: userSelection.precision,
@@ -66,6 +69,7 @@ class InfoBloc extends Cubit<InfoState> {
 
 // New method to fetch SVG data
   Future<void> _fetchSvgData(UserSelection userSelection) async {
+        emit(state.copyWith(svgRequestStatus: EnumStatus.loading));
     try {
       final svgData = await _repository.fetchSvgData(
         diameter: userSelection.diameter!,
@@ -76,7 +80,7 @@ class InfoBloc extends Cubit<InfoState> {
         units: userSelection.units.name,
         precision: userSelection.precision,
         language: _languageBloc.state.enumLang.name,
-        showDimensions: true, 
+        showDimensions: true,
       );
 
       final svgDataNoDimensions = await _repository.fetchSvgData(
@@ -95,11 +99,14 @@ class InfoBloc extends Cubit<InfoState> {
       emit(state.copyWith(
         svgData: svgData,
         svgDataNoDimensions: svgDataNoDimensions,
-        isSvgDataLoaded: true,
+          svgRequestStatus: EnumStatus.success,
       ));
     } catch (e, s) {
       _logger.e('Error fetching SVG data', error: e, stackTrace: s);
-      // Optionally handle SVG fetch errors
+      emit(state.copyWith(
+        svgRequestStatus: EnumStatus.error,
+        svgErrorMsg: 'Error loading SVG data',
+      ));
     }
   }
 
@@ -132,6 +139,6 @@ class InfoBloc extends Cubit<InfoState> {
         ? 'An error occurred while loading info.'
         : 'Произошла ошибка при загрузке информации.';
     emit(state.copyWith(
-        enumPageStatus: EnumPageStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

@@ -35,6 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "choose_language":
             MessageLookupByLibrary.simpleMessage("Choose language"),
         "choose_theme": MessageLookupByLibrary.simpleMessage("Choose theme"),
+        "crestTruncation":
+            MessageLookupByLibrary.simpleMessage("Crest truncation (H/8)"),
         "d1_es": MessageLookupByLibrary.simpleMessage("D1_es"),
         "d1_es_tolerance":
             MessageLookupByLibrary.simpleMessage("D1_es tolerance"),
@@ -67,6 +69,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "diam_minor": MessageLookupByLibrary.simpleMessage("Minor diameter"),
         "diameter": MessageLookupByLibrary.simpleMessage("Diameter"),
         "diameters": MessageLookupByLibrary.simpleMessage("Diameters"),
+        "eighthPitch":
+            MessageLookupByLibrary.simpleMessage("Eighth of pitch (P/8)"),
         "email_app_not_found":
             MessageLookupByLibrary.simpleMessage("No email application found."),
         "email_sending_failed":
@@ -81,6 +85,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "generalError": MessageLookupByLibrary.simpleMessage(
             "Oops, something went wrong!\nTry again\n"),
         "h": MessageLookupByLibrary.simpleMessage("h"),
+        "halfPitch": MessageLookupByLibrary.simpleMessage("Half pitch (P/2)"),
+        "heightOfFundamentalTriangle": MessageLookupByLibrary.simpleMessage(
+            "Height of the fundamental thread triangle (H)"),
         "inch": MessageLookupByLibrary.simpleMessage("inch"),
         "internal_thread": MessageLookupByLibrary.simpleMessage("internal"),
         "lang_en": MessageLookupByLibrary.simpleMessage("English"),
@@ -146,9 +153,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "pitch_diam_tolerance":
             MessageLookupByLibrary.simpleMessage("Pitch diameter tolerance"),
         "precision": MessageLookupByLibrary.simpleMessage("Precision"),
+        "quarterPitch":
+            MessageLookupByLibrary.simpleMessage("Quarter pitch (P/4)"),
         "rate_app": MessageLookupByLibrary.simpleMessage("Rate app"),
         "restartApp": MessageLookupByLibrary.simpleMessage("Restart App"),
         "retry": MessageLookupByLibrary.simpleMessage("Retry"),
+        "rootTruncation":
+            MessageLookupByLibrary.simpleMessage("Root truncation (H/4)"),
         "select_diameter":
             MessageLookupByLibrary.simpleMessage("Choose diameter"),
         "select_pitch": MessageLookupByLibrary.simpleMessage("Choose pitch"),
@@ -159,6 +170,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "thank_you": MessageLookupByLibrary.simpleMessage(
             "Thank you for using our application"),
+        "threadHoleDiameter":
+            MessageLookupByLibrary.simpleMessage("Hole diameter for thread"),
         "thread_class_tolerance":
             MessageLookupByLibrary.simpleMessage("Tolerance class"),
         "thread_depth": MessageLookupByLibrary.simpleMessage("Depth"),
@@ -178,9 +191,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "threads_info":
             MessageLookupByLibrary.simpleMessage("Thread information"),
         "tolerance": MessageLookupByLibrary.simpleMessage("Tolerance"),
+        "totalTruncation":
+            MessageLookupByLibrary.simpleMessage("Total truncation (3H/8)"),
         "type_pitch": MessageLookupByLibrary.simpleMessage("Pitch type"),
         "units": MessageLookupByLibrary.simpleMessage("Units"),
         "version": MessageLookupByLibrary.simpleMessage("Version"),
+        "workingHeightOfProfile": MessageLookupByLibrary.simpleMessage(
+            "Working height of the thread profile (5H/8)"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes")
       };
 }

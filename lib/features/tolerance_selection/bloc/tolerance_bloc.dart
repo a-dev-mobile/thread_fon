@@ -29,15 +29,14 @@ class ToleranceBloc extends Cubit<ToleranceState> {
   final LanguageBloc _languageBloc;
 
   Future<void> loadTolerances() async {
-    emit(state.copyWith(enumPageStatus: EnumPageStatus.loading));
+    emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
       final userSelection = await _localStorage.getUserSelection();
       final tolerances = await _repository.fetchTolerances(
         id: userSelection.id!,
         threadType: userSelection.threadType!.name,
       );
-      emit(state.copyWith(
-          enumPageStatus: EnumPageStatus.success, tolerances: tolerances));
+      emit(state.copyWith(enumPageStatus: EnumStatus.success, tolerances: tolerances));
     } catch (e, s) {
       _logger.e('Error loading tolerances', error: e, stackTrace: s);
       _setErrorState();
@@ -45,8 +44,7 @@ class ToleranceBloc extends Cubit<ToleranceState> {
   }
 
   Future<void> preparationNavigation(ToleranceModel selectedTolerance) async {
-    emit(
-        state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
 
     try {
       await _localStorage.updateUserSelection(
@@ -54,8 +52,7 @@ class ToleranceBloc extends Cubit<ToleranceState> {
           tolerance: selectedTolerance.tolerance,
         ),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
       await Future<void>.delayed(const Duration(milliseconds: 100));
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
@@ -70,8 +67,6 @@ class ToleranceBloc extends Cubit<ToleranceState> {
         ? 'An error occurred while loading tolerances.'
         : 'Произошла ошибка при загрузке допусков.';
     emit(state.copyWith(
-        enumPageStatus: EnumPageStatus.error,
-        errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

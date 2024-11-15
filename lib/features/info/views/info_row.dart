@@ -13,22 +13,38 @@ class InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    final labelStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
+          fontWeight: FontWeight.w600,
+        );
+    final valueStyle = Theme.of(context).textTheme.bodyMedium;
+
+    return Container(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey, 
+            width: 0.2,      
           ),
-          if (value != null)
-            Text(
-              value!,
-              style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          // Label
+          Expanded(
+            child: Text(
+              label,
+              style: labelStyle,
             ),
+          ),
+          const SizedBox(width: 8.0), // Отступ между label и value
+          // Value
+          Text(
+            value ?? '',
+            style: valueStyle,
+            textAlign: TextAlign.right,
+          ),
         ],
       ),
     );

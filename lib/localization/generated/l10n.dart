@@ -1190,6 +1190,96 @@ class GeneratedLocalization {
       args: [],
     );
   }
+
+  /// `Height of the fundamental thread triangle (H)`
+  String get heightOfFundamentalTriangle {
+    return Intl.message(
+      'Height of the fundamental thread triangle (H)',
+      name: 'heightOfFundamentalTriangle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Working height of the thread profile (5H/8)`
+  String get workingHeightOfProfile {
+    return Intl.message(
+      'Working height of the thread profile (5H/8)',
+      name: 'workingHeightOfProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Crest truncation (H/8)`
+  String get crestTruncation {
+    return Intl.message(
+      'Crest truncation (H/8)',
+      name: 'crestTruncation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Root truncation (H/4)`
+  String get rootTruncation {
+    return Intl.message(
+      'Root truncation (H/4)',
+      name: 'rootTruncation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total truncation (3H/8)`
+  String get totalTruncation {
+    return Intl.message(
+      'Total truncation (3H/8)',
+      name: 'totalTruncation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Half pitch (P/2)`
+  String get halfPitch {
+    return Intl.message(
+      'Half pitch (P/2)',
+      name: 'halfPitch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quarter pitch (P/4)`
+  String get quarterPitch {
+    return Intl.message(
+      'Quarter pitch (P/4)',
+      name: 'quarterPitch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Eighth of pitch (P/8)`
+  String get eighthPitch {
+    return Intl.message(
+      'Eighth of pitch (P/8)',
+      name: 'eighthPitch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hole diameter for thread`
+  String get threadHoleDiameter {
+    return Intl.message(
+      'Hole diameter for thread',
+      name: 'threadHoleDiameter',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate

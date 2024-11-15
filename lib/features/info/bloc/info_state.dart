@@ -6,15 +6,14 @@ class InfoState with _$InfoState {
     InfoModel? model,
     String? svgData,
     String? svgDataNoDimensions,
-    @Default(false) bool isSvgDataLoaded,
-    @Default(EnumPageStatus.loading) EnumPageStatus enumPageStatus,
-    @Default(EnumNavigationStatus.initial)
-    EnumNavigationStatus enumNavigationStatus,
+    @Default(EnumStatus.initial) EnumStatus svgRequestStatus,
+    @Default(EnumStatus.initial) EnumStatus enumPageStatus,
+    @Default(EnumNavigationStatus.initial) EnumNavigationStatus enumNavigationStatus,
     String? errorMsg,
+    String? svgErrorMsg,
     @Default(EnumUnits.mm) EnumUnits units,
     @Default(3) int precision,
   }) = _InfoState;
 
-  factory InfoState.fromJson(Map<String, dynamic> json) =>
-      _$InfoStateFromJson(json);
+  factory InfoState.fromJson(Map<String, dynamic> json) => _$InfoStateFromJson(json);
 }

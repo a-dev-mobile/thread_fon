@@ -4,13 +4,11 @@ part of 'diameter_bloc.dart';
 class DiameterState with _$DiameterState {
   const factory DiameterState({
     @Default([]) List<DiameterModel> diameters,
-    @Default(EnumPageStatus.initial) EnumPageStatus enumPageStatus,
-    @Default(EnumNavigationStatus.initial)
-    EnumNavigationStatus enumNavigationStatus,
+    @Default(EnumStatus.initial) EnumStatus enumPageStatus,
+    @Default(EnumNavigationStatus.initial) EnumNavigationStatus enumNavigationStatus,
     String? errorMsg,
     @Default(0.0) double scrollPosition,
   }) = _DiameterState;
 
-  factory DiameterState.fromJson(Map<String, dynamic> json) =>
-      _$DiameterStateFromJson(json);
+  factory DiameterState.fromJson(Map<String, dynamic> json) => _$DiameterStateFromJson(json);
 }
