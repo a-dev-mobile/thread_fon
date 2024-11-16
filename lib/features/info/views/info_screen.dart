@@ -59,6 +59,11 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.watch<InfoBloc>();
+    final state = bloc.state;
+    final localization = context.l10n;
+
+    // Screen dimensions
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final svgWidth = 785.0;
@@ -68,29 +73,17 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     final maxOverlayHeight = screenHeight * 0.4;
     final overlayHeight = calculatedOverlayHeight > maxOverlayHeight ? maxOverlayHeight : calculatedOverlayHeight;
 
-    // context.select((InfoBloc bloc) => bloc.state.enumPageStatus);
-    final bloc = context.watch<InfoBloc>();
-    _logger.d('--InfoScreen: build()');
-    final state = bloc.state;
     return BlocListener<InfoBloc, InfoState>(
       listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
         // Handle side effects if needed
       },
       child: Scaffold(
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () {
-        //     context.read<LanguageBloc>().toggle();
-        //     context.read<ThemeBloc>().toggle();
-        //     context.read<InfoBloc>().load();
-        //   },
-        //   child: const Icon(Icons.navigate_next),
-        // ),
         body: Stack(
           clipBehavior: Clip.none,
           children: [
-            // Main scrollable content
-            _buildMainContent(bloc, context, overlayHeight, svgWidth, svgHeight),
+            // Main content
+            _buildContent(bloc, context, overlayHeight, svgWidth, svgHeight),
             // SVG Overlay
             if (_isSvgOverlayVisible)
               SvgOverlay(
@@ -131,9 +124,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     );
   }
 
-  Widget _buildMainContent(
-      InfoBloc bloc, BuildContext context, double overlayHeight, double svgWidth, double svgHeight) {
-    final localization = context.l10n;
+  Widget _buildContent(InfoBloc bloc, BuildContext context, double overlayHeight, double svgWidth, double svgHeight) {
     final state = bloc.state;
 
     switch (state.enumPageStatus) {
@@ -148,71 +139,76 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
         );
 
       case EnumStatus.success:
-        return CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              title: Text(localization.threads_info),
-              floating: true,
-              snap: true,
-              actions: [
-                IconButton(
-                  icon: const Icon(FontAwesomeIcons.compassDrafting),
-                  onPressed: () {
-                    setState(() {
-                      _isSvgOverlayVisible = !_isSvgOverlayVisible;
-                    });
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.settings),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return UnitsPrecisionDialog(
-                          units: state.units,
-                          precision: state.precision,
-                          onApply: (selectedUnits, selectedPrecision) {
-                            bloc.updateUnitsPrecision(
-                              units: selectedUnits,
-                              precision: selectedPrecision,
-                            );
-                          },
+        return _buildSuccessContent(context, state, bloc, overlayHeight);
+    }
+  }
+
+  Widget _buildSuccessContent(BuildContext context, InfoState state, InfoBloc bloc, double overlayHeight) {
+    final localization = context.l10n;
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          title: Text(localization.threads_info),
+          floating: true,
+          snap: true,
+          actions: [
+            IconButton(
+              icon: const Icon(FontAwesomeIcons.compassDrafting),
+              onPressed: () {
+                setState(() {
+                  _isSvgOverlayVisible = !_isSvgOverlayVisible;
+                });
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return UnitsPrecisionDialog(
+                      units: state.units,
+                      precision: state.precision,
+                      onApply: (selectedUnits, selectedPrecision) {
+                        bloc.updateUnitsPrecision(
+                          units: selectedUnits,
+                          precision: selectedPrecision,
                         );
                       },
                     );
                   },
-                ),
-              ],
+                );
+              },
             ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate([
-                  InfoMainParameters(
-                    info: state.model!,
-                  ),
-                  const Divider(),
-                  InfoDiametersParameters(
-                    info: state.model!,
-                  ),
-                  const Divider(),
-                  InfoParameters(
-                    info: state.model!,
-                  ),
-                ]),
-              ),
-            ),
-            // Add extra space when overlay is visible
-            if (_isSvgOverlayVisible)
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: overlayHeight,
-                ),
-              ),
           ],
-        );
-    }
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          sliver: SliverList(
+            delegate: SliverChildListDelegate([
+              InfoMainParameters(
+                info: state.model!,
+              ),
+              const Divider(),
+              InfoDiametersParameters(
+                info: state.model!,
+              ),
+              const Divider(),
+              InfoParameters(
+                info: state.model!,
+              ),
+            ]),
+          ),
+        ),
+        // Add extra space when overlay is visible
+        if (_isSvgOverlayVisible)
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: overlayHeight,
+            ),
+          ),
+      ],
+    );
   }
 }
 

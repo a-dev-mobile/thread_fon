@@ -39,19 +39,9 @@ class InfoBloc extends Cubit<InfoState> {
       enumPageStatus: EnumStatus.loading,
       svgRequestStatus: EnumStatus.loading,
     ));
-    final userSelection = await _localStorage.getUserSelection();
-
     try {
-      final model = await _repository.fetchInfo(
-        diameter: userSelection.diameter!,
-        pitch: userSelection.pitch!,
-        threadType: userSelection.threadType!.name,
-        tolerance: userSelection.tolerance!,
-        language: _languageBloc.state.enumLang.name,
-        units: userSelection.units.name,
-        precision: userSelection.precision,
-      );
-
+      final userSelection = await _localStorage.getUserSelection();
+      final model = await _fetchModel(userSelection);
       emit(state.copyWith(
         enumPageStatus: EnumStatus.success,
         model: model,
@@ -67,39 +57,57 @@ class InfoBloc extends Cubit<InfoState> {
     }
   }
 
-// New method to fetch SVG data
+  Future<InfoModel> _fetchModel(UserSelection userSelection) async {
+    return await _repository.fetchInfo(
+      diameter: userSelection.diameter!,
+      pitch: userSelection.pitch!,
+      threadType: userSelection.threadType!.name,
+      tolerance: userSelection.tolerance!,
+      language: _languageBloc.state.enumLang.name,
+      units: userSelection.units.name,
+      precision: userSelection.precision,
+    );
+  }
+
   Future<void> _fetchSvgData(UserSelection userSelection) async {
-        emit(state.copyWith(svgRequestStatus: EnumStatus.loading));
+    emit(state.copyWith(svgRequestStatus: EnumStatus.loading));
     try {
-      final svgData = await _repository.fetchSvgData(
+      final theme = _themeBloc.state.themeMode.name;
+      final language = _languageBloc.state.enumLang.name;
+
+      final fetchSvgWithDimensions = _repository.fetchSvgData(
         diameter: userSelection.diameter!,
         pitch: userSelection.pitch!,
         threadType: userSelection.threadType!.name,
         tolerance: userSelection.tolerance!,
-        theme: _themeBloc.state.themeMode.name,
+        theme: theme,
         units: userSelection.units.name,
         precision: userSelection.precision,
-        language: _languageBloc.state.enumLang.name,
+        language: language,
         showDimensions: true,
       );
 
-      final svgDataNoDimensions = await _repository.fetchSvgData(
+      final fetchSvgWithoutDimensions = _repository.fetchSvgData(
         diameter: userSelection.diameter!,
         pitch: userSelection.pitch!,
         threadType: userSelection.threadType!.name,
         tolerance: userSelection.tolerance!,
-        theme: _themeBloc.state.themeMode.name,
+        theme: theme,
         units: userSelection.units.name,
         precision: userSelection.precision,
+        language: language,
         showDimensions: false,
-        language: _languageBloc.state.enumLang.name,
       );
 
-      // Update the state with SVG data
+      final results = await Future.wait([
+        fetchSvgWithDimensions,
+        fetchSvgWithoutDimensions,
+      ]);
+
       emit(state.copyWith(
-        svgData: svgData,
-        svgDataNoDimensions: svgDataNoDimensions,
-          svgRequestStatus: EnumStatus.success,
+        svgData: results[0],
+        svgDataNoDimensions: results[1],
+        svgRequestStatus: EnumStatus.success,
       ));
     } catch (e, s) {
       _logger.e('Error fetching SVG data', error: e, stackTrace: s);

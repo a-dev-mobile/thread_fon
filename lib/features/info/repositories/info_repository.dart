@@ -6,6 +6,7 @@ import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/info/models/info_model.dart';
 
 final _logger = LogService('info_repository');
+const String _baseUrl = 'https://thread.wayofdt.de/v1/metric';
 
 class InfoRepository {
   InfoRepository({
@@ -23,9 +24,10 @@ class InfoRepository {
     required int precision,
     required double diameter,
   }) async {
+    final endpoint = '$_baseUrl/info';
     try {
       final response = await _apiService.get(
-        'https://thread.wayofdt.de/v1/metric/info',
+        endpoint,
         queryParameters: {
           'tolerance': tolerance,
           'diameter': diameter,
@@ -38,22 +40,15 @@ class InfoRepository {
       );
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> rawData =
-            response.data as Map<String, dynamic>;
+        final Map<String, dynamic> rawData = response.data as Map<String, dynamic>;
         return InfoModel.fromJson(rawData);
       } else {
-        _logger.e(
-          'Failed to fetch info',
-          error: 'Status code: ${response.statusCode}',
-        );
-        throw Exception('Failed to fetch info');
+        final errorMessage = 'Failed to fetch info. Status code: ${response.statusCode}';
+        _logger.e(errorMessage);
+        throw Exception(errorMessage);
       }
     } catch (error, stackTrace) {
-      _logger.e(
-        'Error fetching info',
-        error: error,
-        stackTrace: stackTrace,
-      );
+      _logger.e('Error fetching info', error: error, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -69,9 +64,10 @@ class InfoRepository {
     required int precision,
     bool showDimensions = true,
   }) async {
+    final endpoint = '$_baseUrl/thread-svg';
     try {
       final response = await _apiService.get(
-        'https://thread.wayofdt.de/v1/metric/thread-svg',
+        endpoint,
         queryParameters: {
           'tolerance': tolerance,
           'type': threadType,
@@ -87,21 +83,14 @@ class InfoRepository {
       );
 
       if (response.statusCode == 200) {
-        final svgData = response.data as String;
-        return svgData;
+        return response.data as String;
       } else {
-        _logger.e(
-          'Failed to fetch SVG data',
-          error: 'Status code: ${response.statusCode}',
-        );
-        throw Exception('Failed to fetch SVG data');
+        final errorMessage = 'Failed to fetch SVG data. Status code: ${response.statusCode}';
+        _logger.e(errorMessage);
+        throw Exception(errorMessage);
       }
     } catch (error, stackTrace) {
-      _logger.e(
-        'Error fetching SVG data',
-        error: error,
-        stackTrace: stackTrace,
-      );
+      _logger.e('Error fetching SVG data', error: error, stackTrace: stackTrace);
       rethrow;
     }
   }
