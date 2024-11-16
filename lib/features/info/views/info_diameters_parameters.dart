@@ -24,7 +24,7 @@ class InfoDiametersParameters extends StatelessWidget {
         children: [
           if (info.threadType == EnumThreadType.female)
             _DiameterSection(
-              title: '${localization.diam_minor} (D1)',
+              title: 'D1 - ${localization.diam_minor}',
               diameter: info.minorDiamD1,
               dEs: info.d1Es,
               dEi: info.d1Ei,
@@ -32,9 +32,9 @@ class InfoDiametersParameters extends StatelessWidget {
               avg: info.minorDiamAvg,
               max: info.minorDiamMax,
             ),
-             if (info.threadType == EnumThreadType.male) ...[
+          if (info.threadType == EnumThreadType.male) ...[
             _DiameterSection(
-            title: '${localization.diam_major} (d)',
+              title: 'd - ${localization.diam_major}',
               diameter: info.diameter,
               dEs: info.dEs,
               dEi: info.dEi,
@@ -42,7 +42,7 @@ class InfoDiametersParameters extends StatelessWidget {
               avg: info.majorDiamAvg,
               max: info.majorDiamMax,
             ),
-               ],
+          ],
           const SizedBox(height: 10.0),
           if (info.holeDiameter != null) ...[
             InfoRow(
@@ -52,7 +52,7 @@ class InfoDiametersParameters extends StatelessWidget {
             const SizedBox(height: 10.0),
           ],
           _DiameterSection(
-            title: '${localization.diam_middle} ${info.threadType == EnumThreadType.female ? '(D2)' : '(d2)'}',
+            title: '${info.threadType == EnumThreadType.female ? 'D2' : 'd2'} - ${localization.diam_middle}',
             diameter: info.pitchDiamD2,
             dEs: info.d2Es,
             dEi: info.d2Ei,
@@ -61,14 +61,9 @@ class InfoDiametersParameters extends StatelessWidget {
             max: info.pitchDiamMax,
           ),
           const SizedBox(height: 10.0),
-
-
-
-
-
           if (info.threadType == EnumThreadType.male)
             _DiameterSection(
-              title: '${localization.diam_minor} (d1)',
+              title: 'd1 - ${localization.diam_minor}',
               diameter: info.minorDiamD1,
               dEs: info.d1Es,
               dEi: info.d1Ei,
@@ -76,23 +71,15 @@ class InfoDiametersParameters extends StatelessWidget {
               avg: info.minorDiamAvg,
               max: info.minorDiamMax,
             ),
-
-
-
-
-
-
           if (info.threadType == EnumThreadType.female) ...[
-
             _DiameterSection(
-              title: '${localization.diam_major} (D)',
+              title: 'D - ${localization.diam_major}',
               diameter: info.diameter,
             ),
           ],
           if (info.threadType == EnumThreadType.male) ...[
- 
             _DiameterSection(
-              title: 'Внутренний диаметр по дну впадины (d3)',
+              title: localization.d3_label,
               diameter: info.minorDiamD3,
               dEs: info.d3Es,
               dEi: info.d3Ei,
@@ -153,7 +140,8 @@ class _DiameterSection extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                 ),
-              ),SizedBox(width: 8.0),
+              ),
+              SizedBox(width: 8.0),
               _DiameterItem(
                 diameter: diameter,
                 dEs: dEs,
@@ -206,11 +194,11 @@ class _DiameterItem extends StatelessWidget {
                 dEs != null && dEs != 0 ? dEs.toString() : '',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
-              if(dEi != null && dEi != 0)
-              Text(
-                 dEi.toString(),
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
+              if (dEi != null && dEi != 0)
+                Text(
+                  dEi.toString(),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
             ],
           ),
         ],

@@ -1280,6 +1280,56 @@ class GeneratedLocalization {
       args: [],
     );
   }
+
+  /// `d3 - Internal diameter at the bottom of the groove`
+  String get d3_label {
+    return Intl.message(
+      'd3 - Internal diameter at the bottom of the groove',
+      name: 'd3_label',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cmin - Minimum truncation of thread crest`
+  String get cmin_label {
+    return Intl.message(
+      'Cmin - Minimum truncation of thread crest',
+      name: 'cmin_label',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cmax - Maximum truncation of thread crest`
+  String get cmax_label {
+    return Intl.message(
+      'Cmax - Maximum truncation of thread crest',
+      name: 'cmax_label',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rmax - Maximum rounding radius of the thread groove`
+  String get rmax_label {
+    return Intl.message(
+      'Rmax - Maximum rounding radius of the thread groove',
+      name: 'rmax_label',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rmin - Minimum rounding radius of the thread groove`
+  String get rmin_label {
+    return Intl.message(
+      'Rmin - Minimum rounding radius of the thread groove',
+      name: 'rmin_label',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate

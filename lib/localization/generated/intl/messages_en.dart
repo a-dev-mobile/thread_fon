@@ -35,6 +35,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "choose_language":
             MessageLookupByLibrary.simpleMessage("Choose language"),
         "choose_theme": MessageLookupByLibrary.simpleMessage("Choose theme"),
+        "cmax_label": MessageLookupByLibrary.simpleMessage(
+            "Cmax - Maximum truncation of thread crest"),
+        "cmin_label": MessageLookupByLibrary.simpleMessage(
+            "Cmin - Minimum truncation of thread crest"),
         "crestTruncation":
             MessageLookupByLibrary.simpleMessage("Crest truncation (H/8)"),
         "d1_es": MessageLookupByLibrary.simpleMessage("D1_es"),
@@ -46,6 +50,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "d2_es": MessageLookupByLibrary.simpleMessage("D2_es"),
         "d2_es_tolerance":
             MessageLookupByLibrary.simpleMessage("D2_es tolerance"),
+        "d3_label": MessageLookupByLibrary.simpleMessage(
+            "d3 - Internal diameter at the bottom of the groove"),
         "d_ei": MessageLookupByLibrary.simpleMessage("D_ei"),
         "d_ei_tolerance":
             MessageLookupByLibrary.simpleMessage("D_ei tolerance"),
@@ -158,6 +164,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "rate_app": MessageLookupByLibrary.simpleMessage("Rate app"),
         "restartApp": MessageLookupByLibrary.simpleMessage("Restart App"),
         "retry": MessageLookupByLibrary.simpleMessage("Retry"),
+        "rmax_label": MessageLookupByLibrary.simpleMessage(
+            "Rmax - Maximum rounding radius of the thread groove"),
+        "rmin_label": MessageLookupByLibrary.simpleMessage(
+            "Rmin - Minimum rounding radius of the thread groove"),
         "rootTruncation":
             MessageLookupByLibrary.simpleMessage("Root truncation (H/4)"),
         "select_diameter":

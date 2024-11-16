@@ -34,14 +34,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "choose_language":
             MessageLookupByLibrary.simpleMessage("Выберите язык"),
         "choose_theme": MessageLookupByLibrary.simpleMessage("Выберите тему"),
+        "cmax_label": MessageLookupByLibrary.simpleMessage(
+            "Cmax - Максимальная усечённость вершины резьбы"),
+        "cmin_label": MessageLookupByLibrary.simpleMessage(
+            "Cmin - Минимальная усечённость вершины резьбы"),
         "crestTruncation": MessageLookupByLibrary.simpleMessage(
-            "Снятие на вершине резьбы (H/8)"),
+            "H/8 - Снятие на вершине резьбы"),
         "d1_es": MessageLookupByLibrary.simpleMessage("D1_es"),
         "d1_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D1_es"),
         "d2_ei": MessageLookupByLibrary.simpleMessage("D2_ei"),
         "d2_ei_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D2_ei"),
         "d2_es": MessageLookupByLibrary.simpleMessage("D2_es"),
         "d2_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D2_es"),
+        "d3_label": MessageLookupByLibrary.simpleMessage(
+            "d3 - Внутренний диаметр по дну впадины"),
         "d_ei": MessageLookupByLibrary.simpleMessage("D_ei"),
         "d_ei_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D_ei"),
         "d_es": MessageLookupByLibrary.simpleMessage("D_es"),
@@ -65,7 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "diameter": MessageLookupByLibrary.simpleMessage("Диаметр"),
         "diameters": MessageLookupByLibrary.simpleMessage("Диаметры"),
         "eighthPitch": MessageLookupByLibrary.simpleMessage(
-            "Одна восьмая шага резьбы (P/8)"),
+            "P/8 - Одна восьмая шага резьбы"),
         "email_app_not_found": MessageLookupByLibrary.simpleMessage(
             "Приложение для электронной почты не найдено."),
         "email_sending_failed": MessageLookupByLibrary.simpleMessage(
@@ -81,9 +87,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Произошла непредвиденная ошибка."),
         "h": MessageLookupByLibrary.simpleMessage("h"),
         "halfPitch":
-            MessageLookupByLibrary.simpleMessage("Полушаг резьбы (P/2)"),
+            MessageLookupByLibrary.simpleMessage("P/2 - Полушаг резьбы"),
         "heightOfFundamentalTriangle": MessageLookupByLibrary.simpleMessage(
-            "Высота исходного треугольника резьбы (H)"),
+            "H - Высота исходного треугольника резьбы"),
         "inch": MessageLookupByLibrary.simpleMessage("дюйм"),
         "internal_thread": MessageLookupByLibrary.simpleMessage("внутренняя"),
         "lang_en": MessageLookupByLibrary.simpleMessage("Английский"),
@@ -150,13 +156,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Допуск среднего диаметра"),
         "precision": MessageLookupByLibrary.simpleMessage("Точность"),
         "quarterPitch":
-            MessageLookupByLibrary.simpleMessage("Четверть шага резьбы (P/4)"),
+            MessageLookupByLibrary.simpleMessage("P/4 - Четверть шага резьбы"),
         "rate_app": MessageLookupByLibrary.simpleMessage("Оценить приложение"),
         "restartApp":
             MessageLookupByLibrary.simpleMessage("Перезапустить приложение"),
         "retry": MessageLookupByLibrary.simpleMessage("Повторить"),
+        "rmax_label": MessageLookupByLibrary.simpleMessage(
+            "Rmax - Максимальный радиус закругления впадины резьбы"),
+        "rmin_label": MessageLookupByLibrary.simpleMessage(
+            "Rmin - Минимальный радиус закругления впадины резьбы"),
         "rootTruncation": MessageLookupByLibrary.simpleMessage(
-            "Снятие на впадине резьбы (H/4)"),
+            "H/4 - Снятие на впадине резьбы"),
         "select_diameter":
             MessageLookupByLibrary.simpleMessage("Выберите диаметр"),
         "select_pitch": MessageLookupByLibrary.simpleMessage("Выберите шаг"),
@@ -189,12 +199,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Информация о резьбе"),
         "tolerance": MessageLookupByLibrary.simpleMessage("Допуск"),
         "totalTruncation":
-            MessageLookupByLibrary.simpleMessage("Суммарное снятие (3H/8)"),
+            MessageLookupByLibrary.simpleMessage("3H/8 - Суммарное снятие"),
         "type_pitch": MessageLookupByLibrary.simpleMessage("Тип шага"),
         "units": MessageLookupByLibrary.simpleMessage("Единицы измерения"),
         "version": MessageLookupByLibrary.simpleMessage("Версия"),
         "workingHeightOfProfile": MessageLookupByLibrary.simpleMessage(
-            "Рабочая высота профиля резьбы (5H/8)"),
+            "5H/8 - Рабочая высота профиля резьбы"),
         "yes": MessageLookupByLibrary.simpleMessage("Да")
       };
 }

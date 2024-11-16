@@ -45,23 +45,9 @@ Rmax – Maximum root radius of thread
 Rmin – Minimum root radius of thread
 
  */
-                    InfoRow(
-            label: 'Rmax – Максимальный радиус закругления впадины резьбы',
-            value: info.rMax.toString(),
-          ),
-                              InfoRow(
-            label: 'Rmin – Минимальный радиус закругления впадины резьбы',
-            value: info.rMin.toString(),
-          ),
+          
 
-                InfoRow(
-            label: 'Cmin — Минимальная усечённость вершины резьбы',
-            value: info.cMax.toString(),
-          ),
-          InfoRow(
-            label: 'Cmax — Максимальная усечённость вершины резьбы',
-            value: info.cMin.toString(),
-          ),
+            
           InfoRow(
             label: localization.halfPitch,
             value: info.pitchDiv2.toString(),
@@ -73,6 +59,26 @@ Rmin – Minimum root radius of thread
           InfoRow(
             label: localization.eighthPitch,
             value: info.pitchDiv8.toString(),
+          ),
+InfoRow(
+            label: localization.d3_label,
+            value: info.minorDiamD3.toString(),
+          ),
+          InfoRow(
+            label: localization.cmin_label,
+            value: info.cMin.toString(),
+          ),
+          InfoRow(
+            label: localization.cmax_label,
+            value: info.cMax.toString(),
+          ),
+          InfoRow(
+            label: localization.rmax_label,
+            value: info.rMax.toString(),
+          ),
+          InfoRow(
+            label: localization.rmin_label,
+            value: info.rMin.toString(),
           ),
         ],
       ),
