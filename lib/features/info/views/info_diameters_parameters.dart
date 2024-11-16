@@ -32,6 +32,17 @@ class InfoDiametersParameters extends StatelessWidget {
               avg: info.minorDiamAvg,
               max: info.minorDiamMax,
             ),
+             if (info.threadType == EnumThreadType.male) ...[
+            _DiameterSection(
+            title: '${localization.diam_major} (d)',
+              diameter: info.diameter,
+              dEs: info.dEs,
+              dEi: info.dEi,
+              min: info.majorDiamMin,
+              avg: info.majorDiamAvg,
+              max: info.majorDiamMax,
+            ),
+               ],
           const SizedBox(height: 10.0),
           if (info.holeDiameter != null) ...[
             InfoRow(
@@ -50,6 +61,27 @@ class InfoDiametersParameters extends StatelessWidget {
             max: info.pitchDiamMax,
           ),
           const SizedBox(height: 10.0),
+
+
+
+
+
+          if (info.threadType == EnumThreadType.male)
+            _DiameterSection(
+              title: '${localization.diam_minor} (d1)',
+              diameter: info.minorDiamD1,
+              dEs: info.d1Es,
+              dEi: info.d1Ei,
+              min: info.minorDiamMin,
+              avg: info.minorDiamAvg,
+              max: info.minorDiamMax,
+            ),
+
+
+
+
+
+
           if (info.threadType == EnumThreadType.female) ...[
 
             _DiameterSection(
@@ -62,8 +94,8 @@ class InfoDiametersParameters extends StatelessWidget {
             _DiameterSection(
               title: 'Внутренний диаметр по дну впадины (d3)',
               diameter: info.minorDiamD3,
-              dEs: info.dEs,
-              dEi: info.d1Ei,
+              dEs: info.d3Es,
+              dEi: info.d3Ei,
               min: info.minorDiamMinD3,
               avg: info.minorDiamAvgD3,
               max: info.minorDiamMaxD3,
@@ -112,13 +144,16 @@ class _DiameterSection extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+              ),SizedBox(width: 8.0),
               _DiameterItem(
                 diameter: diameter,
                 dEs: dEs,
@@ -171,8 +206,9 @@ class _DiameterItem extends StatelessWidget {
                 dEs != null && dEs != 0 ? dEs.toString() : '',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
+              if(dEi != null && dEi != 0)
               Text(
-                dEi != null && dEi != 0 ? dEi.toString() : '',
+                 dEi.toString(),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],

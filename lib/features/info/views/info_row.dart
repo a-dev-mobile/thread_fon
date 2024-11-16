@@ -13,6 +13,10 @@ class InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (value == null) {
+      return const SizedBox.shrink(); 
+    }
+
     final labelStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
           fontWeight: FontWeight.w600,
         );
@@ -23,8 +27,8 @@ class InfoRow extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Colors.grey, 
-            width: 0.2,      
+            color: Colors.grey,
+            width: 0.2,
           ),
         ),
       ),
@@ -41,7 +45,7 @@ class InfoRow extends StatelessWidget {
           const SizedBox(width: 8.0), // Отступ между label и value
           // Value
           Text(
-            value ?? '',
+            value!,
             style: valueStyle,
             textAlign: TextAlign.right,
           ),

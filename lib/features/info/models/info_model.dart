@@ -20,6 +20,10 @@ class InfoModel with _$InfoModel {
     @JsonKey(name: 'range_main') int? rangeMain,
     @JsonKey(name: 'range_sub') num? rangeSub,
     @JsonKey(name: 'hole_diameter') num? holeDiameter,
+    @JsonKey(name: 'cmax') num? cMax,
+    @JsonKey(name: 'cmin') num? cMin,
+        @JsonKey(name: 'rmax') num? rMax,
+    @JsonKey(name: 'rmin') num? rMin,
     @JsonKey(name: 'minor_diam_max_d3') required num minorDiamMaxD3,
     @JsonKey(name: 'minor_diam_min_d3') required num minorDiamMinD3,
     @JsonKey(name: 'minor_diam_avg_d3')required num minorDiamAvgD3,
@@ -50,6 +54,8 @@ class InfoModel with _$InfoModel {
     @JsonKey(name: 'd1_ei') num? d1Ei,
     @JsonKey(name: 'd2_es') num? d2Es,
     @JsonKey(name: 'd2_ei') num? d2Ei,
+        @JsonKey(name: 'd3_es') num? d3Es,
+    @JsonKey(name: 'd3_ei') num? d3Ei,
   }) = _InfoModel;
 
   factory InfoModel.fromJson(Map<String, dynamic> json) =>

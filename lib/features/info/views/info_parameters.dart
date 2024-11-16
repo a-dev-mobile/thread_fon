@@ -15,41 +15,7 @@ class InfoParameters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = context.l10n;
-/* 
-Summary of Names in the Metric Thread Handbook:
 
-𝐻
-/
-8
-H/8: Снятие на вершине резьбы (Crest Truncation)
-𝐻
-/
-4
-H/4: Снятие на впадине резьбы (Root Truncation)
-3
-𝐻
-/
-8
-3H/8: Суммарное снятие (Total Truncation)
-5
-𝐻
-/
-8
-5H/8: Рабочая высота профиля резьбы (Working Height of the Thread Profile)
-𝑃
-/
-2
-P/2: Полушаг резьбы (Half Pitch)
-𝑃
-/
-4
-P/4: Четверть шага резьбы (Quarter Pitch)
-𝑃
-/
-8
-P/8: Одна восьмая шага резьбы (Eighth of Pitch)
-
- */
     return MyCard(
       child: Column(
         children: [
@@ -72,6 +38,29 @@ P/8: Одна восьмая шага резьбы (Eighth of Pitch)
           InfoRow(
             label: localization.totalTruncation,
             value: info.threeHDiv8.toString(),
+          ),
+
+/* 
+Rmax – Maximum root radius of thread
+Rmin – Minimum root radius of thread
+
+ */
+                    InfoRow(
+            label: 'Rmax – Максимальный радиус закругления впадины резьбы',
+            value: info.rMax.toString(),
+          ),
+                              InfoRow(
+            label: 'Rmin – Минимальный радиус закругления впадины резьбы',
+            value: info.rMin.toString(),
+          ),
+
+                InfoRow(
+            label: 'Cmin — Минимальная усечённость вершины резьбы',
+            value: info.cMax.toString(),
+          ),
+          InfoRow(
+            label: 'Cmax — Максимальная усечённость вершины резьбы',
+            value: info.cMin.toString(),
           ),
           InfoRow(
             label: localization.halfPitch,
