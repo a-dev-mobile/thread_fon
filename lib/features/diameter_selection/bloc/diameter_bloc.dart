@@ -28,7 +28,7 @@ class DiameterBloc extends Cubit<DiameterState> {
   final LocalStorage _localStorage;
   final LanguageBloc _languageBloc;
 
-  Future<void> loadDiameters() async {
+  Future<void> load() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
       final diameters = await _repository.fetchDiameters();

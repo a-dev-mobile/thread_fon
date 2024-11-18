@@ -22,11 +22,11 @@ class InfoModel with _$InfoModel {
     @JsonKey(name: 'hole_diameter') num? holeDiameter,
     @JsonKey(name: 'cmax') num? cMax,
     @JsonKey(name: 'cmin') num? cMin,
-        @JsonKey(name: 'rmax') num? rMax,
+    @JsonKey(name: 'rmax') num? rMax,
     @JsonKey(name: 'rmin') num? rMin,
     @JsonKey(name: 'minor_diam_max_d3') required num minorDiamMaxD3,
     @JsonKey(name: 'minor_diam_min_d3') required num minorDiamMinD3,
-    @JsonKey(name: 'minor_diam_avg_d3')required num minorDiamAvgD3,
+    @JsonKey(name: 'minor_diam_avg_d3') required num minorDiamAvgD3,
     @JsonKey(name: 'three_h_div_8') required num threeHDiv8,
     @JsonKey(name: 'five_h_div_8') required num fiveHDiv8,
     @JsonKey(name: 'h_div_4') required num hDiv4,
@@ -54,7 +54,7 @@ class InfoModel with _$InfoModel {
     @JsonKey(name: 'd1_ei') num? d1Ei,
     @JsonKey(name: 'd2_es') num? d2Es,
     @JsonKey(name: 'd2_ei') num? d2Ei,
-        @JsonKey(name: 'd3_es') num? d3Es,
+    @JsonKey(name: 'd3_es') num? d3Es,
     @JsonKey(name: 'd3_ei') num? d3Ei,
   }) = _InfoModel;
 

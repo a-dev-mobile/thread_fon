@@ -11,8 +11,8 @@ class InfoDiametersParameters extends StatelessWidget {
 
   const InfoDiametersParameters({
     required this.info,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,8 @@ class InfoDiametersParameters extends StatelessWidget {
     final List<Widget> diameterSections = [];
 
     // Добавляем первую секцию диаметров в зависимости от типа резьбы
-    diameterSections.add(_buildPrimaryDiameterSection(prefix, isFemale, localization));
+    diameterSections
+        .add(_buildPrimaryDiameterSection(prefix, isFemale, localization));
 
     // Добавляем отступ
     diameterSections.add(const SizedBox(height: 10.0));
@@ -51,7 +52,8 @@ class InfoDiametersParameters extends StatelessWidget {
     diameterSections.add(const SizedBox(height: 10.0));
 
     // Добавляем дополнительные секции в зависимости от типа резьбы
-    diameterSections.addAll(_buildAdditionalSections(prefix, isFemale, localization));
+    diameterSections
+        .addAll(_buildAdditionalSections(prefix, isFemale, localization));
 
     return MyCard(
       onTap: null,
@@ -63,7 +65,8 @@ class InfoDiametersParameters extends StatelessWidget {
   }
 
   // Метод для создания основной секции диаметра
-  Widget _buildPrimaryDiameterSection(String prefix, bool isFemale, GeneratedLocalization localization) {
+  Widget _buildPrimaryDiameterSection(
+      String prefix, bool isFemale, GeneratedLocalization localization) {
     if (isFemale) {
       return _DiameterSection(
         title: '${prefix}1 - ${localization.diam_minor}',
@@ -76,7 +79,7 @@ class InfoDiametersParameters extends StatelessWidget {
       );
     } else {
       return _DiameterSection(
-        title: '${prefix} - ${localization.diam_major}',
+        title: '$prefix - ${localization.diam_major}',
         diameter: info.diameter,
         dEs: info.dEs,
         dEi: info.dEi,
@@ -88,7 +91,8 @@ class InfoDiametersParameters extends StatelessWidget {
   }
 
   // Метод для создания дополнительных секций диаметров
-  List<Widget> _buildAdditionalSections(String prefix, bool isFemale, GeneratedLocalization localization) {
+  List<Widget> _buildAdditionalSections(
+      String prefix, bool isFemale, GeneratedLocalization localization) {
     List<Widget> sections = [];
 
     if (isFemale) {
@@ -141,8 +145,7 @@ class _DiameterSection extends StatelessWidget {
     this.min,
     this.avg,
     this.max,
-    Key? key,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -209,8 +212,7 @@ class _DiameterItem extends StatelessWidget {
     required this.diameter,
     this.dEs,
     this.dEi,
-    Key? key,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -253,8 +255,7 @@ class _ValueItem extends StatelessWidget {
   const _ValueItem({
     required this.value,
     required this.label,
-    Key? key,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -280,8 +281,7 @@ class _AdditionalInfoItem extends StatelessWidget {
   const _AdditionalInfoItem({
     required this.label,
     required this.value,
-    Key? key,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

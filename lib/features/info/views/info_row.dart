@@ -14,7 +14,7 @@ class InfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (value == null) {
-      return const SizedBox.shrink(); 
+      return const SizedBox.shrink();
     }
 
     final labelStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(

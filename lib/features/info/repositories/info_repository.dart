@@ -40,10 +40,12 @@ class InfoRepository {
       );
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> rawData = response.data as Map<String, dynamic>;
+        final Map<String, dynamic> rawData =
+            response.data as Map<String, dynamic>;
         return InfoModel.fromJson(rawData);
       } else {
-        final errorMessage = 'Failed to fetch info. Status code: ${response.statusCode}';
+        final errorMessage =
+            'Failed to fetch info. Status code: ${response.statusCode}';
         _logger.e(errorMessage);
         throw Exception(errorMessage);
       }
@@ -85,12 +87,14 @@ class InfoRepository {
       if (response.statusCode == 200) {
         return response.data as String;
       } else {
-        final errorMessage = 'Failed to fetch SVG data. Status code: ${response.statusCode}';
+        final errorMessage =
+            'Failed to fetch SVG data. Status code: ${response.statusCode}';
         _logger.e(errorMessage);
         throw Exception(errorMessage);
       }
     } catch (error, stackTrace) {
-      _logger.e('Error fetching SVG data', error: error, stackTrace: stackTrace);
+      _logger.e('Error fetching SVG data',
+          error: error, stackTrace: stackTrace);
       rethrow;
     }
   }

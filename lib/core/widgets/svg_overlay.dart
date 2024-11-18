@@ -9,7 +9,7 @@ import 'package:threadfon/localization/l10n_extension.dart';
 import 'overlay_button.dart';
 
 class SvgOverlay extends StatelessWidget {
-    final String? svgData;
+  final String? svgData;
   final EnumStatus svgRequestStatus;
   final String? svgErrorMsg;
 
@@ -32,17 +32,19 @@ class SvgOverlay extends StatelessWidget {
     required this.onClose,
     required this.onExpand,
     required this.onSwitchSvg,
-    required this.showDimensions, required this.svgRequestStatus, this.svgErrorMsg,
+    required this.showDimensions,
+    required this.svgRequestStatus,
+    this.svgErrorMsg,
   });
 
   @override
   Widget build(BuildContext context) {
-        Widget content;
+    Widget content;
     final localization = context.l10n;
-      switch (svgRequestStatus) {
+    switch (svgRequestStatus) {
       case EnumStatus.initial:
       case EnumStatus.loading:
-        content =MyLoadWidget();
+        content = MyLoadWidget();
         break;
       case EnumStatus.success:
         content = SvgPicture.string(
@@ -53,7 +55,6 @@ class SvgOverlay extends StatelessWidget {
       case EnumStatus.error:
         content = Center(child: Text(svgErrorMsg ?? 'Error loading SVG'));
         break;
-
     }
     return Positioned(
       bottom: 0,

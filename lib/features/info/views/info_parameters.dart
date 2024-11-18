@@ -10,8 +10,8 @@ class InfoParameters extends StatelessWidget {
 
   const InfoParameters({
     required this.info,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,8 @@ class InfoParameters extends StatelessWidget {
   }
 
   // Метод для получения списка параметров
-  List<_Parameter> _getParameters(GeneratedLocalization localization, InfoModel info) {
+  List<_Parameter> _getParameters(
+      GeneratedLocalization localization, InfoModel info) {
     return [
       _Parameter(
         label: localization.heightOfFundamentalTriangle,

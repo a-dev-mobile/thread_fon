@@ -119,7 +119,8 @@ class InfoBloc extends Cubit<InfoState> {
   }
 
   Future<void> preparationNavigation() async {
-    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
+    emit(
+        state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
 
     try {
       await _localStorage.updateUserSelection(
@@ -127,7 +128,8 @@ class InfoBloc extends Cubit<InfoState> {
           id: state.model?.id,
         ),
       );
-      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(
+          enumNavigationStatus: EnumNavigationStatus.navigation));
       await Future<void>.delayed(const Duration(milliseconds: 100));
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
@@ -136,8 +138,10 @@ class InfoBloc extends Cubit<InfoState> {
     }
   }
 
-  Future<void> updateUnitsPrecision({required EnumUnits units, required int precision}) async {
-    await _localStorage.updateUserSelection((current) => current.copyWith(units: units, precision: precision));
+  Future<void> updateUnitsPrecision(
+      {required EnumUnits units, required int precision}) async {
+    await _localStorage.updateUserSelection(
+        (current) => current.copyWith(units: units, precision: precision));
     await load();
   }
 
@@ -147,6 +151,8 @@ class InfoBloc extends Cubit<InfoState> {
         ? 'An error occurred while loading info.'
         : 'Произошла ошибка при загрузке информации.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error,
+        errorMsg: errorMsg,
+        enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

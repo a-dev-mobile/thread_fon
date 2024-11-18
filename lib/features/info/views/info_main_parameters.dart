@@ -20,12 +20,12 @@ class InfoMainParameters extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = context.l10n;
     final units = context.read<InfoBloc>().state.units;
-    final unitsText = units == EnumUnits.mm ? localization.mm : localization.inch;
+    final unitsText =
+        units == EnumUnits.mm ? localization.mm : localization.inch;
 
     return MyCard(
       child: Column(
         children: [
-
           Text(
             info.designation,
             textAlign: TextAlign.center,
@@ -59,9 +59,11 @@ class InfoMainParameters extends StatelessWidget {
           // Конец добавления
           const SizedBox(height: 16.0),
           const Divider(),
-            InfoRow(
+          InfoRow(
             label: 'Тип резьбы',
-            value: info.threadType == EnumThreadType.female ? 'Внутренняя' : 'Внешняя',
+            value: info.threadType == EnumThreadType.female
+                ? 'Внутренняя'
+                : 'Внешняя',
           ),
           InfoRow(
             label: localization.thread_diam_nom,
@@ -83,7 +85,6 @@ class InfoMainParameters extends StatelessWidget {
             label: localization.type_pitch,
             value: info.typePitchDescription,
           ),
-        
         ],
       ),
     );
