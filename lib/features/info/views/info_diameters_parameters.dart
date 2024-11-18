@@ -99,7 +99,16 @@ class InfoDiametersParameters extends StatelessWidget {
       sections.add(_DiameterSection(
         title: '$prefix - ${localization.diam_major}',
         diameter: info.diameter,
+        dEs: info.dEs,
+        dEi: info.dEi,
+        min: info.majorDiamMin,
+        avg: info.majorDiamAvg,
+        max: info.majorDiamMax,
       ));
+
+
+
+      
     } else {
       sections.add(_DiameterSection(
         title: '${prefix}1 - ${localization.diam_minor}',

@@ -101,8 +101,7 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
                   case EnumStatus.error:
                     return MyErrorWidget(
                       errorMsg: state.errorMsg,
-                      onRetry: () =>
-                          context.read<DiameterBloc>().load(),
+                      onRetry: () => context.read<DiameterBloc>().load(),
                     );
                   case EnumStatus.success:
                     WidgetsBinding.instance.addPostFrameCallback((_) {
