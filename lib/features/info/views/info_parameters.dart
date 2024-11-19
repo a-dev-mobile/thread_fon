@@ -76,10 +76,6 @@ class InfoParameters extends StatelessWidget {
         value: info.pitchDiv8,
       ),
       _Parameter(
-        label: localization.d3_label,
-        value: info.minorDiamD3,
-      ),
-      _Parameter(
         label: localization.cmin_label,
         value: info.cMin,
       ),

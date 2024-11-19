@@ -105,10 +105,6 @@ class InfoDiametersParameters extends StatelessWidget {
         avg: info.majorDiamAvg,
         max: info.majorDiamMax,
       ));
-
-
-
-      
     } else {
       sections.add(_DiameterSection(
         title: '${prefix}1 - ${localization.diam_minor}',
@@ -228,6 +224,12 @@ class _DiameterItem extends StatelessWidget {
     final hasDEs = dEs != null && dEs != 0;
     final hasDEi = dEi != null && dEi != 0;
 
+    // Метод для форматирования значения с префиксом
+    String formatValue(num? value) {
+      if (value == null) return '';
+      return value > 0 ? '+${value.toString()}' : value.toString();
+    }
+
     return Row(
       children: [
         Text(
@@ -241,12 +243,12 @@ class _DiameterItem extends StatelessWidget {
             children: [
               if (hasDEs)
                 Text(
-                  dEs.toString(),
+                  formatValue(dEs),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               if (hasDEi)
                 Text(
-                  dEi.toString(),
+                  formatValue(dEi),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
             ],
