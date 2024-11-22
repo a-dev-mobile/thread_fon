@@ -7,8 +7,8 @@ import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/blurred_overlay.dart';
+import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
-import 'package:threadfon/core/widgets/my_load_widget.dart';
 import 'package:threadfon/features/info/views/info_screen.dart';
 import 'package:threadfon/features/tolerance_selection/bloc/tolerance_bloc.dart';
 import 'package:threadfon/features/tolerance_selection/repositories/tolerance_repository.dart';
@@ -46,8 +46,7 @@ class _ToleranceSelectionView extends StatelessWidget {
     final localization = context.l10n;
 
     return BlocListener<ToleranceBloc, ToleranceState>(
-      listenWhen: (previous, current) =>
-          previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
         switch (state.enumNavigationStatus) {
           case EnumNavigationStatus.preparation:
@@ -74,27 +73,23 @@ class _ToleranceSelectionView extends StatelessWidget {
                 switch (state.enumPageStatus) {
                   case EnumStatus.loading:
                   case EnumStatus.initial:
-                    return const MyLoadWidget();
+                    return const LoadingWidget();
 
                   case EnumStatus.error:
                     return MyErrorWidget(
                       errorMsg: state.errorMsg,
-                      onRetry: () =>
-                          context.read<ToleranceBloc>().loadTolerances(),
+                      onRetry: () => context.read<ToleranceBloc>().loadTolerances(),
                     );
 
                   case EnumStatus.success:
                     return ListView.separated(
                       itemCount: state.tolerances.length,
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 8.0),
+                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
                       itemBuilder: (context, index) {
                         final tolerance = state.tolerances[index];
                         return ToleranceChoiceCard(
                           tolerance: tolerance,
-                          onTap: () => context
-                              .read<ToleranceBloc>()
-                              .preparationNavigation(tolerance),
+                          onTap: () => context.read<ToleranceBloc>().preparationNavigation(tolerance),
                         );
                       },
                     );
@@ -104,7 +99,7 @@ class _ToleranceSelectionView extends StatelessWidget {
             BlocBuilder<ToleranceBloc, ToleranceState>(
               builder: (context, state) {
                 if (state.enumNavigationStatus.isPreparation) {
-                  return const BlurredOverlay();
+                  return const LoadingWidget(isBlurred: true);
                 } else {
                   return const SizedBox.shrink();
                 }
