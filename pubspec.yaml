@@ -78,7 +78,7 @@ flutter:
   assets:
     - assets/
     - assets/svg/
-
+    - assets/splash_icon/
 flutter_intl:
   enabled: true
   class_name: GeneratedLocalization
@@ -90,4 +90,12 @@ flutter_intl:
 flutter_gen:
   output: lib/core/constant
   line_length: 120
-  #
+
+
+flutter_native_splash:
+  color: "#042a49" # Задайте желаемый цвет фона
+  image: assets/splash_icon/splash.png
+  android_12:
+    image: assets/splash_icon/icon.png
+    icon_background_color: "#042a49"
+

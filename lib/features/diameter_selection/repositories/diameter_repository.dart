@@ -15,7 +15,7 @@ class DiameterRepository {
   Future<List<DiameterModel>> fetchDiameters({String order = 'asc'}) async {
     try {
       final response = await _apiService.get(
-        'https://thread.wayofdt.de/v1/metric/diameters',
+        'https://thread-api.wayofdt.de/v1/metric/diameters',
         queryParameters: {'order': order},
       );
 
