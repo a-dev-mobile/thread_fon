@@ -13,7 +13,7 @@ class SettingsDrawer extends StatelessWidget {
   Future<void> _sendEmail(BuildContext context) async {
     final Uri emailUri = Uri(
       scheme: 'mailto',
-      path: 'wayofdt@gmail.com', // Updated email address
+      path: 'wayofdt@gmail.com',
       queryParameters: {
         'subject': 'Feedback',
       },
@@ -94,7 +94,8 @@ class SettingsDrawer extends StatelessWidget {
               groupValue: languageBloc.state.enumLang,
               onChanged: (value) {
                 languageBloc.setLanguage(value!);
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(); 
+
               },
             );
           }).toList(),
@@ -112,25 +113,39 @@ class SettingsDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          // Кастомный заголовок Drawer
+          // Улучшенный кастомный заголовок Drawer
           Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-            color: Theme.of(context).primaryColor,
+            padding: EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).primaryColorDark,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  Icons.menu_book,
-                  size: 80,
-                  color: Colors.white,
-                ),
-                SizedBox(height: 10),
+                // Название приложения
                 Text(
                   localization.app_name,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 28,
                     fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8),
+                // Дополнительный подзаголовок или описание
+                Text(
+                  localization.settings_header_subtitle,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 16,
                   ),
                 ),
               ],
@@ -168,6 +183,7 @@ class SettingsDrawer extends StatelessWidget {
               '© ${DateTime.now().year} ThreadApp',
               style: TextStyle(
                 fontSize: 12,
+                color: Colors.grey,
               ),
             ),
           ),

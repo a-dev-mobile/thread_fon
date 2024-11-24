@@ -35,7 +35,7 @@ class _SplashView extends StatelessWidget {
     return BlocListener<SplashBloc, SplashState>(
       listener: (context, state) {
         if (state.enumNavigationStatus == EnumNavigationStatus.navigation) {
-          context.pushNamed(ThreadTypeSelectionScreen.name);
+          context.goNamed(ThreadTypeSelectionScreen.name);
         }
       },
       child: LoadingWidget(),

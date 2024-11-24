@@ -46,8 +46,6 @@ class DiameterBloc extends Cubit<DiameterState> {
 
   Future<void> preparationNavigation(
       DiameterModel selectedDiameter, double scrollPosition) async {
-    emit(
-        state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
     await _localStorage.setScrollPosition(scrollPosition);
     try {
       await _localStorage.updateUserSelection(

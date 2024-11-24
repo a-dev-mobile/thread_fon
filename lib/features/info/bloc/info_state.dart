@@ -6,8 +6,8 @@ class InfoState with _$InfoState {
     InfoModel? model,
     String? svgData,
     String? svgDataNoDimensions,
-    @Default(EnumStatus.initial) EnumStatus svgRequestStatus,
-    @Default(EnumStatus.initial) EnumStatus enumPageStatus,
+    @Default(EnumStatus.loading) EnumStatus svgRequestStatus,
+    @Default(EnumStatus.loading) EnumStatus enumPageStatus,
     @Default(EnumNavigationStatus.initial)
     EnumNavigationStatus enumNavigationStatus,
     String? errorMsg,

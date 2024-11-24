@@ -38,8 +38,7 @@ class SplashBloc extends Cubit<SplashState> {
   }
 
   Future<void> preparationNavigation() async {
-    emit(
-        state.copyWith(enumNavigationStatus: EnumNavigationStatus.preparation));
+
 
     try {
       emit(state.copyWith(

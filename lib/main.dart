@@ -10,8 +10,6 @@ import 'package:threadfon/app/router/router.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/app_bloc_observer.dart';
-// Импорт LogBatcher
-import 'package:threadfon/core/services/logging/log_batcher.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/restart_widget.dart';
 
@@ -24,9 +22,6 @@ Future<void> main() async {
       // Инициализация Flutter и сохранение splash-экрана внутри зоны
       var widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
       FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
-      // Инициализация LogBatcher (singleton)
-      LogBatcher();
 
       try {
         // Инициализация локального хранилища
@@ -120,7 +115,7 @@ class _AppLifecycleObserver extends WidgetsBindingObserver {
     if (state == AppLifecycleState.detached ||
         state == AppLifecycleState.inactive) {
       // Call dispose() when the app is closing
-      LogBatcher().dispose();
+
     }
   }
 }

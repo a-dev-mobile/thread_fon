@@ -178,6 +178,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "send_email": MessageLookupByLibrary.simpleMessage("Send email"),
         "setting": MessageLookupByLibrary.simpleMessage("Settings"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "settings_header_subtitle": MessageLookupByLibrary.simpleMessage(
+            "It is recommended to verify results with official references."),
         "thank_you": MessageLookupByLibrary.simpleMessage(
             "Thank you for using our application"),
         "threadHoleDiameter":

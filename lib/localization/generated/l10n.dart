@@ -1330,6 +1330,16 @@ class GeneratedLocalization {
       args: [],
     );
   }
+
+  /// `It is recommended to verify results with official references.`
+  String get settings_header_subtitle {
+    return Intl.message(
+      'It is recommended to verify results with official references.',
+      name: 'settings_header_subtitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate

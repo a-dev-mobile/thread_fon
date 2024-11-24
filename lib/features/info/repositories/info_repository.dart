@@ -66,7 +66,7 @@ class InfoRepository {
     required int precision,
     bool showDimensions = true,
   }) async {
-    final endpoint = '$_baseUrl/thread-svg';
+    final endpoint = '$_baseUrl/svg';
     try {
       final response = await _apiService.get(
         endpoint,
@@ -79,7 +79,7 @@ class InfoRepository {
           'units': units,
           'precision': precision,
           'language': language,
-          'showDimensions': showDimensions.toString(),
+          'show_dimensions': showDimensions.toString(),
         },
         options: Options(responseType: ResponseType.plain),
       );

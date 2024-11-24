@@ -4,7 +4,7 @@ part of 'diameter_bloc.dart';
 class DiameterState with _$DiameterState {
   const factory DiameterState({
     @Default([]) List<DiameterModel> diameters,
-    @Default(EnumStatus.initial) EnumStatus enumPageStatus,
+    @Default(EnumStatus.loading) EnumStatus enumPageStatus,
     @Default(EnumNavigationStatus.initial)
     EnumNavigationStatus enumNavigationStatus,
     String? errorMsg,

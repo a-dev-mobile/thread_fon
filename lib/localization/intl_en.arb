@@ -129,6 +129,7 @@
   "cmin_label": "Cmin - Minimum truncation of thread crest",
   "cmax_label": "Cmax - Maximum truncation of thread crest",
   "rmax_label": "Rmax - Maximum rounding radius of the thread groove",
-  "rmin_label": "Rmin - Minimum rounding radius of the thread groove"
+  "rmin_label": "Rmin - Minimum rounding radius of the thread groove",
+  "settings_header_subtitle": "It is recommended to verify results with official references."
 
 }
