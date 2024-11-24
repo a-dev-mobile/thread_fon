@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
-
 
 class CustomPrinter extends LogPrinter {
   CustomPrinter(this.fileName)
@@ -34,9 +32,6 @@ class LogService {
   final Logger _logger;
   final String _fileName;
 
-
-  
-
   void t(dynamic message,
       {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
     _logger.t(
@@ -44,7 +39,6 @@ class LogService {
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-   
   }
 
   void d(dynamic message,
@@ -54,7 +48,6 @@ class LogService {
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-  
   }
 
   void i(dynamic message,
@@ -64,7 +57,6 @@ class LogService {
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-    
   }
 
   void w(dynamic message,
@@ -74,7 +66,6 @@ class LogService {
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-   
   }
 
   void e(dynamic message,
@@ -84,7 +75,6 @@ class LogService {
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-  
   }
 
   void f(dynamic message,
@@ -94,6 +84,5 @@ class LogService {
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-   
   }
 }

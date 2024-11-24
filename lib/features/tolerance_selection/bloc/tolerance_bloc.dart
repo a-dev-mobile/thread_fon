@@ -45,8 +45,6 @@ class ToleranceBloc extends Cubit<ToleranceState> {
   }
 
   Future<void> preparationNavigation(ToleranceModel selectedTolerance) async {
-
-
     try {
       await _localStorage.updateUserSelection(
         (current) => current.copyWith(

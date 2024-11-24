@@ -119,8 +119,6 @@ class InfoBloc extends Cubit<InfoState> {
   }
 
   Future<void> preparationNavigation() async {
-
-
     try {
       await _localStorage.updateUserSelection(
         (current) => current.copyWith(

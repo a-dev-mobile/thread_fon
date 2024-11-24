@@ -94,8 +94,7 @@ class SettingsDrawer extends StatelessWidget {
               groupValue: languageBloc.state.enumLang,
               onChanged: (value) {
                 languageBloc.setLanguage(value!);
-                Navigator.of(context).pop(); 
-
+                Navigator.of(context).pop();
               },
             );
           }).toList(),

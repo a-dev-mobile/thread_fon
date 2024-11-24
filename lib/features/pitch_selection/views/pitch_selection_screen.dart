@@ -6,7 +6,6 @@ import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
-import 'package:threadfon/core/widgets/blurred_overlay.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/features/pitch_selection/bloc/pitch_bloc.dart';
@@ -47,7 +46,8 @@ class _PitchSelectionView extends StatelessWidget {
     final localization = context.l10n;
 
     return BlocListener<PitchBloc, PitchState>(
-      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) =>
+          previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
         switch (state.enumNavigationStatus) {
           case EnumNavigationStatus.preparation:
@@ -86,14 +86,18 @@ class _PitchSelectionView extends StatelessWidget {
                   case EnumStatus.success:
                     return ListView.separated(
                       itemCount: state.pitches.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 8.0),
                       itemBuilder: (context, index) {
                         final pitch = state.pitches[index];
                         return PitchChoiceCard(
                           pitch: pitch,
-                          onTap: pitch.enumPitchDataType == EnumPitchDataType.value
-                              ? () => context.read<PitchBloc>().preparationNavigation(pitch)
-                              : null,
+                          onTap:
+                              pitch.enumPitchDataType == EnumPitchDataType.value
+                                  ? () => context
+                                      .read<PitchBloc>()
+                                      .preparationNavigation(pitch)
+                                  : null,
                         );
                       },
                     );

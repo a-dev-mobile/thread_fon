@@ -7,7 +7,6 @@ import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/widgets/base_screen.dart';
-import 'package:threadfon/core/widgets/blurred_overlay.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/features/diameter_selection/views/metric_diameter_screen.dart';
@@ -48,7 +47,8 @@ class _ThreadTypeSelectionView extends StatelessWidget {
     return DrawerScreen(
         title: localization.thread_type,
         body: BlocListener<ThreadTypeBloc, ThreadTypeState>(
-          listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+          listenWhen: (previous, current) =>
+              previous.enumNavigationStatus != current.enumNavigationStatus,
           listener: (context, state) {
             if (state.enumNavigationStatus.isNavigation) {
               Navigator.push(
@@ -77,19 +77,25 @@ class _ThreadTypeSelectionView extends StatelessWidget {
                     case EnumStatus.success:
                       return Center(
                         child: Column(
-                          mainAxisSize: MainAxisSize.min, // Центрирует по вертикали
+                          mainAxisSize:
+                              MainAxisSize.min, // Центрирует по вертикали
                           children: state.threadTypes.map((threadType) {
-                            final label = threadType.enumThreadType == EnumThreadType.female
+                            final label = threadType.enumThreadType ==
+                                    EnumThreadType.female
                                 ? localization.internal_thread
                                 : localization.external_thread;
                             return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: FractionallySizedBox(
-                                widthFactor: 0.8, // Устанавливает ширину 80% от ширины родителя
+                                widthFactor:
+                                    0.8, // Устанавливает ширину 80% от ширины родителя
                                 child: ThreadTypeChoiceCard(
                                   svgAssetPath: threadType.svgAssetPath,
                                   label: label,
-                                  onTap: () => context.read<ThreadTypeBloc>().preparationNavigation(threadType),
+                                  onTap: () => context
+                                      .read<ThreadTypeBloc>()
+                                      .preparationNavigation(threadType),
                                 ),
                               ),
                             );

@@ -6,7 +6,6 @@ import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
-import 'package:threadfon/core/widgets/blurred_overlay.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/features/diameter_selection/bloc/diameter_bloc.dart';
@@ -70,7 +69,8 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
     final localization = context.l10n;
 
     return BlocListener<DiameterBloc, DiameterState>(
-      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) =>
+          previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
         if (state.enumNavigationStatus.isNavigation) {
           Navigator.push(
@@ -89,7 +89,8 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
           children: [
             // Основной контент
             BlocBuilder<DiameterBloc, DiameterState>(
-              buildWhen: (previous, current) => previous.enumPageStatus != current.enumPageStatus,
+              buildWhen: (previous, current) =>
+                  previous.enumPageStatus != current.enumPageStatus,
               builder: (context, state) {
                 switch (state.enumPageStatus) {
                   case EnumStatus.initial:
@@ -110,14 +111,16 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
                     return ListView.separated(
                       controller: _scrollController,
                       itemCount: state.diameters.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 8.0),
                       itemBuilder: (context, index) {
                         final diameter = state.diameters[index];
                         return DiameterChoiceCard(
                           info: diameter.info,
                           onTap: () => context
                               .read<DiameterBloc>()
-                              .preparationNavigation(diameter, _scrollController.position.pixels),
+                              .preparationNavigation(
+                                  diameter, _scrollController.position.pixels),
                         );
                       },
                     );

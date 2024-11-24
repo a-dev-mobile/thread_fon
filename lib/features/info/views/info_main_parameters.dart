@@ -60,11 +60,10 @@ class InfoMainParameters extends StatelessWidget {
           const SizedBox(height: 16.0),
           const Divider(),
           InfoRow(
-            label: localization.thread_type,
-            value: info.threadType == EnumThreadType.female
-                ? localization.internal_thread
-                : localization.external_thread
-          ),
+              label: localization.thread_type,
+              value: info.threadType == EnumThreadType.female
+                  ? localization.internal_thread
+                  : localization.external_thread),
           InfoRow(
             label: localization.thread_diam_nom,
             value: info.diameter.toString(),

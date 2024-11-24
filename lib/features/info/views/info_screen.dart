@@ -9,7 +9,6 @@ import 'package:threadfon/core/constant/enum_units.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
-import 'package:threadfon/core/widgets/blurred_overlay.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/core/widgets/svg_overlay.dart';
@@ -71,10 +70,13 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     final svgAspectRatio = svgWidth / svgHeight;
     final calculatedOverlayHeight = screenWidth / svgAspectRatio;
     final maxOverlayHeight = screenHeight * 0.4;
-    final overlayHeight = calculatedOverlayHeight > maxOverlayHeight ? maxOverlayHeight : calculatedOverlayHeight;
+    final overlayHeight = calculatedOverlayHeight > maxOverlayHeight
+        ? maxOverlayHeight
+        : calculatedOverlayHeight;
 
     return BlocListener<InfoBloc, InfoState>(
-      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) =>
+          previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
         // Handle side effects if needed
       },
@@ -87,7 +89,9 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
             // SVG Overlay
             if (_isSvgOverlayVisible)
               SvgOverlay(
-                svgData: _showDimensions ? state.svgData : state.svgDataNoDimensions!,
+                svgData: _showDimensions
+                    ? state.svgData
+                    : state.svgDataNoDimensions!,
                 svgRequestStatus: state.svgRequestStatus,
                 svgErrorMsg: state.svgErrorMsg,
                 overlayHeight: overlayHeight,
@@ -104,7 +108,9 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => FullScreenSvgView(
-                        svgData: _showDimensions ? state.svgData! : state.svgDataNoDimensions!,
+                        svgData: _showDimensions
+                            ? state.svgData!
+                            : state.svgDataNoDimensions!,
                       ),
                     ),
                   );
@@ -117,14 +123,16 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                 showDimensions: _showDimensions,
               ),
             // Blurred overlay when in preparation status
-            if (state.enumNavigationStatus.isPreparation)  const LoadingWidget(isBlurred: true),
+            if (state.enumNavigationStatus.isPreparation)
+              const LoadingWidget(isBlurred: true),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildContent(InfoBloc bloc, BuildContext context, double overlayHeight, double svgWidth, double svgHeight) {
+  Widget _buildContent(InfoBloc bloc, BuildContext context,
+      double overlayHeight, double svgWidth, double svgHeight) {
     final state = bloc.state;
 
     switch (state.enumPageStatus) {
@@ -143,7 +151,8 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     }
   }
 
-  Widget _buildSuccessContent(BuildContext context, InfoState state, InfoBloc bloc, double overlayHeight) {
+  Widget _buildSuccessContent(BuildContext context, InfoState state,
+      InfoBloc bloc, double overlayHeight) {
     final localization = context.l10n;
     return CustomScrollView(
       slivers: [
@@ -257,7 +266,9 @@ class _UnitsPrecisionDialogState extends State<UnitsPrecisionDialog> {
                 items: EnumUnits.values.map((EnumUnits units) {
                   return DropdownMenuItem<EnumUnits>(
                     value: units,
-                    child: Text(units == EnumUnits.mm ? localization.mm : localization.inch),
+                    child: Text(units == EnumUnits.mm
+                        ? localization.mm
+                        : localization.inch),
                   );
                 }).toList(),
                 onChanged: (EnumUnits? newValue) {

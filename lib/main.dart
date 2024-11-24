@@ -115,7 +115,6 @@ class _AppLifecycleObserver extends WidgetsBindingObserver {
     if (state == AppLifecycleState.detached ||
         state == AppLifecycleState.inactive) {
       // Call dispose() when the app is closing
-
     }
   }
 }
