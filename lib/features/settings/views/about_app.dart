@@ -6,7 +6,8 @@ import 'package:threadfon/localization/l10n_extension.dart';
 
 class AboutApp extends StatefulWidget {
   const AboutApp({super.key});
-
+  static const path = '/AboutApp';
+  static const name = 'AboutApp';
   @override
   _AboutAppState createState() => _AboutAppState();
 }

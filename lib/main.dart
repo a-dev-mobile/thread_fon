@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:isolate';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart'; // Добавлен импорт Crashlytics
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,8 +15,12 @@ import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/app_bloc_observer.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/restart_widget.dart';
+import 'package:threadfon/firebase_options.dart';
 
 final _logger = LogService('main');
+
+// Создание глобального экземпляра FirebaseAnalytics
+final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
 Future<void> main() async {
   // Обернуть всё в runZonedGuarded, включая инициализацию Flutter bindings
@@ -24,21 +31,40 @@ Future<void> main() async {
       FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
       try {
+        await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        );
+
+        // Инициализация Crashlytics
+        // Включаем сбор нефатальных ошибок
+        await FirebaseCrashlytics.instance
+            .setCrashlyticsCollectionEnabled(!kDebugMode);
+
+
+        // Передаём все необработанные асинхронные ошибки в Crashlytics
+        PlatformDispatcher.instance.onError = (error, stack) {
+          FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+          return true;
+        };
+
         // Инициализация локального хранилища
         final localStorage = LocalStorage(isShowLog: true);
         await localStorage.initialize();
 
-        // Настройка глобального обработчика ошибок Flutter
+        // Настройка глобального обработчика ошибок Flutter (сохранение существующей логики)
         FlutterError.onError = (details) {
           if (!kReleaseMode) {
             // В режиме разработки выводим ошибку в консоль
             FlutterError.dumpErrorToConsole(details);
           }
 
-          // Log the error
+          // Логируем ошибку
           _logger.e('FlutterError.onError',
               error: details.exception,
               stackTrace: details.stack ?? StackTrace.current);
+
+          // Также отправляем в Crashlytics
+          FirebaseCrashlytics.instance.recordFlutterFatalError(details);
         };
 
         // Установка предпочтительной ориентации экрана
@@ -46,8 +72,10 @@ Future<void> main() async {
         //   DeviceOrientation.portraitUp,
         //   DeviceOrientation.portraitDown,
         // ]);
+
         var languageState = await localStorage.getLanguageState();
         var themeState = await localStorage.getThemeState();
+
         // Запуск приложения с провайдерами
         Bloc.observer = const AppBlocObserver();
         runApp(
@@ -60,8 +88,11 @@ Future<void> main() async {
                 RepositoryProvider(
                   create: (context) => ApiService(),
                 ),
+                RepositoryProvider.value(
+                  value: analytics, // Добавляем FirebaseAnalytics в провайдеры
+                ),
                 RepositoryProvider(
-                  create: (context) => AppRouter(),
+                  create: (context) => AppRouter(analytics: analytics),
                 ),
               ],
               child: MyApp(
@@ -72,29 +103,31 @@ Future<void> main() async {
           ),
         );
       } on Exception catch (e, s) {
-        // Log exceptions from the try-catch block
+        // Логируем исключения из блока try-catch
         _logger.e('Exception in main', error: e, stackTrace: s);
+
+        // Отправляем исключение в Crashlytics
+        FirebaseCrashlytics.instance.recordError(e, s, fatal: true);
       } finally {
         // Удаление splash-экрана и логирование закрытия
         FlutterNativeSplash.remove();
         _logger.t('** close NATIVE splash**', includeStackTrace: false);
       }
 
-      // Обработка всех необработанных асинхронных ошибок
-      PlatformDispatcher.instance.onError = (error, stack) {
-        // Log the error
-        _logger.e('🚑 PlatformDispatcher.onError',
-            error: error, stackTrace: stack);
-        return true;
-      };
+      // Обработка всех необработанных асинхронных ошибок (уже настроено выше для Crashlytics)
+      // Поскольку мы уже установили PlatformDispatcher.instance.onError выше, этот блок можно удалить или оставить для дополнительной логики
 
-      // Handle errors from isolates
+      // Обработка ошибок из изолятов
       Isolate.current.addErrorListener(
         RawReceivePort((List<dynamic> errorAndStacktrace) {
           final error = errorAndStacktrace.first;
           final stackTrace = errorAndStacktrace.last as StackTrace;
 
           _logger.e('Isolate error', error: error, stackTrace: stackTrace);
+
+          // Отправляем ошибку в Crashlytics
+          FirebaseCrashlytics.instance
+              .recordError(error, stackTrace, fatal: true);
         }).sendPort,
       );
 
@@ -102,8 +135,11 @@ Future<void> main() async {
       WidgetsBinding.instance.addObserver(_AppLifecycleObserver());
     },
     (error, stack) {
-      // Log errors from runZonedGuarded
+      // Логируем ошибки из runZonedGuarded
       _logger.e('runZonedGuarded', error: error, stackTrace: stack);
+
+      // Отправляем ошибку в Crashlytics
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     },
   );
 }
@@ -114,7 +150,7 @@ class _AppLifecycleObserver extends WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.detached ||
         state == AppLifecycleState.inactive) {
-      // Call dispose() when the app is closing
+      // Вызов dispose() при закрытии приложения, если необходимо
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -61,6 +62,17 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     final bloc = context.watch<InfoBloc>();
     final state = bloc.state;
     final localization = context.l10n;
+    final analytics = RepositoryProvider.of<FirebaseAnalytics>(context);
+
+    // Логирование успешной загрузки или ошибки
+    if (state.enumPageStatus == EnumStatus.success) {
+      analytics.logEvent(name: 'info_load_success');
+    } else if (state.enumPageStatus == EnumStatus.error) {
+      analytics.logEvent(
+        name: 'info_load_error',
+        parameters: {'error_msg': state.errorMsg??''},
+      );
+    }
 
     // Screen dimensions
     final screenWidth = MediaQuery.of(context).size.width;
@@ -102,6 +114,9 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                   setState(() {
                     _isSvgOverlayVisible = false;
                   });
+
+                  // Логирование закрытия оверлея
+                  analytics.logEvent(name: 'svg_overlay_closed');
                 },
                 onExpand: () {
                   Navigator.push(
@@ -114,11 +129,20 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                       ),
                     ),
                   );
+
+                  // Логирование расширения оверлея
+                  analytics.logEvent(name: 'svg_overlay_expanded');
                 },
                 onSwitchSvg: () {
                   setState(() {
                     _showDimensions = !_showDimensions;
                   });
+
+                  // Логирование переключения SVG
+                  analytics.logEvent(
+                    name: 'svg_switched',
+                    parameters: {'show_dimensions': _showDimensions},
+                  );
                 },
                 showDimensions: _showDimensions,
               ),
@@ -143,7 +167,13 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
       case EnumStatus.error:
         return MyErrorWidget(
           errorMsg: state.errorMsg,
-          onRetry: () => bloc.load(),
+          onRetry: () {
+            bloc.load();
+
+            // Логирование попытки повторной загрузки
+            final analytics = RepositoryProvider.of<FirebaseAnalytics>(context);
+            analytics.logEvent(name: 'info_retry_load');
+          },
         );
 
       case EnumStatus.success:
@@ -167,6 +197,14 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                 setState(() {
                   _isSvgOverlayVisible = !_isSvgOverlayVisible;
                 });
+
+                // Логирование переключения видимости оверлея
+                final analytics =
+                    RepositoryProvider.of<FirebaseAnalytics>(context);
+                analytics.logEvent(
+                  name: 'toggle_svg_overlay',
+                  parameters: {'is_visible': _isSvgOverlayVisible},
+                );
               },
             ),
             IconButton(
@@ -182,6 +220,17 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                         bloc.updateUnitsPrecision(
                           units: selectedUnits,
                           precision: selectedPrecision,
+                        );
+
+                        // Логирование изменения единиц измерения и точности
+                        final analytics =
+                            RepositoryProvider.of<FirebaseAnalytics>(context);
+                        analytics.logEvent(
+                          name: 'units_precision_changed',
+                          parameters: {
+                            'units': selectedUnits.toString(),
+                            'precision': selectedPrecision,
+                          },
                         );
                       },
                     );

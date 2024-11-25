@@ -62,6 +62,10 @@ dependencies:
   dio: ^5.7.0
   connectivity_plus: ^6.1.0
   package_info_plus: ^8.1.1
+  firebase_core: ^3.8.0
+  firebase_analytics: ^11.3.5
+  firebase_crashlytics: ^4.1.5
+  firebase_app_installations: ^0.3.1
 dev_dependencies:
   intl_utils: ^2.8.7
   build_runner: ^2.4.13
@@ -94,9 +98,9 @@ flutter_gen:
 
 
 flutter_native_splash:
-  color: "#90A4AE" # Задайте желаемый цвет фона
-  image: assets/splash_icon/icon.png
+  color: "#042a49" # Задайте желаемый цвет фона
+  image: assets/png/icon.png
   android_12:
-    image: assets/splash_icon/icon.png
+    image: assets/png/icon.png
     icon_background_color: "#042a49"
 
