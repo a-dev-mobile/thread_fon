@@ -1,6 +1,3 @@
-// features/settings/views/settings_drawer.dart
-
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -266,8 +263,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                 ListTile(
                   leading: const Icon(Icons.build), // Иконка для резьбы
                   title: Text(localization.choose_thread),
-                  subtitle: Text(
-                      localization.metric_thread), // Отображаем текущий выбор
+                  subtitle: Text(localization.metric_thread), // Отображаем текущий выбор
                   onTap: () => _showThreadDialog(context),
                 ),
                 const Divider(),
@@ -302,12 +298,6 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                 color: Colors.grey,
               ),
             ),
-          ),
-          // Добавление кнопки для тестового сбоя (можно удалить в продакшене)
-          TextButton(
-            onPressed: () =>
-                  throw Exception(),
-            child: const Text("Throw Test Exception"),
           ),
         ],
       ),
