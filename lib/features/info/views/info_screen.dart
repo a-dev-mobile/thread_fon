@@ -53,7 +53,7 @@ class _MetricInfoView extends StatefulWidget {
 }
 
 class _MetricInfoViewState extends State<_MetricInfoView> {
-  bool _isSvgOverlayVisible = false;
+  bool _isSvgOverlayVisible = true;
   bool _showDimensions = true;
 
   @override

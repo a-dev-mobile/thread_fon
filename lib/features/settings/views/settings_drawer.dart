@@ -6,16 +6,26 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
+import 'package:threadfon/features/settings/views/about_app.dart'; // Импортируем экран AboutApp
 
-class SettingsDrawer extends StatelessWidget {
+class SettingsDrawer extends StatefulWidget {
   const SettingsDrawer({super.key});
 
+  @override
+  _SettingsDrawerState createState() => _SettingsDrawerState();
+}
+
+class _SettingsDrawerState extends State<SettingsDrawer> {
+  // Переменная для хранения текущего типа резьбы
+  String _selectedThreadType = 'metric_thread'; // Используем ключ локализации
+
+  /// Функция для отправки электронной почты
   Future<void> _sendEmail(BuildContext context) async {
     final Uri emailUri = Uri(
       scheme: 'mailto',
       path: 'wayofdt@gmail.com',
       queryParameters: {
-        'subject': 'Feedback',
+        'subject': 'Feedback ThreadFon',
       },
     );
     try {
@@ -27,19 +37,20 @@ class SettingsDrawer extends StatelessWidget {
         );
       }
     } catch (e) {
-      // Handle any exceptions
+      // Обработка исключений
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.email_sending_failed)),
       );
     }
   }
 
-  /// Displays a dialog to choose between Light and Dark themes.
+  /// Диалог выбора темы
   void _showThemeDialog(BuildContext context, ThemeBloc themeBloc) {
     final localization = context.l10n;
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
+      useRootNavigator: true,
+      builder: (dialogContext) => AlertDialog(
         title: Text(localization.choose_theme),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -49,8 +60,11 @@ class SettingsDrawer extends StatelessWidget {
               value: ThemeMode.light,
               groupValue: themeBloc.state.themeMode,
               onChanged: (value) {
-                themeBloc.setTheme(value!);
-                Navigator.of(context).pop();
+                if (value != null) {
+                  themeBloc.setTheme(value);
+                  Navigator.of(dialogContext).pop(); // Закрыть диалог
+                  Navigator.of(context).pop(); // Закрыть Drawer
+                }
               },
             ),
             RadioListTile<ThemeMode>(
@@ -58,8 +72,11 @@ class SettingsDrawer extends StatelessWidget {
               value: ThemeMode.dark,
               groupValue: themeBloc.state.themeMode,
               onChanged: (value) {
-                themeBloc.setTheme(value!);
-                Navigator.of(context).pop();
+                if (value != null) {
+                  themeBloc.setTheme(value);
+                  Navigator.of(dialogContext).pop(); // Закрыть диалог
+                  Navigator.of(context).pop(); // Закрыть Drawer
+                }
               },
             ),
           ],
@@ -68,12 +85,13 @@ class SettingsDrawer extends StatelessWidget {
     );
   }
 
-  /// Displays a dialog to choose the application language.
+  /// Диалог выбора языка
   void _showLanguageDialog(BuildContext context, LanguageBloc languageBloc) {
     final localization = context.l10n;
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
+      useRootNavigator: true,
+      builder: (dialogContext) => AlertDialog(
         title: Text(localization.choose_language),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -94,10 +112,43 @@ class SettingsDrawer extends StatelessWidget {
               groupValue: languageBloc.state.enumLang,
               onChanged: (value) {
                 languageBloc.setLanguage(value!);
-                Navigator.of(context).pop();
+                Navigator.of(dialogContext).pop(); // Закрыть диалог
+                Navigator.of(context).pop(); // Закрыть Drawer
               },
             );
           }).toList(),
+        ),
+      ),
+    );
+  }
+
+  /// Диалог выбора резьбы
+  void _showThreadDialog(BuildContext context) {
+    final localization = context.l10n;
+    showDialog(
+      context: context,
+      useRootNavigator: true,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(localization.choose_thread),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            RadioListTile<String>(
+              title: Text(localization.metric_thread),
+              value: localization.metric_thread,
+              groupValue: localization.metric_thread,
+              onChanged: (value) {
+                if (value != null) {
+                  setState(() {
+                    _selectedThreadType = 'metric_thread';
+                  });
+                  Navigator.of(dialogContext).pop(); // Закрыть диалог
+                  Navigator.of(context).pop(); // Закрыть Drawer
+                }
+              },
+            ),
+            // В будущем добавьте другие типы резьбы здесь
+          ],
         ),
       ),
     );
@@ -112,10 +163,10 @@ class SettingsDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          // Улучшенный кастомный заголовок Drawer
+          // Кастомный заголовок Drawer
           Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -132,17 +183,17 @@ class SettingsDrawer extends StatelessWidget {
                 // Название приложения
                 Text(
                   localization.app_name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 // Дополнительный подзаголовок или описание
                 Text(
                   localization.settings_header_subtitle,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white70,
                     fontSize: 16,
                   ),
@@ -155,21 +206,41 @@ class SettingsDrawer extends StatelessWidget {
             child: ListView(
               children: [
                 ListTile(
-                  leading: Icon(Icons.color_lens),
+                  leading: const Icon(Icons.color_lens),
                   title: Text(localization.choose_theme),
                   onTap: () => _showThemeDialog(context, themeBloc),
                 ),
-                Divider(),
+                const Divider(),
                 ListTile(
-                  leading: Icon(Icons.language),
+                  leading: const Icon(Icons.language),
                   title: Text(localization.choose_language),
                   onTap: () => _showLanguageDialog(context, languageBloc),
                 ),
-                Divider(),
+                const Divider(),
                 ListTile(
-                  leading: Icon(Icons.feedback),
-                  title: Text(localization.leave_feedback),
+                  leading: const Icon(Icons.build), // Иконка для резьбы
+                  title: Text(localization.choose_thread),
+                  subtitle: Text(localization.metric_thread), // Отображаем текущий выбор
+                  onTap: () => _showThreadDialog(context),
+                ),
+                const Divider(),
+                ListTile(
+                  leading: const Icon(Icons.feedback),
+                  title: Text(localization.suggest_improvement),
                   onTap: () => _sendEmail(context),
+                ),
+                const Divider(),
+                ListTile(
+                  leading: const Icon(Icons.info),
+                  title: Text(localization.about_app),
+                  onTap: () {
+                    Navigator.of(context).pop(); // Закрыть Drawer
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const AboutApp(),
+                      ),
+                    );
+                  },
                 ),
                 // Добавьте дополнительные пункты настроек здесь, если необходимо
               ],
@@ -179,8 +250,8 @@ class SettingsDrawer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              '© ${DateTime.now().year} ThreadApp',
-              style: TextStyle(
+              '© ${DateTime.now().year} ThreadFon',
+              style: const TextStyle(
                 fontSize: 12,
                 color: Colors.grey,
               ),

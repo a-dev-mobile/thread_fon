@@ -13,10 +13,9 @@
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
-final messages = MessageLookup();
+final messages = new MessageLookup();
 
-typedef MessageIfAbsent = String Function(
-    String messageStr, List<dynamic> args);
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
@@ -24,42 +23,47 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("About App"),
+        "about_app": MessageLookupByLibrary.simpleMessage("About App"),
         "additional_info":
-            MessageLookupByLibrary.simpleMessage("Additional information"),
+            MessageLookupByLibrary.simpleMessage("Additional Information"),
+        "app_description": MessageLookupByLibrary.simpleMessage(
+            "ThreadFon is your go-to reference for standard thread parameters and illustrative drawings."),
+        "app_icon_alt": MessageLookupByLibrary.simpleMessage("App Icon"),
         "app_lang":
-            MessageLookupByLibrary.simpleMessage("Application language"),
+            MessageLookupByLibrary.simpleMessage("Application Language"),
         "app_name": MessageLookupByLibrary.simpleMessage("ThreadFon"),
         "apply": MessageLookupByLibrary.simpleMessage("Apply"),
         "avg": MessageLookupByLibrary.simpleMessage("avg"),
         "bolt": MessageLookupByLibrary.simpleMessage("Bolt"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "choose_language":
-            MessageLookupByLibrary.simpleMessage("Choose language"),
-        "choose_theme": MessageLookupByLibrary.simpleMessage("Choose theme"),
+            MessageLookupByLibrary.simpleMessage("Choose Language"),
+        "choose_theme": MessageLookupByLibrary.simpleMessage("Choose Theme"),
+        "choose_thread": MessageLookupByLibrary.simpleMessage("Choose Thread"),
         "cmax_label": MessageLookupByLibrary.simpleMessage(
-            "Cmax - Maximum truncation of thread crest"),
+            "Cmax - Maximum Crest Truncation"),
         "cmin_label": MessageLookupByLibrary.simpleMessage(
-            "Cmin - Minimum truncation of thread crest"),
+            "Cmin - Minimum Crest Truncation"),
         "crestTruncation":
-            MessageLookupByLibrary.simpleMessage("Crest truncation (H/8)"),
+            MessageLookupByLibrary.simpleMessage("Crest Truncation (H/8)"),
         "d1_es": MessageLookupByLibrary.simpleMessage("D1_es"),
         "d1_es_tolerance":
-            MessageLookupByLibrary.simpleMessage("D1_es tolerance"),
+            MessageLookupByLibrary.simpleMessage("D1_es Tolerance"),
         "d2_ei": MessageLookupByLibrary.simpleMessage("D2_ei"),
         "d2_ei_tolerance":
-            MessageLookupByLibrary.simpleMessage("D2_ei tolerance"),
+            MessageLookupByLibrary.simpleMessage("D2_ei Tolerance"),
         "d2_es": MessageLookupByLibrary.simpleMessage("D2_es"),
         "d2_es_tolerance":
-            MessageLookupByLibrary.simpleMessage("D2_es tolerance"),
+            MessageLookupByLibrary.simpleMessage("D2_es Tolerance"),
         "d3_label": MessageLookupByLibrary.simpleMessage(
-            "d3 - Internal diameter at the bottom of the groove"),
+            "d3 - Internal Diameter at the Bottom of the Groove"),
         "d_ei": MessageLookupByLibrary.simpleMessage("D_ei"),
         "d_ei_tolerance":
-            MessageLookupByLibrary.simpleMessage("D_ei tolerance"),
+            MessageLookupByLibrary.simpleMessage("D_ei Tolerance"),
         "d_es": MessageLookupByLibrary.simpleMessage("D_es"),
         "d_es_tolerance":
-            MessageLookupByLibrary.simpleMessage("D_es tolerance"),
-        "dark_theme": MessageLookupByLibrary.simpleMessage("Dark theme"),
+            MessageLookupByLibrary.simpleMessage("D_es Tolerance"),
+        "dark_theme": MessageLookupByLibrary.simpleMessage("Dark Theme"),
         "dialog_about_app_1":
             MessageLookupByLibrary.simpleMessage("- Major diameter tolerances"),
         "dialog_about_app_2":
@@ -70,147 +74,151 @@ class MessageLookup extends MessageLookupByLibrary {
         "dialog_about_app_5":
             MessageLookupByLibrary.simpleMessage("Always check your result!"),
         "dialog_title_about_app": MessageLookupByLibrary.simpleMessage(
-            "With this application you can find out the basic parameters of the thread, as well as:"),
-        "diam_major": MessageLookupByLibrary.simpleMessage("Major diameter"),
-        "diam_middle": MessageLookupByLibrary.simpleMessage("Pitch diameter"),
-        "diam_minor": MessageLookupByLibrary.simpleMessage("Minor diameter"),
+            "With this application, you can find out the basic parameters of the thread, as well as:"),
+        "diam_major": MessageLookupByLibrary.simpleMessage("Major Diameter"),
+        "diam_middle": MessageLookupByLibrary.simpleMessage("Pitch Diameter"),
+        "diam_minor": MessageLookupByLibrary.simpleMessage("Minor Diameter"),
         "diameter": MessageLookupByLibrary.simpleMessage("Diameter"),
         "diameters": MessageLookupByLibrary.simpleMessage("Diameters"),
         "eighthPitch":
-            MessageLookupByLibrary.simpleMessage("Eighth of pitch (P/8)"),
+            MessageLookupByLibrary.simpleMessage("Eighth Pitch (P/8)"),
         "email_app_not_found":
             MessageLookupByLibrary.simpleMessage("No email application found."),
         "email_sending_failed":
             MessageLookupByLibrary.simpleMessage("Failed to send email."),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
-        "exit_app": MessageLookupByLibrary.simpleMessage("Exit app"),
+        "exit_app": MessageLookupByLibrary.simpleMessage("Exit App"),
         "exit_app_warning": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to quit the app?"),
-        "external_thread": MessageLookupByLibrary.simpleMessage("external"),
+        "external_thread":
+            MessageLookupByLibrary.simpleMessage("External Thread"),
         "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
         "g_thread_abrv": MessageLookupByLibrary.simpleMessage("G"),
         "generalError": MessageLookupByLibrary.simpleMessage(
-            "Oops, something went wrong!\nTry again\n"),
+            "Oops, something went wrong!\nPlease try again."),
         "h": MessageLookupByLibrary.simpleMessage("h"),
-        "halfPitch": MessageLookupByLibrary.simpleMessage("Half pitch (P/2)"),
+        "halfPitch": MessageLookupByLibrary.simpleMessage("Half Pitch (P/2)"),
         "heightOfFundamentalTriangle": MessageLookupByLibrary.simpleMessage(
-            "Height of the fundamental thread triangle (H)"),
+            "Height of the Fundamental Thread Triangle (H)"),
         "inch": MessageLookupByLibrary.simpleMessage("inch"),
-        "internal_thread": MessageLookupByLibrary.simpleMessage("internal"),
+        "internal_thread":
+            MessageLookupByLibrary.simpleMessage("Internal Thread"),
         "lang_en": MessageLookupByLibrary.simpleMessage("English"),
         "lang_ru": MessageLookupByLibrary.simpleMessage("Russian"),
         "language": MessageLookupByLibrary.simpleMessage("English"),
         "languageCode": MessageLookupByLibrary.simpleMessage("en"),
         "launch": MessageLookupByLibrary.simpleMessage("Launch"),
         "leave_feedback":
-            MessageLookupByLibrary.simpleMessage("Leave feedback"),
-        "light_theme": MessageLookupByLibrary.simpleMessage("Light theme"),
+            MessageLookupByLibrary.simpleMessage("Leave Feedback"),
+        "light_theme": MessageLookupByLibrary.simpleMessage("Light Theme"),
         "loadingMessage": MessageLookupByLibrary.simpleMessage("Loading..."),
         "localeCode": MessageLookupByLibrary.simpleMessage("en_US"),
-        "m_thread": MessageLookupByLibrary.simpleMessage("Metric thread"),
         "m_thread_abrv": MessageLookupByLibrary.simpleMessage("M"),
         "m_thread_female_description": MessageLookupByLibrary.simpleMessage(
-            "M - Metric cylindrical internal thread"),
+            "M - Metric Cylindrical Internal Thread"),
         "m_thread_gost": MessageLookupByLibrary.simpleMessage(
-            "ISO 965: ISO general purpose metric screw threads"),
+            "ISO 965: ISO General Purpose Metric Screw Threads"),
         "m_thread_male_description": MessageLookupByLibrary.simpleMessage(
-            "M - Metric cylindrical external thread"),
+            "M - Metric Cylindrical External Thread"),
         "main": MessageLookupByLibrary.simpleMessage("Home"),
-        "major_diam": MessageLookupByLibrary.simpleMessage("Major diameter"),
+        "major_diam": MessageLookupByLibrary.simpleMessage("Major Diameter"),
         "major_diam_avg":
-            MessageLookupByLibrary.simpleMessage("Mean major diameter"),
+            MessageLookupByLibrary.simpleMessage("Mean Major Diameter"),
         "major_diam_max":
-            MessageLookupByLibrary.simpleMessage("Max major diameter"),
+            MessageLookupByLibrary.simpleMessage("Max Major Diameter"),
         "major_diam_min":
-            MessageLookupByLibrary.simpleMessage("Min major diameter"),
+            MessageLookupByLibrary.simpleMessage("Min Major Diameter"),
         "major_diam_tolerance":
-            MessageLookupByLibrary.simpleMessage("Major diameter tolerance"),
+            MessageLookupByLibrary.simpleMessage("Major Diameter Tolerance"),
         "max": MessageLookupByLibrary.simpleMessage("max"),
         "mean": MessageLookupByLibrary.simpleMessage("mean"),
+        "metric_thread": MessageLookupByLibrary.simpleMessage("Metric Thread"),
         "min": MessageLookupByLibrary.simpleMessage("min"),
-        "minor_diam": MessageLookupByLibrary.simpleMessage("Minor diameter"),
+        "minor_diam": MessageLookupByLibrary.simpleMessage("Minor Diameter"),
         "minor_diam_avg":
-            MessageLookupByLibrary.simpleMessage("Mean minor diameter"),
+            MessageLookupByLibrary.simpleMessage("Mean Minor Diameter"),
         "minor_diam_d1":
-            MessageLookupByLibrary.simpleMessage("Minor diameter D1"),
+            MessageLookupByLibrary.simpleMessage("Minor Diameter D1"),
         "minor_diam_d3":
-            MessageLookupByLibrary.simpleMessage("Minor diameter D3"),
+            MessageLookupByLibrary.simpleMessage("Minor Diameter D3"),
         "minor_diam_max":
-            MessageLookupByLibrary.simpleMessage("Max minor diameter"),
+            MessageLookupByLibrary.simpleMessage("Max Minor Diameter"),
         "minor_diam_min":
-            MessageLookupByLibrary.simpleMessage("Min minor diameter"),
+            MessageLookupByLibrary.simpleMessage("Min Minor Diameter"),
         "minor_diam_tolerance":
-            MessageLookupByLibrary.simpleMessage("Minor diameter tolerance"),
+            MessageLookupByLibrary.simpleMessage("Minor Diameter Tolerance"),
         "mm": MessageLookupByLibrary.simpleMessage("mm"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
-        "no_data": MessageLookupByLibrary.simpleMessage("No data"),
+        "no_data": MessageLookupByLibrary.simpleMessage("No Data"),
         "no_svg_data":
-            MessageLookupByLibrary.simpleMessage("No data to display"),
+            MessageLookupByLibrary.simpleMessage("No Data to Display"),
         "nuts": MessageLookupByLibrary.simpleMessage("Nuts"),
         "pitch": MessageLookupByLibrary.simpleMessage("Pitch"),
-        "pitch_diam": MessageLookupByLibrary.simpleMessage("Pitch diameter"),
+        "pitch_diam": MessageLookupByLibrary.simpleMessage("Pitch Diameter"),
         "pitch_diam_avg":
-            MessageLookupByLibrary.simpleMessage("Mean pitch diameter"),
+            MessageLookupByLibrary.simpleMessage("Mean Pitch Diameter"),
         "pitch_diam_d2":
-            MessageLookupByLibrary.simpleMessage("Pitch diameter D2"),
+            MessageLookupByLibrary.simpleMessage("Pitch Diameter D2"),
         "pitch_diam_max":
-            MessageLookupByLibrary.simpleMessage("Max pitch diameter"),
+            MessageLookupByLibrary.simpleMessage("Max Pitch Diameter"),
         "pitch_diam_min":
-            MessageLookupByLibrary.simpleMessage("Min pitch diameter"),
+            MessageLookupByLibrary.simpleMessage("Min Pitch Diameter"),
         "pitch_diam_tolerance":
-            MessageLookupByLibrary.simpleMessage("Pitch diameter tolerance"),
+            MessageLookupByLibrary.simpleMessage("Pitch Diameter Tolerance"),
         "precision": MessageLookupByLibrary.simpleMessage("Precision"),
         "quarterPitch":
-            MessageLookupByLibrary.simpleMessage("Quarter pitch (P/4)"),
-        "rate_app": MessageLookupByLibrary.simpleMessage("Rate app"),
+            MessageLookupByLibrary.simpleMessage("Quarter Pitch (P/4)"),
+        "rate_app": MessageLookupByLibrary.simpleMessage("Rate App"),
         "restartApp": MessageLookupByLibrary.simpleMessage("Restart App"),
         "retry": MessageLookupByLibrary.simpleMessage("Retry"),
         "rmax_label": MessageLookupByLibrary.simpleMessage(
-            "Rmax - Maximum rounding radius of the thread groove"),
+            "Rmax - Maximum Rounding Radius of the Thread Groove"),
         "rmin_label": MessageLookupByLibrary.simpleMessage(
-            "Rmin - Minimum rounding radius of the thread groove"),
+            "Rmin - Minimum Rounding Radius of the Thread Groove"),
         "rootTruncation":
-            MessageLookupByLibrary.simpleMessage("Root truncation (H/4)"),
+            MessageLookupByLibrary.simpleMessage("Root Truncation (H/4)"),
         "select_diameter":
-            MessageLookupByLibrary.simpleMessage("Choose diameter"),
-        "select_pitch": MessageLookupByLibrary.simpleMessage("Choose pitch"),
+            MessageLookupByLibrary.simpleMessage("Choose Diameter"),
+        "select_pitch": MessageLookupByLibrary.simpleMessage("Choose Pitch"),
         "select_tolerance":
-            MessageLookupByLibrary.simpleMessage("Choose tolerance"),
-        "send_email": MessageLookupByLibrary.simpleMessage("Send email"),
-        "setting": MessageLookupByLibrary.simpleMessage("Settings"),
+            MessageLookupByLibrary.simpleMessage("Choose Tolerance"),
+        "send_email": MessageLookupByLibrary.simpleMessage("Send Email"),
+        "setting": MessageLookupByLibrary.simpleMessage("Setting"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "settings_header_subtitle": MessageLookupByLibrary.simpleMessage(
             "It is recommended to verify results with official references."),
+        "suggest_improvement":
+            MessageLookupByLibrary.simpleMessage("Suggest Improvement"),
         "thank_you": MessageLookupByLibrary.simpleMessage(
             "Thank you for using our application"),
         "threadHoleDiameter":
-            MessageLookupByLibrary.simpleMessage("Hole diameter for thread"),
+            MessageLookupByLibrary.simpleMessage("Thread Hole Diameter"),
         "thread_class_tolerance":
-            MessageLookupByLibrary.simpleMessage("Tolerance class"),
-        "thread_depth": MessageLookupByLibrary.simpleMessage("Depth"),
+            MessageLookupByLibrary.simpleMessage("Tolerance Class"),
+        "thread_depth": MessageLookupByLibrary.simpleMessage("Thread Depth"),
         "thread_designation":
             MessageLookupByLibrary.simpleMessage("Designation"),
         "thread_diam": MessageLookupByLibrary.simpleMessage("Diameter"),
         "thread_diam_nom":
-            MessageLookupByLibrary.simpleMessage("Diameter (nominal)"),
+            MessageLookupByLibrary.simpleMessage("Diameter (Nominal)"),
         "thread_pitch": MessageLookupByLibrary.simpleMessage("Pitch"),
         "thread_pitch_coarse":
-            MessageLookupByLibrary.simpleMessage("Coarse pitch"),
-        "thread_pitch_fine": MessageLookupByLibrary.simpleMessage("Fine pitch"),
+            MessageLookupByLibrary.simpleMessage("Coarse Pitch"),
+        "thread_pitch_fine": MessageLookupByLibrary.simpleMessage("Fine Pitch"),
         "thread_pitch_superfine":
-            MessageLookupByLibrary.simpleMessage("Super fine pitch"),
+            MessageLookupByLibrary.simpleMessage("Super Fine Pitch"),
         "thread_tolerance": MessageLookupByLibrary.simpleMessage("Tolerance"),
-        "thread_type": MessageLookupByLibrary.simpleMessage("Thread type"),
+        "thread_type": MessageLookupByLibrary.simpleMessage("Thread Type"),
         "threads_info":
-            MessageLookupByLibrary.simpleMessage("Thread information"),
+            MessageLookupByLibrary.simpleMessage("Thread Information"),
         "tolerance": MessageLookupByLibrary.simpleMessage("Tolerance"),
         "totalTruncation":
-            MessageLookupByLibrary.simpleMessage("Total truncation (3H/8)"),
-        "type_pitch": MessageLookupByLibrary.simpleMessage("Pitch type"),
+            MessageLookupByLibrary.simpleMessage("Total Truncation (3H/8)"),
+        "type_pitch": MessageLookupByLibrary.simpleMessage("Pitch Type"),
         "units": MessageLookupByLibrary.simpleMessage("Units"),
         "version": MessageLookupByLibrary.simpleMessage("Version"),
         "workingHeightOfProfile": MessageLookupByLibrary.simpleMessage(
-            "Working height of the thread profile (5H/8)"),
+            "Working Height of the Thread Profile (5H/8)"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes")
       };
 }

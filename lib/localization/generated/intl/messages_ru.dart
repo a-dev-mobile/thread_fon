@@ -13,10 +13,9 @@
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
-final messages = MessageLookup();
+final messages = new MessageLookup();
 
-typedef MessageIfAbsent = String Function(
-    String messageStr, List<dynamic> args);
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
@@ -24,23 +23,29 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("О приложении"),
+        "about_app": MessageLookupByLibrary.simpleMessage("О приложении"),
         "additional_info":
             MessageLookupByLibrary.simpleMessage("Дополнительная информация"),
+        "app_description": MessageLookupByLibrary.simpleMessage(
+            "Ваш справочник по резьбам с параметрами по стандартам и наглядными чертежами."),
+        "app_icon_alt":
+            MessageLookupByLibrary.simpleMessage("Иконка приложения"),
         "app_lang": MessageLookupByLibrary.simpleMessage("Язык приложения"),
         "app_name": MessageLookupByLibrary.simpleMessage("Резьбушка"),
         "apply": MessageLookupByLibrary.simpleMessage("Применить"),
-        "avg": MessageLookupByLibrary.simpleMessage("ср"),
+        "avg": MessageLookupByLibrary.simpleMessage("сред."),
         "bolt": MessageLookupByLibrary.simpleMessage("Болт"),
         "cancel": MessageLookupByLibrary.simpleMessage("Отмена"),
         "choose_language":
             MessageLookupByLibrary.simpleMessage("Выберите язык"),
         "choose_theme": MessageLookupByLibrary.simpleMessage("Выберите тему"),
+        "choose_thread": MessageLookupByLibrary.simpleMessage("Выбрать резьбу"),
         "cmax_label": MessageLookupByLibrary.simpleMessage(
-            "Cmax - Максимальная усечённость вершины резьбы"),
+            "Cmax - Максимальное усечение вершины резьбы"),
         "cmin_label": MessageLookupByLibrary.simpleMessage(
-            "Cmin - Минимальная усечённость вершины резьбы"),
+            "Cmin - Минимальное усечение вершины резьбы"),
         "crestTruncation": MessageLookupByLibrary.simpleMessage(
-            "H/8 - Снятие на вершине резьбы"),
+            "H/8 - Усечение вершины резьбы"),
         "d1_es": MessageLookupByLibrary.simpleMessage("D1_es"),
         "d1_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D1_es"),
         "d2_ei": MessageLookupByLibrary.simpleMessage("D2_ei"),
@@ -48,23 +53,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "d2_es": MessageLookupByLibrary.simpleMessage("D2_es"),
         "d2_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D2_es"),
         "d3_label": MessageLookupByLibrary.simpleMessage(
-            "d3 - Внутренний диаметр по дну впадины"),
+            "d3 - Внутренний диаметр на дне впадины"),
         "d_ei": MessageLookupByLibrary.simpleMessage("D_ei"),
         "d_ei_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D_ei"),
         "d_es": MessageLookupByLibrary.simpleMessage("D_es"),
         "d_es_tolerance": MessageLookupByLibrary.simpleMessage("Допуск D_es"),
         "dark_theme": MessageLookupByLibrary.simpleMessage("Темная тема"),
         "dialog_about_app_1": MessageLookupByLibrary.simpleMessage(
-            "- допуски наружного диаметра"),
+            "- Допуски наружного диаметра"),
         "dialog_about_app_2":
-            MessageLookupByLibrary.simpleMessage("- допуски среднего диаметра"),
+            MessageLookupByLibrary.simpleMessage("- Допуски среднего диаметра"),
         "dialog_about_app_3": MessageLookupByLibrary.simpleMessage(
-            "- допуски внутреннего диаметра"),
+            "- Допуски внутреннего диаметра"),
         "dialog_about_app_4": MessageLookupByLibrary.simpleMessage("---"),
         "dialog_about_app_5": MessageLookupByLibrary.simpleMessage(
-            "Всегда проверяйте свой результат!"),
+            "Всегда проверяйте результат!"),
         "dialog_title_about_app": MessageLookupByLibrary.simpleMessage(
-            "С помощью этого приложения вы сможете узнать основные параметры резьбы, а также:"),
+            "С помощью этого приложения вы можете узнать основные параметры резьбы, а также:"),
         "diam_major": MessageLookupByLibrary.simpleMessage("Наружный диаметр"),
         "diam_middle": MessageLookupByLibrary.simpleMessage("Средний диаметр"),
         "diam_minor":
@@ -81,7 +86,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "exit_app": MessageLookupByLibrary.simpleMessage("Выход из приложения"),
         "exit_app_warning": MessageLookupByLibrary.simpleMessage(
             "Вы уверены, что хотите выйти из приложения?"),
-        "external_thread": MessageLookupByLibrary.simpleMessage("наружная"),
+        "external_thread":
+            MessageLookupByLibrary.simpleMessage("Наружная резьба"),
         "feedback": MessageLookupByLibrary.simpleMessage("Обратная связь"),
         "g_thread_abrv": MessageLookupByLibrary.simpleMessage("G"),
         "generalError": MessageLookupByLibrary.simpleMessage(
@@ -92,7 +98,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "heightOfFundamentalTriangle": MessageLookupByLibrary.simpleMessage(
             "H - Высота исходного треугольника резьбы"),
         "inch": MessageLookupByLibrary.simpleMessage("дюйм"),
-        "internal_thread": MessageLookupByLibrary.simpleMessage("внутренняя"),
+        "internal_thread":
+            MessageLookupByLibrary.simpleMessage("Внутренняя резьба"),
         "lang_en": MessageLookupByLibrary.simpleMessage("Английский"),
         "lang_ru": MessageLookupByLibrary.simpleMessage("Русский"),
         "language": MessageLookupByLibrary.simpleMessage("Русский"),
@@ -103,7 +110,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "light_theme": MessageLookupByLibrary.simpleMessage("Светлая тема"),
         "loadingMessage": MessageLookupByLibrary.simpleMessage("Загрузка..."),
         "localeCode": MessageLookupByLibrary.simpleMessage("ru_RU"),
-        "m_thread": MessageLookupByLibrary.simpleMessage("Метрическая резьба"),
         "m_thread_abrv": MessageLookupByLibrary.simpleMessage("M"),
         "m_thread_female_description": MessageLookupByLibrary.simpleMessage(
             "M - Метрическая цилиндрическая внутренняя резьба"),
@@ -123,6 +129,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Допуск основного диаметра"),
         "max": MessageLookupByLibrary.simpleMessage("макс"),
         "mean": MessageLookupByLibrary.simpleMessage("сред."),
+        "metric_thread":
+            MessageLookupByLibrary.simpleMessage("Метрическая резьба"),
         "min": MessageLookupByLibrary.simpleMessage("мин"),
         "minor_diam": MessageLookupByLibrary.simpleMessage("Минорный диаметр"),
         "minor_diam_avg":
@@ -146,7 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pitch": MessageLookupByLibrary.simpleMessage("Шаг"),
         "pitch_diam": MessageLookupByLibrary.simpleMessage("Средний диаметр"),
         "pitch_diam_avg":
-            MessageLookupByLibrary.simpleMessage("Средний диаметр пича"),
+            MessageLookupByLibrary.simpleMessage("Средний диаметр шага"),
         "pitch_diam_d2":
             MessageLookupByLibrary.simpleMessage("Средний диаметр D2"),
         "pitch_diam_max":
@@ -167,19 +175,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "rmin_label": MessageLookupByLibrary.simpleMessage(
             "Rmin - Минимальный радиус закругления впадины резьбы"),
         "rootTruncation": MessageLookupByLibrary.simpleMessage(
-            "H/4 - Снятие на впадине резьбы"),
+            "H/4 - Усечение на впадине резьбы"),
         "select_diameter":
             MessageLookupByLibrary.simpleMessage("Выберите диаметр"),
         "select_pitch": MessageLookupByLibrary.simpleMessage("Выберите шаг"),
         "select_tolerance":
             MessageLookupByLibrary.simpleMessage("Выберите допуск"),
         "send_email": MessageLookupByLibrary.simpleMessage("Отправить email"),
-        "setting": MessageLookupByLibrary.simpleMessage("Настройки"),
+        "setting": MessageLookupByLibrary.simpleMessage("Настройка"),
         "settings": MessageLookupByLibrary.simpleMessage("Настройки"),
         "settings_header_subtitle": MessageLookupByLibrary.simpleMessage(
             "Рекомендуется сверять результаты с официальными справочниками."),
+        "suggest_improvement":
+            MessageLookupByLibrary.simpleMessage("Предложить улучшение"),
         "thank_you": MessageLookupByLibrary.simpleMessage(
-            "Спасибо Вам, что пользуетесь нашим приложением"),
+            "Спасибо, что пользуетесь нашим приложением"),
         "threadHoleDiameter": MessageLookupByLibrary.simpleMessage(
             "Диаметр отверстия под резьбу"),
         "thread_class_tolerance":
@@ -195,14 +205,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Основной шаг (крупный)"),
         "thread_pitch_fine": MessageLookupByLibrary.simpleMessage("Мелкий шаг"),
         "thread_pitch_superfine":
-            MessageLookupByLibrary.simpleMessage("Супер мелкий шаг"),
+            MessageLookupByLibrary.simpleMessage("Супермелкий шаг"),
         "thread_tolerance": MessageLookupByLibrary.simpleMessage("Допуск"),
         "thread_type": MessageLookupByLibrary.simpleMessage("Тип резьбы"),
         "threads_info":
             MessageLookupByLibrary.simpleMessage("Информация о резьбе"),
         "tolerance": MessageLookupByLibrary.simpleMessage("Допуск"),
         "totalTruncation":
-            MessageLookupByLibrary.simpleMessage("3H/8 - Суммарное снятие"),
+            MessageLookupByLibrary.simpleMessage("3H/8 - Суммарное усечение"),
         "type_pitch": MessageLookupByLibrary.simpleMessage("Тип шага"),
         "units": MessageLookupByLibrary.simpleMessage("Единицы измерения"),
         "version": MessageLookupByLibrary.simpleMessage("Версия"),

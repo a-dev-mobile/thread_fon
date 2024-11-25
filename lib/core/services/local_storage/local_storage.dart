@@ -163,7 +163,7 @@ class LocalStorage {
       forceRefresh: forceRefresh,
       defaultValue: null,
     );
-    final defaultThemeState = ThemeState(themeMode: ThemeMode.dark);
+    final defaultThemeState = ThemeState(themeMode: ThemeMode.light);
 
     try {
       return jsonString != null

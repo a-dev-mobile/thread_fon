@@ -61,6 +61,7 @@ dependencies:
   # retry: ^3.1.2
   dio: ^5.7.0
   connectivity_plus: ^6.1.0
+  package_info_plus: ^8.1.1
 dev_dependencies:
   intl_utils: ^2.8.7
   build_runner: ^2.4.13
@@ -78,7 +79,7 @@ flutter:
   assets:
     - assets/
     - assets/svg/
-    - assets/splash_icon/
+    - assets/png/
 flutter_intl:
   enabled: true
   class_name: GeneratedLocalization
@@ -93,8 +94,8 @@ flutter_gen:
 
 
 flutter_native_splash:
-  color: "#042a49" # Задайте желаемый цвет фона
-  image: assets/splash_icon/splash.png
+  color: "#90A4AE" # Задайте желаемый цвет фона
+  image: assets/splash_icon/icon.png
   android_12:
     image: assets/splash_icon/icon.png
     icon_background_color: "#042a49"
