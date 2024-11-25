@@ -98,9 +98,9 @@ flutter_gen:
 
 
 flutter_native_splash:
-  color: "#042a49" # Задайте желаемый цвет фона
+  color: "#000000" # Задайте желаемый цвет фона
   image: assets/png/icon.png
   android_12:
     image: assets/png/icon.png
-    icon_background_color: "#042a49"
+    icon_background_color: "#000000"
 

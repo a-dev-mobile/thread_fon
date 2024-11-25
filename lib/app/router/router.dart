@@ -7,13 +7,10 @@ import 'package:threadfon/features/splash/splash_screen.dart';
 import 'package:threadfon/features/thread_type_selection/views/thread_type_selection_screen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-// ignore: prefer-static-class
-final _pageNavigatorKey = GlobalKey<NavigatorState>();
-// ignore: prefer-static-class
-final _tabNavigatorKey = GlobalKey<NavigatorState>();
-
 class AppRouter {
   final FirebaseAnalytics analytics;
+  final GlobalKey<NavigatorState> _pageNavigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _tabNavigatorKey = GlobalKey<NavigatorState>();
 
   AppRouter({required this.analytics}) {
     router = _createRouter();

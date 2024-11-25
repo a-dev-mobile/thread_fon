@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
   final ThemeMode themeMode;
   @override
   Widget build(BuildContext context) {
-    context.read<ApiService>();
     final storage = context.read<LocalStorage>();
 
     return MultiBlocProvider(
@@ -57,7 +56,6 @@ class _ThreadApp extends StatelessWidget {
     return MaterialApp.router(
       onGenerateTitle: (BuildContext context) => context.l10n.app_name,
       debugShowCheckedModeBanner: false,
-      //
       themeMode: themeState.themeMode,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
@@ -70,8 +68,6 @@ class _ThreadApp extends StatelessWidget {
       ],
       supportedLocales: GeneratedLocalization.delegate.supportedLocales,
       locale: Locale(languageState.enumLang.name),
-
-      //
       routeInformationProvider: appRouter.router.routeInformationProvider,
       routeInformationParser: appRouter.router.routeInformationParser,
       routerDelegate: appRouter.router.routerDelegate,
