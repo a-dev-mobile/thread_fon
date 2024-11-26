@@ -70,7 +70,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     } else if (state.enumPageStatus == EnumStatus.error) {
       analytics.logEvent(
         name: 'info_load_error',
-        parameters: {'error_msg': state.errorMsg??''},
+        parameters: {'error_msg': state.errorMsg ?? ''},
       );
     }
 

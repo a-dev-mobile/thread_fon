@@ -9,7 +9,6 @@ import 'package:threadfon/app/router/router.dart';
 import 'package:threadfon/app/theme/theme.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/services/connectivity/connectivity_bloc.dart';
-import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 // Импортируем ValueListenableBuilderN
 import 'package:threadfon/localization/l10n_extension.dart';

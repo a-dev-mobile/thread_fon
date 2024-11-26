@@ -263,7 +263,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                 ListTile(
                   leading: const Icon(Icons.build), // Иконка для резьбы
                   title: Text(localization.choose_thread),
-                  subtitle: Text(localization.metric_thread), // Отображаем текущий выбор
+                  subtitle: Text(
+                      localization.metric_thread), // Отображаем текущий выбор
                   onTap: () => _showThreadDialog(context),
                 ),
                 const Divider(),

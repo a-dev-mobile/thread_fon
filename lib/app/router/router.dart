@@ -9,8 +9,10 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 
 class AppRouter {
   final FirebaseAnalytics analytics;
-  final GlobalKey<NavigatorState> _pageNavigatorKey = GlobalKey<NavigatorState>();
-  final GlobalKey<NavigatorState> _tabNavigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _pageNavigatorKey =
+      GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _tabNavigatorKey =
+      GlobalKey<NavigatorState>();
 
   AppRouter({required this.analytics}) {
     router = _createRouter();

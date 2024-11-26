@@ -91,7 +91,19 @@ cache-clean:
 # Обновление зависимостей
 upgrade:
 	$(FLUTTER) pub upgrade
-    	
+
+
+
+# Задача для исправления проблем с CocoaPods
+fix-cocoapods:
+	@echo "Переустанавливаю CocoaPods..."
+	brew reinstall cocoapods
+	@echo "Очистка кеша CocoaPods..."
+	pod cache clean --all
+	@echo "Запуск pod install..."
+	cd ios && pod install
+
+
 ########################
 # Инициализация проекта
 ########################

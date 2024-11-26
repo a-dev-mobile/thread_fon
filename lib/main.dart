@@ -40,7 +40,6 @@ Future<void> main() async {
         await FirebaseCrashlytics.instance
             .setCrashlyticsCollectionEnabled(!kDebugMode);
 
-
         // Передаём все необработанные асинхронные ошибки в Crashlytics
         PlatformDispatcher.instance.onError = (error, stack) {
           FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
