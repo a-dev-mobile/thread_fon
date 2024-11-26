@@ -63,8 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '673801836926',
     projectId: 'prod-threadfon',
     storageBucket: 'prod-threadfon.firebasestorage.app',
-    iosClientId:
-        '673801836926-0l8l5l9osaqjmp4hlo8jko3a2g4r9qtg.apps.googleusercontent.com',
+    iosClientId: '673801836926-0l8l5l9osaqjmp4hlo8jko3a2g4r9qtg.apps.googleusercontent.com',
     iosBundleId: 'a.dev.mobile.threadfon',
   );
+
 }

@@ -95,6 +95,7 @@ upgrade:
 
 
 # Задача для исправления проблем с CocoaPods
+
 fix-cocoapods:
 	@echo "Переустанавливаю CocoaPods..."
 	brew reinstall cocoapods
@@ -102,6 +103,11 @@ fix-cocoapods:
 	pod cache clean --all
 	@echo "Запуск pod install..."
 	cd ios && pod install
+	@echo "Очистка Flutter и получение зависимостей..."
+	flutter clean
+	flutter pub get
+	@echo "Задача fix-cocoapods завершена."
+
 
 
 ########################

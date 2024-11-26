@@ -203,7 +203,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                     RepositoryProvider.of<FirebaseAnalytics>(context);
                 analytics.logEvent(
                   name: 'toggle_svg_overlay',
-                  parameters: {'is_visible': _isSvgOverlayVisible},
+                  parameters: {'is_visible': _isSvgOverlayVisible.toString()},
                 );
               },
             ),
