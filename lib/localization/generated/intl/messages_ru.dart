@@ -33,6 +33,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Иконка приложения"),
         "app_lang": MessageLookupByLibrary.simpleMessage("Язык приложения"),
         "app_name": MessageLookupByLibrary.simpleMessage("Резьбушка"),
+        "app_store_not_found":
+            MessageLookupByLibrary.simpleMessage("AppStore не найден"),
         "apply": MessageLookupByLibrary.simpleMessage("Применить"),
         "avg": MessageLookupByLibrary.simpleMessage("сред."),
         "bolt": MessageLookupByLibrary.simpleMessage("Болт"),
@@ -108,6 +110,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "launch": MessageLookupByLibrary.simpleMessage("Запуск"),
         "leave_feedback":
             MessageLookupByLibrary.simpleMessage("Оставить отзыв"),
+        "leave_review": MessageLookupByLibrary.simpleMessage("Оставить отзыв"),
         "light_theme": MessageLookupByLibrary.simpleMessage("Светлая тема"),
         "loadingMessage": MessageLookupByLibrary.simpleMessage("Загрузка..."),
         "localeCode": MessageLookupByLibrary.simpleMessage("ru_RU"),

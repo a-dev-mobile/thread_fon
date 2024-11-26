@@ -51,6 +51,7 @@ class SvgOverlay extends StatelessWidget {
         content = SvgPicture.string(
           svgData!,
           fit: BoxFit.contain,
+          alignment: Alignment.center,
         );
         break;
       case EnumStatus.error:
@@ -79,18 +80,21 @@ class SvgOverlay extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              AspectRatio(
-                aspectRatio: svgAspectRatio,
-                child: PhotoView.customChild(
-                  childSize: Size(svgWidth, svgHeight),
-                  minScale: PhotoViewComputedScale.contained * 1,
-                  maxScale: PhotoViewComputedScale.covered * 3,
-                  initialScale: PhotoViewComputedScale.contained,
-                  enableRotation: false,
-                  backgroundDecoration: const BoxDecoration(
-                    color: Colors.transparent,
+              // Ensure the SVG content is centered by wrapping it in a Center widget
+              Center(
+                child: AspectRatio(
+                  aspectRatio: svgAspectRatio,
+                  child: PhotoView.customChild(
+                    childSize: Size(svgWidth, svgHeight),
+                    minScale: PhotoViewComputedScale.contained * 0.5,
+                    maxScale: PhotoViewComputedScale.covered * 12,
+                    initialScale: PhotoViewComputedScale.contained,
+                    enableRotation: false,
+                    backgroundDecoration: const BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                    child: content,
                   ),
-                  child: content,
                 ),
               ),
               // Expand Button

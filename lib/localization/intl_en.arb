@@ -136,6 +136,8 @@
   "about_app": "About App",
   "version": "Version",
   "app_description": "ThreadFon is your go-to reference for standard thread parameters and illustrative drawings.",
-  "app_icon_alt": "App Icon"
+  "app_icon_alt": "App Icon",
+  "app_store_not_found": "AppStore not found",
+  "leave_review": "Leave Review"
 
 }

@@ -33,6 +33,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "app_lang":
             MessageLookupByLibrary.simpleMessage("Application Language"),
         "app_name": MessageLookupByLibrary.simpleMessage("ThreadFon"),
+        "app_store_not_found":
+            MessageLookupByLibrary.simpleMessage("AppStore not found"),
         "apply": MessageLookupByLibrary.simpleMessage("Apply"),
         "avg": MessageLookupByLibrary.simpleMessage("avg"),
         "bolt": MessageLookupByLibrary.simpleMessage("Bolt"),
@@ -111,6 +113,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "launch": MessageLookupByLibrary.simpleMessage("Launch"),
         "leave_feedback":
             MessageLookupByLibrary.simpleMessage("Leave Feedback"),
+        "leave_review": MessageLookupByLibrary.simpleMessage("Leave Review"),
         "light_theme": MessageLookupByLibrary.simpleMessage("Light Theme"),
         "loadingMessage": MessageLookupByLibrary.simpleMessage("Loading..."),
         "localeCode": MessageLookupByLibrary.simpleMessage("en_US"),

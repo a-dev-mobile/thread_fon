@@ -141,7 +141,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                   // Логирование переключения SVG
                   analytics.logEvent(
                     name: 'svg_switched',
-                    parameters: {'show_dimensions': _showDimensions},
+                    parameters: {'show_dimensions': _showDimensions.toString()},
                   );
                 },
                 showDimensions: _showDimensions,

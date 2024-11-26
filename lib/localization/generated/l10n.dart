@@ -1390,6 +1390,26 @@ class GeneratedLocalization {
       args: [],
     );
   }
+
+  /// `AppStore not found`
+  String get app_store_not_found {
+    return Intl.message(
+      'AppStore not found',
+      name: 'app_store_not_found',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leave Review`
+  String get leave_review {
+    return Intl.message(
+      'Leave Review',
+      name: 'leave_review',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate

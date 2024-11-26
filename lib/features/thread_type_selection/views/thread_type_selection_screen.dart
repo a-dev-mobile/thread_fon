@@ -76,30 +76,32 @@ class _ThreadTypeSelectionView extends StatelessWidget {
 
                     case EnumStatus.success:
                       return Center(
-                        child: Column(
-                          mainAxisSize:
-                              MainAxisSize.min, // Центрирует по вертикали
-                          children: state.threadTypes.map((threadType) {
-                            final label = threadType.enumThreadType ==
-                                    EnumThreadType.female
-                                ? localization.internal_thread
-                                : localization.external_thread;
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: FractionallySizedBox(
-                                widthFactor:
-                                    0.8, // Устанавливает ширину 80% от ширины родителя
-                                child: ThreadTypeChoiceCard(
-                                  svgAssetPath: threadType.svgAssetPath,
-                                  label: label,
-                                  onTap: () => context
-                                      .read<ThreadTypeBloc>()
-                                      .preparationNavigation(threadType),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize:
+                                MainAxisSize.min, // Центрирует по вертикали
+                            children: state.threadTypes.map((threadType) {
+                              final label = threadType.enumThreadType ==
+                                      EnumThreadType.female
+                                  ? localization.internal_thread
+                                  : localization.external_thread;
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: FractionallySizedBox(
+                                  widthFactor:
+                                      0.8, // Устанавливает ширину 80% от ширины родителя
+                                  child: ThreadTypeChoiceCard(
+                                    svgAssetPath: threadType.svgAssetPath,
+                                    label: label,
+                                    onTap: () => context
+                                        .read<ThreadTypeBloc>()
+                                        .preparationNavigation(threadType),
+                                  ),
                                 ),
-                              ),
-                            );
-                          }).toList(),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       );
                   }

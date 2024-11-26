@@ -76,6 +76,7 @@ dev_dependencies:
   # Linting
   flutter_lints: ^5.0.0
   freezed: ^2.5.7
+  flutter_launcher_icons: "^0.14.1"
 
 flutter:
   generate: true
@@ -96,11 +97,26 @@ flutter_gen:
   output: lib/core/constant
   line_length: 120
 
-
+# dart run flutter_native_splash:create
 flutter_native_splash:
+
   color: "#000000" # Задайте желаемый цвет фона
   image: assets/png/icon.png
   android_12:
     image: assets/png/icon.png
     icon_background_color: "#000000"
 
+           # Цвет фона для iOS
+
+
+
+# flutter pub get && dart run flutter_launcher_icons
+
+flutter_launcher_icons:
+  ios: true
+  image_path: "assets/png/icon_ios.png"
+  # image_path_ios: "assets/icon/icon.png"
+  remove_alpha_channel_ios: true
+  # image_path_ios_dark_transparent: "assets/icon/icon_dark.png"
+  # image_path_ios_tinted_grayscale: "assets/icon/icon_tinted.png"
+  # desaturate_tinted_to_grayscale_ios: true

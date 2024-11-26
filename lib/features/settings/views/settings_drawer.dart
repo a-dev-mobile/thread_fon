@@ -16,8 +16,7 @@ class SettingsDrawer extends StatefulWidget {
 }
 
 class _SettingsDrawerState extends State<SettingsDrawer> {
-  // Переменная для хранения текущего типа резьбы
-  String _selectedThreadType = 'metric_thread'; // Используем ключ локализации
+  String _selectedThreadType = 'metric_thread'; // Текущий тип резьбы
 
   /// Функция для отправки электронной почты
   Future<void> _sendEmail(BuildContext context) async {
@@ -45,7 +44,6 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
         analytics.logEvent(name: 'send_feedback_email_failed');
       }
     } catch (e) {
-      // Обработка исключений
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.email_sending_failed)),
       );
@@ -55,6 +53,20 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
       analytics.logEvent(
         name: 'send_feedback_email_exception',
         parameters: {'error': e.toString()},
+      );
+    }
+  }
+
+  /// Функция для перехода в App Store для iOS
+  Future<void> _openAppStore() async {
+    final String url =
+        'https://apps.apple.com/app/id1602169811'; // Ссылка на App Store
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      // Обработка ошибки
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.app_store_not_found)),
       );
     }
   }
@@ -206,7 +218,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     return Drawer(
       child: Column(
         children: [
-          // Кастомный заголовок Drawer
+          // Заголовок Drawer
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
@@ -261,10 +273,9 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                 ),
                 const Divider(),
                 ListTile(
-                  leading: const Icon(Icons.build), // Иконка для резьбы
+                  leading: const Icon(Icons.build),
                   title: Text(localization.choose_thread),
-                  subtitle: Text(
-                      localization.metric_thread), // Отображаем текущий выбор
+                  subtitle: Text(localization.metric_thread),
                   onTap: () => _showThreadDialog(context),
                 ),
                 const Divider(),
@@ -273,6 +284,15 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                   title: Text(localization.suggest_improvement),
                   onTap: () => _sendEmail(context),
                 ),
+
+                const Divider(),
+                // Новый пункт меню: Перейти в App Store (для iOS)
+                if (Theme.of(context).platform == TargetPlatform.iOS)
+                  ListTile(
+                    leading: const Icon(Icons.store),
+                    title: Text(localization.leave_review),
+                    onTap: _openAppStore,
+                  ),
                 const Divider(),
                 ListTile(
                   leading: const Icon(Icons.info),
@@ -289,7 +309,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
               ],
             ),
           ),
-          // Футер Drawer (опционально)
+          // Футер Drawer
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
