@@ -36,54 +36,60 @@ class _AboutAppState extends State<AboutApp> {
       appBar: AppBar(
         title: Text(localization.about_app),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            // Иконка приложения
-            Image.asset(
-              'assets/png/icon.png',
-              width: 100,
-              height: 100,
-              semanticLabel: localization.app_icon_alt,
+      body: Center( // Центрируем содержимое по горизонтали
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 600), // Ограничиваем максимальную ширину
+          child: SingleChildScrollView( // Обеспечиваем прокрутку на маленьких экранах
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Занимает минимально необходимое пространство
+              children: [
+                // Иконка приложения
+                Image.asset(
+                  'assets/png/icon.png',
+                  width: 100,
+                  height: 100,
+                  semanticLabel: localization.app_icon_alt,
+                ),
+                SizedBox(height: 16),
+                // Название приложения
+                Text(
+                  localization.app_name,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8),
+                // Версия приложения
+                Text(
+                  '${localization.version}: $_version',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                  ),
+                ),
+                SizedBox(height: 16),
+                // Описание приложения
+                Text(
+                  localization.app_description,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 16),
+                // Дополнительная информация или ссылки
+                Text(
+                  '© ${DateTime.now().year} ThreadFon',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 16),
-            // Название приложения
-            Text(
-              localization.app_name,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8),
-            // Версия приложения
-            Text(
-              '${localization.version}: $_version',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[600],
-              ),
-            ),
-            SizedBox(height: 16),
-            // Описание приложения
-            Text(
-              localization.app_description,
-              style: TextStyle(
-                fontSize: 16,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            Spacer(),
-            // Дополнительная информация или ссылки
-            Text(
-              '© ${DateTime.now().year} ThreadFon',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
