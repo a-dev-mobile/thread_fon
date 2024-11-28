@@ -1,7 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 /// The [AppTheme] defines light and dark themes for the app.
 ///
@@ -34,7 +34,7 @@ sealed class AppTheme {
     ),
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
-    fontFamily: GoogleFonts.montserrat().fontFamily,
+    fontFamily: 'Montserrat',
   );
   // The defined dark theme.
   static ThemeData dark = FlexThemeData.dark(
@@ -52,6 +52,6 @@ sealed class AppTheme {
     ),
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
-    fontFamily: GoogleFonts.montserrat().fontFamily,
+    fontFamily: 'Montserrat',
   );
 }

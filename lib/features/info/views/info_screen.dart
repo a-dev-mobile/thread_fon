@@ -67,6 +67,13 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     // Логирование успешной загрузки или ошибки
     if (state.enumPageStatus == EnumStatus.success) {
       analytics.logEvent(name: 'info_load_success');
+      // Log designation
+      if (state.model != null) {
+        analytics.logEvent(
+          name: 'info_designation_displayed',
+          parameters: {'designation': state.model!.designation},
+        );
+      }
     } else if (state.enumPageStatus == EnumStatus.error) {
       analytics.logEvent(
         name: 'info_load_error',

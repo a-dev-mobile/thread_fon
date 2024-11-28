@@ -36,13 +36,17 @@ class _AboutAppState extends State<AboutApp> {
       appBar: AppBar(
         title: Text(localization.about_app),
       ),
-      body: Center( // Центрируем содержимое по горизонтали
+      body: Center(
+        // Центрируем содержимое по горизонтали
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 600), // Ограничиваем максимальную ширину
-          child: SingleChildScrollView( // Обеспечиваем прокрутку на маленьких экранах
+          constraints:
+              BoxConstraints(maxWidth: 600), // Ограничиваем максимальную ширину
+          child: SingleChildScrollView(
+            // Обеспечиваем прокрутку на маленьких экранах
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisSize: MainAxisSize.min, // Занимает минимально необходимое пространство
+              mainAxisSize: MainAxisSize
+                  .min, // Занимает минимально необходимое пространство
               children: [
                 // Иконка приложения
                 Image.asset(

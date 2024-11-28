@@ -7,7 +7,7 @@ version: 2.0.2+6
 
 environment:
   sdk: ^3.5.3
-  flutter: 3.24.3
+
 
 
 dependencies:
@@ -33,7 +33,6 @@ dependencies:
 
   # convert: any
   go_router: ^14.6.1
-  google_fonts: ^6.2.1
   flutter:
     sdk: flutter
   flutter_native_splash: ^2.4.3
@@ -85,6 +84,55 @@ flutter:
     - assets/
     - assets/svg/
     - assets/png/
+    - assets/fonts/
+
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Montserrat-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Montserrat-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/Montserrat-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Montserrat-BlackItalic.ttf
+          weight: 900
+          style: italic
+        - asset: assets/fonts/Montserrat-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Montserrat-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/Montserrat-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Montserrat-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/Montserrat-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Montserrat-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/Montserrat-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Montserrat-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/Montserrat-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Montserrat-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/Montserrat-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Montserrat-ThinItalic.ttf
+          weight: 100
+          style: italic
+
 flutter_intl:
   enabled: true
   class_name: GeneratedLocalization
@@ -100,11 +148,11 @@ flutter_gen:
 # dart run flutter_native_splash:create
 flutter_native_splash:
 
-  color: "#000000" # Задайте желаемый цвет фона
+  color: "#272D34" # Задайте желаемый цвет фона
   image: assets/png/icon.png
   android_12:
     image: assets/png/icon.png
-    icon_background_color: "#000000"
+    icon_background_color: "#272D34"
 
            # Цвет фона для iOS
 
