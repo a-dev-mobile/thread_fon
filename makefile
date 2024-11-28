@@ -1,6 +1,6 @@
 # Переменные для использования fvm flutter и fvm dart
-FLUTTER = fvm flutter
-DART = fvm dart
+FLUTTER := fvm flutter
+DART := fvm dart
 
 ########################
 # Общая помощь
@@ -38,7 +38,6 @@ gen-watch:
 gen-localization:
 	$(DART) pub global activate intl_utils
 	$(DART) pub global run intl_utils:generate
-# $(FLUTTER) gen-l10n --arb-dir lib/src/common/localization --output-dir lib/src/common/localization/generated --template-arb-file intl_en.arb
 
 ########################
 # Исправление и форматирование
@@ -60,31 +59,54 @@ format:
 gen-all: clean get gen-build gen-localization
 
 # Задача для получения всех зависимостей
-get-all: clean get 
+get-all: clean get
 
 ########################
 # Сборка Android-приложения
 ########################
 
-# Задача для сборки релизного APK и копирования в указанную папку
-build-android:
-	@echo "Генерация всех необходимых файлов..."
-	$(MAKE) gen-all
-	@echo "Сборка релизного APK..."
-	$(FLUTTER) build apk --release
+# Создание директории для APK
+create-apk-dir:
 	@echo "Создание целевой директории, если она не существует..."
 	mkdir -p /home/dmitriy/server-spb-my-1-hdd-1tb_1/DEV/APK/thread-fon/
+
+# Копирование APK
+copy-apk:
 	@echo "Копирование APK-файлов с заменой существующих..."
 	cp -f build/app/outputs/flutter-apk/app-*.apk /home/dmitriy/server-spb-my-1-hdd-1tb_1/DEV/APK/thread-fon/
+
+# Задача для сборки релизного APK и копирования в указанную папку
+build-send-apk: create-apk-dir $(MAKE) gen-all
+	@echo "Сборка релизного APK..."
+	$(FLUTTER) build apk --release
+	$(MAKE) copy-apk
 	@echo "Сборка и копирование APK завершены успешно."
 
+# Задача для сборки релизного AAB и копирования в указанную папку
+build-aab:
+	@echo "Генерация всех необходимых файлов..."
+	$(MAKE) gen-all
+	@echo "Сборка релизного AAB..."
+	$(FLUTTER) build appbundle --release
+	@echo "Создание целевой директории, если она не существует..."
+	mkdir -p /home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/artifact
+	@echo "Копирование AAB-файлов с заменой существующих..."
+	cp -f build/app/outputs/bundle/release/app-release.aab /home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/artifact/
+	@echo "Сборка и копирование AAB завершены успешно."
+
+########################
 # Очистка кеша и получение зависимостей для всего проекта
+########################
+
 refresh-all: cache-clean clean get-all
 
 # Обновление всех зависимостей для всего проекта
 upgrade-all: upgrade clean get-all
 
+########################
 # Очистка кеша pub
+########################
+
 cache-clean:
 	$(FLUTTER) pub cache clean
 
@@ -92,9 +114,9 @@ cache-clean:
 upgrade:
 	$(FLUTTER) pub upgrade
 
-
-
-# Задача для исправления проблем с CocoaPods
+########################
+# Исправление проблем с CocoaPods
+########################
 
 fix-cocoapods:
 	@echo "Переустанавливаю CocoaPods..."
@@ -104,11 +126,9 @@ fix-cocoapods:
 	@echo "Запуск pod install..."
 	cd ios && pod install
 	@echo "Очистка Flutter и получение зависимостей..."
-	flutter clean
-	flutter pub get
+	$(FLUTTER) clean
+	$(FLUTTER) pub get
 	@echo "Задача fix-cocoapods завершена."
-
-
 
 ########################
 # Инициализация проекта

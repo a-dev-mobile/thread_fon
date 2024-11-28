@@ -58,7 +58,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   }
 
   /// Функция для перехода в App Store для iOS
-Future<void> _openAppStoreOrPlayStore() async {
+  Future<void> _openAppStoreOrPlayStore() async {
     final String url = Theme.of(context).platform == TargetPlatform.iOS
         ? 'https://apps.apple.com/app/id1602169811' // Ссылка на App Store для iOS
         : 'https://play.google.com/store/apps/details?id=a.dev.mobile.threadfon'; // Ссылка на Google Play для Android
@@ -72,7 +72,6 @@ Future<void> _openAppStoreOrPlayStore() async {
       );
     }
   }
-
 
   /// Диалог выбора темы
   void _showThemeDialog(BuildContext context, ThemeBloc themeBloc) {
@@ -290,12 +289,12 @@ Future<void> _openAppStoreOrPlayStore() async {
 
                 const Divider(),
                 // Новый пункт меню: Перейти в App Store (для iOS)
-                
-                  ListTile(
-                    leading: const Icon(Icons.store),
-                    title: Text(localization.leave_review),
-                    onTap: _openAppStoreOrPlayStore,
-                  ),
+
+                ListTile(
+                  leading: const Icon(Icons.store),
+                  title: Text(localization.leave_review),
+                  onTap: _openAppStoreOrPlayStore,
+                ),
                 const Divider(),
                 ListTile(
                   leading: const Icon(Icons.info),
