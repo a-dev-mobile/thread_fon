@@ -82,7 +82,8 @@ build-send-apk: create-apk-dir $(MAKE) gen-all
 	$(MAKE) copy-apk
 	@echo "Сборка и копирование APK завершены успешно."
 
-# Задача для сборки релизного AAB и копирования в указанную папку
+# Задача для сборки релизного AAB, генерации отладочных символов и копирования в указанную папку
+
 build-aab:
 	@echo "Генерация всех необходимых файлов..."
 	$(MAKE) gen-all
@@ -92,7 +93,11 @@ build-aab:
 	mkdir -p /home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/artifact
 	@echo "Копирование AAB-файлов с заменой существующих..."
 	cp -f build/app/outputs/bundle/release/app-release.aab /home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/artifact/
+	@echo "Архивирование отладочных символов..."
+	cd build/app/intermediates/merged_native_libs/release/out/lib && zip -r /home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/artifact/symbols.zip .
 	@echo "Сборка и копирование AAB завершены успешно."
+	@echo "https://play.google.com/console/u/2/developers/8779815622631445033/app/4972305078485792527/bundle-explorer-selector"
+	@echo "После загрузки aab добавь войди в скачанные файлы этого aab и загрузи symbols.zip в Нативные отладочные символы"
 
 ########################
 # Очистка кеша и получение зависимостей для всего проекта

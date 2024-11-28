@@ -50,6 +50,10 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+             // Включение отладочных символов
+             ndk {
+                debugSymbolLevel = "FULL"  // или "SYMBOL_TABLE" для меньшего размера
+            }
         }
     }
 }
