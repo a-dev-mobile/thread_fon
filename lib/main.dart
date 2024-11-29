@@ -87,9 +87,6 @@ Future<void> main() async {
                 RepositoryProvider(
                   create: (context) => ApiService(),
                 ),
-                RepositoryProvider.value(
-                  value: analytics, // Добавляем FirebaseAnalytics в провайдеры
-                ),
                 RepositoryProvider(
                   create: (context) => AppRouter(analytics: analytics),
                 ),

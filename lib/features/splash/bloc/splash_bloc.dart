@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
+import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 
@@ -12,20 +13,20 @@ part 'splash_state.dart';
 
 final _logger = LogService('info_bloc');
 
-class SplashBloc extends Cubit<SplashState> {
+class SplashBloc extends Cubit<SplashState> with BlocIgnoreEmitAfterClosed {
   SplashBloc({
     required LanguageBloc languageBloc,
     required LocalStorage storage,
-  })  : _storage = storage,
+  })  : 
         _languageBloc = languageBloc,
         super(const SplashState());
 
   final LanguageBloc _languageBloc;
-  final LocalStorage _storage;
+
 
   Future<void> load() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
-    final userSelection = await _storage.getUserSelection();
+
 
     try {
       await Future.delayed(Duration(seconds: 1));

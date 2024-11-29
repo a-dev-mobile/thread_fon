@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
@@ -14,33 +15,53 @@ import 'package:threadfon/features/pitch_selection/repositories/pitch_repository
 import 'package:threadfon/features/pitch_selection/views/pitch_choice_card.dart';
 import 'package:threadfon/features/tolerance_selection/views/tolerance_selection_screen.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
+import 'package:threadfon/main.dart';
 
 final _logger = LogService('metric_pitch_screen');
 
-class PitchSelectionScreen extends StatelessWidget {
+class PitchSelectionScreen extends StatefulWidget {
   const PitchSelectionScreen({super.key});
+  static const path = '/PitchSelectionScreen';
+  static const name = 'PitchSelectionScreen';
 
   @override
-  Widget build(BuildContext context) {
+  State<PitchSelectionScreen> createState() => _PitchSelectionScreenState();
+}
+
+class _PitchSelectionScreenState extends State<PitchSelectionScreen> {
+  late PitchBloc _bloc;
+  @override
+  void initState() {
+    super.initState();
     final apiService = context.read<ApiService>();
     final pitchRepository = PitchRepository(apiService: apiService);
     final localStorage = context.read<LocalStorage>();
     final languageBloc = context.read<LanguageBloc>();
+    _bloc = PitchBloc(
+      repository: pitchRepository,
+      localStorage: localStorage,
+      languageBloc: languageBloc,
+    )..loadPitch();
+  }
 
+  @override
+  void dispose() {
+    _bloc.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => PitchBloc(
-        repository: pitchRepository,
-        localStorage: localStorage,
-        languageBloc: languageBloc,
-      )..loadPitch(),
-      child: const _PitchSelectionView(),
+      create: (_) => _bloc,
+      child: _PitchSelectionView(_bloc),
     );
   }
 }
 
 class _PitchSelectionView extends StatelessWidget {
-  const _PitchSelectionView();
-
+  const _PitchSelectionView(this.bloc);
+  final PitchBloc bloc;
   @override
   Widget build(BuildContext context) {
     final localization = context.l10n;
@@ -49,19 +70,11 @@ class _PitchSelectionView extends StatelessWidget {
       listenWhen: (previous, current) =>
           previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
-        switch (state.enumNavigationStatus) {
-          case EnumNavigationStatus.preparation:
-          case EnumNavigationStatus.initial:
-            // await saveScrollPosition();
-            break;
+        if (state.enumNavigationStatus.isNavigation) {
+          context.pushNamed(ToleranceSelectionScreen.name);
 
-          case EnumNavigationStatus.navigation:
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (_) => const ToleranceSelectionScreen(),
-              ),
-            );
+          // Сброс статуса навигации через публичный метод
+          bloc.resetNavigationStatus();
         }
       },
       child: Scaffold(
@@ -74,7 +87,6 @@ class _PitchSelectionView extends StatelessWidget {
               builder: (context, state) {
                 switch (state.enumPageStatus) {
                   case EnumStatus.loading:
-                  case EnumStatus.initial:
                     return const LoadingWidget();
 
                   case EnumStatus.error:
@@ -92,24 +104,23 @@ class _PitchSelectionView extends StatelessWidget {
                         final pitch = state.pitches[index];
                         return PitchChoiceCard(
                           pitch: pitch,
-                          onTap:
-                              pitch.enumPitchDataType == EnumPitchDataType.value
-                                  ? () => context
-                                      .read<PitchBloc>()
-                                      .preparationNavigation(pitch)
-                                  : null,
+                          onTap: () {
+                            // Логируем выбор шага резьбы
+                            analytics.logEvent(
+                              name: 'pitch_selected',
+                              parameters: {
+                                'pitch_value': pitch
+                                    .info, // Предполагается, что pitch имеет поле value
+                              },
+                            );
+                            if (pitch.enumPitchDataType ==
+                                EnumPitchDataType.value) {
+                              bloc.preparationNavigation(pitch);
+                            }
+                          },
                         );
                       },
                     );
-                }
-              },
-            ),
-            BlocBuilder<PitchBloc, PitchState>(
-              builder: (context, state) {
-                if (state.enumNavigationStatus.isPreparation) {
-                  return const LoadingWidget(isBlurred: true);
-                } else {
-                  return const SizedBox.shrink();
                 }
               },
             ),

@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
+import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/tolerance_selection/models/tolerance_model.dart';
@@ -12,9 +13,10 @@ part 'tolerance_bloc.freezed.dart';
 part 'tolerance_bloc.g.dart';
 part 'tolerance_state.dart';
 
-final _logger = LogService('tolerance_controller');
+final _logger = LogService('tolerance_bloc');
 
-class ToleranceBloc extends Cubit<ToleranceState> {
+class ToleranceBloc extends Cubit<ToleranceState>
+    with BlocIgnoreEmitAfterClosed {
   ToleranceBloc({
     required ToleranceRepository repository,
     required LocalStorage localStorage,
@@ -53,8 +55,6 @@ class ToleranceBloc extends Cubit<ToleranceState> {
       );
       emit(state.copyWith(
           enumNavigationStatus: EnumNavigationStatus.navigation));
-      await Future<void>.delayed(const Duration(milliseconds: 100));
-      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
       _logger.e('Error updating tolerance selection', error: e, stackTrace: s);
       _setErrorState();
@@ -70,5 +70,11 @@ class ToleranceBloc extends Cubit<ToleranceState> {
         enumPageStatus: EnumStatus.error,
         errorMsg: errorMsg,
         enumNavigationStatus: EnumNavigationStatus.initial));
+  }
+
+  void resetNavigationStatus() {
+    emit(state.copyWith(
+      enumNavigationStatus: EnumNavigationStatus.initial,
+    ));
   }
 }

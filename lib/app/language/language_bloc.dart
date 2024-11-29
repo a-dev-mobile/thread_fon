@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
 
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 
@@ -7,7 +8,7 @@ part 'language_bloc.freezed.dart';
 part 'language_bloc.g.dart';
 part 'language_state.dart';
 
-class LanguageBloc extends Cubit<LanguageState> {
+class LanguageBloc extends Cubit<LanguageState> with BlocIgnoreEmitAfterClosed {
   LanguageBloc({
     required LocalStorage storage,
     required EnumLang enumLang,

@@ -5,6 +5,8 @@ import 'package:photo_view/photo_view.dart';
 import 'package:flutter/services.dart';
 
 class FullScreenSvgView extends StatefulWidget {
+  static const path = '/FullScreenSvgView';
+  static const name = 'FullScreenSvgView';
   final String svgData;
 
   const FullScreenSvgView({

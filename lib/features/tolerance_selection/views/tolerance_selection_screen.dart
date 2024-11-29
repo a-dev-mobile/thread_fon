@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
@@ -13,33 +14,55 @@ import 'package:threadfon/features/tolerance_selection/bloc/tolerance_bloc.dart'
 import 'package:threadfon/features/tolerance_selection/repositories/tolerance_repository.dart';
 import 'package:threadfon/features/tolerance_selection/views/tolerance_choice_card.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
+import 'package:threadfon/main.dart';
 
 final _logger = LogService('metric_tolerance_screen');
 
-class ToleranceSelectionScreen extends StatelessWidget {
+class ToleranceSelectionScreen extends StatefulWidget {
   const ToleranceSelectionScreen({super.key});
+  static const path = '/ToleranceSelectionScreen';
+  static const name = 'ToleranceSelectionScreen';
 
   @override
-  Widget build(BuildContext context) {
+  State<ToleranceSelectionScreen> createState() =>
+      _ToleranceSelectionScreenState();
+}
+
+class _ToleranceSelectionScreenState extends State<ToleranceSelectionScreen> {
+  late ToleranceBloc _bloc;
+  @override
+  void initState() {
+    super.initState();
     final apiService = context.read<ApiService>();
     final toleranceRepository = ToleranceRepository(apiService: apiService);
     final localStorage = context.read<LocalStorage>();
     final languageBloc = context.read<LanguageBloc>();
 
+    _bloc = ToleranceBloc(
+      repository: toleranceRepository,
+      localStorage: localStorage,
+      languageBloc: languageBloc,
+    )..loadTolerances();
+  }
+
+  @override
+  void dispose() {
+    _bloc.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ToleranceBloc(
-        repository: toleranceRepository,
-        localStorage: localStorage,
-        languageBloc: languageBloc,
-      )..loadTolerances(),
-      child: const _ToleranceSelectionView(),
+      create: (_) => _bloc,
+      child: _ToleranceSelectionView(_bloc),
     );
   }
 }
 
 class _ToleranceSelectionView extends StatelessWidget {
-  const _ToleranceSelectionView();
-
+  const _ToleranceSelectionView(this.bloc);
+  final ToleranceBloc bloc;
   @override
   Widget build(BuildContext context) {
     final localization = context.l10n;
@@ -48,18 +71,10 @@ class _ToleranceSelectionView extends StatelessWidget {
       listenWhen: (previous, current) =>
           previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
-        switch (state.enumNavigationStatus) {
-          case EnumNavigationStatus.preparation:
-          case EnumNavigationStatus.initial:
-            break;
-
-          case EnumNavigationStatus.navigation:
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (context) => const InfoScreen(),
-              ),
-            );
+        if (state.enumNavigationStatus.isNavigation) {
+          analytics.logEvent(name: 'info_screen_view');
+          context.pushNamed(InfoScreen.name);
+          bloc.resetNavigationStatus();
         }
       },
       child: Scaffold(
@@ -72,14 +87,12 @@ class _ToleranceSelectionView extends StatelessWidget {
               builder: (context, state) {
                 switch (state.enumPageStatus) {
                   case EnumStatus.loading:
-                  case EnumStatus.initial:
                     return const LoadingWidget();
 
                   case EnumStatus.error:
                     return MyErrorWidget(
                       errorMsg: state.errorMsg,
-                      onRetry: () =>
-                          context.read<ToleranceBloc>().loadTolerances(),
+                      onRetry: () => bloc.loadTolerances(),
                     );
 
                   case EnumStatus.success:
@@ -91,21 +104,20 @@ class _ToleranceSelectionView extends StatelessWidget {
                         final tolerance = state.tolerances[index];
                         return ToleranceChoiceCard(
                           tolerance: tolerance,
-                          onTap: () => context
-                              .read<ToleranceBloc>()
-                              .preparationNavigation(tolerance),
+                          onTap: () {
+                            // Логируем выбор допуска
+                            analytics.logEvent(
+                              name: 'tolerance_selected',
+                              parameters: {
+                                'tolerance_value': tolerance
+                                    .info, // Предполагается, что tolerance имеет поле value
+                              },
+                            );
+                            bloc.preparationNavigation(tolerance);
+                          },
                         );
                       },
                     );
-                }
-              },
-            ),
-            BlocBuilder<ToleranceBloc, ToleranceState>(
-              builder: (context, state) {
-                if (state.enumNavigationStatus.isPreparation) {
-                  return const LoadingWidget(isBlurred: true);
-                } else {
-                  return const SizedBox.shrink();
                 }
               },
             ),

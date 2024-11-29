@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
+import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/pitch_selection/models/pitch_model.dart';
@@ -14,7 +15,7 @@ part 'pitch_state.dart';
 
 final _logger = LogService('pitch_bloc');
 
-class PitchBloc extends Cubit<PitchState> {
+class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
   PitchBloc({
     required PitchRepository repository,
     required LocalStorage localStorage,
@@ -54,8 +55,6 @@ class PitchBloc extends Cubit<PitchState> {
       );
       emit(state.copyWith(
           enumNavigationStatus: EnumNavigationStatus.navigation));
-      await Future<void>.delayed(const Duration(milliseconds: 100));
-      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
       _logger.e('Error updating pitch selection', error: e, stackTrace: s);
       _setErrorState();
@@ -71,5 +70,11 @@ class PitchBloc extends Cubit<PitchState> {
         enumPageStatus: EnumStatus.error,
         errorMsg: errorMsg,
         enumNavigationStatus: EnumNavigationStatus.initial));
+  }
+
+  void resetNavigationStatus() {
+    emit(state.copyWith(
+      enumNavigationStatus: EnumNavigationStatus.initial,
+    ));
   }
 }

@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
-import 'package:threadfon/localization/l10n_extension.dart';
+
 
 import 'overlay_button.dart';
 
@@ -41,9 +41,8 @@ class SvgOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget content;
-    final localization = context.l10n;
+
     switch (svgRequestStatus) {
-      case EnumStatus.initial:
       case EnumStatus.loading:
         content = LoadingWidget();
         break;

@@ -1,7 +1,7 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
@@ -20,27 +20,49 @@ import 'package:threadfon/features/info/views/info_diameters_parameters.dart';
 import 'package:threadfon/features/info/views/info_main_parameters.dart';
 import 'package:threadfon/features/info/views/info_parameters.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
+import 'package:threadfon/main.dart';
 
 final _logger = LogService('info_screen');
 
-class InfoScreen extends StatelessWidget {
+class InfoScreen extends StatefulWidget {
   const InfoScreen({super.key});
+  static const path = '/InfoScreen';
+  static const name = 'InfoScreen';
 
   @override
-  Widget build(BuildContext context) {
+  State<InfoScreen> createState() => _InfoScreenState();
+}
+
+class _InfoScreenState extends State<InfoScreen> {
+  late InfoBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
     final apiService = context.read<ApiService>();
     final infoRepository = InfoRepository(apiService: apiService);
     final localStorage = context.read<LocalStorage>();
     final languageBloc = context.read<LanguageBloc>();
     final themeBloc = context.read<ThemeBloc>();
 
+    _bloc = InfoBloc(
+      repository: infoRepository,
+      localStorage: localStorage,
+      languageBloc: languageBloc,
+      themeBloc: themeBloc,
+    )..load();
+  }
+
+  @override
+  void dispose() {
+    _bloc.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => InfoBloc(
-        repository: infoRepository,
-        localStorage: localStorage,
-        languageBloc: languageBloc,
-        themeBloc: themeBloc,
-      )..load(),
+      create: (_) => _bloc,
       child: const _MetricInfoView(),
     );
   }
@@ -61,8 +83,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
   Widget build(BuildContext context) {
     final bloc = context.watch<InfoBloc>();
     final state = bloc.state;
-    final localization = context.l10n;
-    final analytics = RepositoryProvider.of<FirebaseAnalytics>(context);
+
 
     // Логирование успешной загрузки или ошибки
     if (state.enumPageStatus == EnumStatus.success) {
@@ -126,18 +147,12 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                   analytics.logEvent(name: 'svg_overlay_closed');
                 },
                 onExpand: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FullScreenSvgView(
-                        svgData: _showDimensions
-                            ? state.svgData!
-                            : state.svgDataNoDimensions!,
-                      ),
-                    ),
-                  );
+                  context.pushNamed(FullScreenSvgView.name, extra: {
+                    'svgData': _showDimensions
+                        ? state.svgData!
+                        : state.svgDataNoDimensions!,
+                  });
 
-                  // Логирование расширения оверлея
                   analytics.logEvent(name: 'svg_overlay_expanded');
                 },
                 onSwitchSvg: () {
@@ -168,7 +183,6 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
 
     switch (state.enumPageStatus) {
       case EnumStatus.loading:
-      case EnumStatus.initial:
         return const Center(child: LoadingWidget());
 
       case EnumStatus.error:
@@ -178,7 +192,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
             bloc.load();
 
             // Логирование попытки повторной загрузки
-            final analytics = RepositoryProvider.of<FirebaseAnalytics>(context);
+
             analytics.logEvent(name: 'info_retry_load');
           },
         );
@@ -206,8 +220,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                 });
 
                 // Логирование переключения видимости оверлея
-                final analytics =
-                    RepositoryProvider.of<FirebaseAnalytics>(context);
+
                 analytics.logEvent(
                   name: 'toggle_svg_overlay',
                   parameters: {'is_visible': _isSvgOverlayVisible.toString()},
@@ -230,8 +243,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                         );
 
                         // Логирование изменения единиц измерения и точности
-                        final analytics =
-                            RepositoryProvider.of<FirebaseAnalytics>(context);
+
                         analytics.logEvent(
                           name: 'units_precision_changed',
                           parameters: {
@@ -364,13 +376,13 @@ class _UnitsPrecisionDialogState extends State<UnitsPrecisionDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
           child: Text(localization.cancel),
         ),
         ElevatedButton(
           onPressed: () {
             widget.onApply(_selectedUnits, _selectedPrecision);
-            Navigator.of(context).pop();
+            context.pop();
           },
           child: Text(localization.apply),
         ),

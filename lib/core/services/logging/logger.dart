@@ -26,11 +26,11 @@ class LogService {
   LogService(String fileName)
       : _logger = Logger(
           printer: CustomPrinter(fileName),
-        ),
-        _fileName = fileName;
+        )
+     ;
 
   final Logger _logger;
-  final String _fileName;
+
 
   void t(dynamic message,
       {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {

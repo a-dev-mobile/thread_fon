@@ -7,6 +7,7 @@ import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/features/splash/bloc/splash_bloc.dart';
 import 'package:threadfon/features/thread_type_selection/views/thread_type_selection_screen.dart';
+import 'package:threadfon/main.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -16,6 +17,9 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Логируем событие открытия приложения
+    analytics.logEvent(name: 'app_open');
+
     return BlocProvider(
       lazy: false,
       create: (context) => SplashBloc(
@@ -35,6 +39,8 @@ class _SplashView extends StatelessWidget {
     return BlocListener<SplashBloc, SplashState>(
       listener: (context, state) {
         if (state.enumNavigationStatus == EnumNavigationStatus.navigation) {
+          // Логируем событие перехода к выбору типа резьбы
+          analytics.logEvent(name: 'thread_type_selection');
           context.goNamed(ThreadTypeSelectionScreen.name);
         }
       },

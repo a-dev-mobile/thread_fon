@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:threadfon/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 import 'package:threadfon/features/settings/views/about_app.dart'; // Импортируем экран AboutApp
-import 'package:firebase_analytics/firebase_analytics.dart';
 
 class SettingsDrawer extends StatefulWidget {
   const SettingsDrawer({super.key});
@@ -32,7 +32,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
         await launchUrl(emailUri);
 
         // Логирование отправки электронной почты
-        final analytics = RepositoryProvider.of<FirebaseAnalytics>(context);
+
         analytics.logEvent(name: 'send_feedback_email');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -40,7 +40,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
         );
 
         // Логирование ошибки при попытке отправки электронной почты
-        final analytics = RepositoryProvider.of<FirebaseAnalytics>(context);
+
         analytics.logEvent(name: 'send_feedback_email_failed');
       }
     } catch (e) {
@@ -49,7 +49,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
       );
 
       // Логирование исключения при попытке отправки электронной почты
-      final analytics = RepositoryProvider.of<FirebaseAnalytics>(context);
+
       analytics.logEvent(
         name: 'send_feedback_email_exception',
         parameters: {'error': e.toString()},
@@ -76,7 +76,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   /// Диалог выбора темы
   void _showThemeDialog(BuildContext context, ThemeBloc themeBloc) {
     final localization = context.l10n;
-    final analytics = RepositoryProvider.of<FirebaseAnalytics>(context);
+
     showDialog(
       context: context,
       useRootNavigator: true,
@@ -92,8 +92,9 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
               onChanged: (value) {
                 if (value != null) {
                   themeBloc.setTheme(value);
-                  Navigator.of(dialogContext).pop(); // Закрыть диалог
-                  Navigator.of(context).pop(); // Закрыть Drawer
+
+                  dialogContext.pop();
+                  context.pop(); // Закрыть Drawer
 
                   // Логирование изменения темы
                   analytics.logEvent(
@@ -110,8 +111,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
               onChanged: (value) {
                 if (value != null) {
                   themeBloc.setTheme(value);
-                  Navigator.of(dialogContext).pop(); // Закрыть диалог
-                  Navigator.of(context).pop(); // Закрыть Drawer
+                  dialogContext.pop(); // Закрыть диалог
+                  context.pop(); // Закрыть Drawer
 
                   // Логирование изменения темы
                   analytics.logEvent(
@@ -130,7 +131,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   /// Диалог выбора языка
   void _showLanguageDialog(BuildContext context, LanguageBloc languageBloc) {
     final localization = context.l10n;
-    final analytics = RepositoryProvider.of<FirebaseAnalytics>(context);
+
     showDialog(
       context: context,
       useRootNavigator: true,
@@ -155,8 +156,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
               groupValue: languageBloc.state.enumLang,
               onChanged: (value) {
                 languageBloc.setLanguage(value!);
-                Navigator.of(dialogContext).pop(); // Закрыть диалог
-                Navigator.of(context).pop(); // Закрыть Drawer
+                dialogContext.pop(); // Закрыть диалог
+                context.pop(); // Закрыть Drawer
 
                 // Логирование изменения языка
                 analytics.logEvent(
@@ -174,7 +175,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   /// Диалог выбора резьбы
   void _showThreadDialog(BuildContext context) {
     final localization = context.l10n;
-    final analytics = RepositoryProvider.of<FirebaseAnalytics>(context);
+
     showDialog(
       context: context,
       useRootNavigator: true,
@@ -192,8 +193,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                   setState(() {
                     _selectedThreadType = 'metric_thread';
                   });
-                  Navigator.of(dialogContext).pop(); // Закрыть диалог
-                  Navigator.of(context).pop(); // Закрыть Drawer
+                  dialogContext.pop();
+                  context.pop();
 
                   // Логирование изменения типа резьбы
                   analytics.logEvent(
@@ -215,7 +216,6 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     final themeBloc = context.read<ThemeBloc>();
     final languageBloc = context.read<LanguageBloc>();
     final localization = context.l10n;
-    final analytics = RepositoryProvider.of<FirebaseAnalytics>(context);
 
     return Drawer(
       child: Column(
@@ -300,7 +300,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                   leading: const Icon(Icons.info),
                   title: Text(localization.about_app),
                   onTap: () {
-                    Navigator.of(context).pop(); // Закрыть Drawer
+                    context.pop();
                     context.pushNamed(AboutApp.name);
 
                     // Логирование просмотра экрана "About App"

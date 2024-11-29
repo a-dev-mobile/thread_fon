@@ -5,6 +5,7 @@ import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/constant/enum_units.dart';
+import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
 import 'package:threadfon/core/models/user_selection.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
@@ -17,7 +18,7 @@ part 'info_state.dart';
 
 final _logger = LogService('info_bloc');
 
-class InfoBloc extends Cubit<InfoState> {
+class InfoBloc extends Cubit<InfoState> with BlocIgnoreEmitAfterClosed {
   InfoBloc({
     required InfoRepository repository,
     required LocalStorage localStorage,

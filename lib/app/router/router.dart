@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/core/widgets/overlay_widget.dart';
+import 'package:threadfon/features/diameter_selection/views/metric_diameter_screen.dart';
+import 'package:threadfon/features/info/views/full_screen_svg_view.dart';
+import 'package:threadfon/features/info/views/info_screen.dart';
+import 'package:threadfon/features/pitch_selection/views/pitch_selection_screen.dart';
 import 'package:threadfon/features/settings/views/about_app.dart';
 import 'package:threadfon/features/splash/splash_screen.dart';
 import 'package:threadfon/features/thread_type_selection/views/thread_type_selection_screen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:threadfon/features/tolerance_selection/views/tolerance_selection_screen.dart';
 
 class AppRouter {
   final FirebaseAnalytics analytics;
@@ -45,11 +50,46 @@ class AppRouter {
                   child: const SplashScreen(), key: state.pageKey),
             ),
             GoRoute(
+              path: MetricDiameterScreen.path,
+              name: MetricDiameterScreen.name,
+              pageBuilder: (context, state) => NoTransitionPage(
+                  child: const MetricDiameterScreen(), key: state.pageKey),
+            ),
+            GoRoute(
               path: ThreadTypeSelectionScreen.path,
               name: ThreadTypeSelectionScreen.name,
               pageBuilder: (context, state) => NoTransitionPage(
                   child: const ThreadTypeSelectionScreen(), key: state.pageKey),
             ),
+            GoRoute(
+              path: PitchSelectionScreen.path,
+              name: PitchSelectionScreen.name,
+              pageBuilder: (context, state) => NoTransitionPage(
+                  child: const PitchSelectionScreen(), key: state.pageKey),
+            ),
+            GoRoute(
+              path: ToleranceSelectionScreen.path,
+              name: ToleranceSelectionScreen.name,
+              pageBuilder: (context, state) => NoTransitionPage(
+                  child: const ToleranceSelectionScreen(), key: state.pageKey),
+            ),
+            GoRoute(
+              path: InfoScreen.path,
+              name: InfoScreen.name,
+              pageBuilder: (context, state) => NoTransitionPage(
+                  child: const InfoScreen(), key: state.pageKey),
+            ),
+            GoRoute(
+                path: FullScreenSvgView.path,
+                name: FullScreenSvgView.name,
+                pageBuilder: (context, state) {
+                  final data = state.extra! as Map<String, dynamic>;
+                  return NoTransitionPage(
+                      child: FullScreenSvgView(
+                        svgData: data['svgData'] as String,
+                      ),
+                      key: state.pageKey);
+                }),
             GoRoute(
               path: AboutApp.path,
               name: AboutApp.name,

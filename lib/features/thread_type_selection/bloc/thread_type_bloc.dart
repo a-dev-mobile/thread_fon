@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
+import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
@@ -14,7 +15,8 @@ part 'thread_type_state.dart';
 
 final _logger = LogService('thread_type_bloc');
 
-class ThreadTypeBloc extends Cubit<ThreadTypeState> {
+class ThreadTypeBloc extends Cubit<ThreadTypeState>
+    with BlocIgnoreEmitAfterClosed {
   ThreadTypeBloc({
     required ThreadTypeRepository repository,
     required LocalStorage localStorage,
@@ -68,5 +70,11 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> {
         enumPageStatus: EnumStatus.error,
         errorMsg: errorMsg,
         enumNavigationStatus: EnumNavigationStatus.initial));
+  }
+
+  void resetNavigationStatus() {
+    emit(state.copyWith(
+      enumNavigationStatus: EnumNavigationStatus.initial,
+    ));
   }
 }

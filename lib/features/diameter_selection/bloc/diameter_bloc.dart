@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
+import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/diameter_selection/models/diameter_model.dart';
@@ -14,7 +15,7 @@ part 'diameter_state.dart';
 
 final _logger = LogService('diameter_bloc');
 
-class DiameterBloc extends Cubit<DiameterState> {
+class DiameterBloc extends Cubit<DiameterState> with BlocIgnoreEmitAfterClosed {
   DiameterBloc({
     required DiameterRepository repository,
     required LocalStorage localStorage,
@@ -33,6 +34,7 @@ class DiameterBloc extends Cubit<DiameterState> {
     try {
       final diameters = await _repository.fetchDiameters();
       final scrollPosition = await _localStorage.getScrollPosition();
+
       emit(state.copyWith(
         enumPageStatus: EnumStatus.success,
         diameters: diameters,
@@ -40,6 +42,7 @@ class DiameterBloc extends Cubit<DiameterState> {
       ));
     } catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
+
       _setErrorState();
     }
   }
@@ -56,12 +59,17 @@ class DiameterBloc extends Cubit<DiameterState> {
       );
       emit(state.copyWith(
           enumNavigationStatus: EnumNavigationStatus.navigation));
-      await Future<void>.delayed(const Duration(milliseconds: 100));
-      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
+      // Удалили задержку
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
       _setErrorState();
     }
+  }
+
+  void resetNavigationStatus() {
+    emit(state.copyWith(
+      enumNavigationStatus: EnumNavigationStatus.initial,
+    ));
   }
 
   void _setErrorState() {

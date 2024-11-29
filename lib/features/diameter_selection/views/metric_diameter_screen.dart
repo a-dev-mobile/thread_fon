@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
@@ -17,6 +18,8 @@ import 'package:threadfon/localization/l10n_extension.dart';
 final _logger = LogService('metric_diameter_screen');
 
 class MetricDiameterScreen extends StatefulWidget {
+  static const path = '/MetricDiameterScreen';
+  static const name = 'MetricDiameterScreen';
   const MetricDiameterScreen({super.key});
 
   @override
@@ -24,28 +27,41 @@ class MetricDiameterScreen extends StatefulWidget {
 }
 
 class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
+  late DiameterBloc _bloc;
+
   @override
-  Widget build(BuildContext context) {
-    // Создаем экземпляр DiameterRepository здесь
+  void initState() {
+    super.initState();
     final apiService = context.read<ApiService>();
     final diameterRepository = DiameterRepository(apiService: apiService);
     final localStorage = context.read<LocalStorage>();
     final languageBloc = context.read<LanguageBloc>();
 
-    return BlocProvider(
-      create: (_) => DiameterBloc(
-        repository: diameterRepository,
-        localStorage: localStorage,
-        languageBloc: languageBloc,
-      )..load(),
-      child: const _MetricDiameterView(),
+    _bloc = DiameterBloc(
+      repository: diameterRepository,
+      localStorage: localStorage,
+      languageBloc: languageBloc,
+    )..load();
+  }
+
+  @override
+  void dispose() {
+    _bloc.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<DiameterBloc>.value(
+      value: _bloc,
+      child: _MetricDiameterView(_bloc),
     );
   }
 }
 
 class _MetricDiameterView extends StatefulWidget {
-  const _MetricDiameterView();
-
+  const _MetricDiameterView(this.bloc);
+  final DiameterBloc bloc;
   @override
   State<_MetricDiameterView> createState() => _MetricDiameterViewState();
 }
@@ -67,18 +83,16 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
   @override
   Widget build(BuildContext context) {
     final localization = context.l10n;
-
+    final bloc = widget.bloc;
     return BlocListener<DiameterBloc, DiameterState>(
       listenWhen: (previous, current) =>
           previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
         if (state.enumNavigationStatus.isNavigation) {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (_) => const PitchSelectionScreen(),
-            ),
-          );
+          context.pushNamed(PitchSelectionScreen.name);
+
+          // Сброс статуса навигации через публичный метод
+          bloc.resetNavigationStatus();
         }
       },
       child: Scaffold(
@@ -93,14 +107,13 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
                   previous.enumPageStatus != current.enumPageStatus,
               builder: (context, state) {
                 switch (state.enumPageStatus) {
-                  case EnumStatus.initial:
                   case EnumStatus.loading:
                     return const LoadingWidget();
 
                   case EnumStatus.error:
                     return MyErrorWidget(
                       errorMsg: state.errorMsg,
-                      onRetry: () => context.read<DiameterBloc>().load(),
+                      onRetry: () => bloc.load(),
                     );
                   case EnumStatus.success:
                     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -117,22 +130,11 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
                         final diameter = state.diameters[index];
                         return DiameterChoiceCard(
                           info: diameter.info,
-                          onTap: () => context
-                              .read<DiameterBloc>()
-                              .preparationNavigation(
-                                  diameter, _scrollController.position.pixels),
+                          onTap: () => bloc.preparationNavigation(
+                              diameter, _scrollController.position.pixels),
                         );
                       },
                     );
-                }
-              },
-            ),
-            BlocBuilder<DiameterBloc, DiameterState>(
-              builder: (context, state) {
-                if (state.enumNavigationStatus.isPreparation) {
-                  return const LoadingWidget(isBlurred: true);
-                } else {
-                  return const SizedBox.shrink();
                 }
               },
             ),
