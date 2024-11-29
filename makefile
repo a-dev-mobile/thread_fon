@@ -2,6 +2,13 @@
 FLUTTER := fvm flutter
 DART := fvm dart
 
+# Определение операционной системы
+UNAME_S := $(shell uname -s)
+
+# Переменные для API ключей (установите их в вашем окружении)
+API_KEY := 9GD6XUZ22K
+API_ISSUER := 69a6de85-2707-47e3-e053-5b8c7c11a4d1
+
 ########################
 # Общая помощь
 ########################
@@ -76,14 +83,13 @@ copy-apk:
 	cp -f build/app/outputs/flutter-apk/app-*.apk /home/dmitriy/server-spb-my-1-hdd-1tb_1/DEV/APK/thread-fon/
 
 # Задача для сборки релизного APK и копирования в указанную папку
-build-send-apk: create-apk-dir $(MAKE) gen-all
+build-send-apk: create-apk-dir gen-all
 	@echo "Сборка релизного APK..."
 	$(FLUTTER) build apk --release
 	$(MAKE) copy-apk
 	@echo "Сборка и копирование APK завершены успешно."
 
 # Задача для сборки релизного AAB, генерации отладочных символов и копирования в указанную папку
-
 build-aab:
 	@echo "Генерация всех необходимых файлов..."
 	$(MAKE) gen-all
@@ -124,17 +130,9 @@ upgrade:
 # Исправление проблем с CocoaPods
 ########################
 
-fix-cocoapods:
-	@echo "Переустанавливаю CocoaPods..."
-	brew reinstall cocoapods
-	@echo "Очистка кеша CocoaPods..."
-	pod cache clean --all
-	@echo "Запуск pod install..."
-	cd ios && pod install
-	@echo "Очистка Flutter и получение зависимостей..."
-	$(FLUTTER) clean
-	$(FLUTTER) pub get
-	@echo "Задача fix-cocoapods завершена."
+update-pods:
+	@echo "Обновление зависимостей CocoaPods..."
+	cd ios && rm -f Podfile.lock && pod install --repo-update && cd ..
 
 ########################
 # Инициализация проекта
@@ -148,3 +146,17 @@ init:
 	$(MAKE) gen-all
 	$(MAKE) format
 	$(MAKE) fix
+ifeq ($(UNAME_S),Darwin)
+	$(MAKE) update-pods
+endif
+
+########################
+# Сборка и отправка IPA в App Store
+########################
+
+build-and-upload-ipa:
+	@echo "Сборка IPA-файла..."
+	$(FLUTTER) build ipa --release
+	@echo "Отправка IPA в App Store..."
+	xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey $(API_KEY) --apiIssuer $(API_ISSUER)
+	@echo "Сборка и отправка IPA завершены успешно."
