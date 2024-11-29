@@ -176,3 +176,4 @@ build-and-upload-ipa:
 	@echo "Отправка IPA в App Store..."
 	xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey $(API_KEY) --apiIssuer $(API_ISSUER)
 	@echo "Сборка и отправка IPA завершены успешно."
+	@echo "testflight - > https://appstoreconnect.apple.com/teams/69a6de85-2707-47e3-e053-5b8c7c11a4d1/apps/1602169811/testflight/ios"
