@@ -84,7 +84,6 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     final bloc = context.watch<InfoBloc>();
     final state = bloc.state;
 
-
     // Логирование успешной загрузки или ошибки
     if (state.enumPageStatus == EnumStatus.success) {
       analytics.logEvent(name: 'info_load_success');

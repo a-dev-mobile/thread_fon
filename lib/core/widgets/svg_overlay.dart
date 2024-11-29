@@ -6,7 +6,6 @@ import 'package:photo_view/photo_view.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 
-
 import 'overlay_button.dart';
 
 class SvgOverlay extends StatelessWidget {

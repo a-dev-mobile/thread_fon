@@ -6,7 +6,7 @@ DART := fvm dart
 UNAME_S := $(shell uname -s)
 
 # Переменные для API ключей (установите их в вашем окружении)
-API_KEY := 9GD6XUZ22K
+API_KEY := 8VRSLDANVA
 API_ISSUER := 69a6de85-2707-47e3-e053-5b8c7c11a4d1
 
 ########################
@@ -130,8 +130,24 @@ upgrade:
 # Исправление проблем с CocoaPods
 ########################
 
+fix-cocoapods:
+	@echo "Переустанавливаю CocoaPods..."
+	
+	brew reinstall cocoapods
+	@echo "Очистка кеша CocoaPods..."
+	pod cache clean --all
+	@echo "Запуск pod install..."
+	cd ios && pod install
+	@echo "Очистка Flutter и получение зависимостей..."
+	$(FLUTTER) clean
+	$(FLUTTER) pub get
+	@echo "Задача fix-cocoapods завершена."
+
+
+
 update-pods:
 	@echo "Обновление зависимостей CocoaPods..."
+	$(FLUTTER) precache --ios
 	cd ios && rm -f Podfile.lock && pod install --repo-update && cd ..
 
 ########################
@@ -147,7 +163,7 @@ init:
 	$(MAKE) format
 	$(MAKE) fix
 ifeq ($(UNAME_S),Darwin)
-	$(MAKE) update-pods
+	$(MAKE) 
 endif
 
 ########################

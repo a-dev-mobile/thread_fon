@@ -17,16 +17,13 @@ class SplashBloc extends Cubit<SplashState> with BlocIgnoreEmitAfterClosed {
   SplashBloc({
     required LanguageBloc languageBloc,
     required LocalStorage storage,
-  })  : 
-        _languageBloc = languageBloc,
+  })  : _languageBloc = languageBloc,
         super(const SplashState());
 
   final LanguageBloc _languageBloc;
 
-
   Future<void> load() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
-
 
     try {
       await Future.delayed(Duration(seconds: 1));
