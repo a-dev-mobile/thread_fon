@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/core/constant/enum_units.dart';
-import 'package:threadfon/features/pitch_selection/models/pitch_model.dart';
+import 'package:threadfon/features/metric_threads/pitch_selection/models/pitch_model.dart';
 import 'package:threadfon/features/settings/bloc/settings_bloc.dart';
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 

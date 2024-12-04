@@ -10,7 +10,7 @@ import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/widgets/base_screen.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
-import 'package:threadfon/features/diameter_selection/views/metric_diameter_screen.dart';
+import 'package:threadfon/features/metric_threads/diameter_selection/views/metric_diameter_screen.dart';
 import 'package:threadfon/features/thread_type_selection/bloc/thread_type_bloc.dart';
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/features/thread_type_selection/repositories/thread_type_repository.dart';

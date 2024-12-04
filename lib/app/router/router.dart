@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/core/widgets/overlay_widget.dart';
-import 'package:threadfon/features/diameter_selection/views/metric_diameter_screen.dart';
-import 'package:threadfon/features/info/views/full_screen_svg_view.dart';
-import 'package:threadfon/features/info/views/info_screen.dart';
-import 'package:threadfon/features/pitch_selection/views/pitch_selection_screen.dart';
+import 'package:threadfon/features/metric_threads/diameter_selection/views/metric_diameter_screen.dart';
+import 'package:threadfon/features/metric_threads/info/views/full_screen_svg_view.dart';
+import 'package:threadfon/features/metric_threads/info/views/info_screen.dart';
+import 'package:threadfon/features/metric_threads/pitch_selection/views/pitch_selection_screen.dart';
 import 'package:threadfon/features/settings/views/about_app.dart';
 import 'package:threadfon/features/splash/splash_screen.dart';
 import 'package:threadfon/features/thread_type_selection/views/thread_type_selection_screen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:threadfon/features/tolerance_selection/views/tolerance_selection_screen.dart';
+import 'package:threadfon/features/metric_threads/tolerance_selection/views/tolerance_selection_screen.dart';
 
 class AppRouter {
   final FirebaseAnalytics analytics;

@@ -43,8 +43,8 @@ EXCLUDE_STRINGS=(
 )
 LOG_LEVEL="INFO"
 OUTPUT_FILE="directory_structure.log" 
-DISPLAY="all"
 DISPLAY="content"
+DISPLAY="all"
 
 # Запуск скрипта с аргументами
 python /home/dmitriy/Documents/DEV/MY_GITHUB/scripts/scripts/personal/generate_directory_tree.py \

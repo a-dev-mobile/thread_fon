@@ -53,13 +53,15 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => settingsBloc,
-      child: _SettingsDrawerView(settingsBloc, themeBloc, languageBloc, localStorage),
+      child: _SettingsDrawerView(
+          settingsBloc, themeBloc, languageBloc, localStorage),
     );
   }
 }
 
 class _SettingsDrawerView extends StatelessWidget {
-  const _SettingsDrawerView(this.bloc, this.themeBloc, this.languageBloc, this.localStorage);
+  const _SettingsDrawerView(
+      this.bloc, this.themeBloc, this.languageBloc, this.localStorage);
   final SettingsBloc bloc;
   final ThemeBloc themeBloc;
   final LanguageBloc languageBloc;
@@ -86,7 +88,8 @@ class _SettingsDrawerView extends StatelessWidget {
           child: Stack(
             children: [
               BlocBuilder<SettingsBloc, SettingsState>(
-                buildWhen: (previous, current) => previous.enumPageStatus != current.enumPageStatus,
+                buildWhen: (previous, current) =>
+                    previous.enumPageStatus != current.enumPageStatus,
                 builder: (context, state) {
                   switch (state.enumPageStatus) {
                     case EnumStatus.loading:
@@ -103,7 +106,8 @@ class _SettingsDrawerView extends StatelessWidget {
                           // Drawer Header
                           Container(
                             width: double.infinity,
-                            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 50, horizontal: 20),
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
@@ -170,7 +174,8 @@ class _SettingsDrawerView extends StatelessWidget {
                                 ListTile(
                                   leading: const Icon(Icons.store),
                                   title: Text(localization.leave_review),
-                                  onTap: () => _openAppStoreOrPlayStore(context),
+                                  onTap: () =>
+                                      _openAppStoreOrPlayStore(context),
                                 ),
                                 const Divider(),
                                 ListTile(
@@ -181,7 +186,8 @@ class _SettingsDrawerView extends StatelessWidget {
                                     context.pushNamed(AboutApp.name);
 
                                     // Log viewing About App screen
-                                    analytics.logEvent(name: 'about_app_viewed');
+                                    analytics.logEvent(
+                                        name: 'about_app_viewed');
                                   },
                                 ),
                                 // Add more settings options here
