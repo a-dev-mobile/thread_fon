@@ -611,6 +611,16 @@ class GeneratedLocalization {
     );
   }
 
+  /// `Imperial Thread`
+  String get imperial_thread {
+    return Intl.message(
+      'Imperial Thread',
+      name: 'imperial_thread',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `M`
   String get m_thread_abrv {
     return Intl.message(

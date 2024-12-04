@@ -99,6 +99,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("P/2 - Полушаг резьбы"),
         "heightOfFundamentalTriangle": MessageLookupByLibrary.simpleMessage(
             "H - Высота исходного треугольника резьбы"),
+        "imperial_thread":
+            MessageLookupByLibrary.simpleMessage("Дюймовая Thread"),
         "inch": MessageLookupByLibrary.simpleMessage("дюйм"),
         "internal_thread":
             MessageLookupByLibrary.simpleMessage("Внутренняя резьба"),

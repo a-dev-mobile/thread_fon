@@ -129,8 +129,8 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
             if (_isSvgOverlayVisible)
               SvgOverlay(
                 svgData: _showDimensions
-                    ? state.svgData
-                    : state.svgDataNoDimensions!,
+                    ? state.svgData ?? ''
+                    : state.svgDataNoDimensions ?? '',
                 svgRequestStatus: state.svgRequestStatus,
                 svgErrorMsg: state.svgErrorMsg,
                 overlayHeight: overlayHeight,
@@ -146,13 +146,23 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                   analytics.logEvent(name: 'svg_overlay_closed');
                 },
                 onExpand: () {
-                  context.pushNamed(FullScreenSvgView.name, extra: {
-                    'svgData': _showDimensions
-                        ? state.svgData!
-                        : state.svgDataNoDimensions!,
-                  });
+                  final svgDataToSend = _showDimensions
+                      ? state.svgData
+                      : state.svgDataNoDimensions;
 
-                  analytics.logEvent(name: 'svg_overlay_expanded');
+                  if (svgDataToSend != null) {
+                    context.pushNamed(FullScreenSvgView.name, extra: {
+                      'svgData': svgDataToSend,
+                    });
+
+                    analytics.logEvent(name: 'svg_overlay_expanded');
+                  } else {
+                    // Handle the null case, perhaps show an error or a placeholder
+                    _logger.e('SVG data is null when trying to expand');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('SVG data is unavailable.')),
+                    );
+                  }
                 },
                 onSwitchSvg: () {
                   setState(() {
@@ -186,7 +196,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
 
       case EnumStatus.error:
         return MyErrorWidget(
-          errorMsg: state.errorMsg,
+          errorMsg: state.errorMsg ?? 'An unknown error occurred.',
           onRetry: () {
             bloc.load();
 

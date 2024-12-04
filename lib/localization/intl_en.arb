@@ -58,6 +58,7 @@
   "mean": "mean",
   "choose_thread": "Choose Thread",
   "metric_thread": "Metric Thread",
+  "imperial_thread": "Imperial Thread",
   "m_thread_abrv": "M",
   "m_thread_female_description": "M - Metric Cylindrical Internal Thread",
   "m_thread_gost": "ISO 965: ISO General Purpose Metric Screw Threads",

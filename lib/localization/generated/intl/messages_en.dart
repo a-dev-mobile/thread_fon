@@ -102,6 +102,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "halfPitch": MessageLookupByLibrary.simpleMessage("Half Pitch (P/2)"),
         "heightOfFundamentalTriangle": MessageLookupByLibrary.simpleMessage(
             "Height of the Fundamental Thread Triangle (H)"),
+        "imperial_thread":
+            MessageLookupByLibrary.simpleMessage("Imperial Thread"),
         "inch": MessageLookupByLibrary.simpleMessage("inch"),
         "internal_thread":
             MessageLookupByLibrary.simpleMessage("Internal Thread"),
