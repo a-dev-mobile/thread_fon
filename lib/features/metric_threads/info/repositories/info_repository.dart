@@ -6,7 +6,7 @@ import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/metric_threads/info/models/info_model.dart';
 
 final _logger = LogService('info_repository');
-const String _baseUrl = 'https://thread-api.wayofdt.de/v1/metric';
+const String _baseUrl = '/v1/metric';
 
 class InfoRepository {
   InfoRepository({

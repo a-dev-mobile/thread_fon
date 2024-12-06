@@ -10,6 +10,7 @@ PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/thread_
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/diameter_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/info"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/"
+PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads"
 FILE_NAMES=(
     "*.dart"
 )

@@ -18,7 +18,7 @@ class ToleranceRepository {
   }) async {
     try {
       final response = await _apiService.get(
-        'https://thread-api.wayofdt.de/v1/metric/tolerance',
+        '/v1/metric/tolerance',
         queryParameters: {
           'type': threadType,
           'id': id,

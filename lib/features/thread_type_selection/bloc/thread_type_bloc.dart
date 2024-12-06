@@ -3,9 +3,12 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
+import 'package:threadfon/core/constant/enum_thread.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
+import 'package:threadfon/features/imperial_threads/diameter_selection/views/imperial_diameter_screen.dart';
+import 'package:threadfon/features/metric_threads/diameter_selection/views/metric_diameter_screen.dart';
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/features/thread_type_selection/repositories/thread_type_repository.dart';
 
@@ -15,8 +18,7 @@ part 'thread_type_state.dart';
 
 final _logger = LogService('thread_type_bloc');
 
-class ThreadTypeBloc extends Cubit<ThreadTypeState>
-    with BlocIgnoreEmitAfterClosed {
+class ThreadTypeBloc extends Cubit<ThreadTypeState> with BlocIgnoreEmitAfterClosed {
   ThreadTypeBloc({
     required ThreadTypeRepository repository,
     required LocalStorage localStorage,
@@ -35,8 +37,7 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState>
     try {
       final threadTypes = await _repository.fetchThreadTypes();
 
-      emit(state.copyWith(
-          enumPageStatus: EnumStatus.success, threadTypes: threadTypes));
+      emit(state.copyWith(enumPageStatus: EnumStatus.success, threadTypes: threadTypes));
     } on Exception catch (e, s) {
       _logger.e('Error loading thread types', error: e, stackTrace: s);
       _setErrorState();
@@ -45,18 +46,21 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState>
 
   Future<void> preparationNavigation(ThreadTypeModel selectedThreadType) async {
     try {
+      final currentUserSelection = await _localStorage.getUserSelection();
+
+      final nextNameScreen =
+          currentUserSelection.enumThreads.isMetric ? MetricDiameterScreen.name : ImperialDiameterScreen.name;
+
       await _localStorage.updateUserSelection(
         (current) => current.copyWith(
           threadType: selectedThreadType.enumThreadType,
         ),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation, nextNameScreen: nextNameScreen));
       await Future<void>.delayed(const Duration(milliseconds: 100));
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
-      _logger.e('Error updating thread type selection',
-          error: e, stackTrace: s);
+      _logger.e('Error updating thread type selection', error: e, stackTrace: s);
       _setErrorState();
     }
   }
@@ -67,9 +71,7 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState>
         ? 'An error occurred while loading thread types.'
         : 'Произошла ошибка при загрузке типов резьбы.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error,
-        errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 
   void resetNavigationStatus() {

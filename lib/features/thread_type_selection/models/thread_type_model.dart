@@ -6,16 +6,15 @@ part 'thread_type_model.g.dart';
 @freezed
 class ThreadTypeModel with _$ThreadTypeModel {
   const factory ThreadTypeModel({
-    required EnumThreadType enumThreadType,
+    required EnumThreadMaleFemale enumThreadType,
     required String svgAssetPath,
   }) = _ThreadTypeModel;
 
-  factory ThreadTypeModel.fromJson(Map<String, dynamic> json) =>
-      _$ThreadTypeModelFromJson(json);
+  factory ThreadTypeModel.fromJson(Map<String, dynamic> json) => _$ThreadTypeModelFromJson(json);
 }
 
 // enum EnumThreadType { f, m }
-enum EnumThreadType {
+enum EnumThreadMaleFemale {
   @JsonValue('male')
   male,
   @JsonValue('female')

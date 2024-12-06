@@ -1,34 +1,38 @@
 // lib/src/common/services/api_service.dart
-
 import 'package:dio/dio.dart';
 import 'correlation_id_interceptor.dart';
+import 'user_agent_provider.dart';
 
 class ApiService {
-  final Dio _dio;
+  late final Dio dio;
 
-  ApiService({Dio? dio})
-      : _dio = dio ??
-            Dio(BaseOptions(
-              connectTimeout: Duration(seconds: 25),
-              receiveTimeout: Duration(seconds: 23),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            )) {
-    // Добавление интерсепторов
-    // _dio.interceptors.add(LogInterceptor(responseBody: true));
-    _dio.interceptors.add(CorrelationIdInterceptor());
+  Future<ApiService> init() async {
+    final userAgent = await getUserAgent();
+    dio = Dio();
+    dio.options = BaseOptions(
+      baseUrl: 'http://10.0.3.2:5000',
+      // baseUrl: 'https://thread-api.wayofdt.de',
+      connectTimeout: const Duration(seconds: 25),
+      receiveTimeout: const Duration(seconds: 23),
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': userAgent,
+      },
+    );
+
+    dio.interceptors.add(CorrelationIdInterceptor());
+    return this;
   }
 
   Future<Response> get(
     String path, {
     Map<String, dynamic>? queryParameters,
     Options? options,
-  }) {
-    return _dio.get(path, queryParameters: queryParameters, options: options);
+  }) async {
+    return dio.get(path, queryParameters: queryParameters, options: options);
   }
 
-  Future<Response> post(String path, {dynamic data}) {
-    return _dio.post(path, data: data);
+  Future<Response> post(String path, {dynamic data, Options? options}) async {
+    return dio.post(path, data: data, options: options);
   }
 }

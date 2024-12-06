@@ -15,8 +15,7 @@ part 'imperial_diameter_state.dart';
 
 final _logger = LogService('imperial_diameter_bloc');
 
-class ImperialDiameterBloc extends Cubit<ImperialDiameterState>
-    with BlocIgnoreEmitAfterClosed {
+class ImperialDiameterBloc extends Cubit<ImperialDiameterState> with BlocIgnoreEmitAfterClosed {
   ImperialDiameterBloc({
     required DiameterRepository repository,
     required LocalStorage localStorage,
@@ -34,7 +33,7 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState>
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
       final diameters = await _repository.fetchDiameters();
-      final scrollPosition = await _localStorage.getScrollPosition();
+      final scrollPosition = await _localStorage.getImperialScrollPosition();
 
       emit(state.copyWith(
         enumPageStatus: EnumStatus.success,
@@ -48,19 +47,18 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState>
     }
   }
 
-  Future<void> preparationNavigation(
-      ImperialDiameterModel selectedDiameter, double scrollPosition) async {
-    await _localStorage.setScrollPosition(scrollPosition);
+  Future<void> preparationNavigation(ImperialDiameterModel selectedDiameter, double scrollPosition) async {
+    await _localStorage.setImperialScrollPosition(scrollPosition);
     try {
+      final selectedDiameterValue = double.tryParse(selectedDiameter.diameter) ?? 0.0;
+
       await _localStorage.updateUserSelection(
         (current) => current.copyWith(
           id: selectedDiameter.id,
-          diameter: selectedDiameter.diameter,
+          diameter: selectedDiameterValue,
         ),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
-      // Удалили задержку
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
       _setErrorState();
@@ -79,8 +77,6 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState>
         ? 'An error occurred while loading diameters.'
         : 'Произошла ошибка при загрузке диаметров.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error,
-        errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

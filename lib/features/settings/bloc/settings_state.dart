@@ -1,10 +1,5 @@
 part of 'settings_bloc.dart';
 
-enum EnumThreads {
-  metric,
-  imperialThread,
-}
-
 @freezed
 class SettingsState with _$SettingsState {
   const factory SettingsState({
@@ -13,6 +8,5 @@ class SettingsState with _$SettingsState {
     @Default(EnumThreads.metric) EnumThreads enumThreads,
   }) = _SettingsState;
 
-  factory SettingsState.fromJson(Map<String, dynamic> json) =>
-      _$SettingsStateFromJson(json);
+  factory SettingsState.fromJson(Map<String, dynamic> json) => _$SettingsStateFromJson(json);
 }

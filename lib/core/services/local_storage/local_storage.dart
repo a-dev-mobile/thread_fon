@@ -6,95 +6,77 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
+import 'package:threadfon/core/constant/enum_thread.dart';
 import 'package:threadfon/core/models/user_selection.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 
 final _logger = LogService('local_storage');
 
-/// Класс для работы с локальным хранилищем, включая асинхронное и кешированное хранилище.
-/// Обеспечивает сохранение и получение данных с возможностью кеширования и обработки ошибок.
+/// Класс для работы с локальным хранилищем. Кеширование удалено:
+/// Данные всегда считываются из SharedPreferences.
 class LocalStorage {
   LocalStorage({bool isShowLog = false}) : _isShowLog = isShowLog;
 
   SharedPreferences? _sharedPreferences;
-  SharedPreferencesWithCache? _cachePreferences;
 
   final bool _isShowLog;
-  DateTime _lastCacheUpdate = DateTime.now();
-
-  static const Duration _cacheDuration = Duration(minutes: 5);
 
   // Определение ключей в одном месте для предотвращения ошибок
   static const String _appId = '_appId';
   static const String _userSelectionKey = '_userSelection';
   static const String _userAgent = 'userAgent';
   static const String _targetUrl = '_TargetUrl';
+  static const String _metricScrollPositionKey = 'scroll_position_metric';
+  static const String _imperialScrollPositionKey = 'scroll_position_imperial';
+  static const String _themeStateKey = '_themeState';
+  static const String _languageStateKey = '_languageStateKey';
 
-  /// Инициализация асинхронных и кешированных настроек.
+  /// Инициализация SharedPreferences.
   Future<void> initialize() async {
     _sharedPreferences = await SharedPreferences.getInstance();
-    _cachePreferences = await SharedPreferencesWithCache.create(
-      cacheOptions: const SharedPreferencesWithCacheOptions(
-        allowList: <String>{
-          _appId,
-          _userAgent,
-          _targetUrl,
-          _userSelectionKey,
-          _themeStateKey,
-          _languageStateKey,
-          _scrollPositionKey
-        },
-      ),
-    );
     _logger.i('INITIALIZE LocalStorage', includeStackTrace: false);
   }
 
   // ******************************
 
-  // Ключи для сохранения скролла
-  static const String _scrollPositionKey = 'scroll_position_';
-
   /// Сохранение положения скролла
-  Future<void> setScrollPosition(double position) async {
-    await _setValue<double>(key: _scrollPositionKey, value: position);
+  Future<void> setMetricScrollPosition(double position) async {
+    await _setValue<double>(key: _metricScrollPositionKey, value: position);
   }
 
   /// Получение сохраненного положения скролла
-  Future<double> getScrollPosition() async {
-    return await _getValue<double>(
-          key: _scrollPositionKey,
-        ) ??
-        0.0;
+  Future<double> getMetricScrollPosition() async {
+    return await _getValue<double>(key: _metricScrollPositionKey, defaultValue: 0.0) ?? 0.0;
+  }
+
+  /// Сохранение положения скролла
+  Future<void> setImperialScrollPosition(double position) async {
+    await _setValue<double>(key: _imperialScrollPositionKey, value: position);
+  }
+
+  /// Получение сохраненного положения скролла
+  Future<double> getImperialScrollPosition() async {
+    return await _getValue<double>(key: _imperialScrollPositionKey, defaultValue: 0.0) ?? 0.0;
   }
 
   // ******************************
   // Методы для работы с _appId
 
-  Future<String?> getAppId({bool forceRefresh = false}) => _getValue<String>(
-        key: _appId,
-        forceRefresh: forceRefresh,
-      );
+  Future<String?> getAppId() => _getValue<String>(key: _appId);
 
-  Future<void> setAppId(String? value) =>
-      _setValue<String>(key: _appId, value: value ?? '');
+  Future<void> setAppId(String? value) => _setValue<String>(key: _appId, value: value ?? '');
 
   // ******************************
   // Методы для работы с _userSelection
 
-  Future<UserSelection> getUserSelection({bool forceRefresh = false}) async {
-    final jsonString = await _getValue<String>(
-      key: _userSelectionKey,
-      forceRefresh: forceRefresh,
-      defaultValue: '{}',
-    );
+  Future<UserSelection> getUserSelection() async {
+    final jsonString = await _getValue<String>(key: _userSelectionKey, defaultValue: '{}');
     try {
       return jsonString != null
-          ? UserSelection.fromJson(
-              json.decode(jsonString) as Map<String, dynamic>)
+          ? UserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
           : const UserSelection();
     } on Exception catch (e, s) {
-      await _recordError(
-          e, s, 'GET_USER_SELECTION', _userSelectionKey, jsonString);
+      await _recordError(e, s, 'GET_USER_SELECTION', _userSelectionKey, jsonString);
       return const UserSelection();
     }
   }
@@ -124,45 +106,32 @@ class LocalStorage {
 
       await _log('UPDATE_USER_SELECTION', _userSelectionKey, updatedSelection);
     } on Exception catch (e, s) {
-      await _recordError(
-          e, s, 'UPDATE_USER_SELECTION', _userSelectionKey, null);
+      await _recordError(e, s, 'UPDATE_USER_SELECTION', _userSelectionKey, null);
     }
   }
+
   // ******************************
   // Методы для работы с _userAgent
 
-  Future<String?> getUserAgent({bool forceRefresh = false}) =>
-      _getValue<String>(
-        key: _userAgent,
-        forceRefresh: forceRefresh,
-      );
+  Future<String?> getUserAgent() => _getValue<String>(key: _userAgent);
 
-  Future<void> setUserAgent(String? value) =>
-      _setValue<String>(key: _userAgent, value: value ?? '');
+  Future<void> setUserAgent(String? value) => _setValue<String>(key: _userAgent, value: value ?? '');
 
   // ******************************
   // Методы для работы с _targetUrl
 
-  Future<String?> getTargetUrl({bool forceRefresh = false}) =>
-      _getValue<String>(
+  Future<String?> getTargetUrl() => _getValue<String>(
         key: _targetUrl,
-        forceRefresh: forceRefresh,
         defaultValue: 'https://unknown.com?utm_source=organic_mob',
       );
 
-  Future<void> setTargetUrl(String? value) =>
-      _setValue<String>(key: _targetUrl, value: value ?? '');
+  Future<void> setTargetUrl(String? value) => _setValue<String>(key: _targetUrl, value: value ?? '');
 
   // ******************************
   // Методы для работы с _themeMode
-  static const String _themeStateKey = '_themeState';
 
-  Future<ThemeState> getThemeState({bool forceRefresh = false}) async {
-    final jsonString = await _getValue<String>(
-      key: _themeStateKey,
-      forceRefresh: forceRefresh,
-      defaultValue: null,
-    );
+  Future<ThemeState> getThemeState() async {
+    final jsonString = await _getValue<String>(key: _themeStateKey);
     final defaultThemeState = ThemeState(themeMode: ThemeMode.light);
 
     try {
@@ -186,30 +155,22 @@ class LocalStorage {
 
   // ******************************
 
-  // ******************************
-  // Методы для работы с _themeMode
-  static const String _languageStateKey = '_languageStateKey';
-
-  Future<LanguageState> getLanguageState({bool forceRefresh = false}) async {
-    final jsonString = await _getValue<String>(
-      key: _languageStateKey,
-      forceRefresh: forceRefresh,
-      defaultValue: null,
+  // Методы для работы с языковой конфигурацией
+  Future<LanguageState> getLanguageState() async {
+    final jsonString = await _getValue<String>(key: _languageStateKey);
+    final defaultLanguageState = LanguageState(
+      enumLang: EnumLang.values.firstWhere(
+        (e) => e.name == PlatformDispatcher.instance.locale.languageCode,
+        orElse: () => EnumLang.en,
+      ),
     );
 
-    final defaultLanguageState = LanguageState(
-        enumLang: EnumLang.values.firstWhere(
-      (e) => e.name == PlatformDispatcher.instance.locale.languageCode,
-      orElse: () => EnumLang.en,
-    ));
     try {
       return jsonString != null
-          ? LanguageState.fromJson(
-              json.decode(jsonString) as Map<String, dynamic>)
+          ? LanguageState.fromJson(json.decode(jsonString) as Map<String, dynamic>)
           : defaultLanguageState;
     } on Exception catch (e, s) {
-      await _recordError(
-          e, s, 'GET_LANGUAGE_STATE', _languageStateKey, jsonString);
+      await _recordError(e, s, 'GET_LANGUAGE_STATE', _languageStateKey, jsonString);
       return defaultLanguageState;
     }
   }
@@ -224,10 +185,8 @@ class LocalStorage {
   }
 
   // ******************************
-
   // Универсальные методы для хранения и получения данных
 
-  /// Универсальный метод для сохранения значения в хранилище.
   Future<void> _setValue<T>({
     required String key,
     required T value,
@@ -235,42 +194,21 @@ class LocalStorage {
     try {
       _ensureInitialized();
 
-      if (value is String ||
-          value is bool ||
-          value is int ||
-          value is double ||
-          value is List<String>) {
-        if (value is String) {
-          await _sharedPreferences!.setString(key, value);
-        } else if (value is bool) {
-          await _sharedPreferences!.setBool(key, value);
-        } else if (value is int) {
-          await _sharedPreferences!.setInt(key, value);
-        } else if (value is double) {
-          await _sharedPreferences!.setDouble(key, value);
-        } else if (value is List<String>) {
-          await _sharedPreferences!.setStringList(key, value);
-        }
-
-        if (await _isValidKey(key)) {
-          if (value is String) {
-            await _cachePreferences!.setString(key, value);
-          } else if (value is bool) {
-            await _cachePreferences!.setBool(key, value);
-          } else if (value is int) {
-            await _cachePreferences!.setInt(key, value);
-          } else if (value is double) {
-            await _cachePreferences!.setDouble(key, value);
-          } else if (value is List<String>) {
-            await _cachePreferences!.setStringList(key, value);
-          }
-        }
-
-        await _log('SET', key, value);
-        _lastCacheUpdate = DateTime.now();
+      if (value is String) {
+        await _sharedPreferences!.setString(key, value);
+      } else if (value is bool) {
+        await _sharedPreferences!.setBool(key, value);
+      } else if (value is int) {
+        await _sharedPreferences!.setInt(key, value);
+      } else if (value is double) {
+        await _sharedPreferences!.setDouble(key, value);
+      } else if (value is List<String>) {
+        await _sharedPreferences!.setStringList(key, value);
       } else {
         throw Exception('Unsupported type');
       }
+
+      await _log('SET', key, value);
     } on Exception catch (e, s) {
       await _recordError(e, s, 'SET', key, value);
     }
@@ -284,23 +222,16 @@ class LocalStorage {
   }) async {
     try {
       _ensureInitialized();
+      T? result = _getFromSharedPreferences<T>(key, null);
 
-      if (!await _isValidKey(key)) {
-        return _getFromSharedPreferences<T>(key, defaultValue);
+      // Если результат null и есть defaultValue, сохраняем и возвращаем defaultValue
+      if (result == null && defaultValue != null) {
+        await _setValue<T>(key: key, value: defaultValue);
+        return defaultValue;
       }
 
-      if (forceRefresh ||
-          DateTime.now().difference(_lastCacheUpdate) > _cacheDuration) {
-        await _cachePreferences!.reloadCache();
-        _lastCacheUpdate = DateTime.now();
-      }
-
-      final cachedValue = _getFromCache<T>(key);
-      if (cachedValue != null) {
-        return cachedValue;
-      }
-
-      return _getFromSharedPreferences<T>(key, defaultValue);
+      // Возвращаем полученное значение или defaultValue (если result == null)
+      return result ?? defaultValue;
     } on Exception catch (e, s) {
       await _recordError(e, s, 'GET', key, defaultValue);
       return defaultValue;
@@ -323,37 +254,6 @@ class LocalStorage {
     return defaultValue;
   }
 
-  /// Получение значения из кеша.
-  T? _getFromCache<T>(String key) {
-    if (T == String) {
-      return _cachePreferences!.getString(key) as T?;
-    } else if (T == bool) {
-      return _cachePreferences!.getBool(key) as T?;
-    } else if (T == int) {
-      return _cachePreferences!.getInt(key) as T?;
-    } else if (T == double) {
-      return _cachePreferences!.getDouble(key) as T?;
-    } else if (T == List<String>) {
-      return _cachePreferences!.getStringList(key) as T?;
-    }
-    return null;
-  }
-
-  // ******************************
-  /// Проверка наличия ключа в allowList с обработкой ArgumentError
-  Future<bool> _isValidKey(String key) async {
-    try {
-      return _cachePreferences!.containsKey(key);
-    } on Exception catch (e) {
-      if (e is ArgumentError) {
-        await _log('WARN', key,
-            'Key is not included in the PreferencesFilter allowlist');
-        return false;
-      }
-      rethrow; // Если это не ArgumentError, выбрасываем дальше
-    }
-  }
-
   // ******************************
   // Методы для работы с JSON-данными
 
@@ -373,18 +273,11 @@ class LocalStorage {
   /// Метод для получения JSON-объекта из хранилища.
   Future<Map<String, dynamic>?> getJson({
     required String key,
-    required bool forceRefresh,
     defaultValue = const <String, dynamic>{},
   }) async {
-    final jsonString = await _getValue<String>(
-      key: key,
-      forceRefresh: forceRefresh,
-      defaultValue: defaultValue,
-    );
+    final jsonString = await _getValue<String>(key: key, defaultValue: json.encode(defaultValue));
     try {
-      return jsonString != null
-          ? json.decode(jsonString) as Map<String, dynamic>
-          : null;
+      return jsonString != null ? json.decode(jsonString) as Map<String, dynamic> : null;
     } on Exception catch (e, s) {
       await _recordError(e, s, 'GET_JSON', key, jsonString);
       return null;
@@ -425,7 +318,6 @@ class LocalStorage {
       _ensureInitialized();
 
       await _sharedPreferences!.clear();
-      await _cachePreferences!.clear();
       await _log('CLEAR', 'All Data', 'All data cleared');
     } on Exception catch (e, s) {
       await _recordError(e, s, 'CLEAR', 'All Data', 'Failed to clear all data');
@@ -435,9 +327,8 @@ class LocalStorage {
   // ******************************
   /// Проверка инициализации хранилищ
   void _ensureInitialized() {
-    if (_sharedPreferences == null || _cachePreferences == null) {
-      throw Exception(
-          'LocalStorage not initialized. Call initialize() before using.');
+    if (_sharedPreferences == null) {
+      throw Exception('LocalStorage not initialized. Call initialize() before using.');
     }
   }
 }

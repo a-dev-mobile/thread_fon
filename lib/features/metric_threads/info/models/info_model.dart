@@ -13,9 +13,8 @@ class InfoModel with _$InfoModel {
     required String tolerance,
     required String designation,
     required String description,
-    @JsonKey(name: 'thread_type') required EnumThreadType threadType,
-    @JsonKey(name: 'type_pitch_description')
-    required String typePitchDescription,
+    @JsonKey(name: 'thread_type') required EnumThreadMaleFemale threadType,
+    @JsonKey(name: 'type_pitch_description') required String typePitchDescription,
     @JsonKey(name: 'type_pitch') required int typePitch,
     @JsonKey(name: 'range_main') int? rangeMain,
     @JsonKey(name: 'range_sub') num? rangeSub,
@@ -58,6 +57,5 @@ class InfoModel with _$InfoModel {
     @JsonKey(name: 'd3_ei') num? d3Ei,
   }) = _InfoModel;
 
-  factory InfoModel.fromJson(Map<String, dynamic> json) =>
-      _$InfoModelFromJson(json);
+  factory InfoModel.fromJson(Map<String, dynamic> json) => _$InfoModelFromJson(json);
 }

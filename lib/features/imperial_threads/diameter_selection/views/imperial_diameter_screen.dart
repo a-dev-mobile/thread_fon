@@ -11,21 +11,20 @@ import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/features/imperial_threads/diameter_selection/bloc/imperial_diameter_bloc.dart';
 import 'package:threadfon/features/imperial_threads/diameter_selection/repositories/imperial_diameter_repository.dart';
 import 'package:threadfon/features/imperial_threads/diameter_selection/views/widget/imperial_diameter_choice_card.dart';
-
 import 'package:threadfon/localization/l10n_extension.dart';
 
 final _logger = LogService('imperial_diameter_screen');
 
-class MetricDiameterScreen extends StatefulWidget {
-  static const path = '/MetricDiameterScreen';
-  static const name = 'MetricDiameterScreen';
-  const MetricDiameterScreen({super.key});
+class ImperialDiameterScreen extends StatefulWidget {
+  static const path = '/ImperialDiameterScreen';
+  static const name = 'ImperialDiameterScreen';
+  const ImperialDiameterScreen({super.key});
 
   @override
-  State<MetricDiameterScreen> createState() => _MetricDiameterScreenState();
+  State<ImperialDiameterScreen> createState() => _ImperialDiameterScreenState();
 }
 
-class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
+class _ImperialDiameterScreenState extends State<ImperialDiameterScreen> {
   late ImperialDiameterBloc _bloc;
 
   @override
@@ -53,20 +52,22 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
   Widget build(BuildContext context) {
     return BlocProvider<ImperialDiameterBloc>.value(
       value: _bloc,
-      child: _MetricDiameterView(_bloc),
+      child: _ImperialDiameterView(_bloc),
     );
   }
 }
 
-class _MetricDiameterView extends StatefulWidget {
-  const _MetricDiameterView(this.bloc);
+class _ImperialDiameterView extends StatefulWidget {
+  const _ImperialDiameterView(this.bloc);
   final ImperialDiameterBloc bloc;
+
   @override
-  State<_MetricDiameterView> createState() => _MetricDiameterViewState();
+  State<_ImperialDiameterView> createState() => _ImperialDiameterViewState();
 }
 
-class _MetricDiameterViewState extends State<_MetricDiameterView> {
+class _ImperialDiameterViewState extends State<_ImperialDiameterView> {
   late ScrollController _scrollController;
+
   @override
   void initState() {
     super.initState();
@@ -84,10 +85,10 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
     final localization = context.l10n;
     final bloc = widget.bloc;
     return BlocListener<ImperialDiameterBloc, ImperialDiameterState>(
-      listenWhen: (previous, current) =>
-          previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
         if (state.enumNavigationStatus.isNavigation) {
+          // Навигация на следующий экран при выборе
           // context.pushNamed(PitchSelectionScreen.name);
 
           // Сброс статуса навигации через публичный метод
@@ -100,15 +101,13 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
         ),
         body: Stack(
           children: [
-            // Основной контент
             BlocBuilder<ImperialDiameterBloc, ImperialDiameterState>(
               buildWhen: (previous, current) =>
-                  previous.enumPageStatus != current.enumPageStatus,
+                  previous.enumPageStatus != current.enumPageStatus || previous.diameters != current.diameters,
               builder: (context, state) {
                 switch (state.enumPageStatus) {
                   case EnumStatus.loading:
                     return const LoadingWidget();
-
                   case EnumStatus.error:
                     return MyErrorWidget(
                       errorMsg: state.errorMsg,
@@ -123,14 +122,18 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
                     return ListView.separated(
                       controller: _scrollController,
                       itemCount: state.diameters.length,
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 8.0),
+                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
                       itemBuilder: (context, index) {
                         final diameter = state.diameters[index];
                         return ImperialDiameterChoiceCard(
-                          info: diameter.info,
+                          formatted: diameter.formatted,
+                          series: diameter.series,
+                          tpi: diameter.tpi,
+                          diameter: diameter.diameter,
                           onTap: () => bloc.preparationNavigation(
-                              diameter, _scrollController.position.pixels),
+                            diameter,
+                            _scrollController.position.pixels,
+                          ),
                         );
                       },
                     );

@@ -5,8 +5,7 @@ class ImperialDiameterState with _$ImperialDiameterState {
   const factory ImperialDiameterState({
     @Default([]) List<ImperialDiameterModel> diameters,
     @Default(EnumStatus.loading) EnumStatus enumPageStatus,
-    @Default(EnumNavigationStatus.initial)
-    EnumNavigationStatus enumNavigationStatus,
+    @Default(EnumNavigationStatus.initial) EnumNavigationStatus enumNavigationStatus,
     String? errorMsg,
     @Default(0.0) double scrollPosition,
   }) = _ImperialDiameterState;

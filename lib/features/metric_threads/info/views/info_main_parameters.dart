@@ -20,8 +20,7 @@ class InfoMainParameters extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = context.l10n;
     final units = context.read<InfoBloc>().state.units;
-    final unitsText =
-        units == EnumUnits.mm ? localization.mm : localization.inch;
+    final unitsText = units == EnumUnits.mm ? localization.mm : localization.inch;
 
     return MyCard(
       child: Column(
@@ -61,7 +60,7 @@ class InfoMainParameters extends StatelessWidget {
           const Divider(),
           InfoRow(
               label: localization.thread_type,
-              value: info.threadType == EnumThreadType.female
+              value: info.threadType == EnumThreadMaleFemale.female
                   ? localization.internal_thread
                   : localization.external_thread),
           InfoRow(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/core/widgets/overlay_widget.dart';
+import 'package:threadfon/features/imperial_threads/diameter_selection/views/imperial_diameter_screen.dart';
 import 'package:threadfon/features/metric_threads/diameter_selection/views/metric_diameter_screen.dart';
 import 'package:threadfon/features/metric_threads/info/views/full_screen_svg_view.dart';
 import 'package:threadfon/features/metric_threads/info/views/info_screen.dart';
@@ -54,6 +55,12 @@ class AppRouter {
               name: MetricDiameterScreen.name,
               pageBuilder: (context, state) => NoTransitionPage(
                   child: const MetricDiameterScreen(), key: state.pageKey),
+            ),
+               GoRoute(
+              path: ImperialDiameterScreen.path,
+              name: ImperialDiameterScreen.name,
+              pageBuilder: (context, state) =>
+                  NoTransitionPage(child: const ImperialDiameterScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ThreadTypeSelectionScreen.path,

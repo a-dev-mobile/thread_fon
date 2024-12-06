@@ -17,7 +17,7 @@ class PitchRepository {
   }) async {
     try {
       final response = await _apiService.get(
-        'https://thread-api.wayofdt.de/v1/metric/pitch',
+        '/v1/metric/pitch',
         queryParameters: {
           'diameter': diameter,
           'language': language,

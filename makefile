@@ -83,7 +83,9 @@ copy-apk:
 	cp -f build/app/outputs/flutter-apk/app-*.apk /home/dmitriy/server-spb-my-1-hdd-1tb_1/DEV/APK/thread-fon/
 
 # Задача для сборки релизного APK и копирования в указанную папку
-build-send-apk: create-apk-dir gen-all
+build-send-apk: 
+	$(MAKE) create-apk-dir 
+	$(MAKE) gen-all
 	@echo "Сборка релизного APK..."
 	$(FLUTTER) build apk --release
 	$(MAKE) copy-apk

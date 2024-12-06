@@ -12,12 +12,11 @@ class DiameterRepository {
   DiameterRepository({required ApiService apiService})
       : _apiService = apiService;
 
-  Future<List<ImperialDiameterModel>> fetchDiameters(
-      {String order = 'asc'}) async {
+  Future<List<ImperialDiameterModel>> fetchDiameters() async {
     try {
       final response = await _apiService.get(
-        'https://thread-api.wayofdt.de/v1/imperial/diameters',
-        queryParameters: {'order': order},
+        '/v1/imperial/diameters',
+        // queryParameters: {'order': order},
       );
 
       if (response.statusCode == 200) {
@@ -27,13 +26,11 @@ class DiameterRepository {
                 ImperialDiameterModel.fromJson(json as Map<String, dynamic>))
             .toList();
       } else {
-        _logger.e(
-            'Failed to fetch diameters. Status code: ${response.statusCode}');
+        _logger.e('Failed to fetch diameters. Status code: ${response.statusCode}');
         throw Exception('Failed to fetch diameters');
       }
     } catch (error, stackTrace) {
-      _logger.e('Error fetching diameters',
-          error: error, stackTrace: stackTrace);
+      _logger.e('Error fetching diameters', error: error, stackTrace: stackTrace);
       rethrow;
     }
   }

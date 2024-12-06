@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:isolate';
 
+import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart'; // Добавлен импорт Crashlytics
@@ -37,8 +38,7 @@ Future<void> main() async {
 
         // Инициализация Crashlytics
         // Включаем сбор нефатальных ошибок
-        await FirebaseCrashlytics.instance
-            .setCrashlyticsCollectionEnabled(!kDebugMode);
+        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
 
         // Передаём все необработанные асинхронные ошибки в Crashlytics
         PlatformDispatcher.instance.onError = (error, stack) {
@@ -58,9 +58,7 @@ Future<void> main() async {
           }
 
           // Логируем ошибку
-          _logger.e('FlutterError.onError',
-              error: details.exception,
-              stackTrace: details.stack ?? StackTrace.current);
+          _logger.e('FlutterError.onError', error: details.exception, stackTrace: details.stack ?? StackTrace.current);
 
           // Также отправляем в Crashlytics
           FirebaseCrashlytics.instance.recordFlutterFatalError(details);
@@ -75,6 +73,8 @@ Future<void> main() async {
         var languageState = await localStorage.getLanguageState();
         var themeState = await localStorage.getThemeState();
 
+        final apiService = await ApiService().init();
+
         // Запуск приложения с провайдерами
         Bloc.observer = const AppBlocObserver();
         runApp(
@@ -84,8 +84,8 @@ Future<void> main() async {
                 RepositoryProvider.value(
                   value: localStorage,
                 ),
-                RepositoryProvider(
-                  create: (context) => ApiService(),
+                RepositoryProvider.value(
+                  value: apiService,
                 ),
                 RepositoryProvider(
                   create: (context) => AppRouter(analytics: analytics),
@@ -122,8 +122,7 @@ Future<void> main() async {
           _logger.e('Isolate error', error: error, stackTrace: stackTrace);
 
           // Отправляем ошибку в Crashlytics
-          FirebaseCrashlytics.instance
-              .recordError(error, stackTrace, fatal: true);
+          FirebaseCrashlytics.instance.recordError(error, stackTrace, fatal: true);
         }).sendPort,
       );
 
@@ -144,8 +143,7 @@ Future<void> main() async {
 class _AppLifecycleObserver extends WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.detached ||
-        state == AppLifecycleState.inactive) {
+    if (state == AppLifecycleState.detached || state == AppLifecycleState.inactive) {
       // Вызов dispose() при закрытии приложения, если необходимо
     }
   }

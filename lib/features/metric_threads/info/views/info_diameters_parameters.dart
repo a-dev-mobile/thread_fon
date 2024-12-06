@@ -17,15 +17,14 @@ class InfoDiametersParameters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = context.l10n;
-    final isFemale = info.threadType == EnumThreadType.female;
+    final isFemale = info.threadType == EnumThreadMaleFemale.female;
     final prefix = isFemale ? 'D' : 'd';
 
     // Создаем список виджетов секций диаметров
     final List<Widget> diameterSections = [];
 
     // Добавляем первую секцию диаметров в зависимости от типа резьбы
-    diameterSections
-        .add(_buildPrimaryDiameterSection(prefix, isFemale, localization));
+    diameterSections.add(_buildPrimaryDiameterSection(prefix, isFemale, localization));
 
     // Добавляем отступ
     diameterSections.add(const SizedBox(height: 10.0));
@@ -52,8 +51,7 @@ class InfoDiametersParameters extends StatelessWidget {
     diameterSections.add(const SizedBox(height: 10.0));
 
     // Добавляем дополнительные секции в зависимости от типа резьбы
-    diameterSections
-        .addAll(_buildAdditionalSections(prefix, isFemale, localization));
+    diameterSections.addAll(_buildAdditionalSections(prefix, isFemale, localization));
 
     return MyCard(
       onTap: null,
@@ -65,8 +63,7 @@ class InfoDiametersParameters extends StatelessWidget {
   }
 
   // Метод для создания основной секции диаметра
-  Widget _buildPrimaryDiameterSection(
-      String prefix, bool isFemale, GeneratedLocalization localization) {
+  Widget _buildPrimaryDiameterSection(String prefix, bool isFemale, GeneratedLocalization localization) {
     if (isFemale) {
       return _DiameterSection(
         title: '${prefix}1 - ${localization.diam_minor}',
@@ -91,8 +88,7 @@ class InfoDiametersParameters extends StatelessWidget {
   }
 
   // Метод для создания дополнительных секций диаметров
-  List<Widget> _buildAdditionalSections(
-      String prefix, bool isFemale, GeneratedLocalization localization) {
+  List<Widget> _buildAdditionalSections(String prefix, bool isFemale, GeneratedLocalization localization) {
     List<Widget> sections = [];
 
     if (isFemale) {
