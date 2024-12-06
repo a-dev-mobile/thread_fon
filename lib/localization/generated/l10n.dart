@@ -601,20 +601,20 @@ class GeneratedLocalization {
     );
   }
 
-  /// `Metric Thread`
+  /// `ISO 965: ISO General Purpose Metric Screw Threads`
   String get metric_thread {
     return Intl.message(
-      'Metric Thread',
+      'ISO 965: ISO General Purpose Metric Screw Threads',
       name: 'metric_thread',
       desc: '',
       args: [],
     );
   }
 
-  /// `Imperial Thread`
+  /// `ASME/ANSI B1.1 Unified Inch Screw Threads`
   String get imperial_thread {
     return Intl.message(
-      'Imperial Thread',
+      'ASME/ANSI B1.1 Unified Inch Screw Threads',
       name: 'imperial_thread',
       desc: '',
       args: [],

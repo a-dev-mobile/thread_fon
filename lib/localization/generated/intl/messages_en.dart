@@ -13,10 +13,9 @@
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
-final messages = MessageLookup();
+final messages = new MessageLookup();
 
-typedef MessageIfAbsent = String Function(
-    String messageStr, List<dynamic> args);
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
@@ -103,8 +102,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "halfPitch": MessageLookupByLibrary.simpleMessage("Half Pitch (P/2)"),
         "heightOfFundamentalTriangle": MessageLookupByLibrary.simpleMessage(
             "Height of the Fundamental Thread Triangle (H)"),
-        "imperial_thread":
-            MessageLookupByLibrary.simpleMessage("Imperial Thread"),
+        "imperial_thread": MessageLookupByLibrary.simpleMessage(
+            "ASME/ANSI B1.1 Unified Inch Screw Threads"),
         "inch": MessageLookupByLibrary.simpleMessage("inch"),
         "internal_thread":
             MessageLookupByLibrary.simpleMessage("Internal Thread"),
@@ -138,7 +137,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Major Diameter Tolerance"),
         "max": MessageLookupByLibrary.simpleMessage("max"),
         "mean": MessageLookupByLibrary.simpleMessage("mean"),
-        "metric_thread": MessageLookupByLibrary.simpleMessage("Metric Thread"),
+        "metric_thread": MessageLookupByLibrary.simpleMessage(
+            "ISO 965: ISO General Purpose Metric Screw Threads"),
         "min": MessageLookupByLibrary.simpleMessage("min"),
         "minor_diam": MessageLookupByLibrary.simpleMessage("Minor Diameter"),
         "minor_diam_avg":

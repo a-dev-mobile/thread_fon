@@ -13,10 +13,9 @@
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
-final messages = MessageLookup();
+final messages = new MessageLookup();
 
-typedef MessageIfAbsent = String Function(
-    String messageStr, List<dynamic> args);
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
@@ -100,8 +99,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("P/2 - Полушаг резьбы"),
         "heightOfFundamentalTriangle": MessageLookupByLibrary.simpleMessage(
             "H - Высота исходного треугольника резьбы"),
-        "imperial_thread":
-            MessageLookupByLibrary.simpleMessage("Дюймовая Thread"),
+        "imperial_thread": MessageLookupByLibrary.simpleMessage(
+            "ASME/ANSI B1.1 Унифицированная дюймовая резьба"),
         "inch": MessageLookupByLibrary.simpleMessage("дюйм"),
         "internal_thread":
             MessageLookupByLibrary.simpleMessage("Внутренняя резьба"),
@@ -135,8 +134,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Допуск основного диаметра"),
         "max": MessageLookupByLibrary.simpleMessage("макс"),
         "mean": MessageLookupByLibrary.simpleMessage("сред."),
-        "metric_thread":
-            MessageLookupByLibrary.simpleMessage("Метрическая резьба"),
+        "metric_thread": MessageLookupByLibrary.simpleMessage(
+            "ГОСТ 24705-2004 / ISO 965 Метрическая резьба"),
         "min": MessageLookupByLibrary.simpleMessage("мин"),
         "minor_diam": MessageLookupByLibrary.simpleMessage("Минорный диаметр"),
         "minor_diam_avg":

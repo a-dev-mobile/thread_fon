@@ -57,8 +57,10 @@
   "max": "max",
   "mean": "mean",
   "choose_thread": "Choose Thread",
-  "metric_thread": "Metric Thread",
-  "imperial_thread": "Imperial Thread",
+
+  "metric_thread": "ISO 965: ISO General Purpose Metric Screw Threads",
+  "imperial_thread": "ASME/ANSI B1.1 Unified Inch Screw Threads",
+
   "m_thread_abrv": "M",
   "m_thread_female_description": "M - Metric Cylindrical Internal Thread",
   "m_thread_gost": "ISO 965: ISO General Purpose Metric Screw Threads",
