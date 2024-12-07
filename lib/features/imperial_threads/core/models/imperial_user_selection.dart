@@ -13,6 +13,7 @@ class ImperialUserSelection with _$ImperialUserSelection {
   const factory ImperialUserSelection({
 
     String? diameter,
+    String? tolerance,
     String? tpi,
     int? id,
     String? fullName,

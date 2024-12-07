@@ -64,7 +64,7 @@ class InfoBloc extends Cubit<InfoState> with BlocIgnoreEmitAfterClosed {
     return await _repository.fetchInfo(
       diameter: metricUserSelection.diameter!,
       pitch: metricUserSelection.pitch!,
-      threadType: coreUserSelection.threadType!.name,
+      threadType: coreUserSelection.threadType.name,
       tolerance: metricUserSelection.tolerance!,
       language: _languageBloc.state.enumLang.name,
       units: metricUserSelection.units.name,

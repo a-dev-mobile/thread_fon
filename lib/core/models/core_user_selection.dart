@@ -8,7 +8,7 @@ part 'core_user_selection.g.dart';
 @freezed
 class CoreUserSelection with _$CoreUserSelection {
   const factory CoreUserSelection({
-    EnumThreadMaleFemale? threadType,
+    @Default(EnumThreadMaleFemale.male)  EnumThreadMaleFemale threadType,
     @Default(EnumThreads.metric) EnumThreads enumThreads,
   }) = _CoreUserSelection;
 

@@ -27,7 +27,7 @@ class ImperialDiameterChoiceCard extends StatelessWidget {
         trailing: Text(
           series,
           style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
+
         ),
         title: Text(formatted.fractional,
             style: theme.textTheme.titleLarge?.copyWith(

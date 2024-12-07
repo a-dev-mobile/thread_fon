@@ -5,12 +5,14 @@ source /home/dmitriy/.venv/bin/activate
 
 # Аргументы
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/pitch_selection"
-PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/tolerance_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/thread_type_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/diameter_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/info"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads"
+PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/metric_threads/tolerance_selection"
+PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads/tolerance_selection"
+PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads/diameter_selection"
 FILE_NAMES=(
     "*.dart"
 )

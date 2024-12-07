@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
@@ -11,6 +12,7 @@ import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/features/imperial_threads/diameter_selection/bloc/imperial_diameter_bloc.dart';
 import 'package:threadfon/features/imperial_threads/diameter_selection/repositories/imperial_diameter_repository.dart';
 import 'package:threadfon/features/imperial_threads/diameter_selection/views/widget/imperial_diameter_choice_card.dart';
+import 'package:threadfon/features/imperial_threads/tolerance_selection/views/imperial_tolerance_selection_screen.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
 final _logger = LogService('imperial_diameter_screen');
@@ -41,7 +43,6 @@ class _ImperialDiameterScreenState extends State<ImperialDiameterScreen> {
       languageBloc: languageBloc,
     )..load();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +85,7 @@ class _ImperialDiameterViewState extends State<_ImperialDiameterView> {
       listener: (context, state) async {
         if (state.enumNavigationStatus.isNavigation) {
           // Навигация на следующий экран при выборе
-          // context.pushNamed(PitchSelectionScreen.name);
+          context.pushNamed(ImperialToleranceSelectionScreen.name);
 
           // Сброс статуса навигации через публичный метод
           bloc.resetNavigationStatus();
