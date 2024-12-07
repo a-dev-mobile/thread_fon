@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
-import 'package:threadfon/core/constant/enum_thread.dart';
-import 'package:threadfon/core/models/user_selection.dart';
+import 'package:threadfon/core/models/core_user_selection.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
+import 'package:threadfon/features/imperial_threads/core/models/imperial_user_selection.dart';
+import 'package:threadfon/features/metric_threads/core/models/metric_user_selection.dart';
 
 final _logger = LogService('local_storage');
 
@@ -23,7 +24,9 @@ class LocalStorage {
 
   // Определение ключей в одном месте для предотвращения ошибок
   static const String _appId = '_appId';
-  static const String _userSelectionKey = '_userSelection';
+  static const String _metricUserSelectionKey = '_metricUserSelection';
+  static const String _coreUserSelectionKey = '_userSelection'; // Новый ключ
+  static const String _imperialUserSelectionKey = '_imperialUserSelection'; // Новый ключ
   static const String _userAgent = 'userAgent';
   static const String _targetUrl = '_TargetUrl';
   static const String _metricScrollPositionKey = 'scroll_position_metric';
@@ -67,46 +70,134 @@ class LocalStorage {
   Future<void> setAppId(String? value) => _setValue<String>(key: _appId, value: value ?? '');
 
   // ******************************
-  // Методы для работы с _userSelection
+  // Методы для работы с _metricUserSelection
 
-  Future<UserSelection> getUserSelection() async {
-    final jsonString = await _getValue<String>(key: _userSelectionKey, defaultValue: '{}');
+  Future<MetricUserSelection> getMetricUserSelection() async {
+    final jsonString = await _getValue<String>(key: _metricUserSelectionKey, defaultValue: '{}');
     try {
       return jsonString != null
-          ? UserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
-          : const UserSelection();
+          ? MetricUserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
+          : const MetricUserSelection();
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'GET_USER_SELECTION', _userSelectionKey, jsonString);
-      return const UserSelection();
+      await _recordError(e, s, 'GET_METRIC_USER_SELECTION', _metricUserSelectionKey, jsonString);
+      return const MetricUserSelection();
     }
   }
 
-  Future<void> setUserSelection(UserSelection value) async {
+  Future<void> setMetricUserSelection(MetricUserSelection value) async {
     try {
       final jsonString = json.encode(value.toJson());
-      await _setValue<String>(key: _userSelectionKey, value: jsonString);
+      await _setValue<String>(key: _metricUserSelectionKey, value: jsonString);
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'SET_USER_SELECTION', _userSelectionKey, value);
+      await _recordError(e, s, 'SET_METRIC_USER_SELECTION', _metricUserSelectionKey, value);
     }
   }
 
-  /// Метод для обновления UserSelection с использованием функции модификации.
-  Future<void> updateUserSelection(
-    FutureOr<UserSelection> Function(UserSelection current) updateFn,
+  /// Метод для обновления MetricUserSelection с использованием функции модификации.
+  Future<void> updateMetricUserSelection(
+    FutureOr<MetricUserSelection> Function(MetricUserSelection current) updateFn,
   ) async {
     try {
-      // Получаем текущий объект UserSelection
-      var currentSelection = await getUserSelection();
+      // Получаем текущий объект MetricUserSelection
+      var currentSelection = await getMetricUserSelection();
 
       // Применяем функцию обновления
       var updatedSelection = await updateFn(currentSelection);
 
       // Сохраняем обновленный объект
-      await setUserSelection(updatedSelection);
+      await setMetricUserSelection(updatedSelection);
 
-      await _log('UPDATE_USER_SELECTION', _userSelectionKey, updatedSelection);
+      await _log('UPDATE_METRIC_USER_SELECTION', _metricUserSelectionKey, updatedSelection);
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'UPDATE_USER_SELECTION', _userSelectionKey, null);
+      await _recordError(e, s, 'UPDATE_METRIC_USER_SELECTION', _metricUserSelectionKey, null);
+    }
+  }
+
+  // ******************************
+  // Методы для работы с _userSelection
+
+  Future<CoreUserSelection> getCoreUserSelection() async {
+    final jsonString = await _getValue<String>(key: _coreUserSelectionKey, defaultValue: '{}');
+    try {
+      return jsonString != null
+          ? CoreUserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
+          : const CoreUserSelection();
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'GET_CORE_USER_SELECTION', _coreUserSelectionKey, jsonString);
+      return const CoreUserSelection();
+    }
+  }
+
+  Future<void> setCoreUserSelection(CoreUserSelection value) async {
+    try {
+      final jsonString = json.encode(value.toJson());
+      await _setValue<String>(key: _coreUserSelectionKey, value: jsonString);
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'SET_CORE_USER_SELECTION', _coreUserSelectionKey, value);
+    }
+  }
+
+  /// Метод для обновления UserSelection с использованием функции модификации.
+  Future<void> updateCoreUserSelection(
+    FutureOr<CoreUserSelection> Function(CoreUserSelection current) updateFn,
+  ) async {
+    try {
+      // Получаем текущий объект UserSelection
+      var currentSelection = await getCoreUserSelection();
+
+      // Применяем функцию обновления
+      var updatedSelection = await updateFn(currentSelection);
+
+      // Сохраняем обновленный объект
+      await setCoreUserSelection(updatedSelection);
+
+      await _log('UPDATE_CORE_USER_SELECTION', _coreUserSelectionKey, updatedSelection);
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'UPDATE_CORE_USER_SELECTION', _coreUserSelectionKey, null);
+    }
+  }
+
+  // ******************************
+  // Методы для работы с _imperialUserSelection
+
+  Future<ImperialUserSelection> getImperialUserSelection() async {
+    final jsonString = await _getValue<String>(key: _imperialUserSelectionKey, defaultValue: '{}');
+    try {
+      return jsonString != null
+          ? ImperialUserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
+          : const ImperialUserSelection();
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'GET_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey, jsonString);
+      return const ImperialUserSelection();
+    }
+  }
+
+  Future<void> setImperialUserSelection(ImperialUserSelection value) async {
+    try {
+      final jsonString = json.encode(value.toJson());
+      await _setValue<String>(key: _imperialUserSelectionKey, value: jsonString);
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'SET_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey, value);
+    }
+  }
+
+  /// Метод для обновления ImperialUserSelection с использованием функции модификации.
+  Future<void> updateImperialUserSelection(
+    FutureOr<ImperialUserSelection> Function(ImperialUserSelection current) updateFn,
+  ) async {
+    try {
+      // Получаем текущий объект ImperialUserSelection
+      var currentSelection = await getImperialUserSelection();
+
+      // Применяем функцию обновления
+      var updatedSelection = await updateFn(currentSelection);
+
+      // Сохраняем обновленный объект
+      await setImperialUserSelection(updatedSelection);
+
+      await _log('UPDATE_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey, updatedSelection);
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'UPDATE_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey, null);
     }
   }
 

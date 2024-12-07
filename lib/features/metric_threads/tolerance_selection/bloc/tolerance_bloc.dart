@@ -15,8 +15,7 @@ part 'tolerance_state.dart';
 
 final _logger = LogService('tolerance_bloc');
 
-class ToleranceBloc extends Cubit<ToleranceState>
-    with BlocIgnoreEmitAfterClosed {
+class ToleranceBloc extends Cubit<ToleranceState> with BlocIgnoreEmitAfterClosed {
   ToleranceBloc({
     required ToleranceRepository repository,
     required LocalStorage localStorage,
@@ -33,13 +32,13 @@ class ToleranceBloc extends Cubit<ToleranceState>
   Future<void> loadTolerances() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final userSelection = await _localStorage.getUserSelection();
+      final metricUserSelection = await _localStorage.getMetricUserSelection();
+      final coreUserSelection = await _localStorage.getCoreUserSelection();
       final tolerances = await _repository.fetchTolerances(
-        id: userSelection.id!,
-        threadType: userSelection.threadType!.name,
+        id: metricUserSelection.id!,
+        threadType: coreUserSelection.threadType!.name,
       );
-      emit(state.copyWith(
-          enumPageStatus: EnumStatus.success, tolerances: tolerances));
+      emit(state.copyWith(enumPageStatus: EnumStatus.success, tolerances: tolerances));
     } catch (e, s) {
       _logger.e('Error loading tolerances', error: e, stackTrace: s);
       _setErrorState();
@@ -48,13 +47,12 @@ class ToleranceBloc extends Cubit<ToleranceState>
 
   Future<void> preparationNavigation(ToleranceModel selectedTolerance) async {
     try {
-      await _localStorage.updateUserSelection(
+      await _localStorage.updateMetricUserSelection(
         (current) => current.copyWith(
           tolerance: selectedTolerance.tolerance,
         ),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating tolerance selection', error: e, stackTrace: s);
       _setErrorState();
@@ -67,9 +65,7 @@ class ToleranceBloc extends Cubit<ToleranceState>
         ? 'An error occurred while loading tolerances.'
         : 'Произошла ошибка при загрузке допусков.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error,
-        errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 
   void resetNavigationStatus() {

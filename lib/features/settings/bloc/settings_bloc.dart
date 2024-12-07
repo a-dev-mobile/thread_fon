@@ -27,8 +27,9 @@ class SettingsBloc extends Cubit<SettingsState> with BlocIgnoreEmitAfterClosed {
   Future<void> load() async {
     try {
       emit(state.copyWith(enumPageStatus: EnumStatus.loading));
-      final userSelection = await _localStorage.getUserSelection();
-      final enumThreads = userSelection.enumThreads;
+      // final metricUserSelection = await _localStorage.getMetricUserSelection();
+      final coreUserSelection = await _localStorage.getCoreUserSelection();
+      final enumThreads = coreUserSelection.enumThreads;
       emit(state.copyWith(
         enumPageStatus: EnumStatus.success,
         enumThreads: enumThreads,
@@ -41,7 +42,7 @@ class SettingsBloc extends Cubit<SettingsState> with BlocIgnoreEmitAfterClosed {
 
   Future<void> setThreadType(EnumThreads enumThreads) async {
     try {
-      await _localStorage.updateUserSelection(
+      await _localStorage.updateCoreUserSelection(
         (current) => current.copyWith(enumThreads: enumThreads),
       );
       emit(state.copyWith(enumThreads: enumThreads));

@@ -44,11 +44,7 @@ class _PitchSelectionScreenState extends State<PitchSelectionScreen> {
     )..loadPitch();
   }
 
-  @override
-  void dispose() {
-    _bloc.close();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {

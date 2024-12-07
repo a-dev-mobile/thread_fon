@@ -45,11 +45,7 @@ class _ToleranceSelectionScreenState extends State<ToleranceSelectionScreen> {
     )..loadTolerances();
   }
 
-  @override
-  void dispose() {
-    _bloc.close();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {

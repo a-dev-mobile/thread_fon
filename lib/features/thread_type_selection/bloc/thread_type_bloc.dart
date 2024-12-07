@@ -5,9 +5,12 @@ import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/constant/enum_thread.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
+import 'package:threadfon/core/models/core_user_selection.dart';
+
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/imperial_threads/diameter_selection/views/imperial_diameter_screen.dart';
+import 'package:threadfon/features/metric_threads/core/models/metric_user_selection.dart';
 import 'package:threadfon/features/metric_threads/diameter_selection/views/metric_diameter_screen.dart';
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/features/thread_type_selection/repositories/thread_type_repository.dart';
@@ -36,8 +39,9 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> with BlocIgnoreEmitAfterClos
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
       final threadTypes = await _repository.fetchThreadTypes();
-
-      emit(state.copyWith(enumPageStatus: EnumStatus.success, threadTypes: threadTypes));
+      final coreUserSelection = await _localStorage.getCoreUserSelection();
+      emit(state.copyWith(
+          enumPageStatus: EnumStatus.success, threadTypes: threadTypes, coreUserSelection: coreUserSelection));
     } on Exception catch (e, s) {
       _logger.e('Error loading thread types', error: e, stackTrace: s);
       _setErrorState();
@@ -46,12 +50,12 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> with BlocIgnoreEmitAfterClos
 
   Future<void> preparationNavigation(ThreadTypeModel selectedThreadType) async {
     try {
-      final currentUserSelection = await _localStorage.getUserSelection();
+      final currentMetricUserSelection = await _localStorage.getCoreUserSelection();
 
       final nextNameScreen =
-          currentUserSelection.enumThreads.isMetric ? MetricDiameterScreen.name : ImperialDiameterScreen.name;
+          currentMetricUserSelection.enumThreads.isMetric ? MetricDiameterScreen.name : ImperialDiameterScreen.name;
 
-      await _localStorage.updateUserSelection(
+      await _localStorage.updateCoreUserSelection(
         (current) => current.copyWith(
           threadType: selectedThreadType.enumThreadType,
         ),

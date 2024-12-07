@@ -100,7 +100,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "heightOfFundamentalTriangle": MessageLookupByLibrary.simpleMessage(
             "H - Высота исходного треугольника резьбы"),
         "imperial_thread": MessageLookupByLibrary.simpleMessage(
-            "ASME/ANSI B1.1 Унифицированная дюймовая резьба"),
+            "Унифицированная дюймовая резьба"),
+        "imperial_thread_gost":
+            MessageLookupByLibrary.simpleMessage("ASME/ANSI B1.1"),
         "inch": MessageLookupByLibrary.simpleMessage("дюйм"),
         "internal_thread":
             MessageLookupByLibrary.simpleMessage("Внутренняя резьба"),
@@ -134,8 +136,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Допуск основного диаметра"),
         "max": MessageLookupByLibrary.simpleMessage("макс"),
         "mean": MessageLookupByLibrary.simpleMessage("сред."),
-        "metric_thread": MessageLookupByLibrary.simpleMessage(
-            "ГОСТ 24705-2004 / ISO 965 Метрическая резьба"),
+        "metric_thread":
+            MessageLookupByLibrary.simpleMessage("Метрическая резьба"),
+        "metric_thread_gost":
+            MessageLookupByLibrary.simpleMessage("ГОСТ 24705-2004 / ISO 965"),
         "min": MessageLookupByLibrary.simpleMessage("мин"),
         "minor_diam": MessageLookupByLibrary.simpleMessage("Минорный диаметр"),
         "minor_diam_avg":

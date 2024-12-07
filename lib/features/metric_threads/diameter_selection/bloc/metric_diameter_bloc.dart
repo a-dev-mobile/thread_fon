@@ -50,7 +50,7 @@ class MetricDiameterBloc extends Cubit<MetricDiameterState> with BlocIgnoreEmitA
   Future<void> preparationNavigation(MetricDiameterModel selectedDiameter, double scrollPosition) async {
     await _localStorage.setMetricScrollPosition(scrollPosition);
     try {
-      await _localStorage.updateUserSelection(
+      await _localStorage.updateMetricUserSelection(
         (current) => current.copyWith(
           id: selectedDiameter.id,
           diameter: selectedDiameter.diameter,

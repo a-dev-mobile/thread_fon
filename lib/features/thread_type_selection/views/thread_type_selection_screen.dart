@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
+import 'package:threadfon/core/constant/enum_thread.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/widgets/base_screen.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
@@ -43,12 +44,6 @@ class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
   }
 
   @override
-  void dispose() {
-    _bloc.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => _bloc,
@@ -63,9 +58,12 @@ class _ThreadTypeSelectionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = context.l10n;
-    final bloc = context.read<ThreadTypeBloc>();
+    final bloc = context.watch<ThreadTypeBloc>();
     return DrawerScreen(
         title: localization.thread_type,
+        subtitle: bloc.state.coreUserSelection.enumThreads.isMetric
+            ? '${localization.metric_thread_gost}\n${localization.metric_thread}'
+            : '${localization.imperial_thread_gost}\n${localization.imperial_thread}',
         body: BlocListener<ThreadTypeBloc, ThreadTypeState>(
           listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
           listener: (context, state) {

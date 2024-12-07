@@ -53,11 +53,7 @@ class _InfoScreenState extends State<InfoScreen> {
     )..load();
   }
 
-  @override
-  void dispose() {
-    _bloc.close();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {

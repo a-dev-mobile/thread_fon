@@ -44,11 +44,7 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
     )..load();
   }
 
-  @override
-  void dispose() {
-    _bloc.close();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {

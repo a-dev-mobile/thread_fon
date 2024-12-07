@@ -102,8 +102,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "halfPitch": MessageLookupByLibrary.simpleMessage("Half Pitch (P/2)"),
         "heightOfFundamentalTriangle": MessageLookupByLibrary.simpleMessage(
             "Height of the Fundamental Thread Triangle (H)"),
-        "imperial_thread": MessageLookupByLibrary.simpleMessage(
-            "ASME/ANSI B1.1 Unified Inch Screw Threads"),
+        "imperial_thread":
+            MessageLookupByLibrary.simpleMessage("Unified Inch Screw Threads"),
+        "imperial_thread_gost":
+            MessageLookupByLibrary.simpleMessage("ASME/ANSI B1.1"),
         "inch": MessageLookupByLibrary.simpleMessage("inch"),
         "internal_thread":
             MessageLookupByLibrary.simpleMessage("Internal Thread"),
@@ -138,7 +140,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "max": MessageLookupByLibrary.simpleMessage("max"),
         "mean": MessageLookupByLibrary.simpleMessage("mean"),
         "metric_thread": MessageLookupByLibrary.simpleMessage(
-            "ISO 965: ISO General Purpose Metric Screw Threads"),
+            "General Purpose Metric Screw Threads"),
+        "metric_thread_gost": MessageLookupByLibrary.simpleMessage("ISO 965"),
         "min": MessageLookupByLibrary.simpleMessage("min"),
         "minor_diam": MessageLookupByLibrary.simpleMessage("Minor Diameter"),
         "minor_diam_avg":

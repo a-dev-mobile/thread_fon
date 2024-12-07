@@ -11,6 +11,7 @@ import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/features/settings/bloc/settings_bloc.dart';
 import 'package:threadfon/features/settings/views/about_app.dart'; // Импортируем экран AboutApp
+import 'package:threadfon/features/thread_type_selection/bloc/thread_type_bloc.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 import 'package:threadfon/main.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -46,7 +47,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
 
   @override
   void dispose() {
-    settingsBloc.close();
+    // settingsBloc.close();
+    // context.read<ThreadTypeBloc>().load();
     super.dispose();
   }
 
@@ -70,145 +72,151 @@ class _SettingsDrawerView extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = context.l10n;
 
-    return BlocBuilder<SettingsBloc, SettingsState>(
-      builder: (context, settingsState) {
-        final currentThreadType = settingsState.enumThreads;
-        String threadTypeText;
-        switch (currentThreadType) {
-          case EnumThreads.metric:
-            threadTypeText = localization.metric_thread;
-            break;
-          case EnumThreads.imperial:
-            threadTypeText = localization.imperial_thread;
-            break;
-        }
-
-        return Drawer(
-          child: Stack(
-            children: [
-              BlocBuilder<SettingsBloc, SettingsState>(
-                buildWhen: (previous, current) => previous.enumPageStatus != current.enumPageStatus,
-                builder: (context, state) {
-                  switch (state.enumPageStatus) {
-                    case EnumStatus.loading:
-                      return const LoadingWidget();
-
-                    case EnumStatus.error:
-                      return MyErrorWidget(
-                        errorMsg: state.errorMsg,
-                        onRetry: () => bloc.load(),
-                      );
-                    case EnumStatus.success:
-                      return Column(
-                        children: [
-                          // Drawer Header
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Theme.of(context).primaryColor,
-                                  Theme.of(context).primaryColorDark,
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // App Name
-                                Text(
-                                  localization.app_name,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                // Subtitle
-                                Text(
-                                  localization.settings_header_subtitle,
-                                  style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          // Drawer Content
-                          Expanded(
-                            child: ListView(
-                              children: [
-                                ListTile(
-                                  leading: const Icon(Icons.color_lens),
-                                  title: Text(localization.choose_theme),
-                                  onTap: () => _showThemeDialog(context),
-                                ),
-                                const Divider(),
-                                ListTile(
-                                  leading: const Icon(Icons.language),
-                                  title: Text(localization.choose_language),
-                                  onTap: () => _showLanguageDialog(context),
-                                ),
-                                const Divider(),
-                                ListTile(
-                                  leading: const Icon(Icons.build),
-                                  title: Text(localization.choose_thread),
-                                  subtitle: Text(threadTypeText),
-                                  onTap: () => _showThreadDialog(context),
-                                ),
-                                const Divider(),
-                                ListTile(
-                                  leading: const Icon(Icons.feedback),
-                                  title: Text(localization.suggest_improvement),
-                                  onTap: () => _sendEmail(context),
-                                ),
-                                const Divider(),
-                                ListTile(
-                                  leading: const Icon(Icons.store),
-                                  title: Text(localization.leave_review),
-                                  onTap: () => _openAppStoreOrPlayStore(context),
-                                ),
-                                const Divider(),
-                                ListTile(
-                                  leading: const Icon(Icons.info),
-                                  title: Text(localization.about_app),
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                    context.pushNamed(AboutApp.name);
-
-                                    // Log viewing About App screen
-                                    analytics.logEvent(name: 'about_app_viewed');
-                                  },
-                                ),
-                                // Add more settings options here
-                              ],
-                            ),
-                          ),
-                          // Drawer Footer
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              '© ${DateTime.now().year} ThreadFon',
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                  }
-                },
-              ),
-            ],
-          ),
-        );
+    return BlocListener<SettingsBloc, SettingsState>(
+      listenWhen: (previous, current) => previous.enumThreads != current.enumThreads,
+      listener: (context, state) {
+        context.read<ThreadTypeBloc>().load();
       },
+      child: BlocBuilder<SettingsBloc, SettingsState>(
+        builder: (context, settingsState) {
+          final currentThreadType = settingsState.enumThreads;
+          String threadTypeText;
+          switch (currentThreadType) {
+            case EnumThreads.metric:
+              threadTypeText = '${localization.metric_thread_gost}\n${localization.metric_thread}';
+              break;
+            case EnumThreads.imperial:
+              threadTypeText = '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
+              break;
+          }
+
+          return Drawer(
+            child: Stack(
+              children: [
+                BlocBuilder<SettingsBloc, SettingsState>(
+                  buildWhen: (previous, current) => previous.enumPageStatus != current.enumPageStatus,
+                  builder: (context, state) {
+                    switch (state.enumPageStatus) {
+                      case EnumStatus.loading:
+                        return const LoadingWidget();
+
+                      case EnumStatus.error:
+                        return MyErrorWidget(
+                          errorMsg: state.errorMsg,
+                          onRetry: () => bloc.load(),
+                        );
+                      case EnumStatus.success:
+                        return Column(
+                          children: [
+                            // Drawer Header
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Theme.of(context).primaryColor,
+                                    Theme.of(context).primaryColorDark,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // App Name
+                                  Text(
+                                    localization.app_name,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  // Subtitle
+                                  Text(
+                                    localization.settings_header_subtitle,
+                                    style: const TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // Drawer Content
+                            Expanded(
+                              child: ListView(
+                                children: [
+                                  ListTile(
+                                    leading: const Icon(Icons.color_lens),
+                                    title: Text(localization.choose_theme),
+                                    onTap: () => _showThemeDialog(context),
+                                  ),
+                                  const Divider(),
+                                  ListTile(
+                                    leading: const Icon(Icons.language),
+                                    title: Text(localization.choose_language),
+                                    onTap: () => _showLanguageDialog(context),
+                                  ),
+                                  const Divider(),
+                                  ListTile(
+                                    leading: const Icon(Icons.build),
+                                    title: Text(localization.choose_thread),
+                                    subtitle: Text(threadTypeText),
+                                    onTap: () => _showThreadDialog(context),
+                                  ),
+                                  const Divider(),
+                                  ListTile(
+                                    leading: const Icon(Icons.feedback),
+                                    title: Text(localization.suggest_improvement),
+                                    onTap: () => _sendEmail(context),
+                                  ),
+                                  const Divider(),
+                                  ListTile(
+                                    leading: const Icon(Icons.store),
+                                    title: Text(localization.leave_review),
+                                    onTap: () => _openAppStoreOrPlayStore(context),
+                                  ),
+                                  const Divider(),
+                                  ListTile(
+                                    leading: const Icon(Icons.info),
+                                    title: Text(localization.about_app),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      context.pushNamed(AboutApp.name);
+
+                                      // Log viewing About App screen
+                                      analytics.logEvent(name: 'about_app_viewed');
+                                    },
+                                  ),
+                                  // Add more settings options here
+                                ],
+                              ),
+                            ),
+                            // Drawer Footer
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                '© ${DateTime.now().year} ThreadFon',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                    }
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -305,11 +313,7 @@ class _SettingsDrawerView extends StatelessWidget {
                   dialogContext.pop(); // Закрыть диалог
                   context.pop(); // Закрыть Drawer
 
-                  // Log theme change
-                  analytics.logEvent(
-                    name: 'theme_changed',
-                    parameters: {'theme_mode': 'dark'},
-                  );
+
                 }
               },
             ),
@@ -349,11 +353,8 @@ class _SettingsDrawerView extends StatelessWidget {
                 dialogContext.pop(); // Закрыть диалог
                 context.pop(); // Закрыть Drawer
 
-                // Log language change
-                analytics.logEvent(
-                  name: 'language_changed',
-                  parameters: {'language': langText},
-                );
+
+        
               },
             );
           }).toList(),
@@ -367,44 +368,55 @@ class _SettingsDrawerView extends StatelessWidget {
     final localization = context.l10n;
     final currentThreadType = bloc.state.enumThreads;
 
-    showDialog(
-      context: context,
-      useRootNavigator: true,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(localization.choose_thread),
-        content: Column(
+  showDialog(
+    context: context,
+    useRootNavigator: true,
+    builder: (dialogContext) => AlertDialog(
+      title: Text(localization.choose_thread),
+
+      content: Column(
           mainAxisSize: MainAxisSize.min,
           children: EnumThreads.values.map((threadType) {
             String threadTypeText;
             switch (threadType) {
               case EnumThreads.metric:
-                threadTypeText = localization.metric_thread;
+                threadTypeText = '${localization.metric_thread_gost}\n${localization.metric_thread}';
                 break;
               case EnumThreads.imperial:
-                threadTypeText = localization.imperial_thread;
+                threadTypeText = '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
                 break;
             }
             return RadioListTile<EnumThreads>(
-              title: Text(threadTypeText),
+              dense: true, // Уменьшенный размер
+ 
+              title: Text(
+                threadTypeText,
+                softWrap: true, // Позволяет тексту переноситься
+              ),
               value: threadType,
               groupValue: currentThreadType,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0), // Уменьшаем отступы
+              controlAffinity: ListTileControlAffinity.leading, // Располагаем радио-кнопку слева
               onChanged: (value) {
                 if (value != null) {
                   bloc.setThreadType(value);
                   dialogContext.pop();
                   context.pop();
-
-                  // Log thread type change
-                  analytics.logEvent(
-                    name: 'thread_type_changed',
-                    parameters: {'thread_type': threadType.toString()},
-                  );
                 }
               },
             );
           }).toList(),
         ),
-      ),
-    );
-  }
+      actions: [
+        TextButton(
+          onPressed: () => dialogContext.pop(),
+          child: Text(
+            localization.cancel, 
+            style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
+        ),
+      ],
+    ),
+  );
+}
 }

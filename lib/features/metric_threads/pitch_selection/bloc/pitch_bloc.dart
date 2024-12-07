@@ -32,13 +32,12 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
   Future<void> loadPitch() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final userSelection = await _localStorage.getUserSelection();
+      final metricUserSelection = await _localStorage.getMetricUserSelection();
       final pitchList = await _repository.fetchPitch(
-        diameter: userSelection.diameter!,
+        diameter: metricUserSelection.diameter!,
         language: _languageBloc.state.enumLang.name,
       );
-      emit(state.copyWith(
-          enumPageStatus: EnumStatus.success, pitches: pitchList));
+      emit(state.copyWith(enumPageStatus: EnumStatus.success, pitches: pitchList));
     } catch (e, s) {
       _logger.e('Error loading pitch', error: e, stackTrace: s);
       _setErrorState();
@@ -47,14 +46,13 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
 
   Future<void> preparationNavigation(PitchModel selectedPitch) async {
     try {
-      await _localStorage.updateUserSelection(
+      await _localStorage.updateMetricUserSelection(
         (current) => current.copyWith(
           id: selectedPitch.id,
           pitch: selectedPitch.pitch,
         ),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating pitch selection', error: e, stackTrace: s);
       _setErrorState();
@@ -67,9 +65,7 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
         ? 'An error occurred while loading pitches.'
         : 'Произошла ошибка при загрузке шагов резьбы.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error,
-        errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 
   void resetNavigationStatus() {

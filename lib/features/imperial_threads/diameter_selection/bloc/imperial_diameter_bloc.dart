@@ -47,15 +47,17 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState> with BlocIgnoreE
     }
   }
 
-  Future<void> preparationNavigation(ImperialDiameterModel selectedDiameter, double scrollPosition) async {
+  Future<void> preparationNavigation(ImperialDiameterModel model, double scrollPosition) async {
     await _localStorage.setImperialScrollPosition(scrollPosition);
     try {
-      final selectedDiameterValue = double.tryParse(selectedDiameter.diameter) ?? 0.0;
 
-      await _localStorage.updateUserSelection(
+
+      await _localStorage.updateImperialUserSelection(
         (current) => current.copyWith(
-          id: selectedDiameter.id,
-          diameter: selectedDiameterValue,
+          id: model.id,
+          diameter: model.diameter,
+          tpi: model.tpi,
+          
         ),
       );
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
