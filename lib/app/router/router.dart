@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/core/widgets/overlay_widget.dart';
 import 'package:threadfon/features/imperial_threads/diameter_selection/views/imperial_diameter_screen.dart';
+import 'package:threadfon/features/imperial_threads/info/views/imperial_info_screen.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/views/imperial_tolerance_selection_screen.dart';
 import 'package:threadfon/features/metric_threads/diameter_selection/views/metric_diameter_screen.dart';
 import 'package:threadfon/features/metric_threads/info/views/full_screen_svg_view.dart';
@@ -68,6 +69,12 @@ class AppRouter {
               name: ImperialToleranceSelectionScreen.name,
               pageBuilder: (context, state) =>
                   NoTransitionPage(child: const ImperialToleranceSelectionScreen(), key: state.pageKey),
+            ),
+                GoRoute(
+              path: ImperialInfoScreen.path,
+              name: ImperialInfoScreen.name,
+              pageBuilder: (context, state) =>
+                  NoTransitionPage(child: const ImperialInfoScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ThreadTypeSelectionScreen.path,

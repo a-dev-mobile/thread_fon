@@ -68,7 +68,7 @@ class ImperialInfoMainParameters extends StatelessWidget {
                   : localization.external_thread),
           ImperialInfoRow(
             label: localization.thread_diam_nom,
-            value: info.diameter,
+            value: 'info.diameter',
           ),
           ImperialInfoRow(
             label: localization.pitch,

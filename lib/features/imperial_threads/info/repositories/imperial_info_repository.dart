@@ -18,7 +18,7 @@ class ImperialInfoRepository {
 
   Future<ImperialInfoModel> fetchImperialInfo({
     required int id,
-    required String type, // male или female
+    required String type, 
     required String language,
     required String units,
     required int precision,

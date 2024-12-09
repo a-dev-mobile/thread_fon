@@ -9,14 +9,15 @@ part 'imperial_info_model.g.dart';
 class ImperialInfoModel with _$ImperialInfoModel {
   const factory ImperialInfoModel({
     required int id,
-    required String diameter,
-    @JsonKey(name: 'diameter_2') required num diameter2,
+
+    @JsonKey(name: 'fractional_diameter') required String fractionalDiameter,
+    @JsonKey(name: 'decimal_diameter') required num decimalDiameter,
     required String description,
-    @JsonKey(name: 'type') required EnumThreadMaleFemale threadType,
-    @JsonKey(name: 'series_designation') String? seriesDesignation,
-    @JsonKey(name: 'class') required String threadClass, // Изменено на threadClass
     required num tpi,
     required num pitch,
+    @JsonKey(name: 'series_designation') required String seriesDesignation,
+    @JsonKey(name: 'type') required EnumThreadMaleFemale threadType,
+    @JsonKey(name: 'class') required String threadClass, // Изменено на threadClass
     required num allowance,
     @JsonKey(name: 'major_diam_max') num? majorDiamMax,
     @JsonKey(name: 'major_diam_min') num? majorDiamMin,

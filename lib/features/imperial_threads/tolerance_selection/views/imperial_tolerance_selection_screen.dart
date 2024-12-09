@@ -10,6 +10,7 @@ import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
+import 'package:threadfon/features/imperial_threads/info/views/imperial_info_screen.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/bloc/imperial_tolerance_bloc.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/models/imperial_tolerance_model.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/repositories/imperial_tolerance_repository.dart';
@@ -68,7 +69,7 @@ class _ToleranceSelectionView extends StatelessWidget {
       listener: (context, state) {
         if (state.enumNavigationStatus.isNavigation) {
           // Навигация на следующий экран при выборе допуска
-          context.pushNamed(InfoScreen.name);
+          context.pushNamed(ImperialInfoScreen.name);
 
           // Сброс статуса навигации
           bloc.resetNavigationStatus();
