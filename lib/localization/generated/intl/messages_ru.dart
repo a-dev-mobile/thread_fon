@@ -157,6 +157,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "mm": MessageLookupByLibrary.simpleMessage("мм"),
         "no": MessageLookupByLibrary.simpleMessage("Нет"),
         "no_data": MessageLookupByLibrary.simpleMessage("Нет данных"),
+        "no_internet":
+            MessageLookupByLibrary.simpleMessage("Нет подключения к интернету"),
         "no_svg_data":
             MessageLookupByLibrary.simpleMessage("Нет данных для отображения"),
         "nuts": MessageLookupByLibrary.simpleMessage("Гайка"),

@@ -1440,6 +1440,16 @@ class GeneratedLocalization {
       args: [],
     );
   }
+
+  /// `No Internet Connection`
+  String get no_internet {
+    return Intl.message(
+      'No Internet Connection',
+      name: 'no_internet',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate

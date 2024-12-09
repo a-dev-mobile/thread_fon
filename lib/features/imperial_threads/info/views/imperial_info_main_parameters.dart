@@ -3,16 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/core/constant/enum_thread%20copy.dart';
 import 'package:threadfon/core/constant/enum_units.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
-import 'package:threadfon/features/metric_threads/info/bloc/info_bloc.dart';
-import 'package:threadfon/features/metric_threads/info/models/info_model.dart';
-import 'package:threadfon/features/metric_threads/info/views/info_row.dart';
+import 'package:threadfon/features/imperial_threads/info/bloc/imperial_info_bloc.dart';
+
+import 'package:threadfon/features/imperial_threads/info/models/imperial_info_model.dart';
+import 'package:threadfon/features/imperial_threads/info/views/imperial_info_row.dart';
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
-class InfoMainParameters extends StatelessWidget {
-  final InfoModel info;
+class ImperialInfoMainParameters extends StatelessWidget {
+  final ImperialInfoModel info;
 
-  const InfoMainParameters({
+  const ImperialInfoMainParameters({
     required this.info,
     super.key,
   });
@@ -20,14 +21,15 @@ class InfoMainParameters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = context.l10n;
-    final units = context.read<InfoBloc>().state.units;
+    final units = context.read<ImperialInfoBloc>().state.units;
     final unitsText = units == EnumUnits.mm ? localization.mm : localization.inch;
+
 
     return MyCard(
       child: Column(
         children: [
           Text(
-            info.designation,
+            'info.designation',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -41,7 +43,7 @@ class InfoMainParameters extends StatelessWidget {
                 ),
           ),
           Text(
-            info.typePitchDescription,
+            'info.typePitchDescription',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -59,30 +61,42 @@ class InfoMainParameters extends StatelessWidget {
           // Конец добавления
           const SizedBox(height: 16.0),
           const Divider(),
-          InfoRow(
+          ImperialInfoRow(
               label: localization.thread_type,
-              value: info.threadType == EnumThreadMaleFemale.female
+              value: info.threadType.isFemale
                   ? localization.internal_thread
                   : localization.external_thread),
-          InfoRow(
+          ImperialInfoRow(
             label: localization.thread_diam_nom,
-            value: info.diameter.toString(),
+            value: info.diameter,
           ),
-          InfoRow(
+          ImperialInfoRow(
             label: localization.pitch,
             value: info.pitch.toString(),
           ),
-          InfoRow(
+          ImperialInfoRow(
             label: localization.thread_depth,
             value: info.threadDepth.toString(),
           ),
-          InfoRow(
+          ImperialInfoRow(
             label: localization.thread_class_tolerance,
-            value: info.tolerance,
+            value: info.threadClass,
           ),
-          InfoRow(
+          ImperialInfoRow(
+            label: 'localization.allowance',
+            value: info.allowance.toString(),
+          ),
+          ImperialInfoRow(
+            label: 'localization.tpi',
+            value: info.tpi.toString(),
+          ),
+          ImperialInfoRow(
+            label: 'localization.series_designation',
+            value: info.seriesDesignation ?? '-',
+          ),
+          ImperialInfoRow(
             label: localization.type_pitch,
-            value: info.typePitchDescription,
+            value: 'info.typePitchDescription',
           ),
         ],
       ),

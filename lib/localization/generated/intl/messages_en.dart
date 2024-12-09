@@ -159,6 +159,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "mm": MessageLookupByLibrary.simpleMessage("mm"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "no_data": MessageLookupByLibrary.simpleMessage("No Data"),
+        "no_internet":
+            MessageLookupByLibrary.simpleMessage("No Internet Connection"),
         "no_svg_data":
             MessageLookupByLibrary.simpleMessage("No Data to Display"),
         "nuts": MessageLookupByLibrary.simpleMessage("Nuts"),

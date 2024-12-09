@@ -3,7 +3,6 @@
   "localeCode": "en_US",
   "languageCode": "en",
   "language": "English",
-
   "about": "About App",
   "additional_info": "Additional Information",
   "app_lang": "Application Language",
@@ -12,7 +11,6 @@
   "avg": "avg",
   "bolt": "Bolt",
   "cancel": "Cancel",
-
   "d1_es": "D1_es",
   "d1_es_tolerance": "D1_es Tolerance",
   "d2_ei": "D2_ei",
@@ -57,12 +55,10 @@
   "max": "max",
   "mean": "mean",
   "choose_thread": "Choose Thread",
-
   "metric_thread": "General Purpose Metric Screw Threads",
   "metric_thread_gost": "ISO 965",
   "imperial_thread": "Unified Inch Screw Threads",
   "imperial_thread_gost": "ASME/ANSI B1.1",
-
   "m_thread_abrv": "M",
   "m_thread_female_description": "M - Metric Cylindrical Internal Thread",
   "m_thread_gost": "ISO 965: ISO General Purpose Metric Screw Threads",
@@ -113,7 +109,6 @@
   "type_pitch": "Pitch Type",
   "units": "Units",
   "yes": "Yes",
-
   "choose_language": "Choose Language",
   "choose_theme": "Choose Theme",
   "light_theme": "Light Theme",
@@ -143,6 +138,6 @@
   "app_description": "ThreadFon is your go-to reference for standard thread parameters and illustrative drawings.",
   "app_icon_alt": "App Icon",
   "app_store_not_found": "AppStore not found",
-  "leave_review": "Leave Review"
-
+  "leave_review": "Leave Review",
+  "no_internet": "No Internet Connection"
 }

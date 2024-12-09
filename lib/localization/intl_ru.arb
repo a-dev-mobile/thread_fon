@@ -144,5 +144,7 @@
 
   "app_icon_alt": "Иконка приложения",
   "app_store_not_found": "AppStore не найден",
-  "leave_review": "Оставить отзыв"
+  "leave_review": "Оставить отзыв",
+  
+  "no_internet": "Нет подключения к интернету"
 }
