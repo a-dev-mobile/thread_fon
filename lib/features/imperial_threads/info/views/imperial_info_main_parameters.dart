@@ -24,14 +24,20 @@ class ImperialInfoMainParameters extends StatelessWidget {
     final units = context.read<ImperialInfoBloc>().state.units;
     final unitsText = units == EnumUnits.mm ? localization.mm : localization.inch;
 
-
     return MyCard(
       child: Column(
         children: [
           Text(
-            'info.designation',
+            info.designation1,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          Text(
+            '(${info.designation2})',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
@@ -63,12 +69,22 @@ class ImperialInfoMainParameters extends StatelessWidget {
           const Divider(),
           ImperialInfoRow(
               label: localization.thread_type,
-              value: info.threadType.isFemale
-                  ? localization.internal_thread
-                  : localization.external_thread),
+              value: info.type_.isFemale ? localization.internal_thread : localization.external_thread),
           ImperialInfoRow(
             label: localization.thread_diam_nom,
-            value: 'info.diameter',
+            value: '${info.fractional_diameter} (${info.decimal_diameter})',
+          ),
+          ImperialInfoRow(
+            label: 'Витков на дюйм',
+            value: info.tpi.toString(),
+          ),
+          ImperialInfoRow(
+            label: 'Thread Designation',
+            value: info.series_designation,
+          ),
+          ImperialInfoRow(
+            label: localization.thread_class_tolerance,
+            value: info.class_,
           ),
           ImperialInfoRow(
             label: localization.pitch,
@@ -78,10 +94,7 @@ class ImperialInfoMainParameters extends StatelessWidget {
             label: localization.thread_depth,
             value: info.threadDepth.toString(),
           ),
-          ImperialInfoRow(
-            label: localization.thread_class_tolerance,
-            value: info.threadClass,
-          ),
+
           ImperialInfoRow(
             label: 'localization.allowance',
             value: info.allowance.toString(),
@@ -92,7 +105,7 @@ class ImperialInfoMainParameters extends StatelessWidget {
           ),
           ImperialInfoRow(
             label: 'localization.series_designation',
-            value: info.seriesDesignation ?? '-',
+            value: info.series_designation,
           ),
           ImperialInfoRow(
             label: localization.type_pitch,

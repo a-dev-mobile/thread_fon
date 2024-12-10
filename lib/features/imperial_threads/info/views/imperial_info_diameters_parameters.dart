@@ -18,7 +18,7 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = context.l10n;
-    final isFemale = info.threadType.isFemale;
+    final isFemale = info.type_.isFemale;
     final prefix = isFemale ? 'D' : 'd';
 
     // Создаем список виджетов секций диаметров
@@ -81,9 +81,9 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
         diameter: 000,
         dEs: info.dEs,
         dEi: info.dEi,
-        min: info.majorDiamMin,
+        min: info.major_diam_min,
         avg: 0,
-        max: info.majorDiamMax,
+        max: info.major_diam_max,
       );
     }
   }
@@ -98,9 +98,9 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
          diameter: info.dMajMax ?? 0, // Проверьте правильность поля
         dEs: info.dEs,
         dEi: info.dEi,
-        min: info.majorDiamMin,
+        min: info.major_diam_min,
         avg: 0,
-        max: info.majorDiamMax,
+        max: info.major_diam_max,
       ));
     } else {
       sections.add(_DiameterSection(

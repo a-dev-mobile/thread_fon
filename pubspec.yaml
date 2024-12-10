@@ -75,7 +75,7 @@ dev_dependencies:
   # Linting
   flutter_lints: ^5.0.0
   freezed: ^2.5.7
-  flutter_launcher_icons: "^0.14.1"
+  flutter_launcher_icons: "^0.14.2"
 
 flutter:
   generate: true

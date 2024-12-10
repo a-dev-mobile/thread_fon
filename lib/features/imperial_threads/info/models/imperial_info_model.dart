@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/core/constant/enum_thread%20copy.dart';
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
@@ -9,22 +11,23 @@ part 'imperial_info_model.g.dart';
 class ImperialInfoModel with _$ImperialInfoModel {
   const factory ImperialInfoModel({
     required int id,
-
-    @JsonKey(name: 'fractional_diameter') required String fractionalDiameter,
-    @JsonKey(name: 'decimal_diameter') required num decimalDiameter,
+    required String fractional_diameter,
+    required num decimal_diameter,
     required String description,
+    required String designation1,
+    required String designation2,
     required num tpi,
     required num pitch,
-    @JsonKey(name: 'series_designation') required String seriesDesignation,
-    @JsonKey(name: 'type') required EnumThreadMaleFemale threadType,
-    @JsonKey(name: 'class') required String threadClass, // Изменено на threadClass
+    required String series_designation,
+    @JsonKey(name: 'type') required EnumThreadMaleFemale type_,
+    @JsonKey(name: 'class') required String class_,
     required num allowance,
-    @JsonKey(name: 'major_diam_max') num? majorDiamMax,
-    @JsonKey(name: 'major_diam_min') num? majorDiamMin,
-    @JsonKey(name: 'pitch_diameter_max') num? pitchDiameterMax,
-    @JsonKey(name: 'pitch_diameter_min') num? pitchDiameterMin,
-    @JsonKey(name: 'pitch_diameter_tolerance') num? pitchDiameterTolerance,
-    @JsonKey(name: 'unr_minor_diameter_max') num? unrMinorDiameterMax,
+    num? major_diam_max,
+    num? major_diam_min,
+    num? pitch_diameter_max,
+    num? pitch_diameter_min,
+    num? pitch_diameter_tolerance,
+    num? unr_minor_diameter_max,
     @JsonKey(name: 'd_max') num? dMax,
     @JsonKey(name: 'd_min') num? dMin,
     @JsonKey(name: 'd2_max') num? d2Max,
@@ -70,6 +73,5 @@ class ImperialInfoModel with _$ImperialInfoModel {
     @JsonKey(name: 'd3_ei') num? d3Ei,
   }) = _ImperialInfoModel;
 
-  factory ImperialInfoModel.fromJson(Map<String, dynamic> json) =>
-      _$ImperialInfoModelFromJson(json);
+  factory ImperialInfoModel.fromJson(Map<String, dynamic> json) => _$ImperialInfoModelFromJson(json);
 }

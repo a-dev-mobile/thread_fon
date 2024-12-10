@@ -140,16 +140,7 @@ class _ToleranceSelectionView extends StatelessWidget {
         return ImperialToleranceChoiceCard(
           tolerance: tolerance,
           onTap: () {
-            // Логируем выбор допуска
-            // Убедитесь, что у вас есть экземпляр analytics, если необходимо
-            // Пример:
-            // final analytics = context.read<AnalyticsService>();
-            // analytics.logEvent(
-            //   name: 'imperial_tolerance_selected',
-            //   parameters: {
-            //     'imperial_tolerance_value': tolerance.formatted.fractional,
-            //   },
-            // );
+          
             bloc.preparationNavigation(tolerance, isFemale);
           },
         );

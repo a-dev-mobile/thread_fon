@@ -188,9 +188,7 @@ class _SettingsDrawerView extends StatelessWidget {
                                       Navigator.of(context).pop();
                                       context.pushNamed(AboutApp.name);
 
-                                      // Log viewing About App screen
-                                      analytics.logEvent(name: 'about_app_viewed');
-                                    },
+                                             },
                                   ),
                                   // Add more settings options here
                                 ],
@@ -233,26 +231,19 @@ class _SettingsDrawerView extends StatelessWidget {
       if (await canLaunchUrl(emailUri)) {
         await launchUrl(emailUri);
 
-        // Logging email send event
-        analytics.logEvent(name: 'send_feedback_email');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(context.l10n.email_app_not_found)),
         );
 
-        // Logging email send failure
-        analytics.logEvent(name: 'send_feedback_email_failed');
+
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.email_sending_failed)),
       );
 
-      // Logging email send exception
-      analytics.logEvent(
-        name: 'send_feedback_email_exception',
-        parameters: {'error': e.toString()},
-      );
+
     }
   }
 
@@ -295,11 +286,7 @@ class _SettingsDrawerView extends StatelessWidget {
                   dialogContext.pop();
                   context.pop(); // Закрыть Drawer
 
-                  // Log theme change
-                  analytics.logEvent(
-                    name: 'theme_changed',
-                    parameters: {'theme_mode': 'light'},
-                  );
+
                 }
               },
             ),

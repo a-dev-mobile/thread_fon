@@ -14,6 +14,8 @@ PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/metric_
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads/tolerance_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads/diameter_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads/info"
+PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/metric_threads/info"
+PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/metric_threads/info/views"
 FILE_NAMES=(
     "*.dart"
 )

@@ -101,14 +101,7 @@ class _PitchSelectionView extends StatelessWidget {
                         return PitchChoiceCard(
                           pitch: pitch,
                           onTap: () {
-                            // Логируем выбор шага резьбы
-                            analytics.logEvent(
-                              name: 'pitch_selected',
-                              parameters: {
-                                'pitch_value': pitch
-                                    .info, // Предполагается, что pitch имеет поле value
-                              },
-                            );
+
                             if (pitch.enumPitchDataType ==
                                 EnumPitchDataType.value) {
                               bloc.preparationNavigation(pitch);

@@ -117,8 +117,6 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                     _isSvgOverlayVisible = false;
                   });
 
-                  // Логирование закрытия оверлея
-                  analytics.logEvent(name: 'svg_overlay_closed');
                 },
                 onExpand: () {
                   final svgDataToSend = _showDimensions ? state.svgData : state.svgDataNoDimensions;
@@ -128,7 +126,6 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                       'svgData': svgDataToSend,
                     });
 
-                    analytics.logEvent(name: 'svg_overlay_expanded');
                   } else {
                     // Handle the null case, perhaps show an error or a placeholder
                     _logger.e('SVG data is null when trying to expand');
@@ -142,11 +139,7 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                     _showDimensions = !_showDimensions;
                   });
 
-                  // Логирование переключения SVG
-                  analytics.logEvent(
-                    name: 'svg_switched',
-                    parameters: {'show_dimensions': _showDimensions.toString()},
-                  );
+                
                 },
                 showDimensions: _showDimensions,
               ),
@@ -172,9 +165,6 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
           onRetry: () {
             bloc.load();
 
-            // Логирование попытки повторной загрузки
-
-            analytics.logEvent(name: 'info_retry_load');
           },
         );
 
@@ -200,12 +190,7 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                   _isSvgOverlayVisible = !_isSvgOverlayVisible;
                 });
 
-                // Логирование переключения видимости оверлея
-
-                analytics.logEvent(
-                  name: 'toggle_svg_overlay',
-                  parameters: {'is_visible': _isSvgOverlayVisible.toString()},
-                );
+           
               },
             ),
             IconButton(
@@ -223,15 +208,6 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                           precision: selectedPrecision,
                         );
 
-                        // Логирование изменения единиц измерения и точности
-
-                        analytics.logEvent(
-                          name: 'units_precision_changed',
-                          parameters: {
-                            'units': selectedUnits.toString(),
-                            'precision': selectedPrecision,
-                          },
-                        );
                       },
                     );
                   },

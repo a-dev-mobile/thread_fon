@@ -68,8 +68,7 @@ class _ToleranceSelectionView extends StatelessWidget {
           previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
         if (state.enumNavigationStatus.isNavigation) {
-          analytics.logEvent(name: 'info_screen_view');
-          context.pushNamed(InfoScreen.name);
+                 context.pushNamed(InfoScreen.name);
           bloc.resetNavigationStatus();
         }
       },
@@ -101,14 +100,6 @@ class _ToleranceSelectionView extends StatelessWidget {
                         return ToleranceChoiceCard(
                           tolerance: tolerance,
                           onTap: () {
-                            // Логируем выбор допуска
-                            analytics.logEvent(
-                              name: 'tolerance_selected',
-                              parameters: {
-                                'tolerance_value': tolerance
-                                    .info, // Предполагается, что tolerance имеет поле value
-                              },
-                            );
                             bloc.preparationNavigation(tolerance);
                           },
                         );

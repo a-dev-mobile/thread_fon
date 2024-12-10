@@ -17,7 +17,7 @@ class ImperialUserSelection with _$ImperialUserSelection {
     String? tpi,
     int? id,
     String? fullName,
-    @Default(EnumUnits.mm) EnumUnits units,
+    @Default(EnumUnits.inch) EnumUnits units,
     @Default(3) int precision,
   }) = _ImperialUserSelection;
 

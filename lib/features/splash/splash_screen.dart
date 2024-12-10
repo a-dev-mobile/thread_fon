@@ -39,8 +39,6 @@ class _SplashView extends StatelessWidget {
     return BlocListener<SplashBloc, SplashState>(
       listener: (context, state) {
         if (state.enumNavigationStatus == EnumNavigationStatus.navigation) {
-          // Логируем событие перехода к выбору типа резьбы
-          analytics.logEvent(name: 'thread_type_selection');
           context.goNamed(ThreadTypeSelectionScreen.name);
         }
       },
