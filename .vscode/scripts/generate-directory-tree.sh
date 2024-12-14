@@ -8,7 +8,6 @@ PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/pitch_s
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/thread_type_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/diameter_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/info"
-PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/metric_threads/tolerance_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads/tolerance_selection"
@@ -16,6 +15,7 @@ PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperia
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads/info"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/metric_threads/info"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/metric_threads/info/views"
+PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/"
 FILE_NAMES=(
     "*.dart"
 )

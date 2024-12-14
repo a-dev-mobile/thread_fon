@@ -49,9 +49,9 @@ class InfoRepository {
         _logger.e(errorMessage);
         throw Exception(errorMessage);
       }
-    } catch (error, stackTrace) {
-      _logger.e('Error fetching info', error: error, stackTrace: stackTrace);
-      rethrow;
+    } catch (e, s) {
+      _logger.e('Error fetching info', error: e, stackTrace: s);
+      Error.throwWithStackTrace(e, s);
     }
   }
 
@@ -92,10 +92,10 @@ class InfoRepository {
         _logger.e(errorMessage);
         throw Exception(errorMessage);
       }
-    } catch (error, stackTrace) {
+    } catch (e, s) {
       _logger.e('Error fetching SVG data',
-          error: error, stackTrace: stackTrace);
-      rethrow;
+          error: e, stackTrace: s);
+    Error.throwWithStackTrace(e, s);
     }
   }
 }

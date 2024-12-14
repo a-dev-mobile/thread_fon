@@ -9,8 +9,7 @@ final _logger = LogService('diameter_repository');
 class DiameterRepository {
   final ApiService _apiService;
 
-  DiameterRepository({required ApiService apiService})
-      : _apiService = apiService;
+  DiameterRepository({required ApiService apiService}) : _apiService = apiService;
 
   Future<List<ImperialDiameterModel>> fetchDiameters() async {
     try {
@@ -21,19 +20,14 @@ class DiameterRepository {
 
       if (response.statusCode == 200) {
         final List<dynamic> rawData = response.data;
-        return rawData
-            .map((json) =>
-                ImperialDiameterModel.fromJson(json as Map<String, dynamic>))
-            .toList();
+        return rawData.map((json) => ImperialDiameterModel.fromJson(json as Map<String, dynamic>)).toList();
       } else {
-        _logger.e(
-            'Failed to fetch diameters. Status code: ${response.statusCode}');
+        _logger.e('Failed to fetch diameters. Status code: ${response.statusCode}');
         throw Exception('Failed to fetch diameters');
       }
-    } catch (error, stackTrace) {
-      _logger.e('Error fetching diameters',
-          error: error, stackTrace: stackTrace);
-      rethrow;
+    } catch (e, s) {
+      _logger.e('Error fetching diameters', error: e, stackTrace: s);
+      Error.throwWithStackTrace(e, s);
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
+import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/metric_threads/diameter_selection/models/metric_diameter_model.dart';
@@ -43,7 +44,11 @@ class MetricDiameterBloc extends Cubit<MetricDiameterState>
       ));
     } catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
-
+      globalErrorReporting.reportError(
+        error: e,
+        stackTrace: s,
+        customMessage: 'Error loading diameters',
+      );
       _setErrorState();
     }
   }
@@ -63,6 +68,11 @@ class MetricDiameterBloc extends Cubit<MetricDiameterState>
       // Удалили задержку
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
+            globalErrorReporting.reportError(
+        error: e,
+        stackTrace: s,
+        customMessage: 'Error updating selection',
+      );
       _setErrorState();
     }
   }

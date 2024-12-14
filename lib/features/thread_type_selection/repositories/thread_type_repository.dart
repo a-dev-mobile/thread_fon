@@ -19,10 +19,10 @@ class ThreadTypeRepository {
           svgAssetPath: Assets.svg.bolt,
         ),
       ];
-    } catch (error, stackTrace) {
+    } catch (e, s) {
       _logger.e('Error fetching thread types',
-          error: error, stackTrace: stackTrace);
-      rethrow;
+          error: e, stackTrace: s);
+      Error.throwWithStackTrace(e, s);
     }
   }
 }

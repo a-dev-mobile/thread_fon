@@ -7,6 +7,7 @@ import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/constant/enum_units.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
 import 'package:threadfon/core/models/core_user_selection.dart';
+import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/metric_threads/core/models/metric_user_selection.dart';
@@ -56,6 +57,11 @@ class InfoBloc extends Cubit<InfoState> with BlocIgnoreEmitAfterClosed {
       _fetchSvgData(coreUserSelection, metricUserSelection);
     } catch (e, s) {
       _logger.e('Error loading info', error: e, stackTrace: s);
+            globalErrorReporting.reportError(
+        error: e,
+        stackTrace: s,
+        customMessage: 'Error loading info',
+      );
       _setErrorState();
     }
   }
@@ -116,6 +122,11 @@ class InfoBloc extends Cubit<InfoState> with BlocIgnoreEmitAfterClosed {
       ));
     } catch (e, s) {
       _logger.e('Error fetching SVG data', error: e, stackTrace: s);
+                  globalErrorReporting.reportError(
+        error: e,
+        stackTrace: s,
+        customMessage: 'Error fetching SVG data',
+      );
       emit(state.copyWith(
         svgRequestStatus: EnumStatus.error,
         svgErrorMsg: 'Error loading SVG data',
@@ -136,6 +147,11 @@ class InfoBloc extends Cubit<InfoState> with BlocIgnoreEmitAfterClosed {
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
+                  globalErrorReporting.reportError(
+        error: e,
+        stackTrace: s,
+        customMessage: 'Error updating selection',
+      );
       _setErrorState();
     }
   }

@@ -38,13 +38,13 @@ class ToleranceRepository {
         );
         throw Exception('Failed to fetch tolerances');
       }
-    } catch (error, stackTrace) {
+    } catch (e, s) {
       _logger.e(
         'Error fetching tolerances',
-        error: error,
-        stackTrace: stackTrace,
+        error: e,
+        stackTrace: s,
       );
-      rethrow;
+      Error.throwWithStackTrace(e, s);
     }
   }
 }

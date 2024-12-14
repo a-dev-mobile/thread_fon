@@ -31,10 +31,10 @@ class DiameterRepository {
             'Failed to fetch diameters. Status code: ${response.statusCode}');
         throw Exception('Failed to fetch diameters');
       }
-    } catch (error, stackTrace) {
+    } catch (e, s) {
       _logger.e('Error fetching diameters',
-          error: error, stackTrace: stackTrace);
-      rethrow;
+          error: e, stackTrace: s);
+      Error.throwWithStackTrace(e, s);
     }
   }
 }

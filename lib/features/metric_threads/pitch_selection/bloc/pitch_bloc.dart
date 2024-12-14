@@ -4,6 +4,7 @@ import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
+import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/metric_threads/pitch_selection/models/pitch_model.dart';
@@ -41,6 +42,11 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
           enumPageStatus: EnumStatus.success, pitches: pitchList));
     } catch (e, s) {
       _logger.e('Error loading pitch', error: e, stackTrace: s);
+                  globalErrorReporting.reportError(
+        error: e,
+        stackTrace: s,
+        customMessage: 'Error loading pitch',
+      );
       _setErrorState();
     }
   }
@@ -57,6 +63,11 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
           enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating pitch selection', error: e, stackTrace: s);
+                        globalErrorReporting.reportError(
+        error: e,
+        stackTrace: s,
+        customMessage: 'Error updating pitch selection',
+      );
       _setErrorState();
     }
   }

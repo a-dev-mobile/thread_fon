@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 
 final _logger = LogService('app_bloc_observer');
@@ -40,8 +41,13 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
     super.onError(bloc, error, stackTrace);
-    _logger.e('Error in ${bloc.runtimeType}',
-        error: error, stackTrace: stackTrace);
+    _logger.e('Error in ${bloc.runtimeType}', error: error, stackTrace: stackTrace);
+    // Отправка ошибки через ErrorReportingService
+    globalErrorReporting.reportError(
+      error: error,
+      stackTrace: stackTrace,
+      additionalInfo: {'bloc_type': bloc.runtimeType.toString()},
+    );
   }
 
   @override

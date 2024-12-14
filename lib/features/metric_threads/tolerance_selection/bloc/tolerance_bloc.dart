@@ -4,6 +4,7 @@ import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/core/constant/enum_navigation.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
+import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/metric_threads/tolerance_selection/models/tolerance_model.dart';
@@ -43,6 +44,11 @@ class ToleranceBloc extends Cubit<ToleranceState>
           enumPageStatus: EnumStatus.success, tolerances: tolerances));
     } catch (e, s) {
       _logger.e('Error loading tolerances', error: e, stackTrace: s);
+                        globalErrorReporting.reportError(
+        error: e,
+        stackTrace: s,
+        customMessage: 'Error loading tolerances',
+      );
       _setErrorState();
     }
   }
@@ -58,6 +64,11 @@ class ToleranceBloc extends Cubit<ToleranceState>
           enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating tolerance selection', error: e, stackTrace: s);
+         globalErrorReporting.reportError(
+        error: e,
+        stackTrace: s,
+        customMessage: 'Error updating tolerance selection',
+      );
       _setErrorState();
     }
   }

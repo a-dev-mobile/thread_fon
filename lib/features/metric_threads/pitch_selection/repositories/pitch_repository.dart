@@ -36,13 +36,13 @@ class PitchRepository {
         );
         throw Exception('Failed to fetch pitch');
       }
-    } catch (error, stackTrace) {
+    } catch (e, s) {
       _logger.e(
         'Error fetching pitch',
-        error: error,
-        stackTrace: stackTrace,
+        error: e,
+        stackTrace: s,
       );
-      rethrow;
+      Error.throwWithStackTrace(e, s);
     }
   }
 }
