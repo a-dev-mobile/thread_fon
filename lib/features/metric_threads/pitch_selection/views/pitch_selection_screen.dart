@@ -15,7 +15,6 @@ import 'package:threadfon/features/metric_threads/pitch_selection/repositories/p
 import 'package:threadfon/features/metric_threads/pitch_selection/views/pitch_choice_card.dart';
 import 'package:threadfon/features/metric_threads/tolerance_selection/views/tolerance_selection_screen.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
-import 'package:threadfon/main.dart';
 
 final _logger = LogService('metric_pitch_screen');
 
@@ -43,8 +42,6 @@ class _PitchSelectionScreenState extends State<PitchSelectionScreen> {
       languageBloc: languageBloc,
     )..loadPitch();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +98,6 @@ class _PitchSelectionView extends StatelessWidget {
                         return PitchChoiceCard(
                           pitch: pitch,
                           onTap: () {
-
                             if (pitch.enumPitchDataType ==
                                 EnumPitchDataType.value) {
                               bloc.preparationNavigation(pitch);

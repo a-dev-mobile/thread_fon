@@ -3,7 +3,6 @@ import 'package:threadfon/core/constant/enum_thread%20copy.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/metric_threads/info/models/info_model.dart';
 import 'package:threadfon/features/metric_threads/info/views/info_row.dart';
-import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
@@ -25,7 +24,8 @@ class InfoDiametersParameters extends StatelessWidget {
     final List<Widget> diameterSections = [];
 
     // Добавляем первую секцию диаметров в зависимости от типа резьбы
-    diameterSections.add(_buildPrimaryDiameterSection(prefix, isFemale, localization));
+    diameterSections
+        .add(_buildPrimaryDiameterSection(prefix, isFemale, localization));
 
     // Добавляем отступ
     diameterSections.add(const SizedBox(height: 10.0));
@@ -52,7 +52,8 @@ class InfoDiametersParameters extends StatelessWidget {
     diameterSections.add(const SizedBox(height: 10.0));
 
     // Добавляем дополнительные секции в зависимости от типа резьбы
-    diameterSections.addAll(_buildAdditionalSections(prefix, isFemale, localization));
+    diameterSections
+        .addAll(_buildAdditionalSections(prefix, isFemale, localization));
 
     return MyCard(
       onTap: null,
@@ -64,7 +65,8 @@ class InfoDiametersParameters extends StatelessWidget {
   }
 
   // Метод для создания основной секции диаметра
-  Widget _buildPrimaryDiameterSection(String prefix, bool isFemale, GeneratedLocalization localization) {
+  Widget _buildPrimaryDiameterSection(
+      String prefix, bool isFemale, GeneratedLocalization localization) {
     if (isFemale) {
       return _DiameterSection(
         title: '${prefix}1 - ${localization.diam_minor}',
@@ -89,7 +91,8 @@ class InfoDiametersParameters extends StatelessWidget {
   }
 
   // Метод для создания дополнительных секций диаметров
-  List<Widget> _buildAdditionalSections(String prefix, bool isFemale, GeneratedLocalization localization) {
+  List<Widget> _buildAdditionalSections(
+      String prefix, bool isFemale, GeneratedLocalization localization) {
     List<Widget> sections = [];
 
     if (isFemale) {

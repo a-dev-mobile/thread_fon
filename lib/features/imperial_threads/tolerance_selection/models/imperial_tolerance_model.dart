@@ -10,7 +10,8 @@ class ImperialToleranceModel with _$ImperialToleranceModel {
     required List<ImperialToleranceItem> male,
   }) = _ImperialToleranceModel;
 
-  factory ImperialToleranceModel.fromJson(Map<String, dynamic> json) => _$ImperialToleranceModelFromJson(json);
+  factory ImperialToleranceModel.fromJson(Map<String, dynamic> json) =>
+      _$ImperialToleranceModelFromJson(json);
 }
 
 @freezed
@@ -21,7 +22,8 @@ class ImperialToleranceItem with _$ImperialToleranceItem {
     required ImperialToleranceFormatted formatted,
   }) = _ImperialToleranceItem;
 
-  factory ImperialToleranceItem.fromJson(Map<String, dynamic> json) => _$ImperialToleranceItemFromJson(json);
+  factory ImperialToleranceItem.fromJson(Map<String, dynamic> json) =>
+      _$ImperialToleranceItemFromJson(json);
 }
 
 @freezed
@@ -31,5 +33,6 @@ class ImperialToleranceFormatted with _$ImperialToleranceFormatted {
     required String decimal,
   }) = _ImperialToleranceFormatted;
 
-  factory ImperialToleranceFormatted.fromJson(Map<String, dynamic> json) => _$ImperialToleranceFormattedFromJson(json);
+  factory ImperialToleranceFormatted.fromJson(Map<String, dynamic> json) =>
+      _$ImperialToleranceFormattedFromJson(json);
 }

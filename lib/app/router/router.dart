@@ -58,23 +58,24 @@ class AppRouter {
               pageBuilder: (context, state) => NoTransitionPage(
                   child: const MetricDiameterScreen(), key: state.pageKey),
             ),
-               GoRoute(
+            GoRoute(
               path: ImperialDiameterScreen.path,
               name: ImperialDiameterScreen.name,
-              pageBuilder: (context, state) =>
-                  NoTransitionPage(child: const ImperialDiameterScreen(), key: state.pageKey),
+              pageBuilder: (context, state) => NoTransitionPage(
+                  child: const ImperialDiameterScreen(), key: state.pageKey),
             ),
-                  GoRoute(
+            GoRoute(
               path: ImperialToleranceSelectionScreen.path,
               name: ImperialToleranceSelectionScreen.name,
-              pageBuilder: (context, state) =>
-                  NoTransitionPage(child: const ImperialToleranceSelectionScreen(), key: state.pageKey),
+              pageBuilder: (context, state) => NoTransitionPage(
+                  child: const ImperialToleranceSelectionScreen(),
+                  key: state.pageKey),
             ),
-                GoRoute(
+            GoRoute(
               path: ImperialInfoScreen.path,
               name: ImperialInfoScreen.name,
-              pageBuilder: (context, state) =>
-                  NoTransitionPage(child: const ImperialInfoScreen(), key: state.pageKey),
+              pageBuilder: (context, state) => NoTransitionPage(
+                  child: const ImperialInfoScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ThreadTypeSelectionScreen.path,

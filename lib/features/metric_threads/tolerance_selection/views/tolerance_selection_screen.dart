@@ -14,7 +14,6 @@ import 'package:threadfon/features/metric_threads/tolerance_selection/bloc/toler
 import 'package:threadfon/features/metric_threads/tolerance_selection/repositories/tolerance_repository.dart';
 import 'package:threadfon/features/metric_threads/tolerance_selection/views/tolerance_choice_card.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
-import 'package:threadfon/main.dart';
 
 final _logger = LogService('metric_tolerance_screen');
 
@@ -45,8 +44,6 @@ class _ToleranceSelectionScreenState extends State<ToleranceSelectionScreen> {
     )..loadTolerances();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -68,7 +65,7 @@ class _ToleranceSelectionView extends StatelessWidget {
           previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
         if (state.enumNavigationStatus.isNavigation) {
-                 context.pushNamed(InfoScreen.name);
+          context.pushNamed(InfoScreen.name);
           bloc.resetNavigationStatus();
         }
       },

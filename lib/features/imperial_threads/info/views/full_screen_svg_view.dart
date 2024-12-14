@@ -15,7 +15,8 @@ class ImperialFullScreenSvgView extends StatefulWidget {
   });
 
   @override
-  _ImperialFullScreenSvgViewState createState() => _ImperialFullScreenSvgViewState();
+  _ImperialFullScreenSvgViewState createState() =>
+      _ImperialFullScreenSvgViewState();
 }
 
 class _ImperialFullScreenSvgViewState extends State<ImperialFullScreenSvgView> {

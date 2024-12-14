@@ -7,7 +7,6 @@ import 'package:threadfon/features/imperial_threads/info/bloc/imperial_info_bloc
 
 import 'package:threadfon/features/imperial_threads/info/models/imperial_info_model.dart';
 import 'package:threadfon/features/imperial_threads/info/views/imperial_info_row.dart';
-import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
 class ImperialInfoMainParameters extends StatelessWidget {
@@ -22,7 +21,8 @@ class ImperialInfoMainParameters extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = context.l10n;
     final units = context.read<ImperialInfoBloc>().state.units;
-    final unitsText = units == EnumUnits.mm ? localization.mm : localization.inch;
+    final unitsText =
+        units == EnumUnits.mm ? localization.mm : localization.inch;
 
     return MyCard(
       child: Column(
@@ -69,7 +69,9 @@ class ImperialInfoMainParameters extends StatelessWidget {
           const Divider(),
           ImperialInfoRow(
               label: localization.thread_type,
-              value: info.type_.isFemale ? localization.internal_thread : localization.external_thread),
+              value: info.type_.isFemale
+                  ? localization.internal_thread
+                  : localization.external_thread),
           ImperialInfoRow(
             label: localization.thread_diam_nom,
             value: '${info.fractional_diameter} (${info.decimal_diameter})',

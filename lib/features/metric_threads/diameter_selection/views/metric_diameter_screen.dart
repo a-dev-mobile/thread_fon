@@ -44,8 +44,6 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
     )..load();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<MetricDiameterBloc>.value(

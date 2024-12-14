@@ -21,7 +21,6 @@ import 'package:threadfon/features/imperial_threads/info/views/imperial_info_dia
 import 'package:threadfon/features/imperial_threads/info/views/imperial_info_main_parameters.dart';
 import 'package:threadfon/features/imperial_threads/info/views/imperial_info_parameters.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
-import 'package:threadfon/main.dart';
 
 final _logger = LogService('info_screen');
 
@@ -67,7 +66,8 @@ class _ImperialImperialInfoView extends StatefulWidget {
   const _ImperialImperialInfoView();
 
   @override
-  State<_ImperialImperialInfoView> createState() => _ImperialImperialInfoViewState();
+  State<_ImperialImperialInfoView> createState() =>
+      _ImperialImperialInfoViewState();
 }
 
 class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
@@ -79,8 +79,6 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
     final bloc = context.watch<ImperialInfoBloc>();
     final state = bloc.state;
 
- 
-
     // Screen dimensions
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -89,10 +87,13 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
     final svgAspectRatio = svgWidth / svgHeight;
     final calculatedOverlayHeight = screenWidth / svgAspectRatio;
     final maxOverlayHeight = screenHeight * 0.4;
-    final overlayHeight = calculatedOverlayHeight > maxOverlayHeight ? maxOverlayHeight : calculatedOverlayHeight;
+    final overlayHeight = calculatedOverlayHeight > maxOverlayHeight
+        ? maxOverlayHeight
+        : calculatedOverlayHeight;
 
     return BlocListener<ImperialInfoBloc, ImperialInfoState>(
-      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) =>
+          previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
         // Handle side effects if needed
       },
@@ -105,7 +106,9 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
             // SVG Overlay
             if (_isSvgOverlayVisible)
               SvgOverlay(
-                svgData: _showDimensions ? state.svgData ?? '' : state.svgDataNoDimensions ?? '',
+                svgData: _showDimensions
+                    ? state.svgData ?? ''
+                    : state.svgDataNoDimensions ?? '',
                 svgRequestStatus: state.svgRequestStatus,
                 svgErrorMsg: state.svgErrorMsg,
                 overlayHeight: overlayHeight,
@@ -116,16 +119,16 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                   setState(() {
                     _isSvgOverlayVisible = false;
                   });
-
                 },
                 onExpand: () {
-                  final svgDataToSend = _showDimensions ? state.svgData : state.svgDataNoDimensions;
+                  final svgDataToSend = _showDimensions
+                      ? state.svgData
+                      : state.svgDataNoDimensions;
 
                   if (svgDataToSend != null) {
                     context.pushNamed(ImperialFullScreenSvgView.name, extra: {
                       'svgData': svgDataToSend,
                     });
-
                   } else {
                     // Handle the null case, perhaps show an error or a placeholder
                     _logger.e('SVG data is null when trying to expand');
@@ -138,21 +141,20 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                   setState(() {
                     _showDimensions = !_showDimensions;
                   });
-
-                
                 },
                 showDimensions: _showDimensions,
               ),
             // Blurred overlay when in preparation status
-            if (state.enumNavigationStatus.isPreparation) const LoadingWidget(isBlurred: true),
+            if (state.enumNavigationStatus.isPreparation)
+              const LoadingWidget(isBlurred: true),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildContent(
-      ImperialInfoBloc bloc, BuildContext context, double overlayHeight, double svgWidth, double svgHeight) {
+  Widget _buildContent(ImperialInfoBloc bloc, BuildContext context,
+      double overlayHeight, double svgWidth, double svgHeight) {
     final state = bloc.state;
 
     switch (state.enumPageStatus) {
@@ -164,7 +166,6 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
           errorMsg: state.errorMsg ?? 'An unknown error occurred.',
           onRetry: () {
             bloc.load();
-
           },
         );
 
@@ -173,8 +174,8 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
     }
   }
 
-  Widget _buildSuccessContent(
-      BuildContext context, ImperialInfoState state, ImperialInfoBloc bloc, double overlayHeight) {
+  Widget _buildSuccessContent(BuildContext context, ImperialInfoState state,
+      ImperialInfoBloc bloc, double overlayHeight) {
     final localization = context.l10n;
     return CustomScrollView(
       slivers: [
@@ -189,8 +190,6 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                 setState(() {
                   _isSvgOverlayVisible = !_isSvgOverlayVisible;
                 });
-
-           
               },
             ),
             IconButton(
@@ -207,7 +206,6 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                           units: selectedUnits,
                           precision: selectedPrecision,
                         );
-
                       },
                     );
                   },
@@ -291,7 +289,9 @@ class _UnitsPrecisionDialogState extends State<UnitsPrecisionDialog> {
                 items: EnumUnits.values.map((EnumUnits units) {
                   return DropdownMenuItem<EnumUnits>(
                     value: units,
-                    child: Text(units == EnumUnits.mm ? localization.mm : localization.inch),
+                    child: Text(units == EnumUnits.mm
+                        ? localization.mm
+                        : localization.inch),
                   );
                 }).toList(),
                 onChanged: (EnumUnits? newValue) {

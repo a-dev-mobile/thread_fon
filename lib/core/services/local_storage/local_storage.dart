@@ -26,7 +26,8 @@ class LocalStorage {
   static const String _appId = '_appId';
   static const String _metricUserSelectionKey = '_metricUserSelection';
   static const String _coreUserSelectionKey = '_userSelection'; // Новый ключ
-  static const String _imperialUserSelectionKey = '_imperialUserSelection'; // Новый ключ
+  static const String _imperialUserSelectionKey =
+      '_imperialUserSelection'; // Новый ключ
   static const String _userAgent = 'userAgent';
   static const String _targetUrl = '_TargetUrl';
   static const String _metricScrollPositionKey = 'scroll_position_metric';
@@ -49,7 +50,9 @@ class LocalStorage {
 
   /// Получение сохраненного положения скролла
   Future<double> getMetricScrollPosition() async {
-    return await _getValue<double>(key: _metricScrollPositionKey, defaultValue: 0.0) ?? 0.0;
+    return await _getValue<double>(
+            key: _metricScrollPositionKey, defaultValue: 0.0) ??
+        0.0;
   }
 
   /// Сохранение положения скролла
@@ -59,7 +62,9 @@ class LocalStorage {
 
   /// Получение сохраненного положения скролла
   Future<double> getImperialScrollPosition() async {
-    return await _getValue<double>(key: _imperialScrollPositionKey, defaultValue: 0.0) ?? 0.0;
+    return await _getValue<double>(
+            key: _imperialScrollPositionKey, defaultValue: 0.0) ??
+        0.0;
   }
 
   // ******************************
@@ -67,19 +72,23 @@ class LocalStorage {
 
   Future<String?> getAppId() => _getValue<String>(key: _appId);
 
-  Future<void> setAppId(String? value) => _setValue<String>(key: _appId, value: value ?? '');
+  Future<void> setAppId(String? value) =>
+      _setValue<String>(key: _appId, value: value ?? '');
 
   // ******************************
   // Методы для работы с _metricUserSelection
 
   Future<MetricUserSelection> getMetricUserSelection() async {
-    final jsonString = await _getValue<String>(key: _metricUserSelectionKey, defaultValue: '{}');
+    final jsonString = await _getValue<String>(
+        key: _metricUserSelectionKey, defaultValue: '{}');
     try {
       return jsonString != null
-          ? MetricUserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
+          ? MetricUserSelection.fromJson(
+              json.decode(jsonString) as Map<String, dynamic>)
           : const MetricUserSelection();
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'GET_METRIC_USER_SELECTION', _metricUserSelectionKey, jsonString);
+      await _recordError(e, s, 'GET_METRIC_USER_SELECTION',
+          _metricUserSelectionKey, jsonString);
       return const MetricUserSelection();
     }
   }
@@ -89,13 +98,15 @@ class LocalStorage {
       final jsonString = json.encode(value.toJson());
       await _setValue<String>(key: _metricUserSelectionKey, value: jsonString);
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'SET_METRIC_USER_SELECTION', _metricUserSelectionKey, value);
+      await _recordError(
+          e, s, 'SET_METRIC_USER_SELECTION', _metricUserSelectionKey, value);
     }
   }
 
   /// Метод для обновления MetricUserSelection с использованием функции модификации.
   Future<void> updateMetricUserSelection(
-    FutureOr<MetricUserSelection> Function(MetricUserSelection current) updateFn,
+    FutureOr<MetricUserSelection> Function(MetricUserSelection current)
+        updateFn,
   ) async {
     try {
       // Получаем текущий объект MetricUserSelection
@@ -107,9 +118,11 @@ class LocalStorage {
       // Сохраняем обновленный объект
       await setMetricUserSelection(updatedSelection);
 
-      await _log('UPDATE_METRIC_USER_SELECTION', _metricUserSelectionKey, updatedSelection);
+      await _log('UPDATE_METRIC_USER_SELECTION', _metricUserSelectionKey,
+          updatedSelection);
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'UPDATE_METRIC_USER_SELECTION', _metricUserSelectionKey, null);
+      await _recordError(
+          e, s, 'UPDATE_METRIC_USER_SELECTION', _metricUserSelectionKey, null);
     }
   }
 
@@ -117,13 +130,16 @@ class LocalStorage {
   // Методы для работы с _userSelection
 
   Future<CoreUserSelection> getCoreUserSelection() async {
-    final jsonString = await _getValue<String>(key: _coreUserSelectionKey, defaultValue: '{}');
+    final jsonString =
+        await _getValue<String>(key: _coreUserSelectionKey, defaultValue: '{}');
     try {
       return jsonString != null
-          ? CoreUserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
+          ? CoreUserSelection.fromJson(
+              json.decode(jsonString) as Map<String, dynamic>)
           : const CoreUserSelection();
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'GET_CORE_USER_SELECTION', _coreUserSelectionKey, jsonString);
+      await _recordError(
+          e, s, 'GET_CORE_USER_SELECTION', _coreUserSelectionKey, jsonString);
       return const CoreUserSelection();
     }
   }
@@ -133,7 +149,8 @@ class LocalStorage {
       final jsonString = json.encode(value.toJson());
       await _setValue<String>(key: _coreUserSelectionKey, value: jsonString);
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'SET_CORE_USER_SELECTION', _coreUserSelectionKey, value);
+      await _recordError(
+          e, s, 'SET_CORE_USER_SELECTION', _coreUserSelectionKey, value);
     }
   }
 
@@ -151,9 +168,11 @@ class LocalStorage {
       // Сохраняем обновленный объект
       await setCoreUserSelection(updatedSelection);
 
-      await _log('UPDATE_CORE_USER_SELECTION', _coreUserSelectionKey, updatedSelection);
+      await _log('UPDATE_CORE_USER_SELECTION', _coreUserSelectionKey,
+          updatedSelection);
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'UPDATE_CORE_USER_SELECTION', _coreUserSelectionKey, null);
+      await _recordError(
+          e, s, 'UPDATE_CORE_USER_SELECTION', _coreUserSelectionKey, null);
     }
   }
 
@@ -161,13 +180,16 @@ class LocalStorage {
   // Методы для работы с _imperialUserSelection
 
   Future<ImperialUserSelection> getImperialUserSelection() async {
-    final jsonString = await _getValue<String>(key: _imperialUserSelectionKey, defaultValue: '{}');
+    final jsonString = await _getValue<String>(
+        key: _imperialUserSelectionKey, defaultValue: '{}');
     try {
       return jsonString != null
-          ? ImperialUserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
+          ? ImperialUserSelection.fromJson(
+              json.decode(jsonString) as Map<String, dynamic>)
           : const ImperialUserSelection();
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'GET_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey, jsonString);
+      await _recordError(e, s, 'GET_IMPERIAL_USER_SELECTION',
+          _imperialUserSelectionKey, jsonString);
       return const ImperialUserSelection();
     }
   }
@@ -175,15 +197,18 @@ class LocalStorage {
   Future<void> setImperialUserSelection(ImperialUserSelection value) async {
     try {
       final jsonString = json.encode(value.toJson());
-      await _setValue<String>(key: _imperialUserSelectionKey, value: jsonString);
+      await _setValue<String>(
+          key: _imperialUserSelectionKey, value: jsonString);
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'SET_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey, value);
+      await _recordError(e, s, 'SET_IMPERIAL_USER_SELECTION',
+          _imperialUserSelectionKey, value);
     }
   }
 
   /// Метод для обновления ImperialUserSelection с использованием функции модификации.
   Future<void> updateImperialUserSelection(
-    FutureOr<ImperialUserSelection> Function(ImperialUserSelection current) updateFn,
+    FutureOr<ImperialUserSelection> Function(ImperialUserSelection current)
+        updateFn,
   ) async {
     try {
       // Получаем текущий объект ImperialUserSelection
@@ -195,9 +220,11 @@ class LocalStorage {
       // Сохраняем обновленный объект
       await setImperialUserSelection(updatedSelection);
 
-      await _log('UPDATE_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey, updatedSelection);
+      await _log('UPDATE_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey,
+          updatedSelection);
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'UPDATE_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey, null);
+      await _recordError(e, s, 'UPDATE_IMPERIAL_USER_SELECTION',
+          _imperialUserSelectionKey, null);
     }
   }
 
@@ -206,7 +233,8 @@ class LocalStorage {
 
   Future<String?> getUserAgent() => _getValue<String>(key: _userAgent);
 
-  Future<void> setUserAgent(String? value) => _setValue<String>(key: _userAgent, value: value ?? '');
+  Future<void> setUserAgent(String? value) =>
+      _setValue<String>(key: _userAgent, value: value ?? '');
 
   // ******************************
   // Методы для работы с _targetUrl
@@ -216,7 +244,8 @@ class LocalStorage {
         defaultValue: 'https://unknown.com?utm_source=organic_mob',
       );
 
-  Future<void> setTargetUrl(String? value) => _setValue<String>(key: _targetUrl, value: value ?? '');
+  Future<void> setTargetUrl(String? value) =>
+      _setValue<String>(key: _targetUrl, value: value ?? '');
 
   // ******************************
   // Методы для работы с _themeMode
@@ -258,10 +287,12 @@ class LocalStorage {
 
     try {
       return jsonString != null
-          ? LanguageState.fromJson(json.decode(jsonString) as Map<String, dynamic>)
+          ? LanguageState.fromJson(
+              json.decode(jsonString) as Map<String, dynamic>)
           : defaultLanguageState;
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'GET_LANGUAGE_STATE', _languageStateKey, jsonString);
+      await _recordError(
+          e, s, 'GET_LANGUAGE_STATE', _languageStateKey, jsonString);
       return defaultLanguageState;
     }
   }
@@ -366,9 +397,12 @@ class LocalStorage {
     required String key,
     defaultValue = const <String, dynamic>{},
   }) async {
-    final jsonString = await _getValue<String>(key: key, defaultValue: json.encode(defaultValue));
+    final jsonString = await _getValue<String>(
+        key: key, defaultValue: json.encode(defaultValue));
     try {
-      return jsonString != null ? json.decode(jsonString) as Map<String, dynamic> : null;
+      return jsonString != null
+          ? json.decode(jsonString) as Map<String, dynamic>
+          : null;
     } on Exception catch (e, s) {
       await _recordError(e, s, 'GET_JSON', key, jsonString);
       return null;
@@ -419,7 +453,8 @@ class LocalStorage {
   /// Проверка инициализации хранилищ
   void _ensureInitialized() {
     if (_sharedPreferences == null) {
-      throw Exception('LocalStorage not initialized. Call initialize() before using.');
+      throw Exception(
+          'LocalStorage not initialized. Call initialize() before using.');
     }
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:threadfon/core/constant/enum_units.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/imperial_threads/info/models/imperial_info_model.dart';
@@ -18,7 +17,7 @@ class ImperialInfoRepository {
 
   Future<ImperialInfoModel> fetchImperialInfo({
     required int id,
-    required String type, 
+    required String type,
     required String language,
     required String units,
     required int precision,
@@ -37,10 +36,12 @@ class ImperialInfoRepository {
       );
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> rawData = response.data as Map<String, dynamic>;
+        final Map<String, dynamic> rawData =
+            response.data as Map<String, dynamic>;
         return ImperialInfoModel.fromJson(rawData);
       } else {
-        final errorMessage = 'Failed to fetch info. Status code: ${response.statusCode}';
+        final errorMessage =
+            'Failed to fetch info. Status code: ${response.statusCode}';
         _logger.e(errorMessage);
         throw Exception(errorMessage);
       }
@@ -78,12 +79,14 @@ class ImperialInfoRepository {
       if (response.statusCode == 200) {
         return response.data as String;
       } else {
-        final errorMessage = 'Failed to fetch SVG data. Status code: ${response.statusCode}';
+        final errorMessage =
+            'Failed to fetch SVG data. Status code: ${response.statusCode}';
         _logger.e(errorMessage);
         throw Exception(errorMessage);
       }
     } catch (error, stackTrace) {
-      _logger.e('Error fetching SVG data', error: error, stackTrace: stackTrace);
+      _logger.e('Error fetching SVG data',
+          error: error, stackTrace: stackTrace);
       rethrow;
     }
   }

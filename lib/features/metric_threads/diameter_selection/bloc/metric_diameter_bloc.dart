@@ -15,7 +15,8 @@ part 'metric_diameter_state.dart';
 
 final _logger = LogService('metric_diameter_bloc');
 
-class MetricDiameterBloc extends Cubit<MetricDiameterState> with BlocIgnoreEmitAfterClosed {
+class MetricDiameterBloc extends Cubit<MetricDiameterState>
+    with BlocIgnoreEmitAfterClosed {
   MetricDiameterBloc({
     required DiameterRepository repository,
     required LocalStorage localStorage,
@@ -47,7 +48,8 @@ class MetricDiameterBloc extends Cubit<MetricDiameterState> with BlocIgnoreEmitA
     }
   }
 
-  Future<void> preparationNavigation(MetricDiameterModel selectedDiameter, double scrollPosition) async {
+  Future<void> preparationNavigation(
+      MetricDiameterModel selectedDiameter, double scrollPosition) async {
     await _localStorage.setMetricScrollPosition(scrollPosition);
     try {
       await _localStorage.updateMetricUserSelection(
@@ -56,7 +58,8 @@ class MetricDiameterBloc extends Cubit<MetricDiameterState> with BlocIgnoreEmitA
           diameter: selectedDiameter.diameter,
         ),
       );
-      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(
+          enumNavigationStatus: EnumNavigationStatus.navigation));
       // Удалили задержку
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
@@ -76,6 +79,8 @@ class MetricDiameterBloc extends Cubit<MetricDiameterState> with BlocIgnoreEmitA
         ? 'An error occurred while loading diameters.'
         : 'Произошла ошибка при загрузке диаметров.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error,
+        errorMsg: errorMsg,
+        enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

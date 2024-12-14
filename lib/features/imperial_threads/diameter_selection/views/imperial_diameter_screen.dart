@@ -81,7 +81,8 @@ class _ImperialDiameterViewState extends State<_ImperialDiameterView> {
     final localization = context.l10n;
     final bloc = widget.bloc;
     return BlocListener<ImperialDiameterBloc, ImperialDiameterState>(
-      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) =>
+          previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
         if (state.enumNavigationStatus.isNavigation) {
           // Навигация на следующий экран при выборе
@@ -99,7 +100,8 @@ class _ImperialDiameterViewState extends State<_ImperialDiameterView> {
           children: [
             BlocBuilder<ImperialDiameterBloc, ImperialDiameterState>(
               buildWhen: (previous, current) =>
-                  previous.enumPageStatus != current.enumPageStatus || previous.diameters != current.diameters,
+                  previous.enumPageStatus != current.enumPageStatus ||
+                  previous.diameters != current.diameters,
               builder: (context, state) {
                 switch (state.enumPageStatus) {
                   case EnumStatus.loading:
@@ -118,7 +120,8 @@ class _ImperialDiameterViewState extends State<_ImperialDiameterView> {
                     return ListView.separated(
                       controller: _scrollController,
                       itemCount: state.diameters.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 8.0),
                       itemBuilder: (context, index) {
                         final diameter = state.diameters[index];
                         return ImperialDiameterChoiceCard(

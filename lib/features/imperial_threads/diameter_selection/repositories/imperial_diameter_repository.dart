@@ -26,11 +26,13 @@ class DiameterRepository {
                 ImperialDiameterModel.fromJson(json as Map<String, dynamic>))
             .toList();
       } else {
-        _logger.e('Failed to fetch diameters. Status code: ${response.statusCode}');
+        _logger.e(
+            'Failed to fetch diameters. Status code: ${response.statusCode}');
         throw Exception('Failed to fetch diameters');
       }
     } catch (error, stackTrace) {
-      _logger.e('Error fetching diameters', error: error, stackTrace: stackTrace);
+      _logger.e('Error fetching diameters',
+          error: error, stackTrace: stackTrace);
       rethrow;
     }
   }

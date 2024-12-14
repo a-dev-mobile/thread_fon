@@ -13,7 +13,6 @@ import 'package:threadfon/core/widgets/base_screen.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/features/thread_type_selection/bloc/thread_type_bloc.dart';
-import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/features/thread_type_selection/repositories/thread_type_repository.dart';
 import 'package:threadfon/features/thread_type_selection/views/widgets/thread_type_choice_card.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
@@ -24,7 +23,8 @@ class ThreadTypeSelectionScreen extends StatefulWidget {
   static const name = 'ThreadTypeSelectionScreen';
 
   @override
-  State<ThreadTypeSelectionScreen> createState() => _ThreadTypeSelectionScreenState();
+  State<ThreadTypeSelectionScreen> createState() =>
+      _ThreadTypeSelectionScreenState();
 }
 
 class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
@@ -66,7 +66,8 @@ class _ThreadTypeSelectionView extends StatelessWidget {
             ? '${localization.metric_thread_gost}\n${localization.metric_thread}'
             : '${localization.imperial_thread_gost}\n${localization.imperial_thread}',
         body: BlocListener<ThreadTypeBloc, ThreadTypeState>(
-          listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+          listenWhen: (previous, current) =>
+              previous.enumNavigationStatus != current.enumNavigationStatus,
           listener: (context, state) {
             if (state.enumNavigationStatus.isNavigation) {
               context.pushNamed(state.nextNameScreen);
@@ -91,15 +92,19 @@ class _ThreadTypeSelectionView extends StatelessWidget {
                       return Center(
                         child: SingleChildScrollView(
                           child: Column(
-                            mainAxisSize: MainAxisSize.min, // Центрирует по вертикали
+                            mainAxisSize:
+                                MainAxisSize.min, // Центрирует по вертикали
                             children: state.threadTypes.map((threadType) {
-                              final label = threadType.enumThreadType == EnumThreadMaleFemale.female
+                              final label = threadType.enumThreadType ==
+                                      EnumThreadMaleFemale.female
                                   ? localization.internal_thread
                                   : localization.external_thread;
                               return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
                                 child: FractionallySizedBox(
-                                  widthFactor: 0.8, // Устанавливает ширину 80% от ширины родителя
+                                  widthFactor:
+                                      0.8, // Устанавливает ширину 80% от ширины родителя
                                   child: ThreadTypeChoiceCard(
                                     svgAssetPath: threadType.svgAssetPath,
                                     label: label,

@@ -6,7 +6,6 @@ import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/metric_threads/info/bloc/info_bloc.dart';
 import 'package:threadfon/features/metric_threads/info/models/info_model.dart';
 import 'package:threadfon/features/metric_threads/info/views/info_row.dart';
-import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
 class InfoMainParameters extends StatelessWidget {
@@ -21,7 +20,8 @@ class InfoMainParameters extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = context.l10n;
     final units = context.read<InfoBloc>().state.units;
-    final unitsText = units == EnumUnits.mm ? localization.mm : localization.inch;
+    final unitsText =
+        units == EnumUnits.mm ? localization.mm : localization.inch;
 
     return MyCard(
       child: Column(

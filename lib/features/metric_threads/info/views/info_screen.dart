@@ -20,7 +20,6 @@ import 'package:threadfon/features/metric_threads/info/views/info_diameters_para
 import 'package:threadfon/features/metric_threads/info/views/info_main_parameters.dart';
 import 'package:threadfon/features/metric_threads/info/views/info_parameters.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
-import 'package:threadfon/main.dart';
 
 final _logger = LogService('info_screen');
 
@@ -52,8 +51,6 @@ class _InfoScreenState extends State<InfoScreen> {
       themeBloc: themeBloc,
     )..load();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -120,8 +117,6 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                   setState(() {
                     _isSvgOverlayVisible = false;
                   });
-
-   
                 },
                 onExpand: () {
                   final svgDataToSend = _showDimensions
@@ -132,8 +127,6 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                     context.pushNamed(FullScreenSvgView.name, extra: {
                       'svgData': svgDataToSend,
                     });
-
-                  
                   } else {
                     // Handle the null case, perhaps show an error or a placeholder
                     _logger.e('SVG data is null when trying to expand');
@@ -146,7 +139,6 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                   setState(() {
                     _showDimensions = !_showDimensions;
                   });
-
                 },
                 showDimensions: _showDimensions,
               ),
@@ -172,7 +164,6 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
           errorMsg: state.errorMsg ?? 'An unknown error occurred.',
           onRetry: () {
             bloc.load();
-     
           },
         );
 
@@ -199,7 +190,6 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                 });
 
                 // Логирование переключения видимости оверлея
-
               },
             ),
             IconButton(
@@ -218,8 +208,6 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                         );
 
                         // Логирование изменения единиц измерения и точности
-
-
                       },
                     );
                   },

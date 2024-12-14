@@ -39,7 +39,8 @@ class ImperialInfoParameters extends StatelessWidget {
   }
 
   // Метод для получения списка параметров
-  List<_Parameter> _getParameters(GeneratedLocalization localization, ImperialInfoModel info) {
+  List<_Parameter> _getParameters(
+      GeneratedLocalization localization, ImperialInfoModel info) {
     return [
       _Parameter(
         label: localization.heightOfFundamentalTriangle,
@@ -74,7 +75,7 @@ class ImperialInfoParameters extends StatelessWidget {
         label: localization.eighthPitch,
         value: info.pitchDiv8,
       ),
-   
+
       _Parameter(
         label: localization.rmax_label,
         value: info.rMax,

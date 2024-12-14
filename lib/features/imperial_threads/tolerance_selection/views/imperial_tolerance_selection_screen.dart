@@ -15,8 +15,6 @@ import 'package:threadfon/features/imperial_threads/tolerance_selection/bloc/imp
 import 'package:threadfon/features/imperial_threads/tolerance_selection/models/imperial_tolerance_model.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/repositories/imperial_tolerance_repository.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/views/imperial_tolerance_choice_card.dart';
-import 'package:threadfon/features/metric_threads/info/views/info_screen.dart';
-import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
 final _logger = LogService('imperial_tolerance_screen');
@@ -27,10 +25,12 @@ class ImperialToleranceSelectionScreen extends StatefulWidget {
   static const name = 'ImperialToleranceSelectionScreen';
 
   @override
-  State<ImperialToleranceSelectionScreen> createState() => _ImperialToleranceSelectionScreenState();
+  State<ImperialToleranceSelectionScreen> createState() =>
+      _ImperialToleranceSelectionScreenState();
 }
 
-class _ImperialToleranceSelectionScreenState extends State<ImperialToleranceSelectionScreen> {
+class _ImperialToleranceSelectionScreenState
+    extends State<ImperialToleranceSelectionScreen> {
   late final ImperialToleranceBloc _bloc;
 
   @override
@@ -65,7 +65,8 @@ class _ToleranceSelectionView extends StatelessWidget {
     final bloc = context.read<ImperialToleranceBloc>();
 
     return BlocListener<ImperialToleranceBloc, ImperialToleranceState>(
-      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) =>
+          previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
         if (state.enumNavigationStatus.isNavigation) {
           // Навигация на следующий экран при выборе допуска
@@ -76,11 +77,11 @@ class _ToleranceSelectionView extends StatelessWidget {
         }
       },
       child: Scaffold(
-      
         body: Stack(
           children: [
             BlocBuilder<ImperialToleranceBloc, ImperialToleranceState>(
-              buildWhen: (previous, current) => previous.enumPageStatus != current.enumPageStatus,
+              buildWhen: (previous, current) =>
+                  previous.enumPageStatus != current.enumPageStatus,
               builder: (context, state) {
                 switch (state.enumPageStatus) {
                   case EnumStatus.loading:
@@ -93,13 +94,18 @@ class _ToleranceSelectionView extends StatelessWidget {
                   case EnumStatus.success:
                     return DefaultTabController(
                       length: 2,
-                      initialIndex: bloc.state.selectedThreadType == EnumThreadMaleFemale.female ? 1 : 0,
+                      initialIndex: bloc.state.selectedThreadType ==
+                              EnumThreadMaleFemale.female
+                          ? 1
+                          : 0,
                       child: Scaffold(
-                         appBar: AppBar(
+                        appBar: AppBar(
                           title: Text(localization.select_tolerance),
                           bottom: TabBar(
                             onTap: (index) {
-                              final newGender = index == 1 ? EnumThreadMaleFemale.female : EnumThreadMaleFemale.male;
+                              final newGender = index == 1
+                                  ? EnumThreadMaleFemale.female
+                                  : EnumThreadMaleFemale.male;
                               if (bloc.state.selectedThreadType != newGender) {
                                 bloc.updateGenderSelection(newGender);
                               }
@@ -112,8 +118,12 @@ class _ToleranceSelectionView extends StatelessWidget {
                         ),
                         body: TabBarView(
                           children: [
-                            _buildToleranceList(context, bloc.state.maleTolerances, isFemale: false),
-                            _buildToleranceList(context, bloc.state.femaleTolerances, isFemale: true),
+                            _buildToleranceList(
+                                context, bloc.state.maleTolerances,
+                                isFemale: false),
+                            _buildToleranceList(
+                                context, bloc.state.femaleTolerances,
+                                isFemale: true),
                           ],
                         ),
                       ),
@@ -127,7 +137,9 @@ class _ToleranceSelectionView extends StatelessWidget {
     );
   }
 
-  Widget _buildToleranceList(BuildContext context, List<ImperialToleranceItem> tolerances, {required bool isFemale}) {
+  Widget _buildToleranceList(
+      BuildContext context, List<ImperialToleranceItem> tolerances,
+      {required bool isFemale}) {
     final bloc = context.read<ImperialToleranceBloc>();
     final localization = context.l10n;
 
@@ -140,7 +152,6 @@ class _ToleranceSelectionView extends StatelessWidget {
         return ImperialToleranceChoiceCard(
           tolerance: tolerance,
           onTap: () {
-          
             bloc.preparationNavigation(tolerance, isFemale);
           },
         );

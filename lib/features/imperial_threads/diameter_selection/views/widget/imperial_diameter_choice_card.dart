@@ -26,8 +26,8 @@ class ImperialDiameterChoiceCard extends StatelessWidget {
       child: ListTile(
         trailing: Text(
           series,
-          style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-
+          style: theme.textTheme.headlineSmall
+              ?.copyWith(fontWeight: FontWeight.bold),
         ),
         title: Text(formatted.fractional,
             style: theme.textTheme.titleLarge?.copyWith(
@@ -36,7 +36,6 @@ class ImperialDiameterChoiceCard extends StatelessWidget {
         subtitle: Text(
           formatted.decimal,
           style: theme.textTheme.titleMedium,
-
         ),
       ),
     );

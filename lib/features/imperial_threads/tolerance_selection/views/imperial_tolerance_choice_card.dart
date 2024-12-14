@@ -20,7 +20,6 @@ class ImperialToleranceChoiceCard extends StatelessWidget {
     return MyCard(
       onTap: onTap,
       child: ListTile(
-        
         title: Text(
           tolerance.formatted.fractional,
           style: theme.textTheme.titleLarge?.copyWith(

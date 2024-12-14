@@ -25,7 +25,8 @@ class Imperial {
       );
 
       if (response.statusCode == 200) {
-        return ImperialToleranceModel.fromJson(response.data as Map<String, dynamic>);
+        return ImperialToleranceModel.fromJson(
+            response.data as Map<String, dynamic>);
       } else {
         _logger.e(
           'Failed to fetch tolerances',

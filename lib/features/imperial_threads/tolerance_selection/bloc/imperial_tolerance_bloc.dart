@@ -9,7 +9,6 @@ import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/models/imperial_tolerance_model.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/repositories/imperial_tolerance_repository.dart';
-import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 
 part 'imperial_tolerance_bloc.freezed.dart';
 part 'imperial_tolerance_bloc.g.dart';
@@ -17,7 +16,8 @@ part 'imperial_tolerance_state.dart';
 
 final _logger = LogService('imperial_tolerance_bloc');
 
-class ImperialToleranceBloc extends Cubit<ImperialToleranceState> with BlocIgnoreEmitAfterClosed {
+class ImperialToleranceBloc extends Cubit<ImperialToleranceState>
+    with BlocIgnoreEmitAfterClosed {
   ImperialToleranceBloc({
     required Imperial repository,
     required LocalStorage localStorage,
@@ -34,7 +34,8 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState> with BlocIgnor
   Future<void> load() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final imperialUserSelection = await _localStorage.getImperialUserSelection();
+      final imperialUserSelection =
+          await _localStorage.getImperialUserSelection();
       final coreUserSelection = await _localStorage.getCoreUserSelection();
       final tolerancesResponse = await _repository.fetchTolerances(
         tpi: imperialUserSelection.tpi!,
@@ -52,14 +53,16 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState> with BlocIgnor
     }
   }
 
-  Future<void> preparationNavigation(ImperialToleranceItem selectedTolerance, bool isFemale) async {
+  Future<void> preparationNavigation(
+      ImperialToleranceItem selectedTolerance, bool isFemale) async {
     try {
       await _localStorage.updateImperialUserSelection(
         (current) => current.copyWith(
           tolerance: selectedTolerance.formatted.fractional,
         ),
       );
-      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(
+          enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating tolerance selection', error: e, stackTrace: s);
       _setErrorState();
@@ -86,7 +89,9 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState> with BlocIgnor
         ? 'An error occurred while loading tolerances.'
         : 'Произошла ошибка при загрузке допусков.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error,
+        errorMsg: errorMsg,
+        enumNavigationStatus: EnumNavigationStatus.initial));
   }
 
   void resetNavigationStatus() {

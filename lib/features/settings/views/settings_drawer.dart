@@ -13,7 +13,6 @@ import 'package:threadfon/features/settings/bloc/settings_bloc.dart';
 import 'package:threadfon/features/settings/views/about_app.dart'; // Импортируем экран AboutApp
 import 'package:threadfon/features/thread_type_selection/bloc/thread_type_bloc.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
-import 'package:threadfon/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final _logger = LogService('settings_drawer');
@@ -56,13 +55,15 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => settingsBloc,
-      child: _SettingsDrawerView(settingsBloc, themeBloc, languageBloc, localStorage),
+      child: _SettingsDrawerView(
+          settingsBloc, themeBloc, languageBloc, localStorage),
     );
   }
 }
 
 class _SettingsDrawerView extends StatelessWidget {
-  const _SettingsDrawerView(this.bloc, this.themeBloc, this.languageBloc, this.localStorage);
+  const _SettingsDrawerView(
+      this.bloc, this.themeBloc, this.languageBloc, this.localStorage);
   final SettingsBloc bloc;
   final ThemeBloc themeBloc;
   final LanguageBloc languageBloc;
@@ -73,7 +74,8 @@ class _SettingsDrawerView extends StatelessWidget {
     final localization = context.l10n;
 
     return BlocListener<SettingsBloc, SettingsState>(
-      listenWhen: (previous, current) => previous.enumThreads != current.enumThreads,
+      listenWhen: (previous, current) =>
+          previous.enumThreads != current.enumThreads,
       listener: (context, state) {
         context.read<ThreadTypeBloc>().load();
       },
@@ -83,10 +85,12 @@ class _SettingsDrawerView extends StatelessWidget {
           String threadTypeText;
           switch (currentThreadType) {
             case EnumThreads.metric:
-              threadTypeText = '${localization.metric_thread_gost}\n${localization.metric_thread}';
+              threadTypeText =
+                  '${localization.metric_thread_gost}\n${localization.metric_thread}';
               break;
             case EnumThreads.imperial:
-              threadTypeText = '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
+              threadTypeText =
+                  '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
               break;
           }
 
@@ -94,7 +98,8 @@ class _SettingsDrawerView extends StatelessWidget {
             child: Stack(
               children: [
                 BlocBuilder<SettingsBloc, SettingsState>(
-                  buildWhen: (previous, current) => previous.enumPageStatus != current.enumPageStatus,
+                  buildWhen: (previous, current) =>
+                      previous.enumPageStatus != current.enumPageStatus,
                   builder: (context, state) {
                     switch (state.enumPageStatus) {
                       case EnumStatus.loading:
@@ -111,7 +116,8 @@ class _SettingsDrawerView extends StatelessWidget {
                             // Drawer Header
                             Container(
                               width: double.infinity,
-                              padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 50, horizontal: 20),
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
@@ -171,14 +177,16 @@ class _SettingsDrawerView extends StatelessWidget {
                                   const Divider(),
                                   ListTile(
                                     leading: const Icon(Icons.feedback),
-                                    title: Text(localization.suggest_improvement),
+                                    title:
+                                        Text(localization.suggest_improvement),
                                     onTap: () => _sendEmail(context),
                                   ),
                                   const Divider(),
                                   ListTile(
                                     leading: const Icon(Icons.store),
                                     title: Text(localization.leave_review),
-                                    onTap: () => _openAppStoreOrPlayStore(context),
+                                    onTap: () =>
+                                        _openAppStoreOrPlayStore(context),
                                   ),
                                   const Divider(),
                                   ListTile(
@@ -187,8 +195,7 @@ class _SettingsDrawerView extends StatelessWidget {
                                     onTap: () {
                                       Navigator.of(context).pop();
                                       context.pushNamed(AboutApp.name);
-
-                                             },
+                                    },
                                   ),
                                   // Add more settings options here
                                 ],
@@ -230,20 +237,15 @@ class _SettingsDrawerView extends StatelessWidget {
     try {
       if (await canLaunchUrl(emailUri)) {
         await launchUrl(emailUri);
-
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(context.l10n.email_app_not_found)),
         );
-
-
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.email_sending_failed)),
       );
-
-
     }
   }
 
@@ -285,8 +287,6 @@ class _SettingsDrawerView extends StatelessWidget {
 
                   dialogContext.pop();
                   context.pop(); // Закрыть Drawer
-
-
                 }
               },
             ),
@@ -299,8 +299,6 @@ class _SettingsDrawerView extends StatelessWidget {
                   themeBloc.setTheme(value);
                   dialogContext.pop(); // Закрыть диалог
                   context.pop(); // Закрыть Drawer
-
-
                 }
               },
             ),
@@ -339,9 +337,6 @@ class _SettingsDrawerView extends StatelessWidget {
                 languageBloc.setLanguage(value!);
                 dialogContext.pop(); // Закрыть диалог
                 context.pop(); // Закрыть Drawer
-
-
-        
               },
             );
           }).toList(),
@@ -355,35 +350,38 @@ class _SettingsDrawerView extends StatelessWidget {
     final localization = context.l10n;
     final currentThreadType = bloc.state.enumThreads;
 
-  showDialog(
-    context: context,
-    useRootNavigator: true,
-    builder: (dialogContext) => AlertDialog(
-      title: Text(localization.choose_thread),
-
-      content: Column(
+    showDialog(
+      context: context,
+      useRootNavigator: true,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(localization.choose_thread),
+        content: Column(
           mainAxisSize: MainAxisSize.min,
           children: EnumThreads.values.map((threadType) {
             String threadTypeText;
             switch (threadType) {
               case EnumThreads.metric:
-                threadTypeText = '${localization.metric_thread_gost}\n${localization.metric_thread}';
+                threadTypeText =
+                    '${localization.metric_thread_gost}\n${localization.metric_thread}';
                 break;
               case EnumThreads.imperial:
-                threadTypeText = '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
+                threadTypeText =
+                    '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
                 break;
             }
             return RadioListTile<EnumThreads>(
               dense: true, // Уменьшенный размер
- 
+
               title: Text(
                 threadTypeText,
                 softWrap: true, // Позволяет тексту переноситься
               ),
               value: threadType,
               groupValue: currentThreadType,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0), // Уменьшаем отступы
-              controlAffinity: ListTileControlAffinity.leading, // Располагаем радио-кнопку слева
+              contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 0.0, vertical: 4.0), // Уменьшаем отступы
+              controlAffinity: ListTileControlAffinity
+                  .leading, // Располагаем радио-кнопку слева
               onChanged: (value) {
                 if (value != null) {
                   bloc.setThreadType(value);
@@ -394,16 +392,16 @@ class _SettingsDrawerView extends StatelessWidget {
             );
           }).toList(),
         ),
-      actions: [
-        TextButton(
-          onPressed: () => dialogContext.pop(),
-          child: Text(
-            localization.cancel, 
-            style: TextStyle(color: Theme.of(context).primaryColor),
+        actions: [
+          TextButton(
+            onPressed: () => dialogContext.pop(),
+            child: Text(
+              localization.cancel,
+              style: TextStyle(color: Theme.of(context).primaryColor),
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 }

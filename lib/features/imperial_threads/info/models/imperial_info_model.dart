@@ -2,7 +2,6 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/core/constant/enum_thread%20copy.dart';
-import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 
 part 'imperial_info_model.freezed.dart';
 part 'imperial_info_model.g.dart';
@@ -73,5 +72,6 @@ class ImperialInfoModel with _$ImperialInfoModel {
     @JsonKey(name: 'd3_ei') num? d3Ei,
   }) = _ImperialInfoModel;
 
-  factory ImperialInfoModel.fromJson(Map<String, dynamic> json) => _$ImperialInfoModelFromJson(json);
+  factory ImperialInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$ImperialInfoModelFromJson(json);
 }
