@@ -57,7 +57,7 @@ class InfoBloc extends Cubit<InfoState> with BlocIgnoreEmitAfterClosed {
       _fetchSvgData(coreUserSelection, metricUserSelection);
     } catch (e, s) {
       _logger.e('Error loading info', error: e, stackTrace: s);
-            globalErrorReporting.reportError(
+      globalErrorReporting.reportError(
         error: e,
         stackTrace: s,
         customMessage: 'Error loading info',
@@ -122,7 +122,7 @@ class InfoBloc extends Cubit<InfoState> with BlocIgnoreEmitAfterClosed {
       ));
     } catch (e, s) {
       _logger.e('Error fetching SVG data', error: e, stackTrace: s);
-                  globalErrorReporting.reportError(
+      globalErrorReporting.reportError(
         error: e,
         stackTrace: s,
         customMessage: 'Error fetching SVG data',
@@ -147,7 +147,7 @@ class InfoBloc extends Cubit<InfoState> with BlocIgnoreEmitAfterClosed {
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
-                  globalErrorReporting.reportError(
+      globalErrorReporting.reportError(
         error: e,
         stackTrace: s,
         customMessage: 'Error updating selection',

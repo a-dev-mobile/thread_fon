@@ -68,7 +68,7 @@ class MetricDiameterBloc extends Cubit<MetricDiameterState>
       // Удалили задержку
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
-            globalErrorReporting.reportError(
+      globalErrorReporting.reportError(
         error: e,
         stackTrace: s,
         customMessage: 'Error updating selection',

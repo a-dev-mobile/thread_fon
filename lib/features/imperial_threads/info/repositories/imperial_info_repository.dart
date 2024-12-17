@@ -85,8 +85,7 @@ class ImperialInfoRepository {
         throw Exception(errorMessage);
       }
     } catch (e, s) {
-      _logger.e('Error fetching SVG data',
-          error: e, stackTrace: s);
+      _logger.e('Error fetching SVG data', error: e, stackTrace: s);
       Error.throwWithStackTrace(e, s);
     }
   }

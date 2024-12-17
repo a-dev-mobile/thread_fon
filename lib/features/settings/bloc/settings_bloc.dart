@@ -37,7 +37,7 @@ class SettingsBloc extends Cubit<SettingsState> with BlocIgnoreEmitAfterClosed {
       ));
     } catch (e, s) {
       _logger.e('Error loading settings', error: e, stackTrace: s);
-         globalErrorReporting.reportError(
+      globalErrorReporting.reportError(
         error: e,
         stackTrace: s,
         customMessage: 'Error loading settings',
@@ -54,7 +54,7 @@ class SettingsBloc extends Cubit<SettingsState> with BlocIgnoreEmitAfterClosed {
       emit(state.copyWith(enumThreads: enumThreads));
     } catch (e, s) {
       _logger.e('Error updating thread type', error: e, stackTrace: s);
-         globalErrorReporting.reportError(
+      globalErrorReporting.reportError(
         error: e,
         stackTrace: s,
         customMessage: 'Error updating thread type',

@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
-
 class DeviceIdGenerator {
   static Future<String> generateUniqueDeviceId() async {
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -54,4 +53,3 @@ class DeviceIdGenerator {
     return await generateUniqueDeviceId();
   }
 }
-

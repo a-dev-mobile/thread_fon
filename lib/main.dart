@@ -38,7 +38,8 @@ Future<void> main() async {
 
         // Инициализация Crashlytics
         // Включаем сбор нефатальных ошибок
-        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
+        await FirebaseCrashlytics.instance
+            .setCrashlyticsCollectionEnabled(!kDebugMode);
 
         // Передаём все необработанные асинхронные ошибки в Crashlytics
         PlatformDispatcher.instance.onError = (error, stack) {
@@ -50,10 +51,11 @@ Future<void> main() async {
         final localStorage = LocalStorage(isShowLog: true);
         await localStorage.initialize();
         final _ = await localStorage.ensureUserId();
-        
+
         final apiService = await ApiService().init();
         // Инициализация глобального экземпляра ErrorReportingService
-        await ErrorReportingService.initialize(apiService: apiService, localStorage: localStorage);
+        await ErrorReportingService.initialize(
+            apiService: apiService, localStorage: localStorage);
         // Настройка глобального обработчика ошибок Flutter (сохранение существующей логики)
         FlutterError.onError = (details) {
           if (!kReleaseMode) {
@@ -61,13 +63,18 @@ Future<void> main() async {
             FlutterError.dumpErrorToConsole(details);
           }
 
-          _logger.e('FlutterError.onError', error: details.exception, stackTrace: details.stack ?? StackTrace.current);
+          _logger.e('FlutterError.onError',
+              error: details.exception,
+              stackTrace: details.stack ?? StackTrace.current);
           // Отправка ошибки через глобальный экземпляр
           globalErrorReporting.reportError(
               error: details.exception,
               stackTrace: details.stack,
               customMessage: 'Flutter Framework Error',
-              additionalInfo: {'context': 'Flutter Framework Error Handler', 'route': 'Unknown'});
+              additionalInfo: {
+                'context': 'Flutter Framework Error Handler',
+                'route': 'Unknown'
+              });
 
           // Также отправляем в Crashlytics
           FirebaseCrashlytics.instance.recordFlutterFatalError(details);
@@ -158,7 +165,8 @@ Future<void> main() async {
 class _AppLifecycleObserver extends WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.detached || state == AppLifecycleState.inactive) {
+    if (state == AppLifecycleState.detached ||
+        state == AppLifecycleState.inactive) {
       // Вызов dispose() при закрытии приложения, если необходимо
     }
   }

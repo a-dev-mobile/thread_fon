@@ -18,7 +18,7 @@ class ImperialToleranceModel with _$ImperialToleranceModel {
 class ImperialToleranceItem with _$ImperialToleranceItem {
   const factory ImperialToleranceItem({
     required int id,
-    required String tolerance,
+    required String series,
     required ImperialToleranceFormatted formatted,
   }) = _ImperialToleranceItem;
 

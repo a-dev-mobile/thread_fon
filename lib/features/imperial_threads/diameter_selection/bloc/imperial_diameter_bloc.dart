@@ -16,7 +16,8 @@ part 'imperial_diameter_state.dart';
 
 final _logger = LogService('imperial_diameter_bloc');
 
-class ImperialDiameterBloc extends Cubit<ImperialDiameterState> with BlocIgnoreEmitAfterClosed {
+class ImperialDiameterBloc extends Cubit<ImperialDiameterState>
+    with BlocIgnoreEmitAfterClosed {
   ImperialDiameterBloc({
     required DiameterRepository repository,
     required LocalStorage localStorage,
@@ -54,7 +55,8 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState> with BlocIgnoreE
     }
   }
 
-  Future<void> preparationNavigation(ImperialDiameterModel model, double scrollPosition) async {
+  Future<void> preparationNavigation(
+      ImperialDiameterModel model, double scrollPosition) async {
     await _localStorage.setImperialScrollPosition(scrollPosition);
     try {
       await _localStorage.updateImperialUserSelection(
@@ -64,10 +66,11 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState> with BlocIgnoreE
           tpi: model.tpi,
         ),
       );
-      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(
+          enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
-            globalErrorReporting.reportError(
+      globalErrorReporting.reportError(
         error: e,
         stackTrace: s,
         customMessage: 'Error updating selection',
@@ -88,6 +91,8 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState> with BlocIgnoreE
         ? 'An error occurred while loading diameters.'
         : 'Произошла ошибка при загрузке диаметров.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error,
+        errorMsg: errorMsg,
+        enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

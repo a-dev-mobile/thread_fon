@@ -44,7 +44,7 @@ class ToleranceBloc extends Cubit<ToleranceState>
           enumPageStatus: EnumStatus.success, tolerances: tolerances));
     } catch (e, s) {
       _logger.e('Error loading tolerances', error: e, stackTrace: s);
-                        globalErrorReporting.reportError(
+      globalErrorReporting.reportError(
         error: e,
         stackTrace: s,
         customMessage: 'Error loading tolerances',
@@ -64,7 +64,7 @@ class ToleranceBloc extends Cubit<ToleranceState>
           enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating tolerance selection', error: e, stackTrace: s);
-         globalErrorReporting.reportError(
+      globalErrorReporting.reportError(
         error: e,
         stackTrace: s,
         customMessage: 'Error updating tolerance selection',

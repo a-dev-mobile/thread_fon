@@ -20,8 +20,7 @@ class ThreadTypeRepository {
         ),
       ];
     } catch (e, s) {
-      _logger.e('Error fetching thread types',
-          error: e, stackTrace: s);
+      _logger.e('Error fetching thread types', error: e, stackTrace: s);
       Error.throwWithStackTrace(e, s);
     }
   }

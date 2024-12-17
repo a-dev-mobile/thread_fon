@@ -32,8 +32,7 @@ class DiameterRepository {
         throw Exception('Failed to fetch diameters');
       }
     } catch (e, s) {
-      _logger.e('Error fetching diameters',
-          error: e, stackTrace: s);
+      _logger.e('Error fetching diameters', error: e, stackTrace: s);
       Error.throwWithStackTrace(e, s);
     }
   }
