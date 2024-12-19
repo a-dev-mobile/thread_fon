@@ -10,7 +10,7 @@ class ImperialInfoRow extends StatelessWidget {
     super.key,
     required this.label,
     required this.value,
-    this.isHaveDividerBottom = true, 
+    this.isHaveDividerBottom = true,
   });
 
   @override

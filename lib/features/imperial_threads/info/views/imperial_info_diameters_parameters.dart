@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:threadfon/core/constant/enum_thread%20copy.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/imperial_threads/info/models/imperial_info_model.dart';
-import 'package:threadfon/features/imperial_threads/info/views/imperial_info_row.dart';
 import 'package:threadfon/features/imperial_threads/info/views/imperial_info_row_max_min.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
@@ -67,7 +66,8 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
       sections.add(ImperialInfoRowMaxMin(
         isHaveDividerBottom: false,
         label: '$prefix - ${localization.diam_major}',
-        value: info.major_diameter_basic.toString(), labelMaxMin: localization.min,
+        value: info.major_diameter_basic.toString(),
+        labelMaxMin: localization.min,
       ));
     } else {
       // sections.add(_DiameterSection(
@@ -82,7 +82,8 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
       sections.add(ImperialInfoRowMaxMin(
         // isHaveDividerBottom: false,
         label: '${prefix}1 - ${localization.diam_minor}',
-        value: info.minor_diameter_max.toString(), labelMaxMin: localization.max,
+        value: info.minor_diameter_max.toString(),
+        labelMaxMin: localization.max,
       ));
       sections.add(SizedBox(height: 10.0));
     }

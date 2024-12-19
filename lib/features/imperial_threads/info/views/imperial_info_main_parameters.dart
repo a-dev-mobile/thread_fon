@@ -21,7 +21,8 @@ class ImperialInfoMainParameters extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = context.l10n;
     final units = context.read<ImperialInfoBloc>().state.units;
-    final unitsText = units == EnumUnits.mm ? localization.mm : localization.inch;
+    final unitsText =
+        units == EnumUnits.mm ? localization.mm : localization.inch;
 
     return MyCard(
       child: Column(
@@ -69,7 +70,9 @@ class ImperialInfoMainParameters extends StatelessWidget {
           const Divider(),
           ImperialInfoRow(
               label: localization.thread_type,
-              value: info.type_.isFemale ? localization.internal_thread : localization.external_thread),
+              value: info.type_.isFemale
+                  ? localization.internal_thread
+                  : localization.external_thread),
           ImperialInfoRow(
             label: localization.thread_diam_nom,
             value: info.decimal_diameter.toString(),

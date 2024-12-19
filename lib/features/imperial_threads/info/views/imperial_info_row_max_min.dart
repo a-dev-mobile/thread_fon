@@ -54,12 +54,10 @@ class ImperialInfoRowMaxMin extends StatelessWidget {
               Text(
                 labelMaxMin,
                 style: valueStyle,
-                
               ),
               Text(
                 value!,
                 style: valueStyle,
-          
               ),
             ],
           ),
