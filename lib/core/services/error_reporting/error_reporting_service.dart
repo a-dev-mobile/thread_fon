@@ -247,6 +247,7 @@ class ErrorReportingService {
         'theme': (await _localStorage.getThemeState()).themeMode.toString(),
         'language':
             (await _localStorage.getLanguageState()).enumLang.toString(),
+        // 'core_selection': (await _localStorage.getCoreUserSelection()).toString(),
         'metric_selection':
             (await _localStorage.getMetricUserSelection()).toString(),
         'imperial_selection':

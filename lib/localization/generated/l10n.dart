@@ -81,10 +81,10 @@ class GeneratedLocalization {
     );
   }
 
-  /// `About App`
+  /// `About the App`
   String get about {
     return Intl.message(
-      'About App',
+      'About the App',
       name: 'about',
       desc: '',
       args: [],
@@ -261,30 +261,30 @@ class GeneratedLocalization {
     );
   }
 
-  /// `- Major diameter tolerances`
+  /// `- Tolerances of Major Diameter`
   String get dialog_about_app_1 {
     return Intl.message(
-      '- Major diameter tolerances',
+      '- Tolerances of Major Diameter',
       name: 'dialog_about_app_1',
       desc: '',
       args: [],
     );
   }
 
-  /// `- Pitch diameter tolerances`
+  /// `- Tolerances of Pitch Diameter`
   String get dialog_about_app_2 {
     return Intl.message(
-      '- Pitch diameter tolerances',
+      '- Tolerances of Pitch Diameter',
       name: 'dialog_about_app_2',
       desc: '',
       args: [],
     );
   }
 
-  /// `- Minor diameter tolerances`
+  /// `- Tolerances of Minor Diameter`
   String get dialog_about_app_3 {
     return Intl.message(
-      '- Minor diameter tolerances',
+      '- Tolerances of Minor Diameter',
       name: 'dialog_about_app_3',
       desc: '',
       args: [],
@@ -301,20 +301,20 @@ class GeneratedLocalization {
     );
   }
 
-  /// `Always check your result!`
+  /// `Always verify your results!`
   String get dialog_about_app_5 {
     return Intl.message(
-      'Always check your result!',
+      'Always verify your results!',
       name: 'dialog_about_app_5',
       desc: '',
       args: [],
     );
   }
 
-  /// `With this application, you can find out the basic parameters of the thread, as well as:`
+  /// `With this application, you can determine the basic thread parameters, as well as:`
   String get dialog_title_about_app {
     return Intl.message(
-      'With this application, you can find out the basic parameters of the thread, as well as:',
+      'With this application, you can determine the basic thread parameters, as well as:',
       name: 'dialog_title_about_app',
       desc: '',
       args: [],
@@ -391,10 +391,10 @@ class GeneratedLocalization {
     );
   }
 
-  /// `Are you sure you want to quit the app?`
+  /// `Are you sure you want to exit the app?`
   String get exit_app_warning {
     return Intl.message(
-      'Are you sure you want to quit the app?',
+      'Are you sure you want to exit the app?',
       name: 'exit_app_warning',
       desc: '',
       args: [],
@@ -601,10 +601,10 @@ class GeneratedLocalization {
     );
   }
 
-  /// `General Purpose Metric Screw Threads`
+  /// `Metric Screw Threads (General Purpose)`
   String get metric_thread {
     return Intl.message(
-      'General Purpose Metric Screw Threads',
+      'Metric Screw Threads (General Purpose)',
       name: 'metric_thread',
       desc: '',
       args: [],
@@ -651,10 +651,10 @@ class GeneratedLocalization {
     );
   }
 
-  /// `M - Metric Cylindrical Internal Thread`
+  /// `M - Metric Internal Cylindrical Thread`
   String get m_thread_female_description {
     return Intl.message(
-      'M - Metric Cylindrical Internal Thread',
+      'M - Metric Internal Cylindrical Thread',
       name: 'm_thread_female_description',
       desc: '',
       args: [],
@@ -671,10 +671,10 @@ class GeneratedLocalization {
     );
   }
 
-  /// `M - Metric Cylindrical External Thread`
+  /// `M - Metric External Cylindrical Thread`
   String get m_thread_male_description {
     return Intl.message(
-      'M - Metric Cylindrical External Thread',
+      'M - Metric External Cylindrical Thread',
       name: 'm_thread_male_description',
       desc: '',
       args: [],
@@ -891,10 +891,10 @@ class GeneratedLocalization {
     );
   }
 
-  /// `Rate App`
+  /// `Rate the App`
   String get rate_app {
     return Intl.message(
-      'Rate App',
+      'Rate the App',
       name: 'rate_app',
       desc: '',
       args: [],
@@ -921,31 +921,41 @@ class GeneratedLocalization {
     );
   }
 
-  /// `Choose Diameter`
+  /// `Select Diameter`
   String get select_diameter {
     return Intl.message(
-      'Choose Diameter',
+      'Select Diameter',
       name: 'select_diameter',
       desc: '',
       args: [],
     );
   }
 
-  /// `Choose Pitch`
+  /// `Select Pitch`
   String get select_pitch {
     return Intl.message(
-      'Choose Pitch',
+      'Select Pitch',
       name: 'select_pitch',
       desc: '',
       args: [],
     );
   }
 
-  /// `Choose Tolerance`
+  /// `Select Tolerance`
   String get select_tolerance {
     return Intl.message(
-      'Choose Tolerance',
+      'Select Tolerance',
       name: 'select_tolerance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Class`
+  String get select_class {
+    return Intl.message(
+      'Select Class',
+      name: 'select_class',
       desc: '',
       args: [],
     );
@@ -1201,10 +1211,10 @@ class GeneratedLocalization {
     );
   }
 
-  /// `Failed to send email.`
+  /// `Failed to send the email.`
   String get email_sending_failed {
     return Intl.message(
-      'Failed to send email.',
+      'Failed to send the email.',
       name: 'email_sending_failed',
       desc: '',
       args: [],
@@ -1321,10 +1331,10 @@ class GeneratedLocalization {
     );
   }
 
-  /// `d3 - Internal Diameter at the Bottom of the Groove`
+  /// `d3 - Internal diameter at the root of the groove`
   String get d3_label {
     return Intl.message(
-      'd3 - Internal Diameter at the Bottom of the Groove',
+      'd3 - Internal diameter at the root of the groove',
       name: 'd3_label',
       desc: '',
       args: [],
@@ -1351,40 +1361,40 @@ class GeneratedLocalization {
     );
   }
 
-  /// `Rmax - Maximum Rounding Radius of the Thread Groove`
+  /// `Rmax - Maximum Root Radius`
   String get rmax_label {
     return Intl.message(
-      'Rmax - Maximum Rounding Radius of the Thread Groove',
+      'Rmax - Maximum Root Radius',
       name: 'rmax_label',
       desc: '',
       args: [],
     );
   }
 
-  /// `Rmin - Minimum Rounding Radius of the Thread Groove`
+  /// `Rmin - Minimum Root Radius`
   String get rmin_label {
     return Intl.message(
-      'Rmin - Minimum Rounding Radius of the Thread Groove',
+      'Rmin - Minimum Root Radius',
       name: 'rmin_label',
       desc: '',
       args: [],
     );
   }
 
-  /// `It is recommended to verify results with official references.`
+  /// `It is recommended to cross-check results with official references.`
   String get settings_header_subtitle {
     return Intl.message(
-      'It is recommended to verify results with official references.',
+      'It is recommended to cross-check results with official references.',
       name: 'settings_header_subtitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `About App`
+  /// `About the App`
   String get about_app {
     return Intl.message(
-      'About App',
+      'About the App',
       name: 'about_app',
       desc: '',
       args: [],
@@ -1401,10 +1411,10 @@ class GeneratedLocalization {
     );
   }
 
-  /// `ThreadFon is your go-to reference for standard thread parameters and illustrative drawings.`
+  /// `ThreadFon is your comprehensive reference for standard thread parameters with illustrative diagrams.`
   String get app_description {
     return Intl.message(
-      'ThreadFon is your go-to reference for standard thread parameters and illustrative drawings.',
+      'ThreadFon is your comprehensive reference for standard thread parameters with illustrative diagrams.',
       name: 'app_description',
       desc: '',
       args: [],
@@ -1421,20 +1431,20 @@ class GeneratedLocalization {
     );
   }
 
-  /// `AppStore not found`
+  /// `App Store not found`
   String get app_store_not_found {
     return Intl.message(
-      'AppStore not found',
+      'App Store not found',
       name: 'app_store_not_found',
       desc: '',
       args: [],
     );
   }
 
-  /// `Leave Review`
+  /// `Leave a Review`
   String get leave_review {
     return Intl.message(
-      'Leave Review',
+      'Leave a Review',
       name: 'leave_review',
       desc: '',
       args: [],
@@ -1446,6 +1456,46 @@ class GeneratedLocalization {
     return Intl.message(
       'No Internet Connection',
       name: 'no_internet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Threads per inch`
+  String get tpi {
+    return Intl.message(
+      'Threads per inch',
+      name: 'tpi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thread Series`
+  String get thread_series {
+    return Intl.message(
+      'Thread Series',
+      name: 'thread_series',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thread Class`
+  String get thread_class {
+    return Intl.message(
+      'Thread Class',
+      name: 'thread_class',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `UNR Maximum Minor Diameter`
+  String get minor_diameter_unr {
+    return Intl.message(
+      'UNR Maximum Minor Diameter',
+      name: 'minor_diameter_unr',
       desc: '',
       args: [],
     );

@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 ///  darkTheme: AppTheme.dark,
 ///  :
 /// );
+/// https://rydmike.com/flexcolorscheme/themesplayground-latest/
 sealed class AppTheme {
   // The defined light theme.
   static ThemeData light = FlexThemeData.light(
@@ -35,7 +36,7 @@ sealed class AppTheme {
     cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
     fontFamily: 'Montserrat',
   );
-  // The defined dark theme.
+
   static ThemeData dark = FlexThemeData.dark(
     scheme: FlexScheme.greyLaw,
     subThemesData: const FlexSubThemesData(
@@ -48,6 +49,7 @@ sealed class AppTheme {
       alignedDropdown: true,
       navigationRailUseIndicator: true,
       navigationRailLabelType: NavigationRailLabelType.all,
+
     ),
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),

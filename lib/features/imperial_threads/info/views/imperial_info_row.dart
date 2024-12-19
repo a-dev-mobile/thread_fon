@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class ImperialInfoRow extends StatelessWidget {
   final String label;
   final String? value;
+  final bool isHaveDividerBottom; // Новый параметр
 
   const ImperialInfoRow({
     super.key,
     required this.label,
     required this.value,
+    this.isHaveDividerBottom = true, // Значение по умолчанию
   });
 
   @override
@@ -24,14 +26,15 @@ class ImperialInfoRow extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey,
-            width: 0.2,
-          ),
-        ),
-      ),
+      decoration: isHaveDividerBottom
+          ? BoxDecoration(
+              border: const Border(
+                bottom: BorderSide(
+                  color: Colors.grey,
+                  width: 0.2,
+                ),
+              ),
+            ):null,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [

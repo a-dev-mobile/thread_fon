@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:threadfon/core/constant/enum_thread%20copy.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/imperial_threads/info/models/imperial_info_model.dart';
+import 'package:threadfon/features/imperial_threads/info/views/imperial_info_row.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
@@ -20,26 +21,38 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
     final prefix = isFemale ? 'D' : 'd';
 
     // Создаем список виджетов секций диаметров
-    final List<Widget> diameterSections = [];
+    final List<Widget> sections = [];
 
     // Добавляем первую секцию диаметров в зависимости от типа резьбы
-    diameterSections
-        .add(_buildPrimaryDiameterSection(prefix, isFemale, localization));
+    if (info.type_.isMale) {
+      sections.add(_DiameterSection(
+        title: '$prefix - ${localization.diam_major}',
+        diameter: info.major_diameter_basic,
+        dEs: info.major_diam_es,
+        dEi: info.major_diam_ei,
+        min: info.major_diam_min,
+        avg: info.major_diameter_avg,
+        max: info.major_diam_max,
+      ));
+    } else {
+      sections.add(_DiameterSection(
+        title: '${prefix}1 - ${localization.diam_minor}',
+        diameter: info.minor_diameter_basic,
+        dEs: info.minor_diam_es,
+        dEi: info.minor_diam_ei,
+        min: info.minor_diameter_min,
+        avg: info.minor_diameter_avg,
+        max: info.minor_diameter_max,
+      ));
+    }
+// ------------------------------------
+// ------------------------------------
+// ------------------------------------
 
-    // Добавляем отступ
-    diameterSections.add(const SizedBox(height: 10.0));
-
-    // Добавляем информацию о диаметре отверстия, если она существует
-    // if (info.holeDiameter != null) {
-    //   diameterSections.add(ImperialInfoRow(
-    //     label: localization.threadHoleDiameter,
-    //     value: info.holeDiameter.toString(),
-    //   ));
-    //   diameterSections.add(const SizedBox(height: 10.0));
-    // }
+    sections.add(const SizedBox(height: 10.0));
 
     // Добавляем среднюю секцию диаметра
-    diameterSections.add(_DiameterSection(
+    sections.add(_DiameterSection(
       title: '${prefix}2 - ${localization.diam_middle}',
       diameter: info.pitch_diameter_basic,
       dEs: info.pitch_diameter_es,
@@ -48,87 +61,49 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
       avg: info.pitch_diameter_avg,
       max: info.pitch_diameter_max,
     ));
-    diameterSections.add(const SizedBox(height: 10.0));
+    sections.add(const SizedBox(height: 10.0));
 
-    // Добавляем дополнительные секции в зависимости от типа резьбы
-    diameterSections
-        .addAll(_buildAdditionalSections(prefix, isFemale, localization));
+    if (isFemale) {
+      sections.add(ImperialInfoRow(
+        isHaveDividerBottom: false,
+        label: '${prefix}min - ${localization.major_diam_min}',
+        value: info.major_diameter_basic.toString(),
+      ));
+    } else {
+      // sections.add(_DiameterSection(
+      //   title: '${prefix}1max - ${localization.minor_diam_max}',
+      //   diameter: info.minor_diameter_basic,
+      //   dEs: info.minor_diam_es,
+      //   dEi: info.minor_diam_ei,
+      //   min: info.minor_diameter_min,
+      //   avg: info.minor_diameter_avg,
+      //   max: info.minor_diameter_max,
+      // ));
+      sections.add(ImperialInfoRow(
+        // isHaveDividerBottom: false,
+        label: '${prefix}1max - ${localization.minor_diam_max}',
+        value: info.minor_diameter_max.toString(),
+      ));
+      sections.add(SizedBox(height: 10.0));
+    }
+
+    // Добавляем информацию о диаметре отверстия, если она существует
+    if (info.type_.isMale) {
+      sections.add(ImperialInfoRow(
+        isHaveDividerBottom: false,
+        label: '${prefix}3max - ${localization.minor_diameter_unr}',
+        value: info.unr_minor_diameter_max.toString(),
+      ));
+      // diameterSections.add(const SizedBox(height: 10.0));
+    }
 
     return MyCard(
       onTap: null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: diameterSections,
+        children: sections,
       ),
     );
-  }
-
-  // Метод для создания основной секции диаметра
-  Widget _buildPrimaryDiameterSection(
-      String prefix, bool isFemale, GeneratedLocalization localization) {
-    if (info.type_.isMale) {
-      return _DiameterSection(
-        title: '$prefix - ${localization.diam_major}',
-        diameter: info.major_diameter_basic,
-        dEs: info.major_diam_es,
-        dEi: info.major_diam_ei,
-        min: info.major_diam_min,
-        avg: info.major_diameter_avg,
-        max: info.major_diam_max,
-      );
-    } else {
-      return _DiameterSection(
-        title: '${prefix}1 - ${localization.diam_minor}',
-        diameter: info.minor_diameter_basic,
-        dEs: info.minor_diam_es,
-        dEi: info.minor_diam_ei,
-        min: info.minor_diameter_min,
-        avg: info.minor_diameter_avg,
-        max: info.minor_diameter_max,
-      );
-    }
-  }
-
-  // Метод для создания дополнительных секций диаметров
-  List<Widget> _buildAdditionalSections(
-      String prefix, bool isFemale, GeneratedLocalization localization) {
-    List<Widget> sections = [];
-
-    if (isFemale) {
-      sections.add(_DiameterSection(
-        title: '$prefix - ${localization.diam_major}',
-        diameter: info.major_diameter_basic, // Проверьте правильность поля
-        dEs: info.major_diam_es,
-        dEi: info.major_diam_ei,
-        min: info.major_diam_min,
-        avg: info.major_diameter_avg,
-        max: info.major_diam_max,
-      ));
-    } else {
-      sections.add(_DiameterSection(
-        title: '${prefix}1 - ${localization.diam_minor}',
-        diameter: info.minor_diameter_basic,
-        dEs: info.minor_diam_es,
-        dEi: info.minor_diam_ei,
-        min: info.minor_diameter_min,
-        avg: info.minor_diameter_avg,
-        max: info.minor_diameter_max,
-      ));
-
-      sections.add(SizedBox(height: 10.0));
-
-      // sections.add(_DiameterSection(
-      //   title: localization.d3_label,
-      //   diameter: info.minorDiamD3 ?? 0,
-      //   dEs: info.d3Es,
-      //   dEi: info.d3Ei,
-      //   min: info.minorDiamMinD3,
-      //   avg: info.minorDiamAvgD3,
-      //   max: info.minorDiamMaxD3,
-      // ));
-    }
-
-    return sections;
   }
 }
 

@@ -7,6 +7,17 @@ part 'imperial_info_model.freezed.dart';
 part 'imperial_info_model.g.dart';
 
 @freezed
+class AdditionalInfo with _$AdditionalInfo {
+  const factory AdditionalInfo({
+    required String name,
+    required String value,
+  }) = _AdditionalInfo;
+
+  factory AdditionalInfo.fromJson(Map<String, dynamic> json) =>
+      _$AdditionalInfoFromJson(json);
+}
+
+@freezed
 class ImperialInfoModel with _$ImperialInfoModel {
   const factory ImperialInfoModel({
     required int id,
@@ -17,6 +28,7 @@ class ImperialInfoModel with _$ImperialInfoModel {
     required String designation2,
     required num tpi,
     required num pitch,
+    required num thread_depth,
     required String series_designation,
     required String series,
     @JsonKey(name: 'type') required EnumThreadMaleFemale type_,
@@ -46,6 +58,7 @@ class ImperialInfoModel with _$ImperialInfoModel {
     required String units,
     required num pitch_diameter_tolerance,
     num? major_diam_min2,
+    @Default([]) List<AdditionalInfo> additional_info,
   }) = _ImperialInfoModel;
 
   factory ImperialInfoModel.fromJson(Map<String, dynamic> json) =>

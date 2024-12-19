@@ -48,13 +48,13 @@ class ImperialInfoMainParameters extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          Text(
-            'info.typePitchDescription',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
+          // Text(
+          //   'info.typePitchDescription',
+          //   textAlign: TextAlign.center,
+          //   style: Theme.of(context).textTheme.labelSmall?.copyWith(
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          // ),
           // Добавьте этот блок кода
           const SizedBox(height: 8.0),
           Text(
@@ -77,56 +77,35 @@ class ImperialInfoMainParameters extends StatelessWidget {
             value: '${info.fractional_diameter} (${info.decimal_diameter})',
           ),
           ImperialInfoRow(
-            label: 'Витков на дюйм',
+            label:  localization.tpi,
             value: info.tpi.toString(),
           ),
           ImperialInfoRow(
-            label: 'Thread Designation',
+            label: localization.thread_series,
             value: info.series_designation,
           ),
           ImperialInfoRow(
-            label: localization.thread_class_tolerance,
+            label: localization.thread_class,
             value: info.series,
           ),
-          ImperialInfoRow(
-            label: localization.thread_type,
-            value: info.type_.isMale
-                ? localization.external_thread
-                : localization.internal_thread,
-          ),
+        
           ImperialInfoRow(
             label: localization.pitch,
             value: info.pitch.toString(),
           ),
-          ImperialInfoRow(
-            label: 'Basic Major Diameter',
-            value: info.major_diameter_basic.toString(),
-          ),
-          ImperialInfoRow(
-            label: 'Basic Pitch Diameter',
-            value: info.pitch_diameter_basic.toString(),
-          ),
-          ImperialInfoRow(
-            label: localization.thread_depth,
-            value: 'info.threadDepth.toString()',
-          ),
 
           ImperialInfoRow(
-            label: 'localization.allowance',
-            value: info.allowance.toString(),
+            label: localization.thread_depth,
+            value: info.thread_depth.toString(),
           ),
-          ImperialInfoRow(
-            label: 'localization.tpi',
-            value: info.tpi.toString(),
-          ),
-          ImperialInfoRow(
-            label: 'localization.series_designation',
-            value: info.series_designation,
-          ),
-          ImperialInfoRow(
-            label: localization.type_pitch,
-            value: 'info.typePitchDescription',
-          ),
+
+          // ImperialInfoRow(
+          //   label: 'localization.allowance',
+          //   value: info.allowance.toString(),
+          // ),
+       
+       
+        
         ],
       ),
     );

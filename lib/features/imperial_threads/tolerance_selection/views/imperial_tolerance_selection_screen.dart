@@ -100,7 +100,7 @@ class _ToleranceSelectionView extends StatelessWidget {
                           : 0,
                       child: Scaffold(
                         appBar: AppBar(
-                          title: Text(localization.select_tolerance),
+                          title: Text(localization.select_class),
                           bottom: TabBar(
                             onTap: (index) {
                               final newGender = index == 1
@@ -110,9 +110,9 @@ class _ToleranceSelectionView extends StatelessWidget {
                                 bloc.updateGenderSelection(newGender);
                               }
                             },
-                            tabs: const [
-                              Tab(text: 'Male'),
-                              Tab(text: 'Female'),
+                            tabs: [
+                              Tab(text: localization.external_thread),
+                              Tab(text: localization.internal_thread),
                             ],
                           ),
                         ),
