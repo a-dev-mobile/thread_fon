@@ -3,10 +3,10 @@ import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/imperial_threads/info/models/imperial_info_model.dart';
 import 'package:threadfon/features/imperial_threads/info/views/imperial_info_row.dart';
 
-class ImperialInfoParameters extends StatelessWidget {
+class ImperialAdditionalInfo extends StatelessWidget {
   final List<AdditionalInfo> list;
 
-  const ImperialInfoParameters({
+  const ImperialAdditionalInfo({
     required this.list,
     super.key,
   });
@@ -14,9 +14,7 @@ class ImperialInfoParameters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Create widgets for parameters first
-    final List<Widget> paramWidgets = [
-    
-    ];
+    final List<Widget> paramWidgets = [];
 
     // Add additional info items if they exist
     if (list.isNotEmpty) {

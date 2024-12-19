@@ -521,16 +521,6 @@ class GeneratedLocalization {
     );
   }
 
-  /// `Major Diameter`
-  String get major_diam {
-    return Intl.message(
-      'Major Diameter',
-      name: 'major_diam',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Mean Major Diameter`
   String get major_diam_avg {
     return Intl.message(
@@ -686,16 +676,6 @@ class GeneratedLocalization {
     return Intl.message(
       'min',
       name: 'min',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Minor Diameter`
-  String get minor_diam {
-    return Intl.message(
-      'Minor Diameter',
-      name: 'minor_diam',
       desc: '',
       args: [],
     );
@@ -1411,10 +1391,10 @@ class GeneratedLocalization {
     );
   }
 
-  /// `ThreadFon is your comprehensive reference for standard thread parameters with illustrative diagrams.`
+  /// `ThreadFon is your comprehensive reference for standard thread parameters.`
   String get app_description {
     return Intl.message(
-      'ThreadFon is your comprehensive reference for standard thread parameters with illustrative diagrams.',
+      'ThreadFon is your comprehensive reference for standard thread parameters.',
       name: 'app_description',
       desc: '',
       args: [],
@@ -1491,10 +1471,10 @@ class GeneratedLocalization {
     );
   }
 
-  /// `UNR Maximum Minor Diameter`
+  /// `UNR Minor Diameter`
   String get minor_diameter_unr {
     return Intl.message(
-      'UNR Maximum Minor Diameter',
+      'UNR Minor Diameter',
       name: 'minor_diameter_unr',
       desc: '',
       args: [],

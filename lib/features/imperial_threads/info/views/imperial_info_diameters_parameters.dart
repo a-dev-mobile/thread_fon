@@ -3,7 +3,7 @@ import 'package:threadfon/core/constant/enum_thread%20copy.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/imperial_threads/info/models/imperial_info_model.dart';
 import 'package:threadfon/features/imperial_threads/info/views/imperial_info_row.dart';
-import 'package:threadfon/localization/generated/l10n.dart';
+import 'package:threadfon/features/imperial_threads/info/views/imperial_info_row_max_min.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
 class ImperialInfoDiametersParameters extends StatelessWidget {
@@ -64,10 +64,10 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
     sections.add(const SizedBox(height: 10.0));
 
     if (isFemale) {
-      sections.add(ImperialInfoRow(
+      sections.add(ImperialInfoRowMaxMin(
         isHaveDividerBottom: false,
-        label: '${prefix}min - ${localization.major_diam_min}',
-        value: info.major_diameter_basic.toString(),
+        label: '$prefix - ${localization.diam_major}',
+        value: info.major_diameter_basic.toString(), labelMaxMin: localization.min,
       ));
     } else {
       // sections.add(_DiameterSection(
@@ -79,20 +79,24 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
       //   avg: info.minor_diameter_avg,
       //   max: info.minor_diameter_max,
       // ));
-      sections.add(ImperialInfoRow(
+      sections.add(ImperialInfoRowMaxMin(
         // isHaveDividerBottom: false,
-        label: '${prefix}1max - ${localization.minor_diam_max}',
-        value: info.minor_diameter_max.toString(),
+        label: '${prefix}1 - ${localization.diam_minor}',
+        value: info.minor_diameter_max.toString(), labelMaxMin: localization.max,
       ));
       sections.add(SizedBox(height: 10.0));
     }
+// ------------------------------------
+// ------------------------------------
+// ------------------------------------
 
     // Добавляем информацию о диаметре отверстия, если она существует
     if (info.type_.isMale) {
-      sections.add(ImperialInfoRow(
+      sections.add(ImperialInfoRowMaxMin(
         isHaveDividerBottom: false,
-        label: '${prefix}3max - ${localization.minor_diameter_unr}',
+        label: '${prefix}3 - ${localization.minor_diameter_unr}',
         value: info.unr_minor_diameter_max.toString(),
+        labelMaxMin: localization.max,
       ));
       // diameterSections.add(const SizedBox(height: 10.0));
     }
@@ -146,7 +150,7 @@ class _DiameterSection extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: Text(

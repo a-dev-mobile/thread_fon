@@ -1,16 +1,17 @@
 // info_row.dart
 import 'package:flutter/material.dart';
 
-class ImperialInfoRow extends StatelessWidget {
+class ImperialInfoRowMaxMin extends StatelessWidget {
   final String label;
   final String? value;
-  final bool isHaveDividerBottom; // Новый параметр
-
-  const ImperialInfoRow({
+  final String labelMaxMin;
+  final bool isHaveDividerBottom;
+  const ImperialInfoRowMaxMin({
     super.key,
     required this.label,
     required this.value,
-    this.isHaveDividerBottom = true, 
+    this.isHaveDividerBottom = true,
+    required this.labelMaxMin,
   });
 
   @override
@@ -37,7 +38,7 @@ class ImperialInfoRow extends StatelessWidget {
             )
           : null,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Label
           Expanded(
@@ -48,10 +49,19 @@ class ImperialInfoRow extends StatelessWidget {
           ),
           const SizedBox(width: 8.0), // Отступ между label и value
           // Value
-          Text(
-            value!,
-            style: valueStyle,
-            textAlign: TextAlign.right,
+          Column(
+            children: [
+              Text(
+                labelMaxMin,
+                style: valueStyle,
+                
+              ),
+              Text(
+                value!,
+                style: valueStyle,
+          
+              ),
+            ],
           ),
         ],
       ),

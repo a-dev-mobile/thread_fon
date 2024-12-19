@@ -27,7 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "additional_info":
             MessageLookupByLibrary.simpleMessage("Additional Information"),
         "app_description": MessageLookupByLibrary.simpleMessage(
-            "ThreadFon is your comprehensive reference for standard thread parameters with illustrative diagrams."),
+            "ThreadFon is your comprehensive reference for standard thread parameters."),
         "app_icon_alt": MessageLookupByLibrary.simpleMessage("App Icon"),
         "app_lang":
             MessageLookupByLibrary.simpleMessage("Application Language"),
@@ -128,7 +128,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "m_thread_male_description": MessageLookupByLibrary.simpleMessage(
             "M - Metric External Cylindrical Thread"),
         "main": MessageLookupByLibrary.simpleMessage("Home"),
-        "major_diam": MessageLookupByLibrary.simpleMessage("Major Diameter"),
         "major_diam_avg":
             MessageLookupByLibrary.simpleMessage("Mean Major Diameter"),
         "major_diam_max":
@@ -143,7 +142,6 @@ class MessageLookup extends MessageLookupByLibrary {
             "Metric Screw Threads (General Purpose)"),
         "metric_thread_gost": MessageLookupByLibrary.simpleMessage("ISO 965"),
         "min": MessageLookupByLibrary.simpleMessage("min"),
-        "minor_diam": MessageLookupByLibrary.simpleMessage("Minor Diameter"),
         "minor_diam_avg":
             MessageLookupByLibrary.simpleMessage("Mean Minor Diameter"),
         "minor_diam_d1":
@@ -157,7 +155,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "minor_diam_tolerance":
             MessageLookupByLibrary.simpleMessage("Minor Diameter Tolerance"),
         "minor_diameter_unr":
-            MessageLookupByLibrary.simpleMessage("UNR Maximum Minor Diameter"),
+            MessageLookupByLibrary.simpleMessage("UNR Minor Diameter"),
         "mm": MessageLookupByLibrary.simpleMessage("mm"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "no_data": MessageLookupByLibrary.simpleMessage("No Data"),

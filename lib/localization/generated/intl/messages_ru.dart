@@ -27,7 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "additional_info":
             MessageLookupByLibrary.simpleMessage("Дополнительная информация"),
         "app_description": MessageLookupByLibrary.simpleMessage(
-            "«Резьбушка» — ваш справочник по стандартным параметрам резьб с наглядными схемами."),
+            "«Резьбушка» — ваш справочник по стандартным параметрам резьб."),
         "app_icon_alt":
             MessageLookupByLibrary.simpleMessage("Иконка приложения"),
         "app_lang": MessageLookupByLibrary.simpleMessage("Язык приложения"),
@@ -124,7 +124,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "m_thread_male_description": MessageLookupByLibrary.simpleMessage(
             "M - Метрическая наружная цилиндрическая резьба"),
         "main": MessageLookupByLibrary.simpleMessage("Главная"),
-        "major_diam": MessageLookupByLibrary.simpleMessage("Основной диаметр"),
         "major_diam_avg":
             MessageLookupByLibrary.simpleMessage("Средний основной диаметр"),
         "major_diam_max":
@@ -140,8 +139,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "metric_thread_gost":
             MessageLookupByLibrary.simpleMessage("ГОСТ 24705-2004 / ISO 965"),
         "min": MessageLookupByLibrary.simpleMessage("мин"),
-        "minor_diam": MessageLookupByLibrary.simpleMessage(
-            "Внутренний (минорный) диаметр"),
         "minor_diam_avg": MessageLookupByLibrary.simpleMessage(
             "Средний внутренний (минорный) диаметр"),
         "minor_diam_d1":
@@ -154,8 +151,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Мин. внутренний диаметр"),
         "minor_diam_tolerance":
             MessageLookupByLibrary.simpleMessage("Допуск внутреннего диаметра"),
-        "minor_diameter_unr": MessageLookupByLibrary.simpleMessage(
-            "Макс. внутренний диаметр UNR"),
+        "minor_diameter_unr":
+            MessageLookupByLibrary.simpleMessage("Внутренний диаметр UNR"),
         "mm": MessageLookupByLibrary.simpleMessage("мм"),
         "no": MessageLookupByLibrary.simpleMessage("Нет"),
         "no_data": MessageLookupByLibrary.simpleMessage("Нет данных"),

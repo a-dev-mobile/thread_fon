@@ -47,7 +47,7 @@
   "launch": "Launch",
   "loadingMessage": "Loading...",
   "main": "Home",
-  "major_diam": "Major Diameter",
+
   "major_diam_avg": "Mean Major Diameter",
   "major_diam_max": "Max Major Diameter",
   "major_diam_min": "Min Major Diameter",
@@ -64,7 +64,7 @@
   "m_thread_gost": "ISO 965: ISO General Purpose Metric Screw Threads",
   "m_thread_male_description": "M - Metric External Cylindrical Thread",
   "min": "min",
-  "minor_diam": "Minor Diameter",
+
   "minor_diam_avg": "Mean Minor Diameter",
   "minor_diam_d1": "Minor Diameter D1",
   "minor_diam_d3": "Minor Diameter D3",
@@ -136,7 +136,7 @@
   "settings_header_subtitle": "It is recommended to cross-check results with official references.",
   "about_app": "About the App",
   "version": "Version",
-  "app_description": "ThreadFon is your comprehensive reference for standard thread parameters with illustrative diagrams.",
+  "app_description": "ThreadFon is your comprehensive reference for standard thread parameters.",
   "app_icon_alt": "App Icon",
   "app_store_not_found": "App Store not found",
   "leave_review": "Leave a Review",
@@ -144,5 +144,5 @@
    "tpi": "Threads per inch",
    "thread_series": "Thread Series",
 "thread_class": "Thread Class",
-  "minor_diameter_unr": "UNR Maximum Minor Diameter"
+  "minor_diameter_unr": "UNR Minor Diameter"
 }
