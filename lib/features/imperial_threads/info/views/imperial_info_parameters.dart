@@ -46,44 +46,44 @@ class ImperialInfoParameters extends StatelessWidget {
         label: localization.heightOfFundamentalTriangle,
         value: info.h,
       ),
-      _Parameter(
-        label: localization.workingHeightOfProfile,
-        value: info.fiveHDiv8,
-      ),
-      _Parameter(
-        label: localization.crestTruncation,
-        value: info.hDiv8,
-      ),
-      _Parameter(
-        label: localization.rootTruncation,
-        value: info.hDiv4,
-      ),
-      _Parameter(
-        label: localization.totalTruncation,
-        value: info.threeHDiv8,
-      ),
-      // Дополнительные параметры
-      _Parameter(
-        label: localization.halfPitch,
-        value: info.pitchDiv2,
-      ),
-      _Parameter(
-        label: localization.quarterPitch,
-        value: info.pitchDiv4,
-      ),
-      _Parameter(
-        label: localization.eighthPitch,
-        value: info.pitchDiv8,
-      ),
+      // _Parameter(
+      //   label: localization.workingHeightOfProfile,
+      //   value: info.fiveHDiv8,
+      // ),
+      // _Parameter(
+      //   label: localization.crestTruncation,
+      //   value: info.hDiv8,
+      // ),
+      // _Parameter(
+      //   label: localization.rootTruncation,
+      //   value: info.hDiv4,
+      // ),
+      // _Parameter(
+      //   label: localization.totalTruncation,
+      //   value: info.threeHDiv8,
+      // ),
+      // // Дополнительные параметры
+      // _Parameter(
+      //   label: localization.halfPitch,
+      //   value: info.pitchDiv2,
+      // ),
+      // _Parameter(
+      //   label: localization.quarterPitch,
+      //   value: info.pitchDiv4,
+      // ),
+      // _Parameter(
+      //   label: localization.eighthPitch,
+      //   value: info.pitchDiv8,
+      // ),
 
-      _Parameter(
-        label: localization.rmax_label,
-        value: info.rMax,
-      ),
-      _Parameter(
-        label: localization.rmin_label,
-        value: info.rMin,
-      ),
+      // _Parameter(
+      //   label: localization.rmax_label,
+      //   value: info.rMax,
+      // ),
+      // _Parameter(
+      //   label: localization.rmin_label,
+      //   value: info.rMin,
+      // ),
     ];
   }
 }

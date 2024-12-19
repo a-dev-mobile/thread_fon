@@ -11,18 +11,19 @@ import 'package:threadfon/core/services/error_reporting/error_reporting_service.
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/metric_threads/core/models/metric_user_selection.dart';
-import 'package:threadfon/features/metric_threads/info/models/info_model.dart';
-import 'package:threadfon/features/metric_threads/info/repositories/info_repository.dart';
+import 'package:threadfon/features/metric_threads/info/models/metric_info_model.dart';
+import 'package:threadfon/features/metric_threads/info/repositories/metric_info_repository.dart';
 
-part 'info_bloc.freezed.dart';
-part 'info_bloc.g.dart';
-part 'info_state.dart';
+part 'metric_info_bloc.freezed.dart';
+part 'metric_info_bloc.g.dart';
+part 'metric_info_state.dart';
 
 final _logger = LogService('info_bloc');
 
-class InfoBloc extends Cubit<InfoState> with BlocIgnoreEmitAfterClosed {
-  InfoBloc({
-    required InfoRepository repository,
+class MetricInfoBloc extends Cubit<MetricInfoState>
+    with BlocIgnoreEmitAfterClosed {
+  MetricInfoBloc({
+    required MetricInfoRepository repository,
     required LocalStorage localStorage,
     required LanguageBloc languageBloc,
     required ThemeBloc themeBloc,
@@ -30,9 +31,9 @@ class InfoBloc extends Cubit<InfoState> with BlocIgnoreEmitAfterClosed {
         _localStorage = localStorage,
         _languageBloc = languageBloc,
         _themeBloc = themeBloc,
-        super(const InfoState());
+        super(const MetricInfoState());
 
-  final InfoRepository _repository;
+  final MetricInfoRepository _repository;
   final ThemeBloc _themeBloc;
   final LocalStorage _localStorage;
   final LanguageBloc _languageBloc;
@@ -51,6 +52,7 @@ class InfoBloc extends Cubit<InfoState> with BlocIgnoreEmitAfterClosed {
         model: model,
         units: metricUserSelection.units,
         precision: metricUserSelection.precision,
+        isSvgOverlayVisible: coreUserSelection.isSvgOverlayVisible,
       ));
 
       // Start fetching SVG data in the background
@@ -66,7 +68,7 @@ class InfoBloc extends Cubit<InfoState> with BlocIgnoreEmitAfterClosed {
     }
   }
 
-  Future<InfoModel> _fetchModel(CoreUserSelection coreUserSelection,
+  Future<MetricInfoModel> _fetchModel(CoreUserSelection coreUserSelection,
       MetricUserSelection metricUserSelection) async {
     return await _repository.fetchInfo(
       diameter: metricUserSelection.diameter!,
@@ -161,6 +163,17 @@ class InfoBloc extends Cubit<InfoState> with BlocIgnoreEmitAfterClosed {
     await _localStorage.updateMetricUserSelection(
         (current) => current.copyWith(units: units, precision: precision));
     await load();
+  }
+
+  void toggleSvgOverlay() {
+    var isSvgOverlayVisible = !state.isSvgOverlayVisible;
+    emit(state.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
+    _localStorage.updateCoreUserSelection((current) =>
+        current.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
+  }
+
+  void toggleDimensions() {
+    emit(state.copyWith(showDimensions: !state.showDimensions));
   }
 
   void _setErrorState() {

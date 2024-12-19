@@ -14,6 +14,8 @@ class ImperialInfoState with _$ImperialInfoState {
     String? svgErrorMsg,
     @Default(EnumUnits.inch) EnumUnits units,
     @Default(5) int precision,
+    @Default(true) bool isSvgOverlayVisible,
+    @Default(true) bool showDimensions,
   }) = _ImperialInfoState;
 
   factory ImperialInfoState.fromJson(Map<String, dynamic> json) =>

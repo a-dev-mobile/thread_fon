@@ -1,19 +1,18 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/core/widgets/overlay_widget.dart';
 import 'package:threadfon/features/imperial_threads/diameter_selection/views/imperial_diameter_screen.dart';
 import 'package:threadfon/features/imperial_threads/info/views/imperial_info_screen.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/views/imperial_tolerance_selection_screen.dart';
 import 'package:threadfon/features/metric_threads/diameter_selection/views/metric_diameter_screen.dart';
-import 'package:threadfon/features/metric_threads/info/views/full_screen_svg_view.dart';
-import 'package:threadfon/features/metric_threads/info/views/info_screen.dart';
+import 'package:threadfon/features/metric_threads/info/views/metric_full_screen_svg_view.dart';
+import 'package:threadfon/features/metric_threads/info/views/metric_info_screen.dart';
 import 'package:threadfon/features/metric_threads/pitch_selection/views/pitch_selection_screen.dart';
+import 'package:threadfon/features/metric_threads/tolerance_selection/views/tolerance_selection_screen.dart';
 import 'package:threadfon/features/settings/views/about_app.dart';
 import 'package:threadfon/features/splash/splash_screen.dart';
 import 'package:threadfon/features/thread_type_selection/views/thread_type_selection_screen.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:threadfon/features/metric_threads/tolerance_selection/views/tolerance_selection_screen.dart';
 
 class AppRouter {
   final FirebaseAnalytics analytics;
@@ -96,18 +95,18 @@ class AppRouter {
                   child: const ToleranceSelectionScreen(), key: state.pageKey),
             ),
             GoRoute(
-              path: InfoScreen.path,
-              name: InfoScreen.name,
+              path: MetricInfoScreen.path,
+              name: MetricInfoScreen.name,
               pageBuilder: (context, state) => NoTransitionPage(
-                  child: const InfoScreen(), key: state.pageKey),
+                  child: const MetricInfoScreen(), key: state.pageKey),
             ),
             GoRoute(
-                path: FullScreenSvgView.path,
-                name: FullScreenSvgView.name,
+                path: MetricFullScreenSvgView.path,
+                name: MetricFullScreenSvgView.name,
                 pageBuilder: (context, state) {
                   final data = state.extra! as Map<String, dynamic>;
                   return NoTransitionPage(
-                      child: FullScreenSvgView(
+                      child: MetricFullScreenSvgView(
                         svgData: data['svgData'] as String,
                       ),
                       key: state.pageKey);

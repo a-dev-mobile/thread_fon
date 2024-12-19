@@ -61,9 +61,9 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState>
     try {
       await _localStorage.updateImperialUserSelection(
         (current) => current.copyWith(
-          id: model.id,
           diameter: model.diameter,
           tpi: model.tpi,
+          series: model.series,
         ),
       );
       emit(state.copyWith(

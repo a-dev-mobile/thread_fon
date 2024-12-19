@@ -16,7 +16,9 @@ class ImperialInfoRepository {
   final ApiService _apiService;
 
   Future<ImperialInfoModel> fetchImperialInfo({
-    required int id,
+    required String diameter,
+    required String tpi,
+    required String series,
     required String type,
     required String language,
     required String units,
@@ -27,7 +29,9 @@ class ImperialInfoRepository {
       final response = await _apiService.get(
         endpoint,
         queryParameters: {
-          'id': id,
+          'diameter': diameter,
+          'tpi': tpi,
+          'series': series,
           'type': type,
           'language': language,
           'units': units,
@@ -52,7 +56,9 @@ class ImperialInfoRepository {
   }
 
   Future<String> fetchSvgData({
-    required int id,
+    required String diameter,
+    required String tpi,
+    required String series,
     required String type,
     required String language,
     required String units,
@@ -65,7 +71,9 @@ class ImperialInfoRepository {
       final response = await _apiService.get(
         endpoint,
         queryParameters: {
-          'id': id,
+          'diameter': diameter,
+          'tpi': tpi,
+          'series': series,
           'type': type,
           'language': language,
           'units': units,

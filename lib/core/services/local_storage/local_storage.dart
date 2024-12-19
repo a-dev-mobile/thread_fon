@@ -9,7 +9,7 @@ import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/models/core_user_selection.dart';
 import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
-import 'package:threadfon/features/imperial_threads/core/models/imperial_user_selection.dart';
+import 'package:threadfon/features/imperial_threads/models/imperial_user_selection.dart';
 import 'package:threadfon/features/metric_threads/core/models/metric_user_selection.dart';
 import 'package:threadfon/core/utils/device_id_generator.dart';
 
@@ -341,34 +341,33 @@ class LocalStorage {
   // ******************************
   // Методы для работы с _lastActivityTimestamp
 
-  Future<String?> getLastActivityTimestamp() => 
+  Future<String?> getLastActivityTimestamp() =>
       _getValue<String>(key: _lastActivityTimestampKey);
 
-  Future<void> setLastActivityTimestamp(String timestamp) => 
+  Future<void> setLastActivityTimestamp(String timestamp) =>
       _setValue<String>(key: _lastActivityTimestampKey, value: timestamp);
 
   // Методы для работы с _currentRoute
 
-  Future<String?> getCurrentRoute() => 
-      _getValue<String>(key: _currentRouteKey);
+  Future<String?> getCurrentRoute() => _getValue<String>(key: _currentRouteKey);
 
-  Future<void> setCurrentRoute(String route) => 
+  Future<void> setCurrentRoute(String route) =>
       _setValue<String>(key: _currentRouteKey, value: route);
 
   // Методы для работы с _lastErrorTimestamp
 
-  Future<String?> getLastErrorTimestamp() => 
+  Future<String?> getLastErrorTimestamp() =>
       _getValue<String>(key: _lastErrorTimestampKey);
 
-  Future<void> setLastErrorTimestamp(String timestamp) => 
+  Future<void> setLastErrorTimestamp(String timestamp) =>
       _setValue<String>(key: _lastErrorTimestampKey, value: timestamp);
 
   // Методы для работы с _errorCountLastHour
 
-  Future<int?> getErrorCountLastHour() => 
+  Future<int?> getErrorCountLastHour() =>
       _getValue<int>(key: _errorCountLastHourKey);
 
-  Future<void> setErrorCountLastHour(int count) => 
+  Future<void> setErrorCountLastHour(int count) =>
       _setValue<int>(key: _errorCountLastHourKey, value: count);
 
   // ******************************

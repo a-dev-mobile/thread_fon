@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
-import 'package:threadfon/features/metric_threads/info/models/info_model.dart';
-import 'package:threadfon/features/metric_threads/info/views/info_row.dart';
+import 'package:threadfon/features/metric_threads/info/models/metric_info_model.dart';
+import 'package:threadfon/features/metric_threads/info/views/metric_info_row.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
-class InfoParameters extends StatelessWidget {
-  final InfoModel info;
+class MetricInfoParameters extends StatelessWidget {
+  final MetricInfoModel info;
 
-  const InfoParameters({
+  const MetricInfoParameters({
     required this.info,
     super.key,
   });
@@ -40,7 +40,7 @@ class InfoParameters extends StatelessWidget {
 
   // Метод для получения списка параметров
   List<_Parameter> _getParameters(
-      GeneratedLocalization localization, InfoModel info) {
+      GeneratedLocalization localization, MetricInfoModel info) {
     return [
       _Parameter(
         label: localization.heightOfFundamentalTriangle,

@@ -64,7 +64,7 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState>
     try {
       await _localStorage.updateImperialUserSelection(
         (current) => current.copyWith(
-          tolerance: selectedTolerance.formatted.fractional,
+          series: selectedTolerance.series,
         ),
       );
       emit(state.copyWith(

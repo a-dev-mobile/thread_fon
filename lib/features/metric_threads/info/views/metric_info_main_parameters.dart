@@ -3,15 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/core/constant/enum_thread%20copy.dart';
 import 'package:threadfon/core/constant/enum_units.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
-import 'package:threadfon/features/metric_threads/info/bloc/info_bloc.dart';
-import 'package:threadfon/features/metric_threads/info/models/info_model.dart';
-import 'package:threadfon/features/metric_threads/info/views/info_row.dart';
+import 'package:threadfon/features/metric_threads/info/bloc/metric_info_bloc.dart';
+import 'package:threadfon/features/metric_threads/info/models/metric_info_model.dart';
+import 'package:threadfon/features/metric_threads/info/views/metric_info_row.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
-class InfoMainParameters extends StatelessWidget {
-  final InfoModel info;
+class MetricInfoMainParameters extends StatelessWidget {
+  final MetricInfoModel info;
 
-  const InfoMainParameters({
+  const MetricInfoMainParameters({
     required this.info,
     super.key,
   });
@@ -19,7 +19,7 @@ class InfoMainParameters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = context.l10n;
-    final units = context.read<InfoBloc>().state.units;
+    final units = context.read<MetricInfoBloc>().state.units;
     final unitsText =
         units == EnumUnits.mm ? localization.mm : localization.inch;
 

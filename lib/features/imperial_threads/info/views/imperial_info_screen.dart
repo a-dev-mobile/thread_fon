@@ -71,9 +71,6 @@ class _ImperialImperialInfoView extends StatefulWidget {
 }
 
 class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
-  bool _isSvgOverlayVisible = true;
-  bool _showDimensions = true;
-
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<ImperialInfoBloc>();
@@ -104,9 +101,9 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
             // Main content
             _buildContent(bloc, context, overlayHeight, svgWidth, svgHeight),
             // SVG Overlay
-            if (_isSvgOverlayVisible)
+            if (state.isSvgOverlayVisible)
               SvgOverlay(
-                svgData: _showDimensions
+                svgData: state.showDimensions
                     ? state.svgData ?? ''
                     : state.svgDataNoDimensions ?? '',
                 svgRequestStatus: state.svgRequestStatus,
@@ -115,13 +112,9 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                 svgAspectRatio: svgAspectRatio,
                 svgWidth: svgWidth,
                 svgHeight: svgHeight,
-                onClose: () {
-                  setState(() {
-                    _isSvgOverlayVisible = false;
-                  });
-                },
+                onClose: () => bloc.toggleSvgOverlay(),
                 onExpand: () {
-                  final svgDataToSend = _showDimensions
+                  final svgDataToSend = state.showDimensions
                       ? state.svgData
                       : state.svgDataNoDimensions;
 
@@ -137,12 +130,8 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                     );
                   }
                 },
-                onSwitchSvg: () {
-                  setState(() {
-                    _showDimensions = !_showDimensions;
-                  });
-                },
-                showDimensions: _showDimensions,
+                onSwitchSvg: () => bloc.toggleDimensions(),
+                showDimensions: state.showDimensions,
               ),
             // Blurred overlay when in preparation status
             if (state.enumNavigationStatus.isPreparation)
@@ -186,11 +175,7 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
           actions: [
             IconButton(
               icon: const Icon(FontAwesomeIcons.compassDrafting),
-              onPressed: () {
-                setState(() {
-                  _isSvgOverlayVisible = !_isSvgOverlayVisible;
-                });
-              },
+              onPressed: () => bloc.toggleSvgOverlay(),
             ),
             IconButton(
               icon: const Icon(Icons.settings),
@@ -233,7 +218,7 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
           ),
         ),
         // Add extra space when overlay is visible
-        if (_isSvgOverlayVisible)
+        if (state.isSvgOverlayVisible)
           SliverToBoxAdapter(
             child: SizedBox(
               height: overlayHeight,

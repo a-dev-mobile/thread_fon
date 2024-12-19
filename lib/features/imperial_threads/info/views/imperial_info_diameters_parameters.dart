@@ -41,12 +41,12 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
     // Добавляем среднюю секцию диаметра
     diameterSections.add(_DiameterSection(
       title: '${prefix}2 - ${localization.diam_middle}',
-      diameter: info.pitchDiamD2 ?? 0,
-      dEs: info.d2Es,
-      dEi: info.d2Ei,
-      min: info.pitchDiamMin,
-      avg: info.pitchDiamAvg,
-      max: info.pitchDiamMax,
+      diameter: info.pitch_diameter_basic,
+      dEs: info.pitch_diameter_es,
+      dEi: info.pitch_diameter_ei,
+      min: info.pitch_diameter_min,
+      avg: info.pitch_diameter_avg,
+      max: info.pitch_diameter_max,
     ));
     diameterSections.add(const SizedBox(height: 10.0));
 
@@ -66,25 +66,25 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
   // Метод для создания основной секции диаметра
   Widget _buildPrimaryDiameterSection(
       String prefix, bool isFemale, GeneratedLocalization localization) {
-    if (isFemale) {
+    if (info.type_.isMale) {
       return _DiameterSection(
-        title: '${prefix}1 - ${localization.diam_minor}',
-        diameter: info.minorDiamD1 ?? 0,
-        dEs: info.d1Es,
-        dEi: info.d1Ei,
-        min: 0,
-        avg: 0,
-        max: 0,
+        title: '$prefix - ${localization.diam_major}',
+        diameter: info.major_diameter_basic,
+        dEs: info.major_diam_es,
+        dEi: info.major_diam_ei,
+        min: info.major_diam_min,
+        avg: info.major_diameter_avg,
+        max: info.major_diam_max,
       );
     } else {
       return _DiameterSection(
-        title: '$prefix - ${localization.diam_major}',
-        diameter: 000,
-        dEs: info.dEs,
-        dEi: info.dEi,
-        min: info.major_diam_min,
-        avg: 0,
-        max: info.major_diam_max,
+        title: '${prefix}1 - ${localization.diam_minor}',
+        diameter: info.minor_diameter_basic,
+        dEs: info.minor_diam_es,
+        dEi: info.minor_diam_ei,
+        min: info.minor_diameter_min,
+        avg: info.minor_diameter_avg,
+        max: info.minor_diameter_max,
       );
     }
   }
@@ -97,35 +97,35 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
     if (isFemale) {
       sections.add(_DiameterSection(
         title: '$prefix - ${localization.diam_major}',
-        diameter: info.dMajMax ?? 0, // Проверьте правильность поля
-        dEs: info.dEs,
-        dEi: info.dEi,
+        diameter: info.major_diameter_basic, // Проверьте правильность поля
+        dEs: info.major_diam_es,
+        dEi: info.major_diam_ei,
         min: info.major_diam_min,
-        avg: 0,
+        avg: info.major_diameter_avg,
         max: info.major_diam_max,
       ));
     } else {
       sections.add(_DiameterSection(
         title: '${prefix}1 - ${localization.diam_minor}',
-        diameter: info.minorDiamD1 ?? 0,
-        dEs: info.d1Es,
-        dEi: info.d1Ei,
-        min: 0,
-        avg: 0,
-        max: 0,
+        diameter: info.minor_diameter_basic,
+        dEs: info.minor_diam_es,
+        dEi: info.minor_diam_ei,
+        min: info.minor_diameter_min,
+        avg: info.minor_diameter_avg,
+        max: info.minor_diameter_max,
       ));
 
       sections.add(SizedBox(height: 10.0));
 
-      sections.add(_DiameterSection(
-        title: localization.d3_label,
-        diameter: info.minorDiamD3 ?? 0,
-        dEs: info.d3Es,
-        dEi: info.d3Ei,
-        min: info.minorDiamMinD3,
-        avg: info.minorDiamAvgD3,
-        max: info.minorDiamMaxD3,
-      ));
+      // sections.add(_DiameterSection(
+      //   title: localization.d3_label,
+      //   diameter: info.minorDiamD3 ?? 0,
+      //   dEs: info.d3Es,
+      //   dEi: info.d3Ei,
+      //   min: info.minorDiamMinD3,
+      //   avg: info.minorDiamAvgD3,
+      //   max: info.minorDiamMaxD3,
+      // ));
     }
 
     return sections;

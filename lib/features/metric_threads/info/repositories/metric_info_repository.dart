@@ -3,19 +3,19 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
-import 'package:threadfon/features/metric_threads/info/models/info_model.dart';
+import 'package:threadfon/features/metric_threads/info/models/metric_info_model.dart';
 
 final _logger = LogService('info_repository');
 const String _baseUrl = '/v1/metric';
 
-class InfoRepository {
-  InfoRepository({
+class MetricInfoRepository {
+  MetricInfoRepository({
     required ApiService apiService,
   }) : _apiService = apiService;
 
   final ApiService _apiService;
 
-  Future<InfoModel> fetchInfo({
+  Future<MetricInfoModel> fetchInfo({
     required String tolerance,
     required String threadType,
     required String language,
@@ -42,7 +42,7 @@ class InfoRepository {
       if (response.statusCode == 200) {
         final Map<String, dynamic> rawData =
             response.data as Map<String, dynamic>;
-        return InfoModel.fromJson(rawData);
+        return MetricInfoModel.fromJson(rawData);
       } else {
         final errorMessage =
             'Failed to fetch info. Status code: ${response.statusCode}';

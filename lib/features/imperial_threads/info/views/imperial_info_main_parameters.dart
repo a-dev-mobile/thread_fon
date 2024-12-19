@@ -86,15 +86,29 @@ class ImperialInfoMainParameters extends StatelessWidget {
           ),
           ImperialInfoRow(
             label: localization.thread_class_tolerance,
-            value: info.class_,
+            value: info.series,
+          ),
+          ImperialInfoRow(
+            label: localization.thread_type,
+            value: info.type_.isMale
+                ? localization.external_thread
+                : localization.internal_thread,
           ),
           ImperialInfoRow(
             label: localization.pitch,
             value: info.pitch.toString(),
           ),
           ImperialInfoRow(
+            label: 'Basic Major Diameter',
+            value: info.major_diameter_basic.toString(),
+          ),
+          ImperialInfoRow(
+            label: 'Basic Pitch Diameter',
+            value: info.pitch_diameter_basic.toString(),
+          ),
+          ImperialInfoRow(
             label: localization.thread_depth,
-            value: info.threadDepth.toString(),
+            value: 'info.threadDepth.toString()',
           ),
 
           ImperialInfoRow(

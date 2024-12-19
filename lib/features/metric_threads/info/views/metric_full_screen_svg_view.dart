@@ -1,24 +1,25 @@
 // Создайте новый файл full_screen_svg_view.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:flutter/services.dart';
 
-class FullScreenSvgView extends StatefulWidget {
+class MetricFullScreenSvgView extends StatefulWidget {
   static const path = '/FullScreenSvgView';
   static const name = 'FullScreenSvgView';
   final String svgData;
 
-  const FullScreenSvgView({
+  const MetricFullScreenSvgView({
     super.key,
     required this.svgData,
   });
 
   @override
-  _FullScreenSvgViewState createState() => _FullScreenSvgViewState();
+  _MetricFullScreenSvgViewState createState() =>
+      _MetricFullScreenSvgViewState();
 }
 
-class _FullScreenSvgViewState extends State<FullScreenSvgView> {
+class _MetricFullScreenSvgViewState extends State<MetricFullScreenSvgView> {
   @override
   void initState() {
     super.initState();

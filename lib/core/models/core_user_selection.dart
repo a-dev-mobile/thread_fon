@@ -10,6 +10,7 @@ class CoreUserSelection with _$CoreUserSelection {
   const factory CoreUserSelection({
     @Default(EnumThreadMaleFemale.male) EnumThreadMaleFemale threadType,
     @Default(EnumThreads.metric) EnumThreads enumThreads,
+    @Default(true) bool isSvgOverlayVisible,
   }) = _CoreUserSelection;
 
   factory CoreUserSelection.fromJson(Map<String, dynamic> json) =>

@@ -18,8 +18,10 @@ dependencies:
   # bloc: ^8.1.4
   flutter_bloc: ^8.1.6
 
+
+
   # Database
-  shared_preferences: ^2.3.3
+  shared_preferences: ^2.3.4
   # sqflite: ^2.3.3
 
   # very_good_analysis: ^6.0.0

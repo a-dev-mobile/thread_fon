@@ -10,7 +10,7 @@ import 'package:threadfon/core/models/core_user_selection.dart';
 import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
-import 'package:threadfon/features/imperial_threads/core/models/imperial_user_selection.dart';
+import 'package:threadfon/features/imperial_threads/models/imperial_user_selection.dart';
 import 'package:threadfon/features/imperial_threads/info/models/imperial_info_model.dart';
 import 'package:threadfon/features/imperial_threads/info/repositories/imperial_info_repository.dart';
 
@@ -53,6 +53,7 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
         model: model,
         units: imperialUserSelection.units,
         precision: imperialUserSelection.precision,
+        isSvgOverlayVisible: coreUserSelection.isSvgOverlayVisible,
       ));
 
       // Start fetching SVG data in the background
@@ -72,7 +73,9 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
   Future<ImperialInfoModel> _fetchModel(CoreUserSelection coreUserSelection,
       ImperialUserSelection imperialUserSelection) async {
     return await _repository.fetchImperialInfo(
-      id: imperialUserSelection.id!,
+      diameter: imperialUserSelection.diameter!,
+      tpi: imperialUserSelection.tpi!,
+      series: imperialUserSelection.series!,
       type: coreUserSelection.threadType.name,
       language: _languageBloc.state.enumLang.name,
       units: imperialUserSelection.units.name,
@@ -88,7 +91,9 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
       final language = _languageBloc.state.enumLang.name;
 
       final fetchSvgWithDimensions = _repository.fetchSvgData(
-        id: imperialUserSelection.id!,
+        diameter: imperialUserSelection.diameter!,
+        tpi: imperialUserSelection.tpi!,
+        series: imperialUserSelection.series!,
         type: coreUserSelection.threadType.name,
         language: language,
         units: imperialUserSelection.units.name,
@@ -98,7 +103,9 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
       );
 
       final fetchSvgWithoutDimensions = _repository.fetchSvgData(
-        id: imperialUserSelection.id!,
+        diameter: imperialUserSelection.diameter!,
+        tpi: imperialUserSelection.tpi!,
+        series: imperialUserSelection.series!,
         type: coreUserSelection.threadType.name,
         language: language,
         units: imperialUserSelection.units.name,
@@ -133,11 +140,11 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
 
   Future<void> preparationNavigation() async {
     try {
-      await _localStorage.updateImperialUserSelection(
-        (current) => current.copyWith(
-          id: state.model?.id,
-        ),
-      );
+      // await _localStorage.updateImperialUserSelection(
+      //   (current) => current.copyWith(
+      //     id: state.model?.id,
+      //   ),
+      // );
       emit(state.copyWith(
           enumNavigationStatus: EnumNavigationStatus.navigation));
       await Future<void>.delayed(const Duration(milliseconds: 100));
@@ -158,6 +165,17 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
     await _localStorage.updateImperialUserSelection(
         (current) => current.copyWith(units: units, precision: precision));
     await load();
+  }
+
+  void toggleSvgOverlay() {
+    var isSvgOverlayVisible = !state.isSvgOverlayVisible;
+    emit(state.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
+    _localStorage.updateCoreUserSelection((current) =>
+        current.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
+  }
+
+  void toggleDimensions() {
+    emit(state.copyWith(showDimensions: !state.showDimensions));
   }
 
   void _setErrorState() {

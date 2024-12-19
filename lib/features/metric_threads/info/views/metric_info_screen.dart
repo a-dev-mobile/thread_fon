@@ -13,38 +13,38 @@ import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/core/widgets/svg_overlay.dart';
-import 'package:threadfon/features/metric_threads/info/bloc/info_bloc.dart';
-import 'package:threadfon/features/metric_threads/info/repositories/info_repository.dart';
-import 'package:threadfon/features/metric_threads/info/views/full_screen_svg_view.dart';
-import 'package:threadfon/features/metric_threads/info/views/info_diameters_parameters.dart';
-import 'package:threadfon/features/metric_threads/info/views/info_main_parameters.dart';
-import 'package:threadfon/features/metric_threads/info/views/info_parameters.dart';
+import 'package:threadfon/features/metric_threads/info/bloc/metric_info_bloc.dart';
+import 'package:threadfon/features/metric_threads/info/repositories/metric_info_repository.dart';
+import 'package:threadfon/features/metric_threads/info/views/metric_full_screen_svg_view.dart';
+import 'package:threadfon/features/metric_threads/info/views/metric_info_diameters_parameters.dart';
+import 'package:threadfon/features/metric_threads/info/views/metric_info_main_parameters.dart';
+import 'package:threadfon/features/metric_threads/info/views/metric_info_parameters.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
 final _logger = LogService('info_screen');
 
-class InfoScreen extends StatefulWidget {
-  const InfoScreen({super.key});
-  static const path = '/InfoScreen';
-  static const name = 'InfoScreen';
+class MetricInfoScreen extends StatefulWidget {
+  const MetricInfoScreen({super.key});
+  static const path = '/MetricInfoScreen';
+  static const name = 'MetricInfoScreen';
 
   @override
-  State<InfoScreen> createState() => _InfoScreenState();
+  State<MetricInfoScreen> createState() => _MetricInfoState();
 }
 
-class _InfoScreenState extends State<InfoScreen> {
-  late InfoBloc _bloc;
+class _MetricInfoState extends State<MetricInfoScreen> {
+  late MetricInfoBloc _bloc;
 
   @override
   void initState() {
     super.initState();
     final apiService = context.read<ApiService>();
-    final infoRepository = InfoRepository(apiService: apiService);
+    final infoRepository = MetricInfoRepository(apiService: apiService);
     final localStorage = context.read<LocalStorage>();
     final languageBloc = context.read<LanguageBloc>();
     final themeBloc = context.read<ThemeBloc>();
 
-    _bloc = InfoBloc(
+    _bloc = MetricInfoBloc(
       repository: infoRepository,
       localStorage: localStorage,
       languageBloc: languageBloc,
@@ -69,12 +69,9 @@ class _MetricInfoView extends StatefulWidget {
 }
 
 class _MetricInfoViewState extends State<_MetricInfoView> {
-  bool _isSvgOverlayVisible = true;
-  bool _showDimensions = true;
-
   @override
   Widget build(BuildContext context) {
-    final bloc = context.watch<InfoBloc>();
+    final bloc = context.watch<MetricInfoBloc>();
     final state = bloc.state;
 
     // Screen dimensions
@@ -89,7 +86,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
         ? maxOverlayHeight
         : calculatedOverlayHeight;
 
-    return BlocListener<InfoBloc, InfoState>(
+    return BlocListener<MetricInfoBloc, MetricInfoState>(
       listenWhen: (previous, current) =>
           previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
@@ -102,9 +99,9 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
             // Main content
             _buildContent(bloc, context, overlayHeight, svgWidth, svgHeight),
             // SVG Overlay
-            if (_isSvgOverlayVisible)
+            if (state.isSvgOverlayVisible)
               SvgOverlay(
-                svgData: _showDimensions
+                svgData: state.showDimensions
                     ? state.svgData ?? ''
                     : state.svgDataNoDimensions ?? '',
                 svgRequestStatus: state.svgRequestStatus,
@@ -113,18 +110,14 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                 svgAspectRatio: svgAspectRatio,
                 svgWidth: svgWidth,
                 svgHeight: svgHeight,
-                onClose: () {
-                  setState(() {
-                    _isSvgOverlayVisible = false;
-                  });
-                },
+                onClose: () => bloc.toggleSvgOverlay(),
                 onExpand: () {
-                  final svgDataToSend = _showDimensions
+                  final svgDataToSend = state.showDimensions
                       ? state.svgData
                       : state.svgDataNoDimensions;
 
                   if (svgDataToSend != null) {
-                    context.pushNamed(FullScreenSvgView.name, extra: {
+                    context.pushNamed(MetricFullScreenSvgView.name, extra: {
                       'svgData': svgDataToSend,
                     });
                   } else {
@@ -135,12 +128,8 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                     );
                   }
                 },
-                onSwitchSvg: () {
-                  setState(() {
-                    _showDimensions = !_showDimensions;
-                  });
-                },
-                showDimensions: _showDimensions,
+                onSwitchSvg: () => bloc.toggleDimensions(),
+                showDimensions: state.showDimensions,
               ),
             // Blurred overlay when in preparation status
             if (state.enumNavigationStatus.isPreparation)
@@ -151,7 +140,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     );
   }
 
-  Widget _buildContent(InfoBloc bloc, BuildContext context,
+  Widget _buildContent(MetricInfoBloc bloc, BuildContext context,
       double overlayHeight, double svgWidth, double svgHeight) {
     final state = bloc.state;
 
@@ -172,8 +161,8 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     }
   }
 
-  Widget _buildSuccessContent(BuildContext context, InfoState state,
-      InfoBloc bloc, double overlayHeight) {
+  Widget _buildSuccessContent(BuildContext context, MetricInfoState state,
+      MetricInfoBloc bloc, double overlayHeight) {
     final localization = context.l10n;
     return CustomScrollView(
       slivers: [
@@ -184,13 +173,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
           actions: [
             IconButton(
               icon: const Icon(FontAwesomeIcons.compassDrafting),
-              onPressed: () {
-                setState(() {
-                  _isSvgOverlayVisible = !_isSvgOverlayVisible;
-                });
-
-                // Логирование переключения видимости оверлея
-              },
+              onPressed: () => bloc.toggleSvgOverlay(),
             ),
             IconButton(
               icon: const Icon(Icons.settings),
@@ -206,8 +189,6 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                           units: selectedUnits,
                           precision: selectedPrecision,
                         );
-
-                        // Логирование изменения единиц измерения и точности
                       },
                     );
                   },
@@ -220,22 +201,22 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           sliver: SliverList(
             delegate: SliverChildListDelegate([
-              InfoMainParameters(
+              MetricInfoMainParameters(
                 info: state.model!,
               ),
               const Divider(),
-              InfoDiametersParameters(
+              MetricInfoDiametersParameters(
                 info: state.model!,
               ),
               const Divider(),
-              InfoParameters(
+              MetricInfoParameters(
                 info: state.model!,
               ),
             ]),
           ),
         ),
         // Add extra space when overlay is visible
-        if (_isSvgOverlayVisible)
+        if (state.isSvgOverlayVisible)
           SliverToBoxAdapter(
             child: SizedBox(
               height: overlayHeight,

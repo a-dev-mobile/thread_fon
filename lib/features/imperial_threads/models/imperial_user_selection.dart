@@ -8,12 +8,10 @@ part 'imperial_user_selection.g.dart';
 class ImperialUserSelection with _$ImperialUserSelection {
   const factory ImperialUserSelection({
     String? diameter,
-    String? tolerance,
+    String? series,
     String? tpi,
-    int? id,
-    String? fullName,
     @Default(EnumUnits.inch) EnumUnits units,
-    @Default(3) int precision,
+    @Default(4) int precision,
   }) = _ImperialUserSelection;
 
   factory ImperialUserSelection.fromJson(Map<String, dynamic> json) =>

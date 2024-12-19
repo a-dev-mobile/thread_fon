@@ -1,12 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/core/constant/enum_thread%20copy.dart';
 
-part 'info_model.freezed.dart';
-part 'info_model.g.dart';
+part 'metric_info_model.freezed.dart';
+part 'metric_info_model.g.dart';
 
 @freezed
-class InfoModel with _$InfoModel {
-  const factory InfoModel({
+class MetricInfoModel with _$MetricInfoModel {
+  const factory MetricInfoModel({
     required int id,
     required num diameter,
     required num pitch,
@@ -56,8 +56,8 @@ class InfoModel with _$InfoModel {
     @JsonKey(name: 'd2_ei') num? d2Ei,
     @JsonKey(name: 'd3_es') num? d3Es,
     @JsonKey(name: 'd3_ei') num? d3Ei,
-  }) = _InfoModel;
+  }) = _MetricInfoModel;
 
-  factory InfoModel.fromJson(Map<String, dynamic> json) =>
-      _$InfoModelFromJson(json);
+  factory MetricInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$MetricInfoModelFromJson(json);
 }

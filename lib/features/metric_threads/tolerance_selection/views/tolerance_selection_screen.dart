@@ -9,7 +9,7 @@ import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
-import 'package:threadfon/features/metric_threads/info/views/info_screen.dart';
+import 'package:threadfon/features/metric_threads/info/views/metric_info_screen.dart';
 import 'package:threadfon/features/metric_threads/tolerance_selection/bloc/tolerance_bloc.dart';
 import 'package:threadfon/features/metric_threads/tolerance_selection/repositories/tolerance_repository.dart';
 import 'package:threadfon/features/metric_threads/tolerance_selection/views/tolerance_choice_card.dart';
@@ -65,7 +65,7 @@ class _ToleranceSelectionView extends StatelessWidget {
           previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
         if (state.enumNavigationStatus.isNavigation) {
-          context.pushNamed(InfoScreen.name);
+          context.pushNamed(MetricInfoScreen.name);
           bloc.resetNavigationStatus();
         }
       },

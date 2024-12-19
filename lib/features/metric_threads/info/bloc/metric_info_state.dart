@@ -1,9 +1,9 @@
-part of 'info_bloc.dart';
+part of 'metric_info_bloc.dart';
 
 @freezed
-class InfoState with _$InfoState {
-  const factory InfoState({
-    InfoModel? model,
+class MetricInfoState with _$MetricInfoState {
+  const factory MetricInfoState({
+    MetricInfoModel? model,
     String? svgData,
     String? svgDataNoDimensions,
     @Default(EnumStatus.loading) EnumStatus svgRequestStatus,
@@ -14,8 +14,10 @@ class InfoState with _$InfoState {
     String? svgErrorMsg,
     @Default(EnumUnits.mm) EnumUnits units,
     @Default(3) int precision,
+    @Default(true) bool isSvgOverlayVisible,
+    @Default(true) bool showDimensions,
   }) = _InfoState;
 
-  factory InfoState.fromJson(Map<String, dynamic> json) =>
-      _$InfoStateFromJson(json);
+  factory MetricInfoState.fromJson(Map<String, dynamic> json) =>
+      _$MetricInfoStateFromJson(json);
 }
