@@ -57,7 +57,7 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
       ));
 
       // Start fetching SVG data in the background
-      _fetchSvgData(coreUserSelection, imperialUserSelection);
+      // _fetchSvgData(coreUserSelection, imperialUserSelection);
     } catch (e, s) {
       _logger.e('Error loading info', error: e, stackTrace: s);
 
