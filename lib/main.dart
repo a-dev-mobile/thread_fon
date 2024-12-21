@@ -65,7 +65,9 @@ Future<void> main() async {
 
           _logger.e('FlutterError.onError',
               error: details.exception,
-              stackTrace: details.stack ?? StackTrace.current);
+              stackTrace: details.stack ?? StackTrace.current,
+               reportToServer: false
+              );
           // Отправка ошибки через глобальный экземпляр
           globalErrorReporting.reportError(
               error: details.exception,
@@ -111,11 +113,7 @@ Future<void> main() async {
       } on Exception catch (e, s) {
         // Логируем и отправляем критические ошибки
         _logger.e('Exception in main', error: e, stackTrace: s);
-        globalErrorReporting.reportError(
-          error: e,
-          stackTrace: s,
-          customMessage: 'Exception in main',
-        );
+      
         // Отправляем исключение в Crashlytics
         FirebaseCrashlytics.instance.recordError(e, s, fatal: true);
       } finally {
@@ -134,11 +132,7 @@ Future<void> main() async {
           final s = errorAndStacktrace.last as StackTrace;
 
           _logger.e('Isolate error', error: e, stackTrace: s);
-          globalErrorReporting.reportError(
-            error: e,
-            stackTrace: s,
-            customMessage: 'Isolate error',
-          );
+         
           // Отправляем ошибку в Crashlytics
           FirebaseCrashlytics.instance.recordError(e, s, fatal: true);
         }).sendPort,
@@ -150,11 +144,7 @@ Future<void> main() async {
     (e, s) {
       // Логируем ошибки из runZonedGuarded
       _logger.e('runZonedGuarded', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'runZonedGuarded',
-      );
+     
       // Отправляем ошибку в Crashlytics
       FirebaseCrashlytics.instance.recordError(e, s, fatal: true);
     },

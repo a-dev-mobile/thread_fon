@@ -496,11 +496,7 @@ class LocalStorage {
       error: e,
       stackTrace: s,
     );
-    globalErrorReporting.reportError(
-      error: e,
-      stackTrace: s,
-      customMessage: '$action > $key, Value: $value',
-    );
+
   }
 
   // ******************************

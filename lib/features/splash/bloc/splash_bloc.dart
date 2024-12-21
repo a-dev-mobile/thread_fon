@@ -32,11 +32,7 @@ class SplashBloc extends Cubit<SplashState> with BlocIgnoreEmitAfterClosed {
       await preparationNavigation();
     } catch (e, s) {
       _logger.e('Error loading info', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error loading info',
-      );
+    
       _setErrorState();
     }
   }
@@ -47,11 +43,7 @@ class SplashBloc extends Cubit<SplashState> with BlocIgnoreEmitAfterClosed {
           enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error updating selection',
-      );
+    
       _setErrorState();
     }
   }

@@ -1,4 +1,5 @@
 import 'package:logger/logger.dart';
+import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 
 class CustomPrinter extends LogPrinter {
   CustomPrinter(this.fileName)
@@ -67,12 +68,25 @@ class LogService {
   }
 
   void e(dynamic message,
-      {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
+      {Object? error,
+      StackTrace? stackTrace,
+      bool includeStackTrace = true,
+      Map<String, dynamic>? additionalInfo,
+      bool reportToServer = true}) {
     _logger.e(
       message,
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
+    
+    if (reportToServer) {
+      globalErrorReporting.reportError(
+        error: error ?? message,
+        stackTrace: stackTrace ?? StackTrace.current,
+        customMessage: message?.toString(),
+        additionalInfo: additionalInfo,
+      );
+    }
   }
 
   void f(dynamic message,

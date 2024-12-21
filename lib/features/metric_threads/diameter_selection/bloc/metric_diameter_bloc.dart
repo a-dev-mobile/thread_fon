@@ -44,11 +44,7 @@ class MetricDiameterBloc extends Cubit<MetricDiameterState>
       ));
     } catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error loading diameters',
-      );
+
       _setErrorState();
     }
   }
@@ -68,11 +64,7 @@ class MetricDiameterBloc extends Cubit<MetricDiameterState>
       // Удалили задержку
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error updating selection',
-      );
+   
       _setErrorState();
     }
   }

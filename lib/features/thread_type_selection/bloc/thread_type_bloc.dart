@@ -47,11 +47,7 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState>
           coreUserSelection: coreUserSelection));
     } on Exception catch (e, s) {
       _logger.e('Error loading thread types', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error loading thread types',
-      );
+     
       _setErrorState();
     }
   }
@@ -80,11 +76,7 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState>
           error: e, stackTrace: s);
 
       // Отправляем ошибку в ErrorReportingService
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error loading thread types',
-      );
+    
 
       _setErrorState();
     }

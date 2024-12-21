@@ -62,6 +62,7 @@ class _MetricDiameterView extends StatefulWidget {
 
 class _MetricDiameterViewState extends State<_MetricDiameterView> {
   late ScrollController _scrollController;
+  
   @override
   void initState() {
     super.initState();
@@ -72,6 +73,17 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _updateScrollPosition(double position) {
+    if (!mounted) return;
+    if (_scrollController.hasClients && position > 0) {
+      try {
+        _scrollController.jumpTo(position);
+      } catch (e) {
+        _logger.e('Error updating scroll position: $e');
+      }
+    }
   }
 
   @override
@@ -111,9 +123,7 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
                     );
                   case EnumStatus.success:
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      if (_scrollController.hasClients) {
-                        _scrollController.jumpTo(state.scrollPosition);
-                      }
+                      _updateScrollPosition(state.scrollPosition);
                     });
                     return ListView.separated(
                       controller: _scrollController,

@@ -42,11 +42,7 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
           enumPageStatus: EnumStatus.success, pitches: pitchList));
     } catch (e, s) {
       _logger.e('Error loading pitch', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error loading pitch',
-      );
+    
       _setErrorState();
     }
   }
@@ -63,11 +59,7 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
           enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating pitch selection', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error updating pitch selection',
-      );
+    
       _setErrorState();
     }
   }

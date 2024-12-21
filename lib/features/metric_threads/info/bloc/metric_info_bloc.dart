@@ -59,11 +59,7 @@ class MetricInfoBloc extends Cubit<MetricInfoState>
       _fetchSvgData(coreUserSelection, metricUserSelection);
     } catch (e, s) {
       _logger.e('Error loading info', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error loading info',
-      );
+     
       _setErrorState();
     }
   }
@@ -124,11 +120,7 @@ class MetricInfoBloc extends Cubit<MetricInfoState>
       ));
     } catch (e, s) {
       _logger.e('Error fetching SVG data', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error fetching SVG data',
-      );
+   
       emit(state.copyWith(
         svgRequestStatus: EnumStatus.error,
         svgErrorMsg: 'Error loading SVG data',
@@ -149,11 +141,7 @@ class MetricInfoBloc extends Cubit<MetricInfoState>
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error updating selection',
-      );
+    
       _setErrorState();
     }
   }

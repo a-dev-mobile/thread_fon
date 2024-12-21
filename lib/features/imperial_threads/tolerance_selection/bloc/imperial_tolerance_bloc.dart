@@ -50,11 +50,7 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState>
       ));
     } catch (e, s) {
       _logger.e('Error loading tolerances', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error loading tolerances',
-      );
+    
       _setErrorState();
     }
   }
@@ -71,11 +67,7 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState>
           enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating tolerance selection', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error updating tolerance selection',
-      );
+   
       _setErrorState();
     }
   }
@@ -91,11 +83,7 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState>
       emit(state.copyWith(selectedThreadType: threadType));
     } catch (e, s) {
       _logger.e('Error updating gender selection', error: e, stackTrace: s);
-      globalErrorReporting.reportError(
-        error: e,
-        stackTrace: s,
-        customMessage: 'Error updating gender selection',
-      );
+    
     }
   }
 
