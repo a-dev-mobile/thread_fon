@@ -3,7 +3,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:meta/meta.dart';
 
-
 @immutable
 abstract final class ConnectivityState {}
 
@@ -16,5 +15,6 @@ final class ConnectivityOnline extends ConnectivityState {
 
   ConnectivityOnline(this.connectivityResults);
 }
+
 @immutable
 final class ConnectivityOffline extends ConnectivityState {}

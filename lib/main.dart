@@ -118,7 +118,7 @@ Future<void> main() async {
         _logger.e('Exception in main', error: e, stackTrace: s);
 
         // Отправляем исключение в Crashlytics
-        FirebaseCrashlytics.instance.recordError(e, s, fatal: true);
+        await FirebaseCrashlytics.instance.recordError(e, s, fatal: true);
       } finally {
         // Удаление splash-экрана и логирование закрытия
         FlutterNativeSplash.remove();

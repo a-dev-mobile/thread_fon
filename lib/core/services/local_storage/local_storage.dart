@@ -96,6 +96,7 @@ class LocalStorage {
     } on Exception catch (e, s) {
       await _recordError(e, s, 'GET_METRIC_USER_SELECTION',
           _metricUserSelectionKey, jsonString);
+
       return const MetricUserSelection();
     }
   }
@@ -198,6 +199,7 @@ class LocalStorage {
     } on Exception catch (e, s) {
       await _recordError(e, s, 'GET_IMPERIAL_USER_SELECTION',
           _imperialUserSelectionKey, jsonString);
+
       return const ImperialUserSelection();
     }
   }
@@ -302,6 +304,7 @@ class LocalStorage {
     } on Exception catch (e, s) {
       await _recordError(
           e, s, 'GET_LANGUAGE_STATE', _languageStateKey, jsonString);
+
       return defaultLanguageState;
     }
   }

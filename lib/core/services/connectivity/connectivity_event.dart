@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 abstract final class ConnectivityEvent {}
+
 @immutable
 final class ConnectivityChanged extends ConnectivityEvent {
   final List<ConnectivityResult> connectivityResults;

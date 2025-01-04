@@ -50,21 +50,21 @@ class AppRouter {
               path: SplashScreen.path,
               name: SplashScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage(
+                  NoTransitionPage<dynamic>(
                       child: const SplashScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: MetricDiameterScreen.path,
               name: MetricDiameterScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage(
+                  NoTransitionPage<dynamic>(
                       child: const MetricDiameterScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ImperialDiameterScreen.path,
               name: ImperialDiameterScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage(
+                  NoTransitionPage<dynamic>(
                       child: const ImperialDiameterScreen(),
                       key: state.pageKey),
             ),
@@ -72,7 +72,7 @@ class AppRouter {
               path: ImperialToleranceSelectionScreen.path,
               name: ImperialToleranceSelectionScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage(
+                  NoTransitionPage<dynamic>(
                       child: const ImperialToleranceSelectionScreen(),
                       key: state.pageKey),
             ),
@@ -80,14 +80,14 @@ class AppRouter {
               path: ImperialInfoScreen.path,
               name: ImperialInfoScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage(
+                  NoTransitionPage<dynamic>(
                       child: const ImperialInfoScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ThreadTypeSelectionScreen.path,
               name: ThreadTypeSelectionScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage(
+                  NoTransitionPage<dynamic>(
                       child: const ThreadTypeSelectionScreen(),
                       key: state.pageKey),
             ),
@@ -95,14 +95,14 @@ class AppRouter {
               path: PitchSelectionScreen.path,
               name: PitchSelectionScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage(
+                  NoTransitionPage<dynamic>(
                       child: const PitchSelectionScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ToleranceSelectionScreen.path,
               name: ToleranceSelectionScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage(
+                  NoTransitionPage<dynamic>(
                       child: const ToleranceSelectionScreen(),
                       key: state.pageKey),
             ),
@@ -110,7 +110,7 @@ class AppRouter {
               path: MetricInfoScreen.path,
               name: MetricInfoScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage(
+                  NoTransitionPage<dynamic>(
                       child: const MetricInfoScreen(), key: state.pageKey),
             ),
             GoRoute(
@@ -119,7 +119,8 @@ class AppRouter {
                 pageBuilder: (BuildContext context, GoRouterState state) {
                   final Map<String, dynamic> data =
                       state.extra! as Map<String, dynamic>;
-                  return NoTransitionPage(
+
+                  return NoTransitionPage<dynamic>(
                       child: MetricFullScreenSvgView(
                         svgData: data['svgData'] as String,
                       ),
@@ -129,7 +130,8 @@ class AppRouter {
               path: AboutApp.path,
               name: AboutApp.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage(child: const AboutApp(), key: state.pageKey),
+                  NoTransitionPage<dynamic>(
+                      child: const AboutApp(), key: state.pageKey),
             ),
           ],
           navigatorKey: _tabNavigatorKey,

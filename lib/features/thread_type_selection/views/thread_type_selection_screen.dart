@@ -9,7 +9,7 @@ import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/constant/enum_thread_male_female.dart';
 import 'package:threadfon/core/constant/enum_threads.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
-import 'package:threadfon/core/widgets/base_screen.dart';
+import 'package:threadfon/core/widgets/drawer_screen.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/features/thread_type_selection/bloc/thread_type_bloc.dart';

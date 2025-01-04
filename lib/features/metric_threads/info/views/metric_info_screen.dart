@@ -167,6 +167,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
   Widget _buildSuccessContent(BuildContext context, MetricInfoState state,
       MetricInfoBloc bloc, double overlayHeight) {
     final GeneratedLocalization localization = context.l10n;
+
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
@@ -261,6 +262,7 @@ class _UnitsPrecisionDialogState extends State<UnitsPrecisionDialog> {
   @override
   Widget build(BuildContext context) {
     final GeneratedLocalization localization = context.l10n;
+
     return AlertDialog(
       title: Text(localization.settings),
       content: Column(
