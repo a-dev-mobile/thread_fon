@@ -130,6 +130,7 @@ class _AnalyticsObserver extends NavigatorObserver {
 
   _AnalyticsObserver({required this.analytics});
 
+
   void _sendScreenView(Route<dynamic>? route) {
     if (route is MaterialPageRoute) {
       final screenName = route.settings.name ?? route.settings.toString();

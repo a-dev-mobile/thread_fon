@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
-import 'package:threadfon/core/constant/enum_navigation.dart';
+import 'package:threadfon/core/constant/enum_lang.dart';
+import 'package:threadfon/core/constant/enum_navigation_status.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
@@ -60,8 +61,7 @@ class _PitchSelectionView extends StatelessWidget {
     final localization = context.l10n;
 
     return BlocListener<PitchBloc, PitchState>(
-      listenWhen: (previous, current) =>
-          previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
         if (state.enumNavigationStatus.isNavigation) {
           context.pushNamed(ToleranceSelectionScreen.name);
@@ -91,15 +91,13 @@ class _PitchSelectionView extends StatelessWidget {
                   case EnumStatus.success:
                     return ListView.separated(
                       itemCount: state.pitches.length,
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 8.0),
+                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
                       itemBuilder: (context, index) {
                         final pitch = state.pitches[index];
                         return PitchChoiceCard(
                           pitch: pitch,
                           onTap: () {
-                            if (pitch.enumPitchDataType ==
-                                EnumPitchDataType.value) {
+                            if (pitch.enumPitchDataType == EnumPitchDataType.value) {
                               bloc.preparationNavigation(pitch);
                             }
                           },

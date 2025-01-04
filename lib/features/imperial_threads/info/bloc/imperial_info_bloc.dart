@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/core/constant/enum_lang.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
-import 'package:threadfon/core/constant/enum_navigation.dart';
+import 'package:threadfon/core/constant/enum_navigation_status.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/constant/enum_units.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';

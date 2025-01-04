@@ -4,39 +4,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Импорт необходимых пакетов
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:threadfon/app/language/language_bloc.dart'; // Новый импорт
-import 'package:threadfon/app/router/router.dart';
-import 'package:threadfon/app/theme/theme.dart';
+import 'package:nested/nested.dart';
+import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/app/router/app_router.dart';
+import 'package:threadfon/app/theme/app_theme.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
+import 'package:threadfon/core/constant/enum_lang.dart'; // Новый импорт
 import 'package:threadfon/core/services/connectivity/connectivity_bloc.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
-// Импортируем ValueListenableBuilderN
-import 'package:threadfon/localization/l10n_extension.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
+import 'package:threadfon/localization/l10n_extension.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.enumLang, required this.themeMode});
+class App extends StatelessWidget {
+  const App({super.key, required this.enumLang, required this.themeMode});
   final EnumLang enumLang;
   final ThemeMode themeMode;
   @override
   Widget build(BuildContext context) {
-    final storage = context.read<LocalStorage>();
+    final LocalStorage storage = context.read<LocalStorage>();
 
     return MultiBlocProvider(
-      providers: [
+      providers: <SingleChildWidget>[
         BlocProvider(
           lazy: false,
-          create: (context) =>
-              ThemeBloc(storage: storage, themeMode: themeMode),
+          create: (BuildContext context) => ThemeBloc(storage: storage, themeMode: themeMode),
         ),
         BlocProvider(
           lazy: false,
-          create: (context) =>
-              LanguageBloc(storage: storage, enumLang: enumLang),
+          create: (BuildContext context) => LanguageBloc(storage: storage, enumLang: enumLang),
         ),
         BlocProvider(
           lazy: false,
-          create: (context) => ConnectivityBloc(),
+          create: (BuildContext context) => ConnectivityBloc(),
         ),
       ],
       child: const _ThreadApp(),
@@ -49,9 +48,10 @@ class _ThreadApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final languageState = context.watch<LanguageBloc>().state;
-    final themeState = context.watch<ThemeBloc>().state;
-    final appRouter = context.read<AppRouter>();
+    final LanguageState languageState = context.watch<LanguageBloc>().state;
+    final ThemeState themeState = context.watch<ThemeBloc>().state;
+    final AppRouter appRouter = context.read<AppRouter>();
+
     return MaterialApp.router(
       onGenerateTitle: (BuildContext context) => context.l10n.app_name,
       debugShowCheckedModeBanner: false,

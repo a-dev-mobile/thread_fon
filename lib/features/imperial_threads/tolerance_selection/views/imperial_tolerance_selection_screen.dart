@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
-import 'package:threadfon/core/constant/enum_navigation.dart';
+import 'package:threadfon/core/constant/enum_navigation_status.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
-import 'package:threadfon/core/constant/enum_thread%20copy.dart';
+import 'package:threadfon/core/constant/enum_thread_male_female.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
@@ -25,12 +25,10 @@ class ImperialToleranceSelectionScreen extends StatefulWidget {
   static const name = 'ImperialToleranceSelectionScreen';
 
   @override
-  State<ImperialToleranceSelectionScreen> createState() =>
-      _ImperialToleranceSelectionScreenState();
+  State<ImperialToleranceSelectionScreen> createState() => _ImperialToleranceSelectionScreenState();
 }
 
-class _ImperialToleranceSelectionScreenState
-    extends State<ImperialToleranceSelectionScreen> {
+class _ImperialToleranceSelectionScreenState extends State<ImperialToleranceSelectionScreen> {
   late final ImperialToleranceBloc _bloc;
 
   @override
@@ -65,8 +63,7 @@ class _ToleranceSelectionView extends StatelessWidget {
     final bloc = context.read<ImperialToleranceBloc>();
 
     return BlocListener<ImperialToleranceBloc, ImperialToleranceState>(
-      listenWhen: (previous, current) =>
-          previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) {
         if (state.enumNavigationStatus.isNavigation) {
           // Навигация на следующий экран при выборе допуска
@@ -80,8 +77,7 @@ class _ToleranceSelectionView extends StatelessWidget {
         body: Stack(
           children: [
             BlocBuilder<ImperialToleranceBloc, ImperialToleranceState>(
-              buildWhen: (previous, current) =>
-                  previous.enumPageStatus != current.enumPageStatus,
+              buildWhen: (previous, current) => previous.enumPageStatus != current.enumPageStatus,
               builder: (context, state) {
                 switch (state.enumPageStatus) {
                   case EnumStatus.loading:
@@ -94,18 +90,13 @@ class _ToleranceSelectionView extends StatelessWidget {
                   case EnumStatus.success:
                     return DefaultTabController(
                       length: 2,
-                      initialIndex: bloc.state.selectedThreadType ==
-                              EnumThreadMaleFemale.female
-                          ? 1
-                          : 0,
+                      initialIndex: bloc.state.selectedThreadType == EnumThreadMaleFemale.female ? 1 : 0,
                       child: Scaffold(
                         appBar: AppBar(
                           title: Text(localization.select_class),
                           bottom: TabBar(
                             onTap: (index) {
-                              final newGender = index == 1
-                                  ? EnumThreadMaleFemale.female
-                                  : EnumThreadMaleFemale.male;
+                              final newGender = index == 1 ? EnumThreadMaleFemale.female : EnumThreadMaleFemale.male;
                               if (bloc.state.selectedThreadType != newGender) {
                                 bloc.updateGenderSelection(newGender);
                               }
@@ -118,12 +109,8 @@ class _ToleranceSelectionView extends StatelessWidget {
                         ),
                         body: TabBarView(
                           children: [
-                            _buildToleranceList(
-                                context, bloc.state.maleTolerances,
-                                isFemale: false),
-                            _buildToleranceList(
-                                context, bloc.state.femaleTolerances,
-                                isFemale: true),
+                            _buildToleranceList(context, bloc.state.maleTolerances, isFemale: false),
+                            _buildToleranceList(context, bloc.state.femaleTolerances, isFemale: true),
                           ],
                         ),
                       ),
@@ -137,9 +124,7 @@ class _ToleranceSelectionView extends StatelessWidget {
     );
   }
 
-  Widget _buildToleranceList(
-      BuildContext context, List<ImperialToleranceItem> tolerances,
-      {required bool isFemale}) {
+  Widget _buildToleranceList(BuildContext context, List<ImperialToleranceItem> tolerances, {required bool isFemale}) {
     final bloc = context.read<ImperialToleranceBloc>();
     final localization = context.l10n;
 

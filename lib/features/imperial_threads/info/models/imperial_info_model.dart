@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:threadfon/core/constant/enum_thread%20copy.dart';
+import 'package:threadfon/core/constant/enum_thread_male_female.dart';
 
 part 'imperial_info_model.freezed.dart';
 part 'imperial_info_model.g.dart';

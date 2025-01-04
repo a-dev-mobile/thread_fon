@@ -10,7 +10,7 @@ import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 
 // Глобальный экземпляр ErrorReportingService
-late ErrorReportingService globalErrorReporting;
+late final ErrorReportingService globalErrorReporting;
 
 final LogService _logger = LogService('ErrorReportingService');
 

@@ -1,9 +1,6 @@
 part of 'language_bloc.dart';
 
-enum EnumLang {
-  ru,
-  en,
-}
+
 
 @freezed
 sealed class LanguageState with _$LanguageState {

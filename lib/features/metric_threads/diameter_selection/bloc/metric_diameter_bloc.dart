@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
-import 'package:threadfon/core/constant/enum_navigation.dart';
+import 'package:threadfon/core/constant/enum_lang.dart';
+import 'package:threadfon/core/constant/enum_navigation_status.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
 import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
@@ -16,8 +17,7 @@ part 'metric_diameter_state.dart';
 
 final _logger = LogService('metric_diameter_bloc');
 
-class MetricDiameterBloc extends Cubit<MetricDiameterState>
-    with BlocIgnoreEmitAfterClosed {
+class MetricDiameterBloc extends Cubit<MetricDiameterState> with BlocIgnoreEmitAfterClosed {
   MetricDiameterBloc({
     required DiameterRepository repository,
     required LocalStorage localStorage,
@@ -49,8 +49,7 @@ class MetricDiameterBloc extends Cubit<MetricDiameterState>
     }
   }
 
-  Future<void> preparationNavigation(
-      MetricDiameterModel selectedDiameter, double scrollPosition) async {
+  Future<void> preparationNavigation(MetricDiameterModel selectedDiameter, double scrollPosition) async {
     await _localStorage.setMetricScrollPosition(scrollPosition);
     try {
       await _localStorage.updateMetricUserSelection(
@@ -59,12 +58,11 @@ class MetricDiameterBloc extends Cubit<MetricDiameterState>
           diameter: selectedDiameter.diameter,
         ),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
       // Удалили задержку
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
-   
+
       _setErrorState();
     }
   }
@@ -81,8 +79,6 @@ class MetricDiameterBloc extends Cubit<MetricDiameterState>
         ? 'An error occurred while loading diameters.'
         : 'Произошла ошибка при загрузке диаметров.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error,
-        errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

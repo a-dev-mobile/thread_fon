@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:threadfon/core/constant/enum_lang.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
 
 import 'package:threadfon/core/services/local_storage/local_storage.dart';

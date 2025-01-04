@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:threadfon/core/constant/enum_thread%20copy.dart';
-import 'package:threadfon/core/constant/enum_thread.dart';
+import 'package:threadfon/core/constant/enum_thread_male_female.dart';
+import 'package:threadfon/core/constant/enum_threads.dart';
 
 part 'core_user_selection.freezed.dart';
 part 'core_user_selection.g.dart';

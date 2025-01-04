@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 /// https://rydmike.com/flexcolorscheme/themesplayground-latest/
 sealed class AppTheme {
   // The defined light theme.
-  static ThemeData light = FlexThemeData.light(
+  static final ThemeData light = FlexThemeData.light(
     scheme: FlexScheme.greyLaw,
     subThemesData: const FlexSubThemesData(
       interactionEffects: true,
@@ -37,7 +37,7 @@ sealed class AppTheme {
     fontFamily: 'Montserrat',
   );
 
-  static ThemeData dark = FlexThemeData.dark(
+  static final ThemeData dark = FlexThemeData.dark(
     scheme: FlexScheme.greyLaw,
     subThemesData: const FlexSubThemesData(
       interactionEffects: true,

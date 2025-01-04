@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/core/constant/enum_lang.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
-import 'package:threadfon/core/constant/enum_navigation.dart';
+import 'package:threadfon/core/constant/enum_navigation_status.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/constant/enum_units.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
@@ -64,8 +65,7 @@ class _ImperialImperialInfoView extends StatefulWidget {
   const _ImperialImperialInfoView();
 
   @override
-  State<_ImperialImperialInfoView> createState() =>
-      _ImperialImperialInfoViewState();
+  State<_ImperialImperialInfoView> createState() => _ImperialImperialInfoViewState();
 }
 
 class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
@@ -82,13 +82,10 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
     final svgAspectRatio = svgWidth / svgHeight;
     final calculatedOverlayHeight = screenWidth / svgAspectRatio;
     final maxOverlayHeight = screenHeight * 0.4;
-    final overlayHeight = calculatedOverlayHeight > maxOverlayHeight
-        ? maxOverlayHeight
-        : calculatedOverlayHeight;
+    final overlayHeight = calculatedOverlayHeight > maxOverlayHeight ? maxOverlayHeight : calculatedOverlayHeight;
 
     return BlocListener<ImperialInfoBloc, ImperialInfoState>(
-      listenWhen: (previous, current) =>
-          previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (context, state) async {
         // Handle side effects if needed
       },
@@ -101,9 +98,7 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
             // SVG Overlay
             if (state.isSvgOverlayVisible)
               SvgOverlay(
-                svgData: state.showDimensions
-                    ? state.svgData ?? ''
-                    : state.svgDataNoDimensions ?? '',
+                svgData: state.showDimensions ? state.svgData ?? '' : state.svgDataNoDimensions ?? '',
                 svgRequestStatus: state.svgRequestStatus,
                 svgErrorMsg: state.svgErrorMsg,
                 overlayHeight: overlayHeight,
@@ -112,9 +107,7 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                 svgHeight: svgHeight,
                 onClose: () => bloc.toggleSvgOverlay(),
                 onExpand: () {
-                  final svgDataToSend = state.showDimensions
-                      ? state.svgData
-                      : state.svgDataNoDimensions;
+                  final svgDataToSend = state.showDimensions ? state.svgData : state.svgDataNoDimensions;
 
                   if (svgDataToSend != null) {
                     context.pushNamed(ImperialFullScreenSvgView.name, extra: {
@@ -132,16 +125,15 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                 showDimensions: state.showDimensions,
               ),
             // Blurred overlay when in preparation status
-            if (state.enumNavigationStatus.isPreparation)
-              const LoadingWidget(isBlurred: true),
+            if (state.enumNavigationStatus.isPreparation) const LoadingWidget(isBlurred: true),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildContent(ImperialInfoBloc bloc, BuildContext context,
-      double overlayHeight, double svgWidth, double svgHeight) {
+  Widget _buildContent(
+      ImperialInfoBloc bloc, BuildContext context, double overlayHeight, double svgWidth, double svgHeight) {
     final state = bloc.state;
 
     switch (state.enumPageStatus) {
@@ -161,8 +153,8 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
     }
   }
 
-  Widget _buildSuccessContent(BuildContext context, ImperialInfoState state,
-      ImperialInfoBloc bloc, double overlayHeight) {
+  Widget _buildSuccessContent(
+      BuildContext context, ImperialInfoState state, ImperialInfoBloc bloc, double overlayHeight) {
     final localization = context.l10n;
     return CustomScrollView(
       slivers: [
@@ -272,9 +264,7 @@ class _UnitsPrecisionDialogState extends State<UnitsPrecisionDialog> {
                 items: EnumUnits.values.map((EnumUnits units) {
                   return DropdownMenuItem<EnumUnits>(
                     value: units,
-                    child: Text(units == EnumUnits.mm
-                        ? localization.mm
-                        : localization.inch),
+                    child: Text(units == EnumUnits.mm ? localization.mm : localization.inch),
                   );
                 }).toList(),
                 onChanged: (EnumUnits? newValue) {

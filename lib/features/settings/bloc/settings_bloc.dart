@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/core/constant/enum_lang.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
-import 'package:threadfon/core/constant/enum_thread.dart';
+import 'package:threadfon/core/constant/enum_threads.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
 import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
@@ -37,7 +38,7 @@ class SettingsBloc extends Cubit<SettingsState> with BlocIgnoreEmitAfterClosed {
       ));
     } catch (e, s) {
       _logger.e('Error loading settings', error: e, stackTrace: s);
-    
+
       _setErrorState();
     }
   }
@@ -50,7 +51,7 @@ class SettingsBloc extends Cubit<SettingsState> with BlocIgnoreEmitAfterClosed {
       emit(state.copyWith(enumThreads: enumThreads));
     } catch (e, s) {
       _logger.e('Error updating thread type', error: e, stackTrace: s);
-     
+
       _setErrorState();
     }
   }

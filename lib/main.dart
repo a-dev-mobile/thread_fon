@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:threadfon/app/app.dart';
-import 'package:threadfon/app/router/router.dart';
+import 'package:threadfon/app/router/app_router.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
@@ -38,8 +38,7 @@ Future<void> main() async {
 
         // Инициализация Crashlytics
         // Включаем сбор нефатальных ошибок
-        await FirebaseCrashlytics.instance
-            .setCrashlyticsCollectionEnabled(!kDebugMode);
+        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
 
         // Передаём все необработанные асинхронные ошибки в Crashlytics
         PlatformDispatcher.instance.onError = (error, stack) {
@@ -54,8 +53,7 @@ Future<void> main() async {
 
         final apiService = await ApiService().init();
         // Инициализация глобального экземпляра ErrorReportingService
-        await ErrorReportingService.initialize(
-            apiService: apiService, localStorage: localStorage);
+        await ErrorReportingService.initialize(apiService: apiService, localStorage: localStorage);
         // Настройка глобального обработчика ошибок Flutter (сохранение существующей логики)
         FlutterError.onError = (details) {
           if (!kReleaseMode) {
@@ -64,19 +62,13 @@ Future<void> main() async {
           }
 
           _logger.e('FlutterError.onError',
-              error: details.exception,
-              stackTrace: details.stack ?? StackTrace.current,
-               reportToServer: false
-              );
+              error: details.exception, stackTrace: details.stack ?? StackTrace.current, reportToServer: false);
           // Отправка ошибки через глобальный экземпляр
           globalErrorReporting.reportError(
               error: details.exception,
               stackTrace: details.stack,
               customMessage: 'Flutter Framework Error',
-              additionalInfo: {
-                'context': 'Flutter Framework Error Handler',
-                'route': 'Unknown'
-              });
+              additionalInfo: {'context': 'Flutter Framework Error Handler', 'route': 'Unknown'});
 
           // Также отправляем в Crashlytics
           FirebaseCrashlytics.instance.recordFlutterFatalError(details);
@@ -103,7 +95,7 @@ Future<void> main() async {
                   create: (context) => AppRouter(analytics: analytics),
                 ),
               ],
-              child: MyApp(
+              child: App(
                 enumLang: languageState.enumLang,
                 themeMode: themeState.themeMode,
               ),
@@ -113,7 +105,7 @@ Future<void> main() async {
       } on Exception catch (e, s) {
         // Логируем и отправляем критические ошибки
         _logger.e('Exception in main', error: e, stackTrace: s);
-      
+
         // Отправляем исключение в Crashlytics
         FirebaseCrashlytics.instance.recordError(e, s, fatal: true);
       } finally {
@@ -132,7 +124,7 @@ Future<void> main() async {
           final s = errorAndStacktrace.last as StackTrace;
 
           _logger.e('Isolate error', error: e, stackTrace: s);
-         
+
           // Отправляем ошибку в Crashlytics
           FirebaseCrashlytics.instance.recordError(e, s, fatal: true);
         }).sendPort,
@@ -144,7 +136,7 @@ Future<void> main() async {
     (e, s) {
       // Логируем ошибки из runZonedGuarded
       _logger.e('runZonedGuarded', error: e, stackTrace: s);
-     
+
       // Отправляем ошибку в Crashlytics
       FirebaseCrashlytics.instance.recordError(e, s, fatal: true);
     },
@@ -155,8 +147,7 @@ Future<void> main() async {
 class _AppLifecycleObserver extends WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.detached ||
-        state == AppLifecycleState.inactive) {
+    if (state == AppLifecycleState.detached || state == AppLifecycleState.inactive) {
       // Вызов dispose() при закрытии приложения, если необходимо
     }
   }

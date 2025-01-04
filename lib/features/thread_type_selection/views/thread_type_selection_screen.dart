@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
-import 'package:threadfon/core/constant/enum_navigation.dart';
+import 'package:threadfon/core/constant/enum_lang.dart';
+import 'package:threadfon/core/constant/enum_navigation_status.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
-import 'package:threadfon/core/constant/enum_thread%20copy.dart';
-import 'package:threadfon/core/constant/enum_thread.dart';
+import 'package:threadfon/core/constant/enum_thread_male_female.dart';
+import 'package:threadfon/core/constant/enum_threads.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/widgets/base_screen.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
@@ -23,8 +24,7 @@ class ThreadTypeSelectionScreen extends StatefulWidget {
   static const name = 'ThreadTypeSelectionScreen';
 
   @override
-  State<ThreadTypeSelectionScreen> createState() =>
-      _ThreadTypeSelectionScreenState();
+  State<ThreadTypeSelectionScreen> createState() => _ThreadTypeSelectionScreenState();
 }
 
 class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
@@ -66,8 +66,7 @@ class _ThreadTypeSelectionView extends StatelessWidget {
             ? '${localization.metric_thread_gost}\n${localization.metric_thread}'
             : '${localization.imperial_thread_gost}\n${localization.imperial_thread}',
         body: BlocListener<ThreadTypeBloc, ThreadTypeState>(
-          listenWhen: (previous, current) =>
-              previous.enumNavigationStatus != current.enumNavigationStatus,
+          listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
           listener: (context, state) {
             if (state.enumNavigationStatus.isNavigation) {
               context.pushNamed(state.nextNameScreen);
@@ -92,19 +91,15 @@ class _ThreadTypeSelectionView extends StatelessWidget {
                       return Center(
                         child: SingleChildScrollView(
                           child: Column(
-                            mainAxisSize:
-                                MainAxisSize.min, // Центрирует по вертикали
+                            mainAxisSize: MainAxisSize.min, // Центрирует по вертикали
                             children: state.threadTypes.map((threadType) {
-                              final label = threadType.enumThreadType ==
-                                      EnumThreadMaleFemale.female
+                              final label = threadType.enumThreadType == EnumThreadMaleFemale.female
                                   ? localization.internal_thread
                                   : localization.external_thread;
                               return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                padding: const EdgeInsets.symmetric(vertical: 8.0),
                                 child: FractionallySizedBox(
-                                  widthFactor:
-                                      0.8, // Устанавливает ширину 80% от ширины родителя
+                                  widthFactor: 0.8, // Устанавливает ширину 80% от ширины родителя
                                   child: ThreadTypeChoiceCard(
                                     svgAssetPath: threadType.svgAssetPath,
                                     label: label,

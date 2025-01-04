@@ -59,5 +59,17 @@
     "readme.*": "authors, backers.md, changelog*, citation*, code_of_conduct.md, codeowners, contributing.md, contributors, copying, credits, governance.md, history.md, license*, maintainers, readme*, security.md, sponsors.md",
     "*.dart": "$(capture).g.dart, $(capture).freezed.dart, $(capture).config.dart"
   },
-  "dart.flutterSdkPath": ".fvm/versions/3.27.1"
-}
+  "dart.flutterSdkPath": ".fvm/versions/3.27.1",
+
+  
+    "[yaml]": {
+      "editor.quickSuggestions": {
+        "strings": "on"
+      }
+    },
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.dcm.fixAll": "explicit"
+    }
+  }
+

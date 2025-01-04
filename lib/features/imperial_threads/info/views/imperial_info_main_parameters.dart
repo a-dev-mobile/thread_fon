@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threadfon/core/constant/enum_thread%20copy.dart';
+import 'package:threadfon/core/constant/enum_thread_male_female.dart';
 import 'package:threadfon/core/constant/enum_units.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/imperial_threads/info/bloc/imperial_info_bloc.dart';

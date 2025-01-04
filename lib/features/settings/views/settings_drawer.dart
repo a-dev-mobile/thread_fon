@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/core/constant/enum_lang.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
-import 'package:threadfon/core/constant/enum_thread.dart';
+import 'package:threadfon/core/constant/enum_threads.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
@@ -55,15 +56,13 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => settingsBloc,
-      child: _SettingsDrawerView(
-          settingsBloc, themeBloc, languageBloc, localStorage),
+      child: _SettingsDrawerView(settingsBloc, themeBloc, languageBloc, localStorage),
     );
   }
 }
 
 class _SettingsDrawerView extends StatelessWidget {
-  const _SettingsDrawerView(
-      this.bloc, this.themeBloc, this.languageBloc, this.localStorage);
+  const _SettingsDrawerView(this.bloc, this.themeBloc, this.languageBloc, this.localStorage);
   final SettingsBloc bloc;
   final ThemeBloc themeBloc;
   final LanguageBloc languageBloc;
@@ -74,8 +73,7 @@ class _SettingsDrawerView extends StatelessWidget {
     final localization = context.l10n;
 
     return BlocListener<SettingsBloc, SettingsState>(
-      listenWhen: (previous, current) =>
-          previous.enumThreads != current.enumThreads,
+      listenWhen: (previous, current) => previous.enumThreads != current.enumThreads,
       listener: (context, state) {
         context.read<ThreadTypeBloc>().load();
       },
@@ -85,12 +83,10 @@ class _SettingsDrawerView extends StatelessWidget {
           String threadTypeText;
           switch (currentThreadType) {
             case EnumThreads.metric:
-              threadTypeText =
-                  '${localization.metric_thread_gost}\n${localization.metric_thread}';
+              threadTypeText = '${localization.metric_thread_gost}\n${localization.metric_thread}';
               break;
             case EnumThreads.imperial:
-              threadTypeText =
-                  '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
+              threadTypeText = '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
               break;
           }
 
@@ -98,8 +94,7 @@ class _SettingsDrawerView extends StatelessWidget {
             child: Stack(
               children: [
                 BlocBuilder<SettingsBloc, SettingsState>(
-                  buildWhen: (previous, current) =>
-                      previous.enumPageStatus != current.enumPageStatus,
+                  buildWhen: (previous, current) => previous.enumPageStatus != current.enumPageStatus,
                   builder: (context, state) {
                     switch (state.enumPageStatus) {
                       case EnumStatus.loading:
@@ -116,8 +111,7 @@ class _SettingsDrawerView extends StatelessWidget {
                             // Drawer Header
                             Container(
                               width: double.infinity,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 50, horizontal: 20),
+                              padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
@@ -177,16 +171,14 @@ class _SettingsDrawerView extends StatelessWidget {
                                   const Divider(),
                                   ListTile(
                                     leading: const Icon(Icons.feedback),
-                                    title:
-                                        Text(localization.suggest_improvement),
+                                    title: Text(localization.suggest_improvement),
                                     onTap: () => _sendEmail(context),
                                   ),
                                   const Divider(),
                                   ListTile(
                                     leading: const Icon(Icons.store),
                                     title: Text(localization.leave_review),
-                                    onTap: () =>
-                                        _openAppStoreOrPlayStore(context),
+                                    onTap: () => _openAppStoreOrPlayStore(context),
                                   ),
                                   const Divider(),
                                   ListTile(
@@ -361,12 +353,10 @@ class _SettingsDrawerView extends StatelessWidget {
             String threadTypeText;
             switch (threadType) {
               case EnumThreads.metric:
-                threadTypeText =
-                    '${localization.metric_thread_gost}\n${localization.metric_thread}';
+                threadTypeText = '${localization.metric_thread_gost}\n${localization.metric_thread}';
                 break;
               case EnumThreads.imperial:
-                threadTypeText =
-                    '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
+                threadTypeText = '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
                 break;
             }
             return RadioListTile<EnumThreads>(
@@ -378,10 +368,8 @@ class _SettingsDrawerView extends StatelessWidget {
               ),
               value: threadType,
               groupValue: currentThreadType,
-              contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 0.0, vertical: 4.0), // Уменьшаем отступы
-              controlAffinity: ListTileControlAffinity
-                  .leading, // Располагаем радио-кнопку слева
+              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0), // Уменьшаем отступы
+              controlAffinity: ListTileControlAffinity.leading, // Располагаем радио-кнопку слева
               onChanged: (value) {
                 if (value != null) {
                   bloc.setThreadType(value);
