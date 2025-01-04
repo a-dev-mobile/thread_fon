@@ -4,6 +4,7 @@ part 'imperial_diameter_model.freezed.dart';
 part 'imperial_diameter_model.g.dart';
 
 @freezed
+@immutable
 class ImperialDiameterModel with _$ImperialDiameterModel {
   const factory ImperialDiameterModel({
     required int id,
@@ -18,6 +19,7 @@ class ImperialDiameterModel with _$ImperialDiameterModel {
 }
 
 @freezed
+@immutable
 class Formatted with _$Formatted {
   const factory Formatted({
     required String fractional,

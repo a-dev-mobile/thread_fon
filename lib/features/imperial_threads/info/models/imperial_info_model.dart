@@ -7,6 +7,7 @@ part 'imperial_info_model.freezed.dart';
 part 'imperial_info_model.g.dart';
 
 @freezed
+@immutable
 class AdditionalInfo with _$AdditionalInfo {
   const factory AdditionalInfo({
     required String name,
@@ -18,6 +19,7 @@ class AdditionalInfo with _$AdditionalInfo {
 }
 
 @freezed
+@immutable
 class ImperialInfoModel with _$ImperialInfoModel {
   const factory ImperialInfoModel({
     required int id,

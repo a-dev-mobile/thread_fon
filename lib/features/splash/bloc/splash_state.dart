@@ -1,6 +1,7 @@
 part of 'splash_bloc.dart';
 
 @freezed
+@immutable
 class SplashState with _$SplashState {
   const factory SplashState({
     @Default(EnumStatus.loading) EnumStatus enumPageStatus,

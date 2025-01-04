@@ -3,6 +3,7 @@
 // part 'error_state.freezed.dart';
 
 // @freezed
+// @immutable
 // class ErrorState with _$ErrorState {
 //   const factory ErrorState({
 //     required Exception exception,

@@ -1,6 +1,7 @@
 part of 'theme_bloc.dart';
 
 @freezed
+@immutable
 sealed class ThemeState with _$ThemeState {
   const factory ThemeState({
     required ThemeMode themeMode,

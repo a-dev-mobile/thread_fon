@@ -1,6 +1,7 @@
 part of 'imperial_diameter_bloc.dart';
 
 @freezed
+@immutable
 class ImperialDiameterState with _$ImperialDiameterState {
   const factory ImperialDiameterState({
     @Default(<ImperialDiameterModel>[]) List<ImperialDiameterModel> diameters,

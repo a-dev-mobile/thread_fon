@@ -4,6 +4,7 @@ part 'tolerance_model.freezed.dart';
 part 'tolerance_model.g.dart';
 
 @freezed
+@immutable
 class ToleranceModel with _$ToleranceModel {
   const factory ToleranceModel({
     required String info,

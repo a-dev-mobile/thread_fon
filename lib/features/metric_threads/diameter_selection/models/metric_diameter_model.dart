@@ -4,6 +4,7 @@ part 'metric_diameter_model.freezed.dart';
 part 'metric_diameter_model.g.dart';
 
 @freezed
+@immutable
 class MetricDiameterModel with _$MetricDiameterModel {
   const factory MetricDiameterModel({
     required int id,

@@ -1,15 +1,20 @@
 // lib/core/connectivity/connectivity_state.dart
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:meta/meta.dart';
 
-abstract class ConnectivityState {}
 
-class ConnectivityInitial extends ConnectivityState {}
+@immutable
+abstract final class ConnectivityState {}
 
-class ConnectivityOnline extends ConnectivityState {
+@immutable
+final class ConnectivityInitial extends ConnectivityState {}
+
+@immutable
+final class ConnectivityOnline extends ConnectivityState {
   final List<ConnectivityResult> connectivityResults;
 
   ConnectivityOnline(this.connectivityResults);
 }
-
-class ConnectivityOffline extends ConnectivityState {}
+@immutable
+final class ConnectivityOffline extends ConnectivityState {}

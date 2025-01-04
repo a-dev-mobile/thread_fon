@@ -5,6 +5,7 @@ part 'thread_type_model.freezed.dart';
 part 'thread_type_model.g.dart';
 
 @freezed
+@immutable
 class ThreadTypeModel with _$ThreadTypeModel {
   const factory ThreadTypeModel({
     required EnumThreadMaleFemale enumThreadType,

@@ -147,7 +147,7 @@ class LocalStorage {
     } on Exception catch (e, s) {
       await _recordError(
           e, s, 'GET_CORE_USER_SELECTION', _coreUserSelectionKey, jsonString);
-   
+
       return const CoreUserSelection();
     }
   }

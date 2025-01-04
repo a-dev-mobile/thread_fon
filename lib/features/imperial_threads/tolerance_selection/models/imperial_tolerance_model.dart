@@ -4,6 +4,7 @@ part 'imperial_tolerance_model.freezed.dart';
 part 'imperial_tolerance_model.g.dart';
 
 @freezed
+@immutable
 class ImperialToleranceModel with _$ImperialToleranceModel {
   const factory ImperialToleranceModel({
     required List<ImperialToleranceItem> female,
@@ -15,6 +16,7 @@ class ImperialToleranceModel with _$ImperialToleranceModel {
 }
 
 @freezed
+@immutable
 class ImperialToleranceItem with _$ImperialToleranceItem {
   const factory ImperialToleranceItem({
     required int id,
@@ -27,6 +29,7 @@ class ImperialToleranceItem with _$ImperialToleranceItem {
 }
 
 @freezed
+@immutable
 class ImperialToleranceFormatted with _$ImperialToleranceFormatted {
   const factory ImperialToleranceFormatted({
     required String fractional,

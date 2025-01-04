@@ -1,6 +1,7 @@
 part of 'tolerance_bloc.dart';
 
 @freezed
+@immutable
 class ToleranceState with _$ToleranceState {
   const factory ToleranceState({
     @Default(<ToleranceModel>[]) List<ToleranceModel> tolerances,

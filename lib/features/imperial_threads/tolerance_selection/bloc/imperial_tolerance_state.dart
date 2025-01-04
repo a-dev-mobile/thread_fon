@@ -1,6 +1,7 @@
 part of 'imperial_tolerance_bloc.dart';
 
 @freezed
+@immutable
 class ImperialToleranceState with _$ImperialToleranceState {
   const factory ImperialToleranceState({
     @Default(<ImperialToleranceItem>[])

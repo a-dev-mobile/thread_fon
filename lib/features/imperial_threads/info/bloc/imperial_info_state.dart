@@ -1,6 +1,7 @@
 part of 'imperial_info_bloc.dart';
 
 @freezed
+@immutable
 class ImperialInfoState with _$ImperialInfoState {
   const factory ImperialInfoState({
     ImperialInfoModel? model,
