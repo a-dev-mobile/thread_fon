@@ -7,9 +7,9 @@ class ImperialInfoRow extends StatelessWidget {
   final bool isHaveDividerBottom; // Новый параметр
 
   const ImperialInfoRow({
-    super.key,
     required this.label,
     required this.value,
+    super.key,
     this.isHaveDividerBottom = true,
   });
 
@@ -19,16 +19,17 @@ class ImperialInfoRow extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    final labelStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.w600,
-        );
-    final valueStyle = Theme.of(context).textTheme.bodyMedium;
+    final TextStyle? labelStyle =
+        Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            );
+    final TextStyle? valueStyle = Theme.of(context).textTheme.bodyMedium;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       decoration: isHaveDividerBottom
-          ? BoxDecoration(
-              border: const Border(
+          ? const BoxDecoration(
+              border: Border(
                 bottom: BorderSide(
                   color: Colors.grey,
                   width: 0.2,
@@ -38,7 +39,7 @@ class ImperialInfoRow extends StatelessWidget {
           : null,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
+        children: <Widget>[
           // Label
           Expanded(
             child: Text(

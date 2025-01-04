@@ -17,7 +17,7 @@ class BlurredOverlay extends StatelessWidget {
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 // Индикатор загрузки
                 // const CircularProgressIndicator(),
                 const SizedBox(height: 20),

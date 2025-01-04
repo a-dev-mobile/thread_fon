@@ -15,7 +15,7 @@ class MetricInfoParameters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = context.l10n;
+    final GeneratedLocalization localization = context.l10n;
 
     // Список параметров для отображения
     final List<_Parameter> parameters = _getParameters(localization, info);
@@ -25,7 +25,7 @@ class MetricInfoParameters extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: parameters
             .map(
-              (param) => Padding(
+              (_Parameter param) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: InfoRow(
                   label: param.label,
@@ -41,7 +41,7 @@ class MetricInfoParameters extends StatelessWidget {
   // Метод для получения списка параметров
   List<_Parameter> _getParameters(
       GeneratedLocalization localization, MetricInfoModel info) {
-    return [
+    return <_Parameter>[
       _Parameter(
         label: localization.heightOfFundamentalTriangle,
         value: info.h,

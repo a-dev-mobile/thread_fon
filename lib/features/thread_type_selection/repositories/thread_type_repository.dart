@@ -3,13 +3,13 @@ import 'package:threadfon/core/constant/enum_thread_male_female.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/thread_type_selection/models/thread_type_model.dart';
 
-final _logger = LogService('thread_type_repository');
+final LogService _logger = LogService('thread_type_repository');
 
 class ThreadTypeRepository {
   Future<List<ThreadTypeModel>> fetchThreadTypes() async {
     try {
       // В будущем можно добавить API вызовы или локальное хранилище
-      return [
+      return <ThreadTypeModel>[
         ThreadTypeModel(
           enumThreadType: EnumThreadMaleFemale.female,
           svgAssetPath: Assets.svg.gaika,

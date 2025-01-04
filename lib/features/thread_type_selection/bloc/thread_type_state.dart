@@ -3,7 +3,7 @@ part of 'thread_type_bloc.dart';
 @freezed
 class ThreadTypeState with _$ThreadTypeState {
   const factory ThreadTypeState({
-    @Default([]) List<ThreadTypeModel> threadTypes,
+    @Default(<ThreadTypeModel>[]) List<ThreadTypeModel> threadTypes,
     @Default(EnumStatus.loading) EnumStatus enumPageStatus,
     @Default(EnumNavigationStatus.initial)
     EnumNavigationStatus enumNavigationStatus,

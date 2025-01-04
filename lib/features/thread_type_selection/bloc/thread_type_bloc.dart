@@ -7,7 +7,6 @@ import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/constant/enum_threads.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
 import 'package:threadfon/core/models/core_user_selection.dart';
-import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
@@ -20,9 +19,10 @@ part 'thread_type_bloc.freezed.dart';
 part 'thread_type_bloc.g.dart';
 part 'thread_type_state.dart';
 
-final _logger = LogService('thread_type_bloc');
+final LogService _logger = LogService('thread_type_bloc');
 
-class ThreadTypeBloc extends Cubit<ThreadTypeState> with BlocIgnoreEmitAfterClosed {
+class ThreadTypeBloc extends Cubit<ThreadTypeState>
+    with BlocIgnoreEmitAfterClosed {
   ThreadTypeBloc({
     required ThreadTypeRepository repository,
     required LocalStorage localStorage,
@@ -39,10 +39,14 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> with BlocIgnoreEmitAfterClos
   Future<void> load() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final threadTypes = await _repository.fetchThreadTypes();
-      final coreUserSelection = await _localStorage.getCoreUserSelection();
+      final List<ThreadTypeModel> threadTypes =
+          await _repository.fetchThreadTypes();
+      final CoreUserSelection coreUserSelection =
+          await _localStorage.getCoreUserSelection();
       emit(state.copyWith(
-          enumPageStatus: EnumStatus.success, threadTypes: threadTypes, coreUserSelection: coreUserSelection));
+          enumPageStatus: EnumStatus.success,
+          threadTypes: threadTypes,
+          coreUserSelection: coreUserSelection));
     } on Exception catch (e, s) {
       _logger.e('Error loading thread types', error: e, stackTrace: s);
 
@@ -52,21 +56,27 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> with BlocIgnoreEmitAfterClos
 
   Future<void> preparationNavigation(ThreadTypeModel selectedThreadType) async {
     try {
-      final currentMetricUserSelection = await _localStorage.getCoreUserSelection();
+      final CoreUserSelection currentMetricUserSelection =
+          await _localStorage.getCoreUserSelection();
 
-      final nextNameScreen =
-          currentMetricUserSelection.enumThreads.isMetric ? MetricDiameterScreen.name : ImperialDiameterScreen.name;
+      final String nextNameScreen =
+          currentMetricUserSelection.enumThreads.isMetric
+              ? MetricDiameterScreen.name
+              : ImperialDiameterScreen.name;
 
       await _localStorage.updateCoreUserSelection(
-        (current) => current.copyWith(
+        (CoreUserSelection current) => current.copyWith(
           threadType: selectedThreadType.enumThreadType,
         ),
       );
-      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation, nextNameScreen: nextNameScreen));
+      emit(state.copyWith(
+          enumNavigationStatus: EnumNavigationStatus.navigation,
+          nextNameScreen: nextNameScreen));
       await Future<void>.delayed(const Duration(milliseconds: 100));
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
-      _logger.e('Error updating thread type selection', error: e, stackTrace: s);
+      _logger.e('Error updating thread type selection',
+          error: e, stackTrace: s);
 
       // Отправляем ошибку в ErrorReportingService
 
@@ -75,12 +85,14 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState> with BlocIgnoreEmitAfterClos
   }
 
   void _setErrorState() {
-    final currentLang = _languageBloc.state.enumLang;
-    final errorMsg = currentLang == EnumLang.en
+    final EnumLang currentLang = _languageBloc.state.enumLang;
+    final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading thread types.'
         : 'Произошла ошибка при загрузке типов резьбы.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error,
+        errorMsg: errorMsg,
+        enumNavigationStatus: EnumNavigationStatus.initial));
   }
 
   void resetNavigationStatus() {

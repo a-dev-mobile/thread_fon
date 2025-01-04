@@ -5,9 +5,9 @@ import 'package:threadfon/core/constant/enum_lang.dart';
 import 'package:threadfon/core/constant/enum_navigation_status.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
-import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
+import 'package:threadfon/features/metric_threads/core/models/metric_user_selection.dart';
 import 'package:threadfon/features/metric_threads/pitch_selection/models/pitch_model.dart';
 import 'package:threadfon/features/metric_threads/pitch_selection/repositories/pitch_repository.dart';
 
@@ -15,7 +15,7 @@ part 'pitch_bloc.freezed.dart';
 part 'pitch_bloc.g.dart';
 part 'pitch_state.dart';
 
-final _logger = LogService('pitch_bloc');
+final LogService _logger = LogService('pitch_bloc');
 
 class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
   PitchBloc({
@@ -34,12 +34,14 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
   Future<void> loadPitch() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final metricUserSelection = await _localStorage.getMetricUserSelection();
-      final pitchList = await _repository.fetchPitch(
+      final MetricUserSelection metricUserSelection =
+          await _localStorage.getMetricUserSelection();
+      final List<PitchModel> pitchList = await _repository.fetchPitch(
         diameter: metricUserSelection.diameter!,
         language: _languageBloc.state.enumLang.name,
       );
-      emit(state.copyWith(enumPageStatus: EnumStatus.success, pitches: pitchList));
+      emit(state.copyWith(
+          enumPageStatus: EnumStatus.success, pitches: pitchList));
     } catch (e, s) {
       _logger.e('Error loading pitch', error: e, stackTrace: s);
 
@@ -50,12 +52,13 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
   Future<void> preparationNavigation(PitchModel selectedPitch) async {
     try {
       await _localStorage.updateMetricUserSelection(
-        (current) => current.copyWith(
+        (MetricUserSelection current) => current.copyWith(
           id: selectedPitch.id,
           pitch: selectedPitch.pitch,
         ),
       );
-      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(
+          enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating pitch selection', error: e, stackTrace: s);
 
@@ -64,12 +67,14 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
   }
 
   void _setErrorState() {
-    final currentLang = _languageBloc.state.enumLang;
-    final errorMsg = currentLang == EnumLang.en
+    final EnumLang currentLang = _languageBloc.state.enumLang;
+    final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading pitches.'
         : 'Произошла ошибка при загрузке шагов резьбы.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error,
+        errorMsg: errorMsg,
+        enumNavigationStatus: EnumNavigationStatus.initial));
   }
 
   void resetNavigationStatus() {

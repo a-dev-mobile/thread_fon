@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 import 'connectivity_bloc.dart';
 import 'connectivity_state.dart';
@@ -11,10 +12,10 @@ class ConnectivityBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = context.l10n;
+    final GeneratedLocalization localization = context.l10n;
 
     return BlocBuilder<ConnectivityBloc, ConnectivityState>(
-      builder: (context, state) {
+      builder: (BuildContext context, ConnectivityState state) {
         if (state is ConnectivityOffline) {
           return Positioned(
             bottom: 0,

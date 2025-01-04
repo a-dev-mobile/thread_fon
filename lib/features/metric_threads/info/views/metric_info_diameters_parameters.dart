@@ -16,12 +16,12 @@ class MetricInfoDiametersParameters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = context.l10n;
-    final isFemale = info.threadType == EnumThreadMaleFemale.female;
-    final prefix = isFemale ? 'D' : 'd';
+    final GeneratedLocalization localization = context.l10n;
+    final bool isFemale = info.threadType == EnumThreadMaleFemale.female;
+    final String prefix = isFemale ? 'D' : 'd';
 
     // Создаем список виджетов секций диаметров
-    final List<Widget> diameterSections = [];
+    final List<Widget> diameterSections = <Widget>[];
 
     // Добавляем первую секцию диаметров в зависимости от типа резьбы
     diameterSections
@@ -93,7 +93,7 @@ class MetricInfoDiametersParameters extends StatelessWidget {
   // Метод для создания дополнительных секций диаметров
   List<Widget> _buildAdditionalSections(
       String prefix, bool isFemale, GeneratedLocalization localization) {
-    List<Widget> sections = [];
+    List<Widget> sections = <Widget>[];
 
     if (isFemale) {
       sections.add(_DiameterSection(
@@ -116,7 +116,7 @@ class MetricInfoDiametersParameters extends StatelessWidget {
         max: info.minorDiamMax,
       ));
 
-      sections.add(SizedBox(height: 10.0));
+      sections.add(const SizedBox(height: 10.0));
 
       sections.add(_DiameterSection(
         title: localization.d3_label,
@@ -154,11 +154,11 @@ class _DiameterSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = context.l10n;
+    final GeneratedLocalization localization = context.l10n;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         // Заголовок секции
         Container(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -173,7 +173,7 @@ class _DiameterSection extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
+            children: <Widget>[
               Expanded(
                 child: Text(
                   title,
@@ -192,11 +192,11 @@ class _DiameterSection extends StatelessWidget {
           ),
         ),
         // Отображение min, avg, max, если они заданы
-        if (min != null && avg != null && max != null) ...[
+        if (min != null && avg != null && max != null) ...<Widget>[
           const SizedBox(height: 6.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: <Widget>[
               _ValueItem(label: localization.min, value: min!),
               _ValueItem(label: localization.avg, value: avg!),
               _ValueItem(label: localization.max, value: max!),
@@ -221,8 +221,8 @@ class _DiameterItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasDEs = dEs != null && dEs != 0;
-    final hasDEi = dEi != null && dEi != 0;
+    final bool hasDEs = dEs != null && dEs != 0;
+    final bool hasDEi = dEi != null && dEi != 0;
 
     // Метод для форматирования значения с префиксом
     String formatValue(num? value) {
@@ -231,16 +231,16 @@ class _DiameterItem extends StatelessWidget {
     }
 
     return Row(
-      children: [
+      children: <Widget>[
         Text(
           diameter.toString(),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
-        if (hasDEs || hasDEi) ...[
+        if (hasDEs || hasDEi) ...<Widget>[
           const SizedBox(width: 8.0),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               if (hasDEs)
                 Text(
                   formatValue(dEs),
@@ -271,7 +271,7 @@ class _ValueItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         Text(
           label,
           style: Theme.of(context).textTheme.bodySmall,
@@ -298,7 +298,7 @@ class _AdditionalInfoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      children: <Widget>[
         Expanded(
           child: Text(
             label,

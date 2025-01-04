@@ -12,7 +12,7 @@ class LoadingWidget extends StatelessWidget {
     Widget content = Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           // Optional loading indicator
           // const CircularProgressIndicator(),
           const SizedBox(height: 20),

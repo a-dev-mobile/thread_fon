@@ -3,7 +3,7 @@ part of 'imperial_diameter_bloc.dart';
 @freezed
 class ImperialDiameterState with _$ImperialDiameterState {
   const factory ImperialDiameterState({
-    @Default([]) List<ImperialDiameterModel> diameters,
+    @Default(<ImperialDiameterModel>[]) List<ImperialDiameterModel> diameters,
     @Default(EnumStatus.loading) EnumStatus enumPageStatus,
     @Default(EnumNavigationStatus.initial)
     EnumNavigationStatus enumNavigationStatus,

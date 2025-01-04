@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
-import 'package:threadfon/core/constant/enum_lang.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
+import 'package:threadfon/core/constant/enum_lang.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/constant/enum_threads.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
@@ -13,10 +13,11 @@ import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/features/settings/bloc/settings_bloc.dart';
 import 'package:threadfon/features/settings/views/about_app.dart'; // Импортируем экран AboutApp
 import 'package:threadfon/features/thread_type_selection/bloc/thread_type_bloc.dart';
+import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-final _logger = LogService('settings_drawer');
+final LogService _logger = LogService('settings_drawer');
 
 class SettingsDrawer extends StatefulWidget {
   const SettingsDrawer({super.key});
@@ -56,13 +57,15 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => settingsBloc,
-      child: _SettingsDrawerView(settingsBloc, themeBloc, languageBloc, localStorage),
+      child: _SettingsDrawerView(
+          settingsBloc, themeBloc, languageBloc, localStorage),
     );
   }
 }
 
 class _SettingsDrawerView extends StatelessWidget {
-  const _SettingsDrawerView(this.bloc, this.themeBloc, this.languageBloc, this.localStorage);
+  const _SettingsDrawerView(
+      this.bloc, this.themeBloc, this.languageBloc, this.localStorage);
   final SettingsBloc bloc;
   final ThemeBloc themeBloc;
   final LanguageBloc languageBloc;
@@ -70,32 +73,36 @@ class _SettingsDrawerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = context.l10n;
+    final GeneratedLocalization localization = context.l10n;
 
     return BlocListener<SettingsBloc, SettingsState>(
-      listenWhen: (previous, current) => previous.enumThreads != current.enumThreads,
-      listener: (context, state) {
+      listenWhen: (SettingsState previous, SettingsState current) =>
+          previous.enumThreads != current.enumThreads,
+      listener: (BuildContext context, SettingsState state) {
         context.read<ThreadTypeBloc>().load();
       },
       child: BlocBuilder<SettingsBloc, SettingsState>(
-        builder: (context, settingsState) {
-          final currentThreadType = settingsState.enumThreads;
+        builder: (BuildContext context, SettingsState settingsState) {
+          final EnumThreads currentThreadType = settingsState.enumThreads;
           String threadTypeText;
           switch (currentThreadType) {
             case EnumThreads.metric:
-              threadTypeText = '${localization.metric_thread_gost}\n${localization.metric_thread}';
+              threadTypeText =
+                  '${localization.metric_thread_gost}\n${localization.metric_thread}';
               break;
             case EnumThreads.imperial:
-              threadTypeText = '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
+              threadTypeText =
+                  '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
               break;
           }
 
           return Drawer(
             child: Stack(
-              children: [
+              children: <Widget>[
                 BlocBuilder<SettingsBloc, SettingsState>(
-                  buildWhen: (previous, current) => previous.enumPageStatus != current.enumPageStatus,
-                  builder: (context, state) {
+                  buildWhen: (SettingsState previous, SettingsState current) =>
+                      previous.enumPageStatus != current.enumPageStatus,
+                  builder: (BuildContext context, SettingsState state) {
                     switch (state.enumPageStatus) {
                       case EnumStatus.loading:
                         return const LoadingWidget();
@@ -107,14 +114,15 @@ class _SettingsDrawerView extends StatelessWidget {
                         );
                       case EnumStatus.success:
                         return Column(
-                          children: [
+                          children: <Widget>[
                             // Drawer Header
                             Container(
                               width: double.infinity,
-                              padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 50, horizontal: 20),
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
-                                  colors: [
+                                  colors: <Color>[
                                     Theme.of(context).primaryColor,
                                     Theme.of(context).primaryColorDark,
                                   ],
@@ -124,7 +132,7 @@ class _SettingsDrawerView extends StatelessWidget {
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                                children: <Widget>[
                                   // App Name
                                   Text(
                                     localization.app_name,
@@ -149,7 +157,7 @@ class _SettingsDrawerView extends StatelessWidget {
                             // Drawer Content
                             Expanded(
                               child: ListView(
-                                children: [
+                                children: <Widget>[
                                   ListTile(
                                     leading: const Icon(Icons.color_lens),
                                     title: Text(localization.choose_theme),
@@ -171,14 +179,16 @@ class _SettingsDrawerView extends StatelessWidget {
                                   const Divider(),
                                   ListTile(
                                     leading: const Icon(Icons.feedback),
-                                    title: Text(localization.suggest_improvement),
+                                    title:
+                                        Text(localization.suggest_improvement),
                                     onTap: () => _sendEmail(context),
                                   ),
                                   const Divider(),
                                   ListTile(
                                     leading: const Icon(Icons.store),
                                     title: Text(localization.leave_review),
-                                    onTap: () => _openAppStoreOrPlayStore(context),
+                                    onTap: () =>
+                                        _openAppStoreOrPlayStore(context),
                                   ),
                                   const Divider(),
                                   ListTile(
@@ -222,7 +232,7 @@ class _SettingsDrawerView extends StatelessWidget {
     final Uri emailUri = Uri(
       scheme: 'mailto',
       path: 'wayofdt@gmail.com',
-      queryParameters: {
+      queryParameters: <String, dynamic>{
         'subject': 'Feedback ThreadFon',
       },
     );
@@ -259,21 +269,21 @@ class _SettingsDrawerView extends StatelessWidget {
 
   /// Dialog to choose theme
   void _showThemeDialog(BuildContext context) {
-    final localization = context.l10n;
+    final GeneratedLocalization localization = context.l10n;
 
     showDialog(
       context: context,
       useRootNavigator: true,
-      builder: (dialogContext) => AlertDialog(
+      builder: (BuildContext dialogContext) => AlertDialog(
         title: Text(localization.choose_theme),
         content: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             RadioListTile<ThemeMode>(
               title: Text(localization.light_theme),
               value: ThemeMode.light,
               groupValue: themeBloc.state.themeMode,
-              onChanged: (value) {
+              onChanged: (ThemeMode? value) {
                 if (value != null) {
                   themeBloc.setTheme(value);
 
@@ -286,7 +296,7 @@ class _SettingsDrawerView extends StatelessWidget {
               title: Text(localization.dark_theme),
               value: ThemeMode.dark,
               groupValue: themeBloc.state.themeMode,
-              onChanged: (value) {
+              onChanged: (ThemeMode? value) {
                 if (value != null) {
                   themeBloc.setTheme(value);
                   dialogContext.pop(); // Закрыть диалог
@@ -302,16 +312,16 @@ class _SettingsDrawerView extends StatelessWidget {
 
   /// Dialog to choose language
   void _showLanguageDialog(BuildContext context) {
-    final localization = context.l10n;
+    final GeneratedLocalization localization = context.l10n;
 
     showDialog(
       context: context,
       useRootNavigator: true,
-      builder: (dialogContext) => AlertDialog(
+      builder: (BuildContext dialogContext) => AlertDialog(
         title: Text(localization.choose_language),
         content: Column(
           mainAxisSize: MainAxisSize.min,
-          children: EnumLang.values.map((lang) {
+          children: EnumLang.values.map((EnumLang lang) {
             String langText;
             switch (lang) {
               case EnumLang.en:
@@ -325,7 +335,7 @@ class _SettingsDrawerView extends StatelessWidget {
               title: Text(langText),
               value: lang,
               groupValue: languageBloc.state.enumLang,
-              onChanged: (value) {
+              onChanged: (EnumLang? value) {
                 languageBloc.setLanguage(value!);
                 dialogContext.pop(); // Закрыть диалог
                 context.pop(); // Закрыть Drawer
@@ -339,24 +349,26 @@ class _SettingsDrawerView extends StatelessWidget {
 
   /// Dialog to choose thread type
   void _showThreadDialog(BuildContext context) {
-    final localization = context.l10n;
-    final currentThreadType = bloc.state.enumThreads;
+    final GeneratedLocalization localization = context.l10n;
+    final EnumThreads currentThreadType = bloc.state.enumThreads;
 
     showDialog(
       context: context,
       useRootNavigator: true,
-      builder: (dialogContext) => AlertDialog(
+      builder: (BuildContext dialogContext) => AlertDialog(
         title: Text(localization.choose_thread),
         content: Column(
           mainAxisSize: MainAxisSize.min,
-          children: EnumThreads.values.map((threadType) {
+          children: EnumThreads.values.map((EnumThreads threadType) {
             String threadTypeText;
             switch (threadType) {
               case EnumThreads.metric:
-                threadTypeText = '${localization.metric_thread_gost}\n${localization.metric_thread}';
+                threadTypeText =
+                    '${localization.metric_thread_gost}\n${localization.metric_thread}';
                 break;
               case EnumThreads.imperial:
-                threadTypeText = '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
+                threadTypeText =
+                    '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
                 break;
             }
             return RadioListTile<EnumThreads>(
@@ -368,9 +380,11 @@ class _SettingsDrawerView extends StatelessWidget {
               ),
               value: threadType,
               groupValue: currentThreadType,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0), // Уменьшаем отступы
-              controlAffinity: ListTileControlAffinity.leading, // Располагаем радио-кнопку слева
-              onChanged: (value) {
+              contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 0.0, vertical: 4.0), // Уменьшаем отступы
+              controlAffinity: ListTileControlAffinity
+                  .leading, // Располагаем радио-кнопку слева
+              onChanged: (EnumThreads? value) {
                 if (value != null) {
                   bloc.setThreadType(value);
                   dialogContext.pop();
@@ -380,7 +394,7 @@ class _SettingsDrawerView extends StatelessWidget {
             );
           }).toList(),
         ),
-        actions: [
+        actions: <Widget>[
           TextButton(
             onPressed: () => dialogContext.pop(),
             child: Text(

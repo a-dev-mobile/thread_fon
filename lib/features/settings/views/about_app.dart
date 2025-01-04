@@ -2,12 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
 class AboutApp extends StatefulWidget {
   const AboutApp({super.key});
-  static const path = '/AboutApp';
-  static const name = 'AboutApp';
+  static const String path = '/AboutApp';
+  static const String name = 'AboutApp';
   @override
   _AboutAppState createState() => _AboutAppState();
 }
@@ -22,7 +23,7 @@ class _AboutAppState extends State<AboutApp> {
   }
 
   Future<void> _initPackageInfo() async {
-    final info = await PackageInfo.fromPlatform();
+    final PackageInfo info = await PackageInfo.fromPlatform();
     setState(() {
       _version = info.version;
     });
@@ -30,7 +31,7 @@ class _AboutAppState extends State<AboutApp> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = context.l10n;
+    final GeneratedLocalization localization = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
@@ -39,15 +40,15 @@ class _AboutAppState extends State<AboutApp> {
       body: Center(
         // Центрируем содержимое по горизонтали
         child: ConstrainedBox(
-          constraints:
-              BoxConstraints(maxWidth: 600), // Ограничиваем максимальную ширину
+          constraints: const BoxConstraints(
+              maxWidth: 600), // Ограничиваем максимальную ширину
           child: SingleChildScrollView(
             // Обеспечиваем прокрутку на маленьких экранах
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisSize: MainAxisSize
                   .min, // Занимает минимально необходимое пространство
-              children: [
+              children: <Widget>[
                 // Иконка приложения
                 Image.asset(
                   'assets/png/icon.png',
@@ -55,16 +56,16 @@ class _AboutAppState extends State<AboutApp> {
                   height: 100,
                   semanticLabel: localization.app_icon_alt,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 // Название приложения
                 Text(
                   localization.app_name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 // Версия приложения
                 Text(
                   '${localization.version}: $_version',
@@ -73,20 +74,20 @@ class _AboutAppState extends State<AboutApp> {
                     color: Colors.grey[600],
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 // Описание приложения
                 Text(
                   localization.app_description,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 // Дополнительная информация или ссылки
                 Text(
                   '© ${DateTime.now().year} ThreadFon',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                     color: Colors.grey,
                   ),

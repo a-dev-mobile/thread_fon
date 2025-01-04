@@ -5,7 +5,7 @@ import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/metric_threads/info/models/metric_info_model.dart';
 
-final _logger = LogService('info_repository');
+final LogService _logger = LogService('info_repository');
 const String _baseUrl = '/v1/metric';
 
 class MetricInfoRepository {
@@ -24,11 +24,11 @@ class MetricInfoRepository {
     required int precision,
     required double diameter,
   }) async {
-    final endpoint = '$_baseUrl/info';
+    const String endpoint = '$_baseUrl/info';
     try {
-      final response = await _apiService.get(
+      final Response response = await _apiService.get(
         endpoint,
-        queryParameters: {
+        queryParameters: <String, dynamic>{
           'tolerance': tolerance,
           'diameter': diameter,
           'pitch': pitch,
@@ -44,7 +44,7 @@ class MetricInfoRepository {
             response.data as Map<String, dynamic>;
         return MetricInfoModel.fromJson(rawData);
       } else {
-        final errorMessage =
+        final String errorMessage =
             'Failed to fetch info. Status code: ${response.statusCode}';
         _logger.e(errorMessage);
         throw Exception(errorMessage);
@@ -66,11 +66,11 @@ class MetricInfoRepository {
     required int precision,
     bool showDimensions = true,
   }) async {
-    final endpoint = '$_baseUrl/svg';
+    const String endpoint = '$_baseUrl/svg';
     try {
-      final response = await _apiService.get(
+      final Response response = await _apiService.get(
         endpoint,
-        queryParameters: {
+        queryParameters: <String, dynamic>{
           'tolerance': tolerance,
           'type': threadType,
           'pitch': pitch,
@@ -87,7 +87,7 @@ class MetricInfoRepository {
       if (response.statusCode == 200) {
         return response.data as String;
       } else {
-        final errorMessage =
+        final String errorMessage =
             'Failed to fetch SVG data. Status code: ${response.statusCode}';
         _logger.e(errorMessage);
         throw Exception(errorMessage);

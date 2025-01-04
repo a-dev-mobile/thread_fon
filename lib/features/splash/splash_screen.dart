@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
-import 'package:threadfon/core/constant/enum_lang.dart';
 import 'package:threadfon/core/constant/enum_navigation_status.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
@@ -13,8 +12,8 @@ import 'package:threadfon/main.dart';
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
-  static const name = 'Splash';
-  static const path = '/splash';
+  static const String name = 'Splash';
+  static const String path = '/splash';
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class SplashScreen extends StatelessWidget {
 
     return BlocProvider(
       lazy: false,
-      create: (context) => SplashBloc(
+      create: (BuildContext context) => SplashBloc(
         storage: context.read<LocalStorage>(),
         languageBloc: context.read<LanguageBloc>(),
       )..load(),
@@ -38,12 +37,12 @@ class _SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<SplashBloc, SplashState>(
-      listener: (context, state) {
+      listener: (BuildContext context, SplashState state) {
         if (state.enumNavigationStatus == EnumNavigationStatus.navigation) {
           context.goNamed(ThreadTypeSelectionScreen.name);
         }
       },
-      child: LoadingWidget(),
+      child: const LoadingWidget(),
     );
   }
 }

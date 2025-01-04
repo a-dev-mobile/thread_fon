@@ -5,13 +5,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_view/photo_view.dart';
 
 class ImperialFullScreenSvgView extends StatefulWidget {
-  static const path = '/FullScreenSvgView';
-  static const name = 'FullScreenSvgView';
+  static const String path = '/FullScreenSvgView';
+  static const String name = 'FullScreenSvgView';
   final String svgData;
 
   const ImperialFullScreenSvgView({
-    super.key,
     required this.svgData,
+    super.key,
   });
 
   @override
@@ -24,7 +24,7 @@ class _ImperialFullScreenSvgViewState extends State<ImperialFullScreenSvgView> {
   void initState() {
     super.initState();
     // Lock orientation to landscape
-    SystemChrome.setPreferredOrientations([
+    SystemChrome.setPreferredOrientations(<DeviceOrientation>[
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
@@ -41,7 +41,7 @@ class _ImperialFullScreenSvgViewState extends State<ImperialFullScreenSvgView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [
+        children: <Widget>[
           PhotoView.customChild(
             enableRotation: false,
             backgroundDecoration: BoxDecoration(

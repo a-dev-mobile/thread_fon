@@ -93,7 +93,7 @@ dart_code_metrics:
 
   rules:
     # Code Quality
-    - avoid-dynamic: false
+    - avoid-dynamic
     - avoid-passing-async-when-sync-expected
     - avoid-redundant-async
     - avoid-unnecessary-type-assertions
@@ -118,11 +118,35 @@ dart_code_metrics:
     
     # Additional Rules from Common Set
     - avoid-global-state
-    - avoid-non-null-assertion: false
+    - avoid-non-null-assertion
     - avoid-throw-in-catch-block
     - prefer-first
     - prefer-last
     - prefer-match-file-name
+
+    # Bloc Specific Rules
+    - avoid-bloc-public-fields
+    - avoid-bloc-public-methods
+    - avoid-cubits
+    - avoid-duplicate-bloc-event-handlers
+    - avoid-empty-build-when
+    - avoid-existing-instances-in-bloc-provider
+    - avoid-instantiating-in-bloc-value-provider
+    - avoid-passing-bloc-to-bloc
+    - avoid-passing-build-context-to-blocs
+    - avoid-returning-value-from-cubit-methods
+    - check-is-not-closed-after-async-gap
+    - emit-new-bloc-state-instances
+    - handle-bloc-event-subclasses
+    - prefer-bloc-event-suffix
+    - prefer-bloc-extensions
+    - prefer-bloc-state-suffix
+    - prefer-correct-bloc-provider
+    - prefer-immutable-bloc-events
+    - prefer-immutable-bloc-state
+    - prefer-multi-bloc-provider
+    - prefer-sealed-bloc-events
+    - prefer-sealed-bloc-state
 
   exclude:
     - test/**

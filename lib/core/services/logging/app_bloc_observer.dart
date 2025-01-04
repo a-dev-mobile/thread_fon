@@ -1,14 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 
-final _logger = LogService('app_bloc_observer');
+final LogService _logger = LogService('app_bloc_observer');
 
 // ignore_for_file:avoid-non-ascii-symbols, avoid-dynamic
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
   String _truncate(Object? obj, {int maxLength = 1000}) {
-    final str = obj?.toString() ?? 'null';
+    final String str = obj?.toString() ?? 'null';
     if (str.length > maxLength) {
       return '${str.substring(0, maxLength)}... [truncated]';
     }
@@ -44,8 +43,9 @@ class AppBlocObserver extends BlocObserver {
     _logger.e('Error in ${bloc.runtimeType}',
         error: error,
         stackTrace: stackTrace,
-        additionalInfo: {'bloc_type': bloc.runtimeType.toString()});
-
+        additionalInfo: <String, dynamic>{
+          'bloc_type': bloc.runtimeType.toString()
+        });
   }
 
   @override

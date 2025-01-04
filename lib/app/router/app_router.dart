@@ -29,82 +29,96 @@ class AppRouter {
   GoRouter _createRouter() {
     return GoRouter(
       navigatorKey: _pageNavigatorKey,
-      errorPageBuilder: (context, state) => MaterialPage<void>(
+      errorPageBuilder: (BuildContext context, GoRouterState state) =>
+          MaterialPage<void>(
         key: state.pageKey,
         child: Center(child: Text(state.error.toString())),
       ),
       initialLocation: SplashScreen.path,
       debugLogDiagnostics: true,
-      observers: [
+      observers: <NavigatorObserver>[
         // Добавляем слушатель для логирования экранов
         _AnalyticsObserver(analytics: analytics),
       ],
-      routes: [
+      routes: <RouteBase>[
         ShellRoute(
-          builder: (_, GoRouterState state, child) {
+          builder: (_, GoRouterState state, Widget child) {
             return OverlayScreen(goRouterState: state, child: child);
           },
-          routes: [
+          routes: <RouteBase>[
             GoRoute(
               path: SplashScreen.path,
               name: SplashScreen.name,
-              pageBuilder: (context, state) => NoTransitionPage(
-                  child: const SplashScreen(), key: state.pageKey),
+              pageBuilder: (BuildContext context, GoRouterState state) =>
+                  NoTransitionPage(
+                      child: const SplashScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: MetricDiameterScreen.path,
               name: MetricDiameterScreen.name,
-              pageBuilder: (context, state) => NoTransitionPage(
-                  child: const MetricDiameterScreen(), key: state.pageKey),
+              pageBuilder: (BuildContext context, GoRouterState state) =>
+                  NoTransitionPage(
+                      child: const MetricDiameterScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ImperialDiameterScreen.path,
               name: ImperialDiameterScreen.name,
-              pageBuilder: (context, state) => NoTransitionPage(
-                  child: const ImperialDiameterScreen(), key: state.pageKey),
+              pageBuilder: (BuildContext context, GoRouterState state) =>
+                  NoTransitionPage(
+                      child: const ImperialDiameterScreen(),
+                      key: state.pageKey),
             ),
             GoRoute(
               path: ImperialToleranceSelectionScreen.path,
               name: ImperialToleranceSelectionScreen.name,
-              pageBuilder: (context, state) => NoTransitionPage(
-                  child: const ImperialToleranceSelectionScreen(),
-                  key: state.pageKey),
+              pageBuilder: (BuildContext context, GoRouterState state) =>
+                  NoTransitionPage(
+                      child: const ImperialToleranceSelectionScreen(),
+                      key: state.pageKey),
             ),
             GoRoute(
               path: ImperialInfoScreen.path,
               name: ImperialInfoScreen.name,
-              pageBuilder: (context, state) => NoTransitionPage(
-                  child: const ImperialInfoScreen(), key: state.pageKey),
+              pageBuilder: (BuildContext context, GoRouterState state) =>
+                  NoTransitionPage(
+                      child: const ImperialInfoScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ThreadTypeSelectionScreen.path,
               name: ThreadTypeSelectionScreen.name,
-              pageBuilder: (context, state) => NoTransitionPage(
-                  child: const ThreadTypeSelectionScreen(), key: state.pageKey),
+              pageBuilder: (BuildContext context, GoRouterState state) =>
+                  NoTransitionPage(
+                      child: const ThreadTypeSelectionScreen(),
+                      key: state.pageKey),
             ),
             GoRoute(
               path: PitchSelectionScreen.path,
               name: PitchSelectionScreen.name,
-              pageBuilder: (context, state) => NoTransitionPage(
-                  child: const PitchSelectionScreen(), key: state.pageKey),
+              pageBuilder: (BuildContext context, GoRouterState state) =>
+                  NoTransitionPage(
+                      child: const PitchSelectionScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ToleranceSelectionScreen.path,
               name: ToleranceSelectionScreen.name,
-              pageBuilder: (context, state) => NoTransitionPage(
-                  child: const ToleranceSelectionScreen(), key: state.pageKey),
+              pageBuilder: (BuildContext context, GoRouterState state) =>
+                  NoTransitionPage(
+                      child: const ToleranceSelectionScreen(),
+                      key: state.pageKey),
             ),
             GoRoute(
               path: MetricInfoScreen.path,
               name: MetricInfoScreen.name,
-              pageBuilder: (context, state) => NoTransitionPage(
-                  child: const MetricInfoScreen(), key: state.pageKey),
+              pageBuilder: (BuildContext context, GoRouterState state) =>
+                  NoTransitionPage(
+                      child: const MetricInfoScreen(), key: state.pageKey),
             ),
             GoRoute(
                 path: MetricFullScreenSvgView.path,
                 name: MetricFullScreenSvgView.name,
-                pageBuilder: (context, state) {
-                  final data = state.extra! as Map<String, dynamic>;
+                pageBuilder: (BuildContext context, GoRouterState state) {
+                  final Map<String, dynamic> data =
+                      state.extra! as Map<String, dynamic>;
                   return NoTransitionPage(
                       child: MetricFullScreenSvgView(
                         svgData: data['svgData'] as String,
@@ -114,7 +128,7 @@ class AppRouter {
             GoRoute(
               path: AboutApp.path,
               name: AboutApp.name,
-              pageBuilder: (context, state) =>
+              pageBuilder: (BuildContext context, GoRouterState state) =>
                   NoTransitionPage(child: const AboutApp(), key: state.pageKey),
             ),
           ],
@@ -130,13 +144,13 @@ class _AnalyticsObserver extends NavigatorObserver {
 
   _AnalyticsObserver({required this.analytics});
 
-
   void _sendScreenView(Route<dynamic>? route) {
     if (route is MaterialPageRoute) {
-      final screenName = route.settings.name ?? route.settings.toString();
+      final String screenName =
+          route.settings.name ?? route.settings.toString();
       analytics.logEvent(
         name: 'screen_view',
-        parameters: {'screen_name': screenName},
+        parameters: <String, Object>{'screen_name': screenName},
       );
     }
   }

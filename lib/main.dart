@@ -8,8 +8,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:nested/nested.dart';
 import 'package:threadfon/app/app.dart';
+import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/router/app_router.dart';
+import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
@@ -18,7 +21,7 @@ import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/restart_widget.dart';
 import 'package:threadfon/firebase_options.dart';
 
-final _logger = LogService('main');
+final LogService _logger = LogService('main');
 
 // Создание глобального экземпляра FirebaseAnalytics
 final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
@@ -28,7 +31,7 @@ Future<void> main() async {
   runZonedGuarded<void>(
     () async {
       // Инициализация Flutter и сохранение splash-экрана внутри зоны
-      var widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+      WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
       FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
       try {
@@ -38,37 +41,44 @@ Future<void> main() async {
 
         // Инициализация Crashlytics
         // Включаем сбор нефатальных ошибок
-        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
+        await FirebaseCrashlytics.instance
+            .setCrashlyticsCollectionEnabled(!kDebugMode);
 
         // Передаём все необработанные асинхронные ошибки в Crashlytics
-        PlatformDispatcher.instance.onError = (error, stack) {
+        PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
           FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
           return true;
         };
 
         // Инициализация локального хранилища
-        final localStorage = LocalStorage(isShowLog: true);
+        final LocalStorage localStorage = LocalStorage(isShowLog: true);
         await localStorage.initialize();
-        final _ = await localStorage.ensureUserId();
+        final String _ = await localStorage.ensureUserId();
 
-        final apiService = await ApiService().init();
+        final ApiService apiService = await ApiService().init();
         // Инициализация глобального экземпляра ErrorReportingService
-        await ErrorReportingService.initialize(apiService: apiService, localStorage: localStorage);
+        await ErrorReportingService.initialize(
+            apiService: apiService, localStorage: localStorage);
         // Настройка глобального обработчика ошибок Flutter (сохранение существующей логики)
-        FlutterError.onError = (details) {
+        FlutterError.onError = (FlutterErrorDetails details) {
           if (!kReleaseMode) {
             // В режиме разработки выводим ошибку в консоль
             FlutterError.dumpErrorToConsole(details);
           }
 
           _logger.e('FlutterError.onError',
-              error: details.exception, stackTrace: details.stack ?? StackTrace.current, reportToServer: false);
+              error: details.exception,
+              stackTrace: details.stack ?? StackTrace.current,
+              reportToServer: false);
           // Отправка ошибки через глобальный экземпляр
           globalErrorReporting.reportError(
               error: details.exception,
               stackTrace: details.stack,
               customMessage: 'Flutter Framework Error',
-              additionalInfo: {'context': 'Flutter Framework Error Handler', 'route': 'Unknown'});
+              additionalInfo: <String, dynamic>{
+                'context': 'Flutter Framework Error Handler',
+                'route': 'Unknown'
+              });
 
           // Также отправляем в Crashlytics
           FirebaseCrashlytics.instance.recordFlutterFatalError(details);
@@ -80,19 +90,20 @@ Future<void> main() async {
         //   DeviceOrientation.portraitDown,
         // ]);
 
-        var languageState = await localStorage.getLanguageState();
-        var themeState = await localStorage.getThemeState();
+        LanguageState languageState = await localStorage.getLanguageState();
+        ThemeState themeState = await localStorage.getThemeState();
 
         // Запуск приложения с провайдерами
         Bloc.observer = const AppBlocObserver();
         runApp(
           RestartWidget(
             child: MultiRepositoryProvider(
-              providers: [
-                RepositoryProvider.value(value: localStorage),
-                RepositoryProvider.value(value: apiService),
-                RepositoryProvider(
-                  create: (context) => AppRouter(analytics: analytics),
+              providers: <SingleChildWidget>[
+                RepositoryProvider<LocalStorage>.value(value: localStorage),
+                RepositoryProvider<ApiService>.value(value: apiService),
+                RepositoryProvider<AppRouter>(
+                  create: (BuildContext context) =>
+                      AppRouter(analytics: analytics),
                 ),
               ],
               child: App(
@@ -121,7 +132,7 @@ Future<void> main() async {
       Isolate.current.addErrorListener(
         RawReceivePort((List<dynamic> errorAndStacktrace) {
           final e = errorAndStacktrace.first;
-          final s = errorAndStacktrace.last as StackTrace;
+          final StackTrace s = errorAndStacktrace.last as StackTrace;
 
           _logger.e('Isolate error', error: e, stackTrace: s);
 
@@ -133,7 +144,7 @@ Future<void> main() async {
       // Добавляем наблюдателя за жизненным циклом приложения для вызова dispose()
       WidgetsBinding.instance.addObserver(_AppLifecycleObserver());
     },
-    (e, s) {
+    (Object e, StackTrace s) {
       // Логируем ошибки из runZonedGuarded
       _logger.e('runZonedGuarded', error: e, stackTrace: s);
 
@@ -147,7 +158,8 @@ Future<void> main() async {
 class _AppLifecycleObserver extends WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.detached || state == AppLifecycleState.inactive) {
+    if (state == AppLifecycleState.detached ||
+        state == AppLifecycleState.inactive) {
       // Вызов dispose() при закрытии приложения, если необходимо
     }
   }

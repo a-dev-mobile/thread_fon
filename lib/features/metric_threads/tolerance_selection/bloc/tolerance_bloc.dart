@@ -5,9 +5,10 @@ import 'package:threadfon/core/constant/enum_lang.dart';
 import 'package:threadfon/core/constant/enum_navigation_status.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
-import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
+import 'package:threadfon/core/models/core_user_selection.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
+import 'package:threadfon/features/metric_threads/core/models/metric_user_selection.dart';
 import 'package:threadfon/features/metric_threads/tolerance_selection/models/tolerance_model.dart';
 import 'package:threadfon/features/metric_threads/tolerance_selection/repositories/tolerance_repository.dart';
 
@@ -15,9 +16,10 @@ part 'tolerance_bloc.freezed.dart';
 part 'tolerance_bloc.g.dart';
 part 'tolerance_state.dart';
 
-final _logger = LogService('tolerance_bloc');
+final LogService _logger = LogService('tolerance_bloc');
 
-class ToleranceBloc extends Cubit<ToleranceState> with BlocIgnoreEmitAfterClosed {
+class ToleranceBloc extends Cubit<ToleranceState>
+    with BlocIgnoreEmitAfterClosed {
   ToleranceBloc({
     required ToleranceRepository repository,
     required LocalStorage localStorage,
@@ -34,13 +36,16 @@ class ToleranceBloc extends Cubit<ToleranceState> with BlocIgnoreEmitAfterClosed
   Future<void> loadTolerances() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final metricUserSelection = await _localStorage.getMetricUserSelection();
-      final coreUserSelection = await _localStorage.getCoreUserSelection();
-      final tolerances = await _repository.fetchTolerances(
+      final MetricUserSelection metricUserSelection =
+          await _localStorage.getMetricUserSelection();
+      final CoreUserSelection coreUserSelection =
+          await _localStorage.getCoreUserSelection();
+      final List<ToleranceModel> tolerances = await _repository.fetchTolerances(
         id: metricUserSelection.id!,
         threadType: coreUserSelection.threadType.name,
       );
-      emit(state.copyWith(enumPageStatus: EnumStatus.success, tolerances: tolerances));
+      emit(state.copyWith(
+          enumPageStatus: EnumStatus.success, tolerances: tolerances));
     } catch (e, s) {
       _logger.e('Error loading tolerances', error: e, stackTrace: s);
 
@@ -51,11 +56,12 @@ class ToleranceBloc extends Cubit<ToleranceState> with BlocIgnoreEmitAfterClosed
   Future<void> preparationNavigation(ToleranceModel selectedTolerance) async {
     try {
       await _localStorage.updateMetricUserSelection(
-        (current) => current.copyWith(
+        (MetricUserSelection current) => current.copyWith(
           tolerance: selectedTolerance.tolerance,
         ),
       );
-      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(
+          enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating tolerance selection', error: e, stackTrace: s);
 
@@ -64,12 +70,14 @@ class ToleranceBloc extends Cubit<ToleranceState> with BlocIgnoreEmitAfterClosed
   }
 
   void _setErrorState() {
-    final currentLang = _languageBloc.state.enumLang;
-    final errorMsg = currentLang == EnumLang.en
+    final EnumLang currentLang = _languageBloc.state.enumLang;
+    final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading tolerances.'
         : 'Произошла ошибка при загрузке допусков.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error,
+        errorMsg: errorMsg,
+        enumNavigationStatus: EnumNavigationStatus.initial));
   }
 
   void resetNavigationStatus() {

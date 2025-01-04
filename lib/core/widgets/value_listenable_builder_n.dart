@@ -31,8 +31,9 @@ class _ValueListenableBuilderNState<T>
   @override
   void initState() {
     super.initState();
-    _currentValues = widget.listenable.map((e) => e.value).toList();
-    for (final listenable in widget.listenable) {
+    _currentValues =
+        widget.listenable.map((ValueListenable<T> e) => e.value).toList();
+    for (final ValueListenable<T> listenable in widget.listenable) {
       listenable.addListener(_updateValues);
     }
   }
@@ -41,11 +42,12 @@ class _ValueListenableBuilderNState<T>
   void didUpdateWidget(covariant ValueListenableBuilderN<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.listenable != widget.listenable) {
-      for (final listenable in oldWidget.listenable) {
+      for (final ValueListenable<T> listenable in oldWidget.listenable) {
         listenable.removeListener(_updateValues);
       }
-      _currentValues = widget.listenable.map((e) => e.value).toList();
-      for (final listenable in widget.listenable) {
+      _currentValues =
+          widget.listenable.map((ValueListenable<T> e) => e.value).toList();
+      for (final ValueListenable<T> listenable in widget.listenable) {
         listenable.addListener(_updateValues);
       }
     }
@@ -53,7 +55,7 @@ class _ValueListenableBuilderNState<T>
 
   @override
   void dispose() {
-    for (final listenable in widget.listenable) {
+    for (final ValueListenable<T> listenable in widget.listenable) {
       listenable.removeListener(_updateValues);
     }
     super.dispose();
@@ -61,7 +63,8 @@ class _ValueListenableBuilderNState<T>
 
   void _updateValues() {
     setState(() {
-      _currentValues = widget.listenable.map((e) => e.value).toList();
+      _currentValues =
+          widget.listenable.map((ValueListenable<T> e) => e.value).toList();
     });
   }
 

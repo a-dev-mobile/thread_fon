@@ -17,9 +17,9 @@ class ThreadTypeChoiceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Получаем текущую тему
-    final theme = Theme.of(context);
+    final ThemeData theme = Theme.of(context);
     // Определяем цвет для SVG в зависимости от темы
-    final svgColor = theme.brightness == Brightness.dark
+    final Color svgColor = theme.brightness == Brightness.dark
         ? theme.colorScheme.inverseSurface // Цвет для тёмной темы
         : theme.colorScheme.primary; // Цвет для светлой темы
 
@@ -27,7 +27,7 @@ class ThreadTypeChoiceCard extends StatelessWidget {
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           SvgPicture.asset(
             svgAssetPath,
             // Применяем цвет к SVG

@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:dio/src/response.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/metric_threads/diameter_selection/models/metric_diameter_model.dart';
 
-final _logger = LogService('diameter_repository');
+final LogService _logger = LogService('diameter_repository');
 
 class DiameterRepository {
   final ApiService _apiService;
@@ -15,9 +16,9 @@ class DiameterRepository {
   Future<List<MetricDiameterModel>> fetchDiameters(
       {String order = 'asc'}) async {
     try {
-      final response = await _apiService.get(
+      final Response response = await _apiService.get(
         '/v1/metric/diameters',
-        queryParameters: {'order': order},
+        queryParameters: <String, dynamic>{'order': order},
       );
 
       if (response.statusCode == 200) {

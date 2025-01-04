@@ -9,9 +9,9 @@ class DrawerScreen extends StatelessWidget {
   final String? subtitle; // Добавляем опциональный подзаголовок
 
   const DrawerScreen({
-    super.key,
     required this.body,
     required this.title,
+    super.key,
     this.subtitle, // Инициализация подзаголовка
   });
 
@@ -28,7 +28,7 @@ class DrawerScreen extends StatelessWidget {
       appBar: AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Text(
               title,
               style: const TextStyle(

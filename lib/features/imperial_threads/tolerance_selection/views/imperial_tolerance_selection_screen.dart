@@ -15,29 +15,32 @@ import 'package:threadfon/features/imperial_threads/tolerance_selection/bloc/imp
 import 'package:threadfon/features/imperial_threads/tolerance_selection/models/imperial_tolerance_model.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/repositories/imperial_tolerance_repository.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/views/imperial_tolerance_choice_card.dart';
+import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
-final _logger = LogService('imperial_tolerance_screen');
+final LogService _logger = LogService('imperial_tolerance_screen');
 
 class ImperialToleranceSelectionScreen extends StatefulWidget {
   const ImperialToleranceSelectionScreen({super.key});
-  static const path = '/ImperialToleranceSelectionScreen';
-  static const name = 'ImperialToleranceSelectionScreen';
+  static const String path = '/ImperialToleranceSelectionScreen';
+  static const String name = 'ImperialToleranceSelectionScreen';
 
   @override
-  State<ImperialToleranceSelectionScreen> createState() => _ImperialToleranceSelectionScreenState();
+  State<ImperialToleranceSelectionScreen> createState() =>
+      _ImperialToleranceSelectionScreenState();
 }
 
-class _ImperialToleranceSelectionScreenState extends State<ImperialToleranceSelectionScreen> {
+class _ImperialToleranceSelectionScreenState
+    extends State<ImperialToleranceSelectionScreen> {
   late final ImperialToleranceBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    final apiService = context.read<ApiService>();
-    final toleranceRepository = Imperial(apiService: apiService);
-    final localStorage = context.read<LocalStorage>();
-    final languageBloc = context.read<LanguageBloc>();
+    final ApiService apiService = context.read<ApiService>();
+    final Imperial toleranceRepository = Imperial(apiService: apiService);
+    final LocalStorage localStorage = context.read<LocalStorage>();
+    final LanguageBloc languageBloc = context.read<LanguageBloc>();
 
     _bloc = ImperialToleranceBloc(
       repository: toleranceRepository,
@@ -59,12 +62,14 @@ class _ToleranceSelectionView extends StatelessWidget {
   const _ToleranceSelectionView();
   @override
   Widget build(BuildContext context) {
-    final localization = context.l10n;
-    final bloc = context.read<ImperialToleranceBloc>();
+    final GeneratedLocalization localization = context.l10n;
+    final ImperialToleranceBloc bloc = context.read<ImperialToleranceBloc>();
 
     return BlocListener<ImperialToleranceBloc, ImperialToleranceState>(
-      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
-      listener: (context, state) {
+      listenWhen:
+          (ImperialToleranceState previous, ImperialToleranceState current) =>
+              previous.enumNavigationStatus != current.enumNavigationStatus,
+      listener: (BuildContext context, ImperialToleranceState state) {
         if (state.enumNavigationStatus.isNavigation) {
           // Навигация на следующий экран при выборе допуска
           context.pushNamed(ImperialInfoScreen.name);
@@ -75,10 +80,12 @@ class _ToleranceSelectionView extends StatelessWidget {
       },
       child: Scaffold(
         body: Stack(
-          children: [
+          children: <Widget>[
             BlocBuilder<ImperialToleranceBloc, ImperialToleranceState>(
-              buildWhen: (previous, current) => previous.enumPageStatus != current.enumPageStatus,
-              builder: (context, state) {
+              buildWhen: (ImperialToleranceState previous,
+                      ImperialToleranceState current) =>
+                  previous.enumPageStatus != current.enumPageStatus,
+              builder: (BuildContext context, ImperialToleranceState state) {
                 switch (state.enumPageStatus) {
                   case EnumStatus.loading:
                     return const LoadingWidget();
@@ -90,27 +97,36 @@ class _ToleranceSelectionView extends StatelessWidget {
                   case EnumStatus.success:
                     return DefaultTabController(
                       length: 2,
-                      initialIndex: bloc.state.selectedThreadType == EnumThreadMaleFemale.female ? 1 : 0,
+                      initialIndex: bloc.state.selectedThreadType ==
+                              EnumThreadMaleFemale.female
+                          ? 1
+                          : 0,
                       child: Scaffold(
                         appBar: AppBar(
                           title: Text(localization.select_class),
                           bottom: TabBar(
-                            onTap: (index) {
-                              final newGender = index == 1 ? EnumThreadMaleFemale.female : EnumThreadMaleFemale.male;
+                            onTap: (int index) {
+                              final EnumThreadMaleFemale newGender = index == 1
+                                  ? EnumThreadMaleFemale.female
+                                  : EnumThreadMaleFemale.male;
                               if (bloc.state.selectedThreadType != newGender) {
                                 bloc.updateGenderSelection(newGender);
                               }
                             },
-                            tabs: [
+                            tabs: <Widget>[
                               Tab(text: localization.external_thread),
                               Tab(text: localization.internal_thread),
                             ],
                           ),
                         ),
                         body: TabBarView(
-                          children: [
-                            _buildToleranceList(context, bloc.state.maleTolerances, isFemale: false),
-                            _buildToleranceList(context, bloc.state.femaleTolerances, isFemale: true),
+                          children: <Widget>[
+                            _buildToleranceList(
+                                context, bloc.state.maleTolerances,
+                                isFemale: false),
+                            _buildToleranceList(
+                                context, bloc.state.femaleTolerances,
+                                isFemale: true),
                           ],
                         ),
                       ),
@@ -124,16 +140,19 @@ class _ToleranceSelectionView extends StatelessWidget {
     );
   }
 
-  Widget _buildToleranceList(BuildContext context, List<ImperialToleranceItem> tolerances, {required bool isFemale}) {
-    final bloc = context.read<ImperialToleranceBloc>();
-    final localization = context.l10n;
+  Widget _buildToleranceList(
+      BuildContext context, List<ImperialToleranceItem> tolerances,
+      {required bool isFemale}) {
+    final ImperialToleranceBloc bloc = context.read<ImperialToleranceBloc>();
+    final GeneratedLocalization localization = context.l10n;
 
     return ListView.separated(
       padding: const EdgeInsets.all(16.0),
       itemCount: tolerances.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
-      itemBuilder: (context, index) {
-        final tolerance = tolerances[index];
+      separatorBuilder: (BuildContext context, int index) =>
+          const SizedBox(height: 8.0),
+      itemBuilder: (BuildContext context, int index) {
+        final ImperialToleranceItem tolerance = tolerances[index];
         return ImperialToleranceChoiceCard(
           tolerance: tolerance,
           onTap: () {

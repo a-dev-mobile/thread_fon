@@ -5,7 +5,6 @@ import 'package:threadfon/core/constant/enum_lang.dart';
 import 'package:threadfon/core/constant/enum_navigation_status.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
-import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 
@@ -13,7 +12,7 @@ part 'splash_bloc.freezed.dart';
 part 'splash_bloc.g.dart';
 part 'splash_state.dart';
 
-final _logger = LogService('info_bloc');
+final LogService _logger = LogService('info_bloc');
 
 class SplashBloc extends Cubit<SplashState> with BlocIgnoreEmitAfterClosed {
   SplashBloc({
@@ -28,7 +27,7 @@ class SplashBloc extends Cubit<SplashState> with BlocIgnoreEmitAfterClosed {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
 
     try {
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
 
       await preparationNavigation();
     } catch (e, s) {
@@ -40,7 +39,8 @@ class SplashBloc extends Cubit<SplashState> with BlocIgnoreEmitAfterClosed {
 
   Future<void> preparationNavigation() async {
     try {
-      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(
+          enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
 
@@ -49,11 +49,13 @@ class SplashBloc extends Cubit<SplashState> with BlocIgnoreEmitAfterClosed {
   }
 
   void _setErrorState() {
-    final currentLang = _languageBloc.state.enumLang;
-    final errorMsg = currentLang == EnumLang.en
+    final EnumLang currentLang = _languageBloc.state.enumLang;
+    final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading info.'
         : 'Произошла ошибка при загрузке информации.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error,
+        errorMsg: errorMsg,
+        enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

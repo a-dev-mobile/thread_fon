@@ -6,9 +6,9 @@ class InfoRow extends StatelessWidget {
   final String? value;
 
   const InfoRow({
-    super.key,
     required this.label,
     required this.value,
+    super.key,
   });
 
   @override
@@ -17,10 +17,11 @@ class InfoRow extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    final labelStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.w600,
-        );
-    final valueStyle = Theme.of(context).textTheme.bodyMedium;
+    final TextStyle? labelStyle =
+        Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            );
+    final TextStyle? valueStyle = Theme.of(context).textTheme.bodyMedium;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -34,7 +35,7 @@ class InfoRow extends StatelessWidget {
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
+        children: <Widget>[
           // Label
           Expanded(
             child: Text(

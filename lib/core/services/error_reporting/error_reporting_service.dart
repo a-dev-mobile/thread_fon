@@ -63,10 +63,10 @@ class ErrorReportingService {
     required ApiService apiService,
     required LocalStorage localStorage,
   }) async {
-    final packageInfo = await PackageInfo.fromPlatform();
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
     // Получаем информацию об устройстве
-    final deviceInfoPlugin = DeviceInfoPlugin();
+    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     String deviceModel = 'Unknown';
     String osVersion = 'Unknown';
     bool isPhysicalDevice = false;
@@ -74,19 +74,20 @@ class ErrorReportingService {
 
     try {
       if (Platform.isAndroid) {
-        final androidInfo = await deviceInfoPlugin.androidInfo;
+        final AndroidDeviceInfo androidInfo =
+            await deviceInfoPlugin.androidInfo;
         deviceModel = '${androidInfo.manufacturer} ${androidInfo.model}';
         osVersion =
             'Android ${androidInfo.version.release} (SDK ${androidInfo.version.sdkInt})';
         isPhysicalDevice = androidInfo.isPhysicalDevice;
       } else if (Platform.isIOS) {
-        final iosInfo = await deviceInfoPlugin.iosInfo;
+        final IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
         deviceModel = iosInfo.utsname.machine;
         osVersion = '${iosInfo.systemName} ${iosInfo.systemVersion}';
         isPhysicalDevice = iosInfo.isPhysicalDevice;
       } else {
         // Другие платформы
-        final info = await deviceInfoPlugin.deviceInfo;
+        final BaseDeviceInfo info = await deviceInfoPlugin.deviceInfo;
         deviceModel = info.data['name']?.toString() ?? 'Unknown Device';
         osVersion = info.data['version']?.toString() ?? 'Unknown OS';
         // Для web или desktop isPhysicalDevice не применимо
@@ -104,11 +105,11 @@ class ErrorReportingService {
       // Если есть другой механизм получения локали - используйте его.
       // Ниже просто пример, как можно получить локаль через платформенные каналы
       // ignore: deprecated_member_use
-      final locale = WidgetsBinding.instance.window.locale;
+      final Locale locale = WidgetsBinding.instance.window.locale;
       systemLocale = locale.toLanguageTag();
     } catch (_) {}
 
-    final isDebugMode = kDebugMode;
+    const bool isDebugMode = kDebugMode;
 
     globalErrorReporting = ErrorReportingService._internal(
       apiService: apiService,
@@ -134,16 +135,18 @@ class ErrorReportingService {
     Map<String, dynamic>? additionalInfo,
   }) async {
     try {
-      final userId = await _localStorage.getCurrentUserId();
-      final connectivity = await Connectivity().checkConnectivity();
-      final deviceInfo = await DeviceInfoPlugin().deviceInfo;
-      final now = DateTime.now();
-      final timeZone = now.timeZoneOffset.toString();
-      final deviceLocale = PlatformDispatcher.instance.locale.toString();
+      final String? userId = await _localStorage.getCurrentUserId();
+      final List<ConnectivityResult> connectivity =
+          await Connectivity().checkConnectivity();
+      final BaseDeviceInfo deviceInfo = await DeviceInfoPlugin().deviceInfo;
+      final DateTime now = DateTime.now();
+      final String timeZone = now.timeZoneOffset.toString();
+      final String deviceLocale = PlatformDispatcher.instance.locale.toString();
 
-      final errorReport = {
+      final Map<String, Map<String, dynamic>> errorReport =
+          <String, Map<String, dynamic>>{
         // Неизменяемые данные (используются для создания хэша)
-        'immutableData': {
+        'immutableData': <String, Object>{
           'error_type': error.runtimeType.toString(),
           'error': error.toString(),
           'trace': stackTrace?.toString() ?? 'No stack trace',
@@ -168,7 +171,7 @@ class ErrorReportingService {
         },
 
         // Изменяемые данные (не используются для создания хэша)
-        'mutableData': {
+        'mutableData': <String, dynamic>{
           'custom_message': customMessage,
           'user_id': userId,
           'device_info': deviceInfo.data,
@@ -228,7 +231,7 @@ class ErrorReportingService {
       await reportError(
         error: error,
         stackTrace: stackTrace,
-        additionalInfo: {'is_fatal': true},
+        additionalInfo: <String, dynamic>{'is_fatal': true},
       );
 
       if (shouldTerminateApp) {
@@ -243,7 +246,7 @@ class ErrorReportingService {
 
   Future<Map<String, dynamic>> _getUserPreferences() async {
     try {
-      return {
+      return <String, dynamic>{
         'theme': (await _localStorage.getThemeState()).themeMode.toString(),
         'language':
             (await _localStorage.getLanguageState()).enumLang.toString(),
@@ -254,13 +257,13 @@ class ErrorReportingService {
             (await _localStorage.getImperialUserSelection()).toString(),
       };
     } catch (e) {
-      return {'error': 'Failed to get preferences'};
+      return <String, dynamic>{'error': 'Failed to get preferences'};
     }
   }
 
   Future<String> _getAppState() async {
     try {
-      return {
+      return <String, Object>{
         'core_selection': await _localStorage.getCoreUserSelection(),
         'metric_scroll_position': await _localStorage.getMetricScrollPosition(),
         'imperial_scroll_position':
@@ -273,7 +276,7 @@ class ErrorReportingService {
 
   Future<int> _getErrorCountLastHour() async {
     try {
-      final count = await _localStorage.getErrorCountLastHour() ?? 0;
+      final int count = await _localStorage.getErrorCountLastHour() ?? 0;
       return count;
     } catch (e) {
       return -1;
@@ -282,7 +285,7 @@ class ErrorReportingService {
 
   Future<void> _incrementErrorCount() async {
     try {
-      final count = await _getErrorCountLastHour();
+      final int count = await _getErrorCountLastHour();
       await _localStorage.setErrorCountLastHour(count + 1);
     } catch (e) {
       _logger.e('Failed to increment error count', error: e);

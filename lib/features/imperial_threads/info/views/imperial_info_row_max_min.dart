@@ -7,11 +7,11 @@ class ImperialInfoRowMaxMin extends StatelessWidget {
   final String labelMaxMin;
   final bool isHaveDividerBottom;
   const ImperialInfoRowMaxMin({
-    super.key,
     required this.label,
     required this.value,
-    this.isHaveDividerBottom = true,
     required this.labelMaxMin,
+    super.key,
+    this.isHaveDividerBottom = true,
   });
 
   @override
@@ -20,16 +20,17 @@ class ImperialInfoRowMaxMin extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    final labelStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.w600,
-        );
-    final valueStyle = Theme.of(context).textTheme.bodyMedium;
+    final TextStyle? labelStyle =
+        Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            );
+    final TextStyle? valueStyle = Theme.of(context).textTheme.bodyMedium;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       decoration: isHaveDividerBottom
-          ? BoxDecoration(
-              border: const Border(
+          ? const BoxDecoration(
+              border: Border(
                 bottom: BorderSide(
                   color: Colors.grey,
                   width: 0.2,
@@ -39,7 +40,7 @@ class ImperialInfoRowMaxMin extends StatelessWidget {
           : null,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           // Label
           Expanded(
             child: Text(
@@ -50,7 +51,7 @@ class ImperialInfoRowMaxMin extends StatelessWidget {
           const SizedBox(width: 8.0), // Отступ между label и value
           // Value
           Column(
-            children: [
+            children: <Widget>[
               Text(
                 labelMaxMin,
                 style: valueStyle,

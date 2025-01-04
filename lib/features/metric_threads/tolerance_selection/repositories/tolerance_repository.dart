@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:dio/src/response.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/metric_threads/tolerance_selection/models/tolerance_model.dart';
 
-final _logger = LogService('tolerance_repository');
+final LogService _logger = LogService('tolerance_repository');
 
 class ToleranceRepository {
   final ApiService _apiService;
@@ -17,9 +18,9 @@ class ToleranceRepository {
     required String threadType,
   }) async {
     try {
-      final response = await _apiService.get(
+      final Response response = await _apiService.get(
         '/v1/metric/tolerance',
-        queryParameters: {
+        queryParameters: <String, dynamic>{
           'type': threadType,
           'id': id,
         },

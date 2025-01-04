@@ -1,5 +1,6 @@
 // lib/src/common/services/api_service.dart
 import 'package:dio/dio.dart';
+
 import 'correlation_id_interceptor.dart';
 import 'user_agent_provider.dart';
 
@@ -7,7 +8,7 @@ class ApiService {
   late final Dio dio;
 
   Future<ApiService> init() async {
-    final userAgent = await getUserAgent();
+    final String userAgent = await getUserAgent();
     dio = Dio();
     dio.options = BaseOptions(
       // baseUrl: 'http://10.0.3.2:5000',
@@ -15,7 +16,7 @@ class ApiService {
       baseUrl: 'https://thread-api.wayofdt.de',
       connectTimeout: const Duration(seconds: 25),
       receiveTimeout: const Duration(seconds: 23),
-      headers: {
+      headers: <String, dynamic>{
         'Content-Type': 'application/json',
         'User-Agent': userAgent,
       },

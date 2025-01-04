@@ -1,8 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
+
+import 'package:crypto/crypto.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
-import 'package:crypto/crypto.dart';
-import 'dart:convert';
 
 class DeviceIdGenerator {
   static Future<String> generateUniqueDeviceId() async {
@@ -42,8 +43,8 @@ class DeviceIdGenerator {
   /// Generate a consistent hash from input string
   static String _generateHash(String input) {
     // Use SHA-256 to create a consistent, unique hash
-    final bytes = utf8.encode(input);
-    final digest = sha256.convert(bytes);
+    final Uint8List bytes = utf8.encode(input);
+    final Digest digest = sha256.convert(bytes);
     return digest.toString().substring(0, 32); // Truncate to 32 characters
   }
 

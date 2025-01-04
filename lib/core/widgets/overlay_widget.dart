@@ -29,7 +29,7 @@ class _OverlayScreenState extends State<OverlayScreen> {
 
     return Scaffold(
       body: Stack(
-        children: [
+        children: <Widget>[
           widget.child,
           const ConnectivityBanner(),
         ],

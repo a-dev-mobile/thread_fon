@@ -10,16 +10,18 @@ import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/features/imperial_threads/diameter_selection/bloc/imperial_diameter_bloc.dart';
+import 'package:threadfon/features/imperial_threads/diameter_selection/models/imperial_diameter_model.dart';
 import 'package:threadfon/features/imperial_threads/diameter_selection/repositories/imperial_diameter_repository.dart';
 import 'package:threadfon/features/imperial_threads/diameter_selection/views/widget/imperial_diameter_choice_card.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/views/imperial_tolerance_selection_screen.dart';
+import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
-final _logger = LogService('imperial_diameter_screen');
+final LogService _logger = LogService('imperial_diameter_screen');
 
 class ImperialDiameterScreen extends StatefulWidget {
-  static const path = '/ImperialDiameterScreen';
-  static const name = 'ImperialDiameterScreen';
+  static const String path = '/ImperialDiameterScreen';
+  static const String name = 'ImperialDiameterScreen';
   const ImperialDiameterScreen({super.key});
 
   @override
@@ -32,10 +34,11 @@ class _ImperialDiameterScreenState extends State<ImperialDiameterScreen> {
   @override
   void initState() {
     super.initState();
-    final apiService = context.read<ApiService>();
-    final diameterRepository = DiameterRepository(apiService: apiService);
-    final localStorage = context.read<LocalStorage>();
-    final languageBloc = context.read<LanguageBloc>();
+    final ApiService apiService = context.read<ApiService>();
+    final DiameterRepository diameterRepository =
+        DiameterRepository(apiService: apiService);
+    final LocalStorage localStorage = context.read<LocalStorage>();
+    final LanguageBloc languageBloc = context.read<LanguageBloc>();
 
     _bloc = ImperialDiameterBloc(
       repository: diameterRepository,
@@ -78,11 +81,13 @@ class _ImperialDiameterViewState extends State<_ImperialDiameterView> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = context.l10n;
-    final bloc = widget.bloc;
+    final GeneratedLocalization localization = context.l10n;
+    final ImperialDiameterBloc bloc = widget.bloc;
     return BlocListener<ImperialDiameterBloc, ImperialDiameterState>(
-      listenWhen: (previous, current) => previous.enumNavigationStatus != current.enumNavigationStatus,
-      listener: (context, state) async {
+      listenWhen:
+          (ImperialDiameterState previous, ImperialDiameterState current) =>
+              previous.enumNavigationStatus != current.enumNavigationStatus,
+      listener: (BuildContext context, ImperialDiameterState state) async {
         if (state.enumNavigationStatus.isNavigation) {
           // Навигация на следующий экран при выборе
           context.pushNamed(ImperialToleranceSelectionScreen.name);
@@ -96,11 +101,13 @@ class _ImperialDiameterViewState extends State<_ImperialDiameterView> {
           title: Text(localization.select_diameter),
         ),
         body: Stack(
-          children: [
+          children: <Widget>[
             BlocBuilder<ImperialDiameterBloc, ImperialDiameterState>(
-              buildWhen: (previous, current) =>
-                  previous.enumPageStatus != current.enumPageStatus || previous.diameters != current.diameters,
-              builder: (context, state) {
+              buildWhen: (ImperialDiameterState previous,
+                      ImperialDiameterState current) =>
+                  previous.enumPageStatus != current.enumPageStatus ||
+                  previous.diameters != current.diameters,
+              builder: (BuildContext context, ImperialDiameterState state) {
                 switch (state.enumPageStatus) {
                   case EnumStatus.loading:
                     return const LoadingWidget();
@@ -118,9 +125,11 @@ class _ImperialDiameterViewState extends State<_ImperialDiameterView> {
                     return ListView.separated(
                       controller: _scrollController,
                       itemCount: state.diameters.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 8.0),
-                      itemBuilder: (context, index) {
-                        final diameter = state.diameters[index];
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const SizedBox(height: 8.0),
+                      itemBuilder: (BuildContext context, int index) {
+                        final ImperialDiameterModel diameter =
+                            state.diameters[index];
                         return ImperialDiameterChoiceCard(
                           formatted: diameter.formatted,
                           series: diameter.series,

@@ -19,7 +19,7 @@ class ThemeBloc extends Cubit<ThemeState> with BlocIgnoreEmitAfterClosed {
 
   // Метод для установки конкретной темы и сохранения в SharedPreferences
   void setTheme(ThemeMode mode) {
-    final newState = state.copyWith(themeMode: mode);
+    final ThemeState newState = state.copyWith(themeMode: mode);
     emit(newState);
     _storage.setThemeState(newState);
   }

@@ -15,11 +15,11 @@ class CustomPrinter extends LogPrinter {
 
   @override
   List<String> log(LogEvent event) {
-    final printer = event.stackTrace != null
+    final PrettyPrinter printer = event.stackTrace != null
         ? _prettyPrinterWithStack
         : _prettyPrinterWithoutStack;
-    final output = printer.log(event);
-    return output.map((line) => '[$fileName] $line').toList();
+    final List<String> output = printer.log(event);
+    return output.map((String line) => '[$fileName] $line').toList();
   }
 }
 
@@ -78,7 +78,7 @@ class LogService {
       error: error,
       stackTrace: includeStackTrace ? (stackTrace ?? StackTrace.current) : null,
     );
-    
+
     if (reportToServer) {
       globalErrorReporting.reportError(
         error: error ?? message,

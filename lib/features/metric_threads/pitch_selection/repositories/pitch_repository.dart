@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:dio/src/response.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/metric_threads/pitch_selection/models/pitch_model.dart';
 
-final _logger = LogService('pitch_repository');
+final LogService _logger = LogService('pitch_repository');
 
 class PitchRepository {
   final ApiService _apiService;
@@ -16,9 +17,9 @@ class PitchRepository {
     required String language,
   }) async {
     try {
-      final response = await _apiService.get(
+      final Response response = await _apiService.get(
         '/v1/metric/pitch',
-        queryParameters: {
+        queryParameters: <String, dynamic>{
           'diameter': diameter,
           'language': language,
         },

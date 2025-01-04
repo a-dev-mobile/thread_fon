@@ -23,7 +23,6 @@ class SvgOverlay extends StatelessWidget {
   final bool showDimensions;
 
   const SvgOverlay({
-    super.key,
     required this.svgData,
     required this.overlayHeight,
     required this.svgAspectRatio,
@@ -34,6 +33,7 @@ class SvgOverlay extends StatelessWidget {
     required this.onSwitchSvg,
     required this.showDimensions,
     required this.svgRequestStatus,
+    super.key,
     this.svgErrorMsg,
   });
 
@@ -43,7 +43,7 @@ class SvgOverlay extends StatelessWidget {
 
     switch (svgRequestStatus) {
       case EnumStatus.loading:
-        content = LoadingWidget();
+        content = const LoadingWidget();
         break;
       case EnumStatus.success:
         content = SvgPicture.string(
@@ -65,7 +65,7 @@ class SvgOverlay extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(16.0),
               topRight: Radius.circular(16.0),
             ),
@@ -77,7 +77,7 @@ class SvgOverlay extends StatelessWidget {
             ),
           ),
           child: Stack(
-            children: [
+            children: <Widget>[
               // Ensure the SVG content is centered by wrapping it in a Center widget
               Center(
                 child: AspectRatio(

@@ -3,8 +3,10 @@ part of 'imperial_tolerance_bloc.dart';
 @freezed
 class ImperialToleranceState with _$ImperialToleranceState {
   const factory ImperialToleranceState({
-    @Default([]) List<ImperialToleranceItem> femaleTolerances,
-    @Default([]) List<ImperialToleranceItem> maleTolerances,
+    @Default(<ImperialToleranceItem>[])
+    List<ImperialToleranceItem> femaleTolerances,
+    @Default(<ImperialToleranceItem>[])
+    List<ImperialToleranceItem> maleTolerances,
     @Default(EnumStatus.loading) EnumStatus enumPageStatus,
     @Default(EnumNavigationStatus.initial)
     EnumNavigationStatus enumNavigationStatus,

@@ -1,8 +1,10 @@
 // lib/core/connectivity/connectivity_bloc.dart
 
 import 'dart:async';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'connectivity_event.dart';
 import 'connectivity_state.dart';
 
@@ -16,8 +18,8 @@ class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
     on<ConnectivityChanged>(_onConnectivityChanged);
 
     // Подписываемся на изменения подключения
-    _connectivitySubscription =
-        _connectivity.onConnectivityChanged.listen((results) {
+    _connectivitySubscription = _connectivity.onConnectivityChanged
+        .listen((List<ConnectivityResult> results) {
       add(ConnectivityChanged(results));
     });
 
@@ -27,11 +29,12 @@ class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
 
   Future<void> _initializeConnectivity() async {
     try {
-      final results = await _connectivity.checkConnectivity();
+      final List<ConnectivityResult> results =
+          await _connectivity.checkConnectivity();
       add(ConnectivityChanged(results));
     } catch (e) {
       // В случае ошибки считаем, что подключения нет
-      add(ConnectivityChanged([ConnectivityResult.none]));
+      add(ConnectivityChanged(<ConnectivityResult>[ConnectivityResult.none]));
     }
   }
 

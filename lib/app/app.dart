@@ -16,7 +16,7 @@ import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
 class App extends StatelessWidget {
-  const App({super.key, required this.enumLang, required this.themeMode});
+  const App({required this.enumLang, required this.themeMode, super.key});
   final EnumLang enumLang;
   final ThemeMode themeMode;
   @override
@@ -27,11 +27,13 @@ class App extends StatelessWidget {
       providers: <SingleChildWidget>[
         BlocProvider(
           lazy: false,
-          create: (BuildContext context) => ThemeBloc(storage: storage, themeMode: themeMode),
+          create: (BuildContext context) =>
+              ThemeBloc(storage: storage, themeMode: themeMode),
         ),
         BlocProvider(
           lazy: false,
-          create: (BuildContext context) => LanguageBloc(storage: storage, enumLang: enumLang),
+          create: (BuildContext context) =>
+              LanguageBloc(storage: storage, enumLang: enumLang),
         ),
         BlocProvider(
           lazy: false,

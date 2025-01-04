@@ -7,6 +7,7 @@ import 'package:threadfon/features/imperial_threads/info/bloc/imperial_info_bloc
 
 import 'package:threadfon/features/imperial_threads/info/models/imperial_info_model.dart';
 import 'package:threadfon/features/imperial_threads/info/views/imperial_info_row.dart';
+import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
 class ImperialInfoMainParameters extends StatelessWidget {
@@ -19,14 +20,14 @@ class ImperialInfoMainParameters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = context.l10n;
-    final units = context.read<ImperialInfoBloc>().state.units;
-    final unitsText =
+    final GeneratedLocalization localization = context.l10n;
+    final EnumUnits units = context.read<ImperialInfoBloc>().state.units;
+    final String unitsText =
         units == EnumUnits.mm ? localization.mm : localization.inch;
 
     return MyCard(
       child: Column(
-        children: [
+        children: <Widget>[
           Text(
             info.designation1,
             textAlign: TextAlign.center,

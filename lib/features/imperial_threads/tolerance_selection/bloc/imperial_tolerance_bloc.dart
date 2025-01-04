@@ -6,8 +6,10 @@ import 'package:threadfon/core/constant/enum_navigation_status.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/constant/enum_thread_male_female.dart';
 import 'package:threadfon/core/mixins/bloc_ignore_emit_after_closed.dart';
+import 'package:threadfon/core/models/core_user_selection.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
+import 'package:threadfon/features/imperial_threads/models/imperial_user_selection.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/models/imperial_tolerance_model.dart';
 import 'package:threadfon/features/imperial_threads/tolerance_selection/repositories/imperial_tolerance_repository.dart';
 
@@ -15,9 +17,10 @@ part 'imperial_tolerance_bloc.freezed.dart';
 part 'imperial_tolerance_bloc.g.dart';
 part 'imperial_tolerance_state.dart';
 
-final _logger = LogService('imperial_tolerance_bloc');
+final LogService _logger = LogService('imperial_tolerance_bloc');
 
-class ImperialToleranceBloc extends Cubit<ImperialToleranceState> with BlocIgnoreEmitAfterClosed {
+class ImperialToleranceBloc extends Cubit<ImperialToleranceState>
+    with BlocIgnoreEmitAfterClosed {
   ImperialToleranceBloc({
     required Imperial repository,
     required LocalStorage localStorage,
@@ -34,9 +37,12 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState> with BlocIgnor
   Future<void> load() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final imperialUserSelection = await _localStorage.getImperialUserSelection();
-      final coreUserSelection = await _localStorage.getCoreUserSelection();
-      final tolerancesResponse = await _repository.fetchTolerances(
+      final ImperialUserSelection imperialUserSelection =
+          await _localStorage.getImperialUserSelection();
+      final CoreUserSelection coreUserSelection =
+          await _localStorage.getCoreUserSelection();
+      final ImperialToleranceModel tolerancesResponse =
+          await _repository.fetchTolerances(
         tpi: imperialUserSelection.tpi!,
         diameter: imperialUserSelection.diameter!,
       );
@@ -53,14 +59,16 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState> with BlocIgnor
     }
   }
 
-  Future<void> preparationNavigation(ImperialToleranceItem selectedTolerance, bool isFemale) async {
+  Future<void> preparationNavigation(
+      ImperialToleranceItem selectedTolerance, bool isFemale) async {
     try {
       await _localStorage.updateImperialUserSelection(
-        (current) => current.copyWith(
+        (ImperialUserSelection current) => current.copyWith(
           series: selectedTolerance.series,
         ),
       );
-      emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(state.copyWith(
+          enumNavigationStatus: EnumNavigationStatus.navigation));
     } catch (e, s) {
       _logger.e('Error updating tolerance selection', error: e, stackTrace: s);
 
@@ -72,7 +80,7 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState> with BlocIgnor
   Future<void> updateGenderSelection(EnumThreadMaleFemale threadType) async {
     try {
       await _localStorage.updateCoreUserSelection(
-        (current) => current.copyWith(
+        (CoreUserSelection current) => current.copyWith(
           threadType: threadType,
         ),
       );
@@ -83,12 +91,14 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState> with BlocIgnor
   }
 
   void _setErrorState() {
-    final currentLang = _languageBloc.state.enumLang;
-    final errorMsg = currentLang == EnumLang.en
+    final EnumLang currentLang = _languageBloc.state.enumLang;
+    final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading tolerances.'
         : 'Произошла ошибка при загрузке допусков.';
     emit(state.copyWith(
-        enumPageStatus: EnumStatus.error, errorMsg: errorMsg, enumNavigationStatus: EnumNavigationStatus.initial));
+        enumPageStatus: EnumStatus.error,
+        errorMsg: errorMsg,
+        enumNavigationStatus: EnumNavigationStatus.initial));
   }
 
   void resetNavigationStatus() {

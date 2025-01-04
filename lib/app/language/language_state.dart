@@ -1,7 +1,5 @@
 part of 'language_bloc.dart';
 
-
-
 @freezed
 sealed class LanguageState with _$LanguageState {
   const factory LanguageState({

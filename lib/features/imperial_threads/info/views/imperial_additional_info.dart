@@ -14,7 +14,7 @@ class ImperialAdditionalInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Create widgets for parameters first
-    final List<Widget> paramWidgets = [];
+    final List<Widget> paramWidgets = <Widget>[];
 
     // Add additional info items if they exist
     if (list.isNotEmpty) {
@@ -24,8 +24,8 @@ class ImperialAdditionalInfo extends StatelessWidget {
       }
 
       // Add each additional info item
-      for (var i = 0; i < list.length; i++) {
-        final item = list[i];
+      for (int i = 0; i < list.length; i++) {
+        final AdditionalInfo item = list[i];
         paramWidgets.add(
           ImperialInfoRow(
             label: item.name,
