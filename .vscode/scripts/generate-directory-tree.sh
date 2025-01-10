@@ -11,7 +11,6 @@ PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/info"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/metric_threads/tolerance_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads/tolerance_selection"
-PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads/diameter_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads/info"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/metric_threads/info"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/metric_threads/info/views"
@@ -20,6 +19,9 @@ PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/imperial_threads/tolerance_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/metric_threads/pitch_selection"
 PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/metric_threads/tolerance_selection"
+PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib"
+PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/04_imperial_threads/diameter_selection"
+PROJ_PATH="/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/lib/features/05_trapezoidal_threads/diameter_selection"
 FILE_NAMES=(
     "*.dart"
 )
@@ -52,7 +54,7 @@ EXCLUDE_STRINGS=(
     "part '"
 )
 LOG_LEVEL="INFO"
-OUTPUT_FILE="directory_structure.log" 
+OUTPUT_FILE="directory_structure.log"
 DISPLAY="all"
 DISPLAY="content"
 

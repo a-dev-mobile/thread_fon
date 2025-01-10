@@ -1,8 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-mixin BlocIgnoreEmitAfterClosed<T> on Cubit<T> {
+mixin BlocIgnoreEmitAfterClosed<State> on Cubit<State> {
   @override
-  void emit(T state) {
-    if (!isClosed) super.emit(state);
+  void emit(State state) {
+    if (!isClosed) {
+      super.emit(state);
+    }
   }
 }

@@ -1,7 +1,7 @@
 // lib/core/widgets/base_screen.dart
 
 import 'package:flutter/material.dart';
-import 'package:threadfon/features/settings/views/settings_drawer.dart';
+import 'package:threadfon/features/10_settings/views/settings_drawer.dart';
 
 class DrawerScreen extends StatelessWidget {
   final Widget body;

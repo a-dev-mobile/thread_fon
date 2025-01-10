@@ -34,7 +34,8 @@ class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
       add(ConnectivityChanged(results));
     } catch (e) {
       // В случае ошибки считаем, что подключения нет
-      add(ConnectivityChanged(const <ConnectivityResult>[ConnectivityResult.none]));
+      add(ConnectivityChanged(
+          const <ConnectivityResult>[ConnectivityResult.none]));
     }
   }
 

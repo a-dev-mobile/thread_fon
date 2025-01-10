@@ -10,8 +10,9 @@ import 'package:threadfon/core/constant/enum_lang.dart';
 import 'package:threadfon/core/models/core_user_selection.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/utils/device_id_generator.dart';
-import 'package:threadfon/features/imperial_threads/models/imperial_user_selection.dart';
-import 'package:threadfon/features/metric_threads/core/models/metric_user_selection.dart';
+import 'package:threadfon/features/04_imperial_threads/models/imperial_user_selection.dart';
+import 'package:threadfon/features/03_metric_threads/core/models/metric_user_selection.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/core/models/trapezoidal_user_selection.dart';
 
 final LogService _logger = LogService('local_storage');
 
@@ -28,8 +29,7 @@ class LocalStorage {
   static const String _appId = '_appId';
   static const String _metricUserSelectionKey = '_metricUserSelection';
   static const String _coreUserSelectionKey = '_userSelection'; // Новый ключ
-  static const String _imperialUserSelectionKey =
-      '_imperialUserSelection'; // Новый ключ
+  static const String _imperialUserSelectionKey = '_imperialUserSelection';
   static const String _userAgent = 'userAgent';
   static const String _targetUrl = '_TargetUrl';
   static const String _metricScrollPositionKey = 'scroll_position_metric';
@@ -57,9 +57,7 @@ class LocalStorage {
 
   /// Получение сохраненного положения скролла
   Future<double> getMetricScrollPosition() async {
-    return await _getValue<double>(
-            key: _metricScrollPositionKey, defaultValue: 0.0) ??
-        0.0;
+    return await _getValue<double>(key: _metricScrollPositionKey, defaultValue: 0.0) ?? 0.0;
   }
 
   /// Сохранение положения скролла
@@ -69,33 +67,34 @@ class LocalStorage {
 
   /// Получение сохраненного положения скролла
   Future<double> getImperialScrollPosition() async {
-    return await _getValue<double>(
-            key: _imperialScrollPositionKey, defaultValue: 0.0) ??
-        0.0;
+    return await _getValue<double>(key: _imperialScrollPositionKey, defaultValue: 0.0) ?? 0.0;
   }
 
+  ///
+  ///
+  ///
+  ///
+
+
+  // ******************************
   // ******************************
   // Методы для работы с _appId
 
   Future<String?> getAppId() => _getValue<String>(key: _appId);
 
-  Future<void> setAppId(String? value) =>
-      _setValue<String>(key: _appId, value: value ?? '');
+  Future<void> setAppId(String? value) => _setValue<String>(key: _appId, value: value ?? '');
 
   // ******************************
   // Методы для работы с _metricUserSelection
 
   Future<MetricUserSelection> getMetricUserSelection() async {
-    final String? jsonString = await _getValue<String>(
-        key: _metricUserSelectionKey, defaultValue: '{}');
+    final String? jsonString = await _getValue<String>(key: _metricUserSelectionKey, defaultValue: '{}');
     try {
       return jsonString != null
-          ? MetricUserSelection.fromJson(
-              json.decode(jsonString) as Map<String, dynamic>)
+          ? MetricUserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
           : const MetricUserSelection();
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'GET_METRIC_USER_SELECTION',
-          _metricUserSelectionKey, jsonString);
+      await _recordError(e, s, 'GET_METRIC_USER_SELECTION', _metricUserSelectionKey, jsonString);
 
       return const MetricUserSelection();
     }
@@ -106,15 +105,13 @@ class LocalStorage {
       final String jsonString = json.encode(value.toJson());
       await _setValue<String>(key: _metricUserSelectionKey, value: jsonString);
     } on Exception catch (e, s) {
-      await _recordError(
-          e, s, 'SET_METRIC_USER_SELECTION', _metricUserSelectionKey, value);
+      await _recordError(e, s, 'SET_METRIC_USER_SELECTION', _metricUserSelectionKey, value);
     }
   }
 
   /// Метод для обновления MetricUserSelection с использованием функции модификации.
   Future<void> updateMetricUserSelection(
-    FutureOr<MetricUserSelection> Function(MetricUserSelection current)
-        updateFn,
+    FutureOr<MetricUserSelection> Function(MetricUserSelection current) updateFn,
   ) async {
     try {
       // Получаем текущий объект MetricUserSelection
@@ -126,11 +123,9 @@ class LocalStorage {
       // Сохраняем обновленный объект
       await setMetricUserSelection(updatedSelection);
 
-      await _log('UPDATE_METRIC_USER_SELECTION', _metricUserSelectionKey,
-          updatedSelection);
+      await _log('UPDATE_METRIC_USER_SELECTION', _metricUserSelectionKey, updatedSelection);
     } on Exception catch (e, s) {
-      await _recordError(
-          e, s, 'UPDATE_METRIC_USER_SELECTION', _metricUserSelectionKey, null);
+      await _recordError(e, s, 'UPDATE_METRIC_USER_SELECTION', _metricUserSelectionKey, null);
     }
   }
 
@@ -138,16 +133,13 @@ class LocalStorage {
   // Методы для работы с _userSelection
 
   Future<CoreUserSelection> getCoreUserSelection() async {
-    final String? jsonString =
-        await _getValue<String>(key: _coreUserSelectionKey, defaultValue: '{}');
+    final String? jsonString = await _getValue<String>(key: _coreUserSelectionKey, defaultValue: '{}');
     try {
       return jsonString != null
-          ? CoreUserSelection.fromJson(
-              json.decode(jsonString) as Map<String, dynamic>)
+          ? CoreUserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
           : const CoreUserSelection();
     } on Exception catch (e, s) {
-      await _recordError(
-          e, s, 'GET_CORE_USER_SELECTION', _coreUserSelectionKey, jsonString);
+      await _recordError(e, s, 'GET_CORE_USER_SELECTION', _coreUserSelectionKey, jsonString);
 
       return const CoreUserSelection();
     }
@@ -158,8 +150,7 @@ class LocalStorage {
       final String jsonString = json.encode(value.toJson());
       await _setValue<String>(key: _coreUserSelectionKey, value: jsonString);
     } on Exception catch (e, s) {
-      await _recordError(
-          e, s, 'SET_CORE_USER_SELECTION', _coreUserSelectionKey, value);
+      await _recordError(e, s, 'SET_CORE_USER_SELECTION', _coreUserSelectionKey, value);
     }
   }
 
@@ -177,11 +168,9 @@ class LocalStorage {
       // Сохраняем обновленный объект
       await setCoreUserSelection(updatedSelection);
 
-      await _log('UPDATE_CORE_USER_SELECTION', _coreUserSelectionKey,
-          updatedSelection);
+      await _log('UPDATE_CORE_USER_SELECTION', _coreUserSelectionKey, updatedSelection);
     } on Exception catch (e, s) {
-      await _recordError(
-          e, s, 'UPDATE_CORE_USER_SELECTION', _coreUserSelectionKey, null);
+      await _recordError(e, s, 'UPDATE_CORE_USER_SELECTION', _coreUserSelectionKey, null);
     }
   }
 
@@ -189,16 +178,13 @@ class LocalStorage {
   // Методы для работы с _imperialUserSelection
 
   Future<ImperialUserSelection> getImperialUserSelection() async {
-    final String? jsonString = await _getValue<String>(
-        key: _imperialUserSelectionKey, defaultValue: '{}');
+    final String? jsonString = await _getValue<String>(key: _imperialUserSelectionKey, defaultValue: '{}');
     try {
       return jsonString != null
-          ? ImperialUserSelection.fromJson(
-              json.decode(jsonString) as Map<String, dynamic>)
+          ? ImperialUserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
           : const ImperialUserSelection();
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'GET_IMPERIAL_USER_SELECTION',
-          _imperialUserSelectionKey, jsonString);
+      await _recordError(e, s, 'GET_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey, jsonString);
 
       return const ImperialUserSelection();
     }
@@ -207,18 +193,15 @@ class LocalStorage {
   Future<void> setImperialUserSelection(ImperialUserSelection value) async {
     try {
       final String jsonString = json.encode(value.toJson());
-      await _setValue<String>(
-          key: _imperialUserSelectionKey, value: jsonString);
+      await _setValue<String>(key: _imperialUserSelectionKey, value: jsonString);
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'SET_IMPERIAL_USER_SELECTION',
-          _imperialUserSelectionKey, value);
+      await _recordError(e, s, 'SET_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey, value);
     }
   }
 
   /// Метод для обновления ImperialUserSelection с использованием функции модификации.
   Future<void> updateImperialUserSelection(
-    FutureOr<ImperialUserSelection> Function(ImperialUserSelection current)
-        updateFn,
+    FutureOr<ImperialUserSelection> Function(ImperialUserSelection current) updateFn,
   ) async {
     try {
       // Получаем текущий объект ImperialUserSelection
@@ -230,21 +213,93 @@ class LocalStorage {
       // Сохраняем обновленный объект
       await setImperialUserSelection(updatedSelection);
 
-      await _log('UPDATE_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey,
-          updatedSelection);
+      await _log('UPDATE_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey, updatedSelection);
     } on Exception catch (e, s) {
-      await _recordError(e, s, 'UPDATE_IMPERIAL_USER_SELECTION',
-          _imperialUserSelectionKey, null);
+      await _recordError(e, s, 'UPDATE_IMPERIAL_USER_SELECTION', _imperialUserSelectionKey, null);
     }
   }
+// ******************************
+// ******************************
+// ******************************
+// ******************************
+// **********trapezoidal********
+// ******************************
+// ******************************
+// ******************************
+// ******************************
+
+  static const String _trapezoidalScrollPosition = '_trapezoidalScrollPosition';
+
+  Future<void> setTrapezoidalScrollPosition(double position) async {
+    await _setValue<double>(key: _trapezoidalScrollPosition, value: position);
+  }
+
+  Future<double> getTrapezoidalScrollPosition() async {
+    return await _getValue<double>(key: _trapezoidalScrollPosition, defaultValue: 0.0) ?? 0.0;
+  }
+
+  static const String _trapezoidalUserSelection = '_trapezoidalUserSelection';
+
+  Future<TrapezoidalUserSelection> getTrapezoidalUserSelection() async {
+    final String? jsonString = await _getValue<String>(key: _trapezoidalUserSelection, defaultValue: '{}');
+    try {
+      return jsonString != null
+          ? TrapezoidalUserSelection.fromJson(json.decode(jsonString) as Map<String, dynamic>)
+          : const TrapezoidalUserSelection();
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'GET_TRAPEZOIDAL_USER_SELECTION', _trapezoidalUserSelection, jsonString);
+
+      return const TrapezoidalUserSelection();
+    }
+  }
+
+  Future<void> setTrapezoidalUserSelection(TrapezoidalUserSelection value) async {
+    try {
+      final String jsonString = json.encode(value.toJson());
+      await _setValue<String>(key: _trapezoidalUserSelection, value: jsonString);
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'SET_TRAPEZOIDAL_USER_SELECTION', _trapezoidalUserSelection, value);
+    }
+  }
+
+  // ******************************
+
+  Future<void> updateTrapezoidalUserSelection(
+    FutureOr<TrapezoidalUserSelection> Function(TrapezoidalUserSelection current) updateFn,
+  ) async {
+    try {
+      // Получаем текущий объект ImperialUserSelection
+      TrapezoidalUserSelection currentSelection = await getTrapezoidalUserSelection();
+
+      // Применяем функцию обновления
+      TrapezoidalUserSelection updatedSelection = await updateFn(currentSelection);
+
+      // Сохраняем обновленный объект
+      await setTrapezoidalUserSelection(updatedSelection);
+
+      await _log('UPDATE_TRAPEZOIDAL_USER_SELECTION', _trapezoidalUserSelection, updatedSelection);
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'UPDATE_TRAPEZOIDAL_USER_SELECTION', _trapezoidalUserSelection, null);
+    }
+  }
+
+
+  // ******************************
+// ******************************
+// ******************************
+// ******************************
+// ******************************
+// ******************************
+// ******************************
+// ******************************
+// ******************************
 
   // ******************************
   // Методы для работы с _userAgent
 
   Future<String?> getUserAgent() => _getValue<String>(key: _userAgent);
 
-  Future<void> setUserAgent(String? value) =>
-      _setValue<String>(key: _userAgent, value: value ?? '');
+  Future<void> setUserAgent(String? value) => _setValue<String>(key: _userAgent, value: value ?? '');
 
   // ******************************
   // Методы для работы с _targetUrl
@@ -254,8 +309,7 @@ class LocalStorage {
         defaultValue: 'https://unknown.com?utm_source=organic_mob',
       );
 
-  Future<void> setTargetUrl(String? value) =>
-      _setValue<String>(key: _targetUrl, value: value ?? '');
+  Future<void> setTargetUrl(String? value) => _setValue<String>(key: _targetUrl, value: value ?? '');
 
   // ******************************
   // Методы для работы с _themeMode
@@ -290,20 +344,17 @@ class LocalStorage {
     final String? jsonString = await _getValue<String>(key: _languageStateKey);
     final LanguageState defaultLanguageState = LanguageState(
       enumLang: EnumLang.values.firstWhere(
-        (EnumLang e) =>
-            e.name == PlatformDispatcher.instance.locale.languageCode,
+        (EnumLang e) => e.name == PlatformDispatcher.instance.locale.languageCode,
         orElse: () => EnumLang.en,
       ),
     );
 
     try {
       return jsonString != null
-          ? LanguageState.fromJson(
-              json.decode(jsonString) as Map<String, dynamic>)
+          ? LanguageState.fromJson(json.decode(jsonString) as Map<String, dynamic>)
           : defaultLanguageState;
     } on Exception catch (e, s) {
-      await _recordError(
-          e, s, 'GET_LANGUAGE_STATE', _languageStateKey, jsonString);
+      await _recordError(e, s, 'GET_LANGUAGE_STATE', _languageStateKey, jsonString);
 
       return defaultLanguageState;
     }
@@ -321,8 +372,7 @@ class LocalStorage {
   // ******************************
   // Методы для работы с текущим userId
 
-  Future<String?> getCurrentUserId() =>
-      _getValue<String>(key: _currentUserIdKey);
+  Future<String?> getCurrentUserId() => _getValue<String>(key: _currentUserIdKey);
 
   /// Инициализирует или получает существующий ID пользователя
   Future<String> ensureUserId() async {
@@ -336,8 +386,7 @@ class LocalStorage {
 
   /// Сохраняет ID пользователя. Если значение null, генерирует новый ID
   Future<void> setCurrentUserId(String? value) async {
-    final String userId =
-        value ?? await DeviceIdGenerator.generateUniqueDeviceId();
+    final String userId = value ?? await DeviceIdGenerator.generateUniqueDeviceId();
     await _setValue<String>(
       key: _currentUserIdKey,
       value: userId,
@@ -347,8 +396,7 @@ class LocalStorage {
   // ******************************
   // Методы для работы с _lastActivityTimestamp
 
-  Future<String?> getLastActivityTimestamp() =>
-      _getValue<String>(key: _lastActivityTimestampKey);
+  Future<String?> getLastActivityTimestamp() => _getValue<String>(key: _lastActivityTimestampKey);
 
   Future<void> setLastActivityTimestamp(String timestamp) =>
       _setValue<String>(key: _lastActivityTimestampKey, value: timestamp);
@@ -357,24 +405,20 @@ class LocalStorage {
 
   Future<String?> getCurrentRoute() => _getValue<String>(key: _currentRouteKey);
 
-  Future<void> setCurrentRoute(String route) =>
-      _setValue<String>(key: _currentRouteKey, value: route);
+  Future<void> setCurrentRoute(String route) => _setValue<String>(key: _currentRouteKey, value: route);
 
   // Методы для работы с _lastErrorTimestamp
 
-  Future<String?> getLastErrorTimestamp() =>
-      _getValue<String>(key: _lastErrorTimestampKey);
+  Future<String?> getLastErrorTimestamp() => _getValue<String>(key: _lastErrorTimestampKey);
 
   Future<void> setLastErrorTimestamp(String timestamp) =>
       _setValue<String>(key: _lastErrorTimestampKey, value: timestamp);
 
   // Методы для работы с _errorCountLastHour
 
-  Future<int?> getErrorCountLastHour() =>
-      _getValue<int>(key: _errorCountLastHourKey);
+  Future<int?> getErrorCountLastHour() => _getValue<int>(key: _errorCountLastHourKey);
 
-  Future<void> setErrorCountLastHour(int count) =>
-      _setValue<int>(key: _errorCountLastHourKey, value: count);
+  Future<void> setErrorCountLastHour(int count) => _setValue<int>(key: _errorCountLastHourKey, value: count);
 
   // ******************************
   // Универсальные методы для хранения и получения данных
@@ -467,12 +511,9 @@ class LocalStorage {
     required String key,
     defaultValue = const <String, dynamic>{},
   }) async {
-    final String? jsonString = await _getValue<String>(
-        key: key, defaultValue: json.encode(defaultValue));
+    final String? jsonString = await _getValue<String>(key: key, defaultValue: json.encode(defaultValue));
     try {
-      return jsonString != null
-          ? json.decode(jsonString) as Map<String, dynamic>
-          : null;
+      return jsonString != null ? json.decode(jsonString) as Map<String, dynamic> : null;
     } on Exception catch (e, s) {
       await _recordError(e, s, 'GET_JSON', key, jsonString);
       return null;
@@ -523,8 +564,7 @@ class LocalStorage {
   /// Проверка инициализации хранилищ
   void _ensureInitialized() {
     if (_sharedPreferences == null) {
-      throw Exception(
-          'LocalStorage not initialized. Call initialize() before using.');
+      throw Exception('LocalStorage not initialized. Call initialize() before using.');
     }
   }
 }

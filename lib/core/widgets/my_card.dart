@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 class MyCard extends StatelessWidget {
   final Widget child;
@@ -12,10 +13,22 @@ class MyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card.outlined(
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    return Card(
+      elevation: isDark ? 4.0 : 1.0,
       margin: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        side: BorderSide(
+          color:
+              isDark ? theme.colorScheme.surfaceContainerHighest.withOpacity(0.2) : theme.colorScheme.outline.withOpacity(0.2),
+        ),
+      ),
       child: InkWell(
         onTap: onTap,
+        borderRadius: BorderRadius.circular(12.0),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: child,

@@ -8,12 +8,12 @@ analyzer:
     - "build/**"
     - "scripts/**"
     - ".dart_tool/**"
-    
+
     # Tests and Coverage
     - "test/**.mocks.dart"
     - ".test_coverage.dart"
     - "coverage/**"
-    
+
     # Generated Files
     - "**.g.dart"
     - "**.gql.dart"
@@ -26,7 +26,7 @@ analyzer:
     - "**.pbjson.dart"
     - "lib/localization/generated/**"
     - "lib/constants/pubspec.yaml.g.dart"
-    
+
     # Assets and Platform-specific
     - "assets/**"
     - "ios/**"
@@ -35,7 +35,7 @@ analyzer:
     - "macos/**"
     - "windows/**"
     - "linux/**"
-    
+
     # Development Tools
     - ".fvm/**"
 
@@ -50,7 +50,7 @@ linter:
     - avoid_web_libraries_in_flutter
     - cancel_subscriptions
     - close_sinks
-    
+
     # Style and Formatting
     - always_declare_return_types
     - always_put_control_body_on_new_line
@@ -64,13 +64,13 @@ linter:
     - prefer_single_quotes
     - sort_child_properties_last
     - unawaited_futures
-    
+
     # Performance
     - avoid_unnecessary_containers
     - prefer_const_constructors
     - prefer_const_declarations
     - prefer_const_literals_to_create_immutables
-    
+
     # Flutter Specific
     - sized_box_for_whitespace
     - use_full_hex_values_for_flutter_colors
@@ -85,7 +85,7 @@ dart_code_metrics:
     maximum-nesting-level: 5
     source-lines-of-code: 50
     maintainability-index: 50
-    
+
   formatter:
     indent: 2
     line-length: 100
@@ -105,7 +105,7 @@ dart_code_metrics:
     - no-empty-block
     - prefer-trailing-comma
     - prefer-conditional-expressions
-    
+
     # Flutter Best Practices
     - avoid-returning-widgets
     - avoid-unnecessary-setstate
@@ -115,7 +115,7 @@ dart_code_metrics:
     - prefer-correct-edge-insets-constructor
     - avoid-shrink-wrap-in-lists
     - avoid-unnecessary-stateful-widgets
-    
+
     # Additional Rules from Common Set
     - avoid-global-state
     - avoid-non-null-assertion: false
@@ -135,7 +135,8 @@ dart_code_metrics:
     - avoid-passing-bloc-to-bloc
     - avoid-passing-build-context-to-blocs
     - avoid-returning-value-from-cubit-methods
-    - check-is-not-closed-after-async-gap
+    # используем BlocIgnoreEmitAfterClosed
+    - check-is-not-closed-after-async-gap: false
     - emit-new-bloc-state-instances
     - handle-bloc-event-subclasses
     - prefer-bloc-event-suffix
