@@ -64,7 +64,7 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
     sections.add(const SizedBox(height: 10.0));
 
     if (isFemale) {
-      sections.add(ImperialInfoRowMaxMin(
+      sections.add(InfoRowMaxMin(
         isHaveDividerBottom: false,
         label: '$prefix - ${localization.diam_major}',
         value: info.major_diameter_basic.toString(),
@@ -80,7 +80,7 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
       //   avg: info.minor_diameter_avg,
       //   max: info.minor_diameter_max,
       // ));
-      sections.add(ImperialInfoRowMaxMin(
+      sections.add(InfoRowMaxMin(
         // isHaveDividerBottom: false,
         label: '${prefix}1 - ${localization.diam_minor}',
         value: info.minor_diameter_max.toString(),
@@ -94,7 +94,7 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
 
     // Добавляем информацию о диаметре отверстия, если она существует
     if (info.type_.isMale) {
-      sections.add(ImperialInfoRowMaxMin(
+      sections.add(InfoRowMaxMin(
         isHaveDividerBottom: false,
         label: '${prefix}3 - ${localization.minor_diameter_unr}',
         value: info.unr_minor_diameter_max.toString(),

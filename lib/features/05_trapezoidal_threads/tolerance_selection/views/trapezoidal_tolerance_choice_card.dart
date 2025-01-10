@@ -24,10 +24,9 @@ class TrapezoidalToleranceChoiceCard extends StatelessWidget {
       child: ListTile(
         title: Text(
           tolerance.formatted,
-          textAlign:  TextAlign.center,
+          textAlign: TextAlign.center,
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
-
           ),
         ),
       ),

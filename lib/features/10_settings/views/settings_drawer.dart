@@ -10,9 +10,9 @@ import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
+import 'package:threadfon/features/02_thread_type_selection/bloc/thread_type_bloc.dart';
 import 'package:threadfon/features/10_settings/bloc/settings_bloc.dart';
 import 'package:threadfon/features/10_settings/views/about_app.dart'; // Импортируем экран AboutApp
-import 'package:threadfon/features/02_thread_type_selection/bloc/thread_type_bloc.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -57,13 +57,15 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => settingsBloc,
-      child: _SettingsDrawerView(settingsBloc, themeBloc, languageBloc, localStorage),
+      child: _SettingsDrawerView(
+          settingsBloc, themeBloc, languageBloc, localStorage),
     );
   }
 }
 
 class _SettingsDrawerView extends StatelessWidget {
-  const _SettingsDrawerView(this.bloc, this.themeBloc, this.languageBloc, this.localStorage);
+  const _SettingsDrawerView(
+      this.bloc, this.themeBloc, this.languageBloc, this.localStorage);
   final SettingsBloc bloc;
   final ThemeBloc themeBloc;
   final LanguageBloc languageBloc;
@@ -74,7 +76,8 @@ class _SettingsDrawerView extends StatelessWidget {
     final GeneratedLocalization localization = context.l10n;
 
     return BlocListener<SettingsBloc, SettingsState>(
-      listenWhen: (SettingsState previous, SettingsState current) => previous.enumThreads != current.enumThreads,
+      listenWhen: (SettingsState previous, SettingsState current) =>
+          previous.enumThreads != current.enumThreads,
       listener: (BuildContext context, SettingsState state) {
         context.read<ThreadTypeBloc>().load();
       },
@@ -84,10 +87,12 @@ class _SettingsDrawerView extends StatelessWidget {
           String threadTypeText;
           switch (currentThreadType) {
             case EnumThreads.metric:
-              threadTypeText = '${localization.metric_thread_gost}\n${localization.metric_thread}';
+              threadTypeText =
+                  '${localization.metric_thread_gost}\n${localization.metric_thread}';
               break;
             case EnumThreads.imperial:
-              threadTypeText = '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
+              threadTypeText =
+                  '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
               break;
             case EnumThreads.trapezoidal:
               threadTypeText = 'trapezoidal';
@@ -115,7 +120,8 @@ class _SettingsDrawerView extends StatelessWidget {
                             // Drawer Header
                             Container(
                               width: double.infinity,
-                              padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 50, horizontal: 20),
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: <Color>[
@@ -175,14 +181,16 @@ class _SettingsDrawerView extends StatelessWidget {
                                   const Divider(),
                                   ListTile(
                                     leading: const Icon(Icons.feedback),
-                                    title: Text(localization.suggest_improvement),
+                                    title:
+                                        Text(localization.suggest_improvement),
                                     onTap: () => _sendEmail(context),
                                   ),
                                   const Divider(),
                                   ListTile(
                                     leading: const Icon(Icons.store),
                                     title: Text(localization.leave_review),
-                                    onTap: () => _openAppStoreOrPlayStore(context),
+                                    onTap: () =>
+                                        _openAppStoreOrPlayStore(context),
                                   ),
                                   const Divider(),
                                   ListTile(
@@ -357,10 +365,12 @@ class _SettingsDrawerView extends StatelessWidget {
             String threadTypeText;
             switch (threadType) {
               case EnumThreads.metric:
-                threadTypeText = '${localization.metric_thread_gost}\n${localization.metric_thread}';
+                threadTypeText =
+                    '${localization.metric_thread_gost}\n${localization.metric_thread}';
                 break;
               case EnumThreads.imperial:
-                threadTypeText = '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
+                threadTypeText =
+                    '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
                 break;
               case EnumThreads.trapezoidal:
                 threadTypeText = 'trapezoidal';
@@ -375,8 +385,10 @@ class _SettingsDrawerView extends StatelessWidget {
               ),
               value: threadType,
               groupValue: currentThreadType,
-              contentPadding: const EdgeInsets.symmetric(vertical: 4.0), // Уменьшаем отступы
-              controlAffinity: ListTileControlAffinity.leading, // Располагаем радио-кнопку слева
+              contentPadding: const EdgeInsets.symmetric(
+                  vertical: 4.0), // Уменьшаем отступы
+              controlAffinity: ListTileControlAffinity
+                  .leading, // Располагаем радио-кнопку слева
               onChanged: (EnumThreads? value) {
                 if (value != null) {
                   bloc.setThreadType(value);

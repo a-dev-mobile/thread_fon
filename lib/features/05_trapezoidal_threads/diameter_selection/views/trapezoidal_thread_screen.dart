@@ -25,7 +25,8 @@ class TrapezoidalThreadScreen extends StatefulWidget {
   const TrapezoidalThreadScreen({super.key});
 
   @override
-  State<TrapezoidalThreadScreen> createState() => _TrapezoidalThreadScreenState();
+  State<TrapezoidalThreadScreen> createState() =>
+      _TrapezoidalThreadScreenState();
 }
 
 class _TrapezoidalThreadScreenState extends State<TrapezoidalThreadScreen> {
@@ -38,7 +39,8 @@ class _TrapezoidalThreadScreenState extends State<TrapezoidalThreadScreen> {
     final ApiService apiService = context.read<ApiService>();
     final LocalStorage localStorage = context.read<LocalStorage>();
     final LanguageBloc languageBloc = context.read<LanguageBloc>();
-    final TrapezoidalThreadRepository repository = TrapezoidalThreadRepository(apiService: apiService);
+    final TrapezoidalThreadRepository repository =
+        TrapezoidalThreadRepository(apiService: apiService);
 
     _bloc = TrapezoidalThreadBloc(
       repository: repository,
@@ -85,8 +87,9 @@ class _TrapezoidalThreadViewState extends State<_TrapezoidalThreadView> {
     final TrapezoidalThreadBloc bloc = widget.bloc;
 
     return BlocListener<TrapezoidalThreadBloc, TrapezoidalThreadState>(
-      listenWhen: (TrapezoidalThreadState previous, TrapezoidalThreadState current) =>
-          previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen:
+          (TrapezoidalThreadState previous, TrapezoidalThreadState current) =>
+              previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (BuildContext context, TrapezoidalThreadState state) async {
         if (state.enumNavigationStatus.isNavigation) {
           await context.pushNamed(TrapezoidalToleranceSelectionScreen.name);
@@ -95,11 +98,13 @@ class _TrapezoidalThreadViewState extends State<_TrapezoidalThreadView> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('localization.select_diameter_and_pitch'),
+          title: const Text('localization.select_diameter_and_pitch'),
         ),
         body: BlocBuilder<TrapezoidalThreadBloc, TrapezoidalThreadState>(
-          buildWhen: (TrapezoidalThreadState previous, TrapezoidalThreadState current) =>
-              previous.enumPageStatus != current.enumPageStatus || previous.threads != current.threads,
+          buildWhen: (TrapezoidalThreadState previous,
+                  TrapezoidalThreadState current) =>
+              previous.enumPageStatus != current.enumPageStatus ||
+              previous.threads != current.threads,
           builder: (BuildContext context, TrapezoidalThreadState state) {
             switch (state.enumPageStatus) {
               case EnumStatus.loading:
@@ -119,7 +124,8 @@ class _TrapezoidalThreadViewState extends State<_TrapezoidalThreadView> {
                 return ListView.separated(
                   controller: _scrollController,
                   itemCount: state.threads.length,
-                  separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 8.0),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const SizedBox(height: 8.0),
                   itemBuilder: (BuildContext context, int index) {
                     final TrapezoidalThreadModel thread = state.threads[index];
                     return TrapezoidalThreadCard(

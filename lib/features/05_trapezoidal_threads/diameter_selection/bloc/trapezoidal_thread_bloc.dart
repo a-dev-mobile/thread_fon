@@ -25,21 +25,23 @@ class TrapezoidalThreadBloc extends Cubit<TrapezoidalThreadState>
   TrapezoidalThreadBloc({
     required TrapezoidalThreadRepository repository,
     required LocalStorage localStorage,
-    required LanguageBloc languageBloc,  // Added LanguageBloc
+    required LanguageBloc languageBloc, // Added LanguageBloc
   })  : _repository = repository,
         _localStorage = localStorage,
-        _languageBloc = languageBloc,  // Added field
+        _languageBloc = languageBloc, // Added field
         super(const TrapezoidalThreadState());
 
   final TrapezoidalThreadRepository _repository;
   final LocalStorage _localStorage;
-  final LanguageBloc _languageBloc;  // Added field
+  final LanguageBloc _languageBloc; // Added field
 
   Future<void> loadThreads() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final List<TrapezoidalThreadModel> threads = await _repository.fetchThreads();
-      final double scrollPosition = await _localStorage.getTrapezoidalScrollPosition();
+      final List<TrapezoidalThreadModel> threads =
+          await _repository.fetchThreads();
+      final double scrollPosition =
+          await _localStorage.getTrapezoidalScrollPosition();
 
       emit(state.copyWith(
         enumPageStatus: EnumStatus.success,
@@ -60,7 +62,6 @@ class TrapezoidalThreadBloc extends Cubit<TrapezoidalThreadState>
         (TrapezoidalUserSelection current) => current.copyWith(
           diameter: model.diameter,
           pitch: model.pitch,
-
         ),
       );
       emit(state.copyWith(

@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'trapezoidal_tolerance_model.freezed.dart';
 part 'trapezoidal_tolerance_model.g.dart';
+
 @freezed
 @immutable
 class TrapezoidalToleranceModel with _$TrapezoidalToleranceModel {
@@ -10,7 +11,8 @@ class TrapezoidalToleranceModel with _$TrapezoidalToleranceModel {
     required List<TrapezoidalToleranceItem> male,
   }) = _TrapezoidalToleranceModel;
 
-  factory TrapezoidalToleranceModel.fromJson(Map<String, dynamic> json) => _$TrapezoidalToleranceModelFromJson(json);
+  factory TrapezoidalToleranceModel.fromJson(Map<String, dynamic> json) =>
+      _$TrapezoidalToleranceModelFromJson(json);
 }
 
 @freezed
@@ -21,5 +23,6 @@ class TrapezoidalToleranceItem with _$TrapezoidalToleranceItem {
     required String formatted,
   }) = _TrapezoidalToleranceItem;
 
-  factory TrapezoidalToleranceItem.fromJson(Map<String, dynamic> json) => _$TrapezoidalToleranceItemFromJson(json);
+  factory TrapezoidalToleranceItem.fromJson(Map<String, dynamic> json) =>
+      _$TrapezoidalToleranceItemFromJson(json);
 }

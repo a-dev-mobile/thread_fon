@@ -2,19 +2,20 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/core/widgets/overlay_widget.dart';
-import 'package:threadfon/features/04_imperial_threads/diameter_selection/views/imperial_diameter_screen.dart';
-import 'package:threadfon/features/04_imperial_threads/info/views/imperial_info_screen.dart';
-import 'package:threadfon/features/04_imperial_threads/tolerance_selection/views/imperial_tolerance_selection_screen.dart';
+import 'package:threadfon/features/01_splash/splash_screen.dart';
+import 'package:threadfon/features/02_thread_type_selection/views/thread_type_selection_screen.dart';
 import 'package:threadfon/features/03_metric_threads/diameter_selection/views/metric_diameter_screen.dart';
 import 'package:threadfon/features/03_metric_threads/info/views/metric_full_screen_svg_view.dart';
 import 'package:threadfon/features/03_metric_threads/info/views/metric_info_screen.dart';
 import 'package:threadfon/features/03_metric_threads/pitch_selection/views/pitch_selection_screen.dart';
 import 'package:threadfon/features/03_metric_threads/tolerance_selection/views/tolerance_selection_screen.dart';
+import 'package:threadfon/features/04_imperial_threads/diameter_selection/views/imperial_diameter_screen.dart';
+import 'package:threadfon/features/04_imperial_threads/info/views/imperial_info_screen.dart';
+import 'package:threadfon/features/04_imperial_threads/tolerance_selection/views/imperial_tolerance_selection_screen.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/diameter_selection/views/trapezoidal_thread_screen.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal_info_screen.dart';
 import 'package:threadfon/features/05_trapezoidal_threads/tolerance_selection/views/trapezoidal_tolerance_selection_screen.dart';
 import 'package:threadfon/features/10_settings/views/about_app.dart';
-import 'package:threadfon/features/01_splash/splash_screen.dart';
-import 'package:threadfon/features/02_thread_type_selection/views/thread_type_selection_screen.dart';
-import 'package:threadfon/features/05_trapezoidal_threads/diameter_selection/views/trapezoidal_thread_screen.dart';
 
 class AppRouter {
   final FirebaseAnalytics analytics;
@@ -117,9 +118,16 @@ class AppRouter {
               pageBuilder: (BuildContext context, GoRouterState state) =>
                   MaterialPage<void>(child: const TrapezoidalThreadScreen(), key: state.pageKey),
             ),
-              GoRoute(
+            GoRoute(
               path: TrapezoidalToleranceSelectionScreen.path,
               name: TrapezoidalToleranceSelectionScreen.name,
+              pageBuilder: (BuildContext context, GoRouterState state) =>
+                  MaterialPage<void>(child: const TrapezoidalToleranceSelectionScreen(), key: state.pageKey),
+            ),
+
+            GoRoute(
+              path: TrapezoidalInfoScreen.path,
+              name: TrapezoidalInfoScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
                   MaterialPage<void>(child: const TrapezoidalToleranceSelectionScreen(), key: state.pageKey),
             ),

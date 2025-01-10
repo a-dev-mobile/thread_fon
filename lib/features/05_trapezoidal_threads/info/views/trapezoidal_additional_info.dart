@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:threadfon/core/widgets/info_row.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
-import 'package:threadfon/features/04_imperial_threads/info/models/imperial_info_model.dart';
 
-class ImperialAdditionalInfo extends StatelessWidget {
+import 'package:threadfon/features/05_trapezoidal_threads/info/models/trapezoidal_info_model.dart';
+
+class TrapezoidalAdditionalInfo extends StatelessWidget {
   final List<AdditionalInfo> list;
 
-  const ImperialAdditionalInfo({
+  const TrapezoidalAdditionalInfo({
     required this.list,
     super.key,
   });

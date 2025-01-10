@@ -1,12 +1,12 @@
 // info_row.dart
 import 'package:flutter/material.dart';
 
-class ImperialInfoRowMaxMin extends StatelessWidget {
+class InfoRowMaxMin extends StatelessWidget {
   final String label;
   final String? value;
   final String labelMaxMin;
   final bool isHaveDividerBottom;
-  const ImperialInfoRowMaxMin({
+  const InfoRowMaxMin({
     required this.label,
     required this.value,
     required this.labelMaxMin,

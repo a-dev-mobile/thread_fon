@@ -10,6 +10,7 @@ import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal_info_screen.dart';
 
 import 'package:threadfon/features/05_trapezoidal_threads/tolerance_selection/bloc/trapezoidal_tolerance_bloc.dart';
 import 'package:threadfon/features/05_trapezoidal_threads/tolerance_selection/models/trapezoidal_tolerance_model.dart';
@@ -38,7 +39,8 @@ class _TrapezoidalToleranceSelectionScreenState
   void initState() {
     super.initState();
     final ApiService apiService = context.read<ApiService>();
-    final TrapezoidalToleranceRepository toleranceRepository = TrapezoidalToleranceRepository(apiService: apiService);
+    final TrapezoidalToleranceRepository toleranceRepository =
+        TrapezoidalToleranceRepository(apiService: apiService);
     final LocalStorage localStorage = context.read<LocalStorage>();
     final LanguageBloc languageBloc = context.read<LanguageBloc>();
 
@@ -64,15 +66,16 @@ class _ToleranceSelectionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GeneratedLocalization localization = context.l10n;
-    final TrapezoidalToleranceBloc bloc = context.read<TrapezoidalToleranceBloc>();
+    final TrapezoidalToleranceBloc bloc =
+        context.read<TrapezoidalToleranceBloc>();
 
     return BlocListener<TrapezoidalToleranceBloc, TrapezoidalToleranceState>(
-      listenWhen:
-          (TrapezoidalToleranceState previous, TrapezoidalToleranceState current) =>
-              previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (TrapezoidalToleranceState previous,
+              TrapezoidalToleranceState current) =>
+          previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (BuildContext context, TrapezoidalToleranceState state) {
         if (state.enumNavigationStatus.isNavigation) {
-          // context.pushNamed(TrapezoidalInfoScreen.name);
+          context.pushNamed(TrapezoidalInfoScreen.name);
           bloc.resetNavigationStatus();
         }
       },
@@ -141,10 +144,11 @@ class _ToleranceSelectionView extends StatelessWidget {
   Widget _buildToleranceList(
       BuildContext context, List<TrapezoidalToleranceItem> tolerances,
       {required bool isFemale}) {
-    final TrapezoidalToleranceBloc bloc = context.read<TrapezoidalToleranceBloc>();
+    final TrapezoidalToleranceBloc bloc =
+        context.read<TrapezoidalToleranceBloc>();
 
     return ListView.separated(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       itemCount: tolerances.length,
       separatorBuilder: (BuildContext context, int index) =>
           const SizedBox(height: 8.0),

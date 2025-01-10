@@ -11,7 +11,8 @@ final LogService _logger = LogService('trapezoidal_tolerance_repository');
 class TrapezoidalToleranceRepository {
   final ApiService _apiService;
 
-  TrapezoidalToleranceRepository({required ApiService apiService}) : _apiService = apiService;
+  TrapezoidalToleranceRepository({required ApiService apiService})
+      : _apiService = apiService;
 
   Future<TrapezoidalToleranceModel> fetchTolerances({
     required String pitch,
@@ -27,7 +28,8 @@ class TrapezoidalToleranceRepository {
       );
 
       if (response.statusCode == 200) {
-        return TrapezoidalToleranceModel.fromJson(response.data as Map<String, dynamic>);
+        return TrapezoidalToleranceModel.fromJson(
+            response.data as Map<String, dynamic>);
       } else {
         _logger.e(
           'Failed to fetch tolerances',

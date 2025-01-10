@@ -25,7 +25,8 @@ class ThreadTypeSelectionScreen extends StatefulWidget {
   static const String name = 'ThreadTypeSelectionScreen';
 
   @override
-  State<ThreadTypeSelectionScreen> createState() => _ThreadTypeSelectionScreenState();
+  State<ThreadTypeSelectionScreen> createState() =>
+      _ThreadTypeSelectionScreenState();
 }
 
 class _ThreadTypeSelectionScreenState extends State<ThreadTypeSelectionScreen> {
@@ -65,8 +66,10 @@ class _ThreadTypeSelectionView extends StatelessWidget {
     return DrawerScreen(
         title: localization.thread_type,
         subtitle: switch (bloc.state.coreUserSelection.enumThreads) {
-          EnumThreads.metric => '${localization.metric_thread_gost}\n${localization.metric_thread}',
-          EnumThreads.imperial => '${localization.imperial_thread_gost}\n${localization.imperial_thread}',
+          EnumThreads.metric =>
+            '${localization.metric_thread_gost}\n${localization.metric_thread}',
+          EnumThreads.imperial =>
+            '${localization.imperial_thread_gost}\n${localization.imperial_thread}',
           EnumThreads.trapezoidal => 'trapezoidal',
         },
         body: BlocListener<ThreadTypeBloc, ThreadTypeState>(
@@ -96,15 +99,20 @@ class _ThreadTypeSelectionView extends StatelessWidget {
                       return Center(
                         child: SingleChildScrollView(
                           child: Column(
-                            mainAxisSize: MainAxisSize.min, // Центрирует по вертикали
-                            children: state.threadTypes.map((ThreadTypeModel threadType) {
-                              final String label = threadType.enumThreadType == EnumThreadMaleFemale.female
+                            mainAxisSize:
+                                MainAxisSize.min, // Центрирует по вертикали
+                            children: state.threadTypes
+                                .map((ThreadTypeModel threadType) {
+                              final String label = threadType.enumThreadType ==
+                                      EnumThreadMaleFemale.female
                                   ? localization.internal_thread
                                   : localization.external_thread;
                               return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
                                 child: FractionallySizedBox(
-                                  widthFactor: 0.8, // Устанавливает ширину 80% от ширины родителя
+                                  widthFactor:
+                                      0.8, // Устанавливает ширину 80% от ширины родителя
                                   child: ThreadTypeChoiceCard(
                                     svgAssetPath: threadType.svgAssetPath,
                                     label: label,

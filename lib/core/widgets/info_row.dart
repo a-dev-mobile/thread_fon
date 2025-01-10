@@ -1,12 +1,12 @@
 // info_row.dart
 import 'package:flutter/material.dart';
 
-class ImperialInfoRow extends StatelessWidget {
+class InfoRow extends StatelessWidget {
   final String label;
   final String? value;
   final bool isHaveDividerBottom; // Новый параметр
 
-  const ImperialInfoRow({
+  const InfoRow({
     required this.label,
     required this.value,
     super.key,

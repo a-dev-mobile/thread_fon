@@ -14,7 +14,8 @@ part 'splash_state.dart';
 
 final LogService _logger = LogService('info_bloc');
 
-class SplashBloc extends Cubit<SplashState> with BlocIgnoreEmitAfterClosed<SplashState> {
+class SplashBloc extends Cubit<SplashState>
+    with BlocIgnoreEmitAfterClosed<SplashState> {
   SplashBloc({
     required LanguageBloc languageBloc,
     required LocalStorage storage,

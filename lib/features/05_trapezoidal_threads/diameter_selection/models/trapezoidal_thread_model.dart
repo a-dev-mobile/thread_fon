@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-
 part 'trapezoidal_thread_model.g.dart';
 part 'trapezoidal_thread_model.freezed.dart';
 
@@ -13,5 +12,6 @@ class TrapezoidalThreadModel with _$TrapezoidalThreadModel {
     required String designation,
   }) = _TrapezoidalThreadModel;
 
-  factory TrapezoidalThreadModel.fromJson(Map<String, dynamic> json) => _$TrapezoidalThreadModelFromJson(json);
+  factory TrapezoidalThreadModel.fromJson(Map<String, dynamic> json) =>
+      _$TrapezoidalThreadModelFromJson(json);
 }

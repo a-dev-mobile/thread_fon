@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threadfon/core/constant/enum_thread_male_female.dart';
 import 'package:threadfon/core/constant/enum_units.dart';
+import 'package:threadfon/core/widgets/info_row.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/04_imperial_threads/info/bloc/imperial_info_bloc.dart';
-
 import 'package:threadfon/features/04_imperial_threads/info/models/imperial_info_model.dart';
-import 'package:threadfon/features/04_imperial_threads/info/views/imperial_info_row.dart';
+
 import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
@@ -69,40 +69,40 @@ class ImperialInfoMainParameters extends StatelessWidget {
           // Конец добавления
           const SizedBox(height: 16.0),
           const Divider(),
-          ImperialInfoRow(
+          InfoRow(
               label: localization.thread_type,
               value: info.type_.isFemale
                   ? localization.internal_thread
                   : localization.external_thread),
-          ImperialInfoRow(
+          InfoRow(
             label: localization.thread_diam_nom,
             value: info.decimal_diameter.toString(),
           ),
-          ImperialInfoRow(
+          InfoRow(
             label: localization.tpi,
             value: info.tpi.toString(),
           ),
-          ImperialInfoRow(
+          InfoRow(
             label: localization.thread_series,
             value: info.series_designation,
           ),
-          ImperialInfoRow(
+          InfoRow(
             label: localization.thread_class,
             value: info.series,
           ),
 
-          ImperialInfoRow(
+          InfoRow(
             label: localization.pitch,
             value: info.pitch.toString(),
           ),
 
-          ImperialInfoRow(
+          InfoRow(
             isHaveDividerBottom: false,
             label: localization.thread_depth,
             value: info.thread_depth.toString(),
           ),
 
-          // ImperialInfoRow(
+          // InfoRow(
           //   label: 'localization.allowance',
           //   value: info.allowance.toString(),
           // ),

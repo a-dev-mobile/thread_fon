@@ -1,0 +1,338 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:threadfon/app/language/language_bloc.dart';
+import 'package:threadfon/app/theme/theme_bloc.dart';
+import 'package:threadfon/core/constant/enum_navigation_status.dart';
+import 'package:threadfon/core/constant/enum_status.dart';
+import 'package:threadfon/core/constant/enum_units.dart';
+import 'package:threadfon/core/services/api_service/api_service.dart';
+import 'package:threadfon/core/services/local_storage/local_storage.dart';
+import 'package:threadfon/core/services/logging/logger.dart';
+import 'package:threadfon/core/widgets/loading_widget.dart';
+import 'package:threadfon/core/widgets/my_error_widget.dart';
+import 'package:threadfon/core/widgets/svg_overlay.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/info/bloc/trapezoidal_info_bloc.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/info/repositories/trapezoidal_info_repository.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/info/views/full_screen_svg_view.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal_additional_info.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal_info_diameters_parameters.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal_info_main_parameters.dart';
+
+import 'package:threadfon/localization/generated/l10n.dart';
+import 'package:threadfon/localization/l10n_extension.dart';
+
+final LogService _logger = LogService('info_screen');
+
+class TrapezoidalInfoScreen extends StatefulWidget {
+  const TrapezoidalInfoScreen({super.key});
+  static const String path = '/TrapezoidalInfoScreen';
+  static const String name = 'TrapezoidalInfoScreen';
+
+  @override
+  State<TrapezoidalInfoScreen> createState() => _TrapezoidalInfoScreenState();
+}
+
+class _TrapezoidalInfoScreenState extends State<TrapezoidalInfoScreen> {
+  late TrapezoidalInfoBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    final ApiService apiService = context.read<ApiService>();
+    final TrapezoidalInfoRepository infoRepository =
+        TrapezoidalInfoRepository(apiService: apiService);
+    final LocalStorage localStorage = context.read<LocalStorage>();
+    final LanguageBloc languageBloc = context.read<LanguageBloc>();
+    final ThemeBloc themeBloc = context.read<ThemeBloc>();
+
+    _bloc = TrapezoidalInfoBloc(
+      repository: infoRepository,
+      localStorage: localStorage,
+      languageBloc: languageBloc,
+      themeBloc: themeBloc,
+    )..load();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => _bloc,
+      child: const _TrapezoidalTrapezoidalInfoView(),
+    );
+  }
+}
+
+class _TrapezoidalTrapezoidalInfoView extends StatefulWidget {
+  const _TrapezoidalTrapezoidalInfoView();
+
+  @override
+  State<_TrapezoidalTrapezoidalInfoView> createState() =>
+      _TrapezoidalTrapezoidalInfoViewState();
+}
+
+class _TrapezoidalTrapezoidalInfoViewState
+    extends State<_TrapezoidalTrapezoidalInfoView> {
+  @override
+  Widget build(BuildContext context) {
+    final TrapezoidalInfoBloc bloc = context.watch<TrapezoidalInfoBloc>();
+    final TrapezoidalInfoState state = bloc.state;
+
+    // Screen dimensions
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    const double svgWidth = 785.0;
+    const double svgHeight = 568.0;
+    const double svgAspectRatio = svgWidth / svgHeight;
+    final double calculatedOverlayHeight = screenWidth / svgAspectRatio;
+    final double maxOverlayHeight = screenHeight * 0.4;
+    final double overlayHeight = calculatedOverlayHeight > maxOverlayHeight
+        ? maxOverlayHeight
+        : calculatedOverlayHeight;
+
+    return BlocListener<TrapezoidalInfoBloc, TrapezoidalInfoState>(
+      listenWhen:
+          (TrapezoidalInfoState previous, TrapezoidalInfoState current) =>
+              previous.enumNavigationStatus != current.enumNavigationStatus,
+      listener: (BuildContext context, TrapezoidalInfoState state) async {
+        // Handle side effects if needed
+      },
+      child: Scaffold(
+        body: Stack(
+          clipBehavior: Clip.none,
+          children: <Widget>[
+            // Main content
+            _buildContent(bloc, context, overlayHeight, svgWidth, svgHeight),
+            // SVG Overlay
+            if (state.isSvgOverlayVisible)
+              SvgOverlay(
+                svgData: state.showDimensions
+                    ? state.svgData ?? ''
+                    : state.svgDataNoDimensions ?? '',
+                svgRequestStatus: state.svgRequestStatus,
+                svgErrorMsg: state.svgErrorMsg,
+                overlayHeight: overlayHeight,
+                svgAspectRatio: svgAspectRatio,
+                svgWidth: svgWidth,
+                svgHeight: svgHeight,
+                onClose: () => bloc.toggleSvgOverlay(),
+                onExpand: () {
+                  final String? svgDataToSend = state.showDimensions
+                      ? state.svgData
+                      : state.svgDataNoDimensions;
+
+                  if (svgDataToSend != null) {
+                    context.pushNamed(TrapezoidalFullScreenSvgView.name,
+                        extra: <String, String>{
+                          'svgData': svgDataToSend,
+                        });
+                  } else {
+                    // Handle the null case, perhaps show an error or a placeholder
+                    _logger.e('SVG data is null when trying to expand');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('SVG data is unavailable.')),
+                    );
+                  }
+                },
+                onSwitchSvg: () => bloc.toggleDimensions(),
+                showDimensions: state.showDimensions,
+              ),
+            // Blurred overlay when in preparation status
+            if (state.enumNavigationStatus.isPreparation)
+              const LoadingWidget(isBlurred: true),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContent(TrapezoidalInfoBloc bloc, BuildContext context,
+      double overlayHeight, double svgWidth, double svgHeight) {
+    final TrapezoidalInfoState state = bloc.state;
+
+    switch (state.enumPageStatus) {
+      case EnumStatus.loading:
+        return const Center(child: LoadingWidget());
+
+      case EnumStatus.error:
+        return MyErrorWidget(
+          errorMsg: state.errorMsg ?? 'An unknown error occurred.',
+          onRetry: () {
+            bloc.load();
+          },
+        );
+
+      case EnumStatus.success:
+        return _buildSuccessContent(context, state, bloc, overlayHeight);
+    }
+  }
+
+  Widget _buildSuccessContent(BuildContext context, TrapezoidalInfoState state,
+      TrapezoidalInfoBloc bloc, double overlayHeight) {
+    final GeneratedLocalization localization = context.l10n;
+
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverAppBar(
+          title: Text(localization.threads_info),
+          floating: true,
+          snap: true,
+          actions: <Widget>[
+            // IconButton(
+            //   icon: const Icon(FontAwesomeIcons.compassDrafting),
+            //   onPressed: () => bloc.toggleSvgOverlay(),
+            // ),
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return UnitsPrecisionDialog(
+                      units: state.units,
+                      precision: state.precision,
+                      onApply:
+                          (EnumUnits selectedUnits, int selectedPrecision) {
+                        bloc.updateUnitsPrecision(
+                          units: selectedUnits,
+                          precision: selectedPrecision,
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          sliver: SliverList(
+            delegate: SliverChildListDelegate(<Widget>[
+              TrapezoidalInfoMainParameters(
+                info: state.model!,
+              ),
+              const Divider(),
+              TrapezoidalInfoDiametersParameters(
+                info: state.model!,
+              ),
+              const Divider(),
+              TrapezoidalAdditionalInfo(
+                list: state.model!.additional_info,
+              ),
+            ]),
+          ),
+        ),
+        // Add extra space when overlay is visible
+        if (state.isSvgOverlayVisible)
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: overlayHeight,
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class UnitsPrecisionDialog extends StatefulWidget {
+  final EnumUnits units;
+  final int precision;
+  final void Function(EnumUnits units, int precision) onApply;
+
+  const UnitsPrecisionDialog({
+    required this.units,
+    required this.precision,
+    required this.onApply,
+    super.key,
+  });
+
+  @override
+  _UnitsPrecisionDialogState createState() => _UnitsPrecisionDialogState();
+}
+
+class _UnitsPrecisionDialogState extends State<UnitsPrecisionDialog> {
+  late EnumUnits _selectedUnits;
+  late int _selectedPrecision;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedUnits = widget.units;
+    _selectedPrecision = widget.precision;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final GeneratedLocalization localization = context.l10n;
+    return AlertDialog(
+      title: Text(localization.settings),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          // Units selection
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(localization.units),
+              DropdownButton<EnumUnits>(
+                value: _selectedUnits,
+                items: EnumUnits.values.map((EnumUnits units) {
+                  return DropdownMenuItem<EnumUnits>(
+                    value: units,
+                    child: Text(units == EnumUnits.mm
+                        ? localization.mm
+                        : localization.inch),
+                  );
+                }).toList(),
+                onChanged: (EnumUnits? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _selectedUnits = newValue;
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+          // Precision selection
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(localization.precision),
+              DropdownButton<int>(
+                value: _selectedPrecision,
+                items: <int>[1, 2, 3, 4, 5].map((int value) {
+                  return DropdownMenuItem<int>(
+                    value: value,
+                    child: Text(value.toString()),
+                  );
+                }).toList(),
+                onChanged: (int? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _selectedPrecision = newValue;
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => context.pop(),
+          child: Text(localization.cancel),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            widget.onApply(_selectedUnits, _selectedPrecision);
+            context.pop();
+          },
+          child: Text(localization.apply),
+        ),
+      ],
+    );
+  }
+}
