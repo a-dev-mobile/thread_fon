@@ -10,6 +10,7 @@ import 'package:threadfon/features/03_metric_threads/info/views/metric_full_scre
 import 'package:threadfon/features/03_metric_threads/info/views/metric_info_screen.dart';
 import 'package:threadfon/features/03_metric_threads/pitch_selection/views/pitch_selection_screen.dart';
 import 'package:threadfon/features/03_metric_threads/tolerance_selection/views/tolerance_selection_screen.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/tolerance_selection/views/trapezoidal_tolerance_selection_screen.dart';
 import 'package:threadfon/features/10_settings/views/about_app.dart';
 import 'package:threadfon/features/01_splash/splash_screen.dart';
 import 'package:threadfon/features/02_thread_type_selection/views/thread_type_selection_screen.dart';
@@ -48,55 +49,55 @@ class AppRouter {
               path: SplashScreen.path,
               name: SplashScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage<dynamic>(child: const SplashScreen(), key: state.pageKey),
+                  MaterialPage<void>(child: const SplashScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: MetricDiameterScreen.path,
               name: MetricDiameterScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage<dynamic>(child: const MetricDiameterScreen(), key: state.pageKey),
+                  MaterialPage<void>(child: const MetricDiameterScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ImperialDiameterScreen.path,
               name: ImperialDiameterScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage<dynamic>(child: const ImperialDiameterScreen(), key: state.pageKey),
+                  MaterialPage<void>(child: const ImperialDiameterScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ImperialToleranceSelectionScreen.path,
               name: ImperialToleranceSelectionScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage<dynamic>(child: const ImperialToleranceSelectionScreen(), key: state.pageKey),
+                  MaterialPage<void>(child: const ImperialToleranceSelectionScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ImperialInfoScreen.path,
               name: ImperialInfoScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage<dynamic>(child: const ImperialInfoScreen(), key: state.pageKey),
+                  MaterialPage<void>(child: const ImperialInfoScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ThreadTypeSelectionScreen.path,
               name: ThreadTypeSelectionScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage<dynamic>(child: const ThreadTypeSelectionScreen(), key: state.pageKey),
+                  MaterialPage<void>(child: const ThreadTypeSelectionScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: PitchSelectionScreen.path,
               name: PitchSelectionScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage<dynamic>(child: const PitchSelectionScreen(), key: state.pageKey),
+                  MaterialPage<void>(child: const PitchSelectionScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ToleranceSelectionScreen.path,
               name: ToleranceSelectionScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage<dynamic>(child: const ToleranceSelectionScreen(), key: state.pageKey),
+                  MaterialPage<void>(child: const ToleranceSelectionScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: MetricInfoScreen.path,
               name: MetricInfoScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage<dynamic>(child: const MetricInfoScreen(), key: state.pageKey),
+                  MaterialPage<void>(child: const MetricInfoScreen(), key: state.pageKey),
             ),
             GoRoute(
                 path: MetricFullScreenSvgView.path,
@@ -104,7 +105,7 @@ class AppRouter {
                 pageBuilder: (BuildContext context, GoRouterState state) {
                   final Map<String, dynamic> data = state.extra! as Map<String, dynamic>;
 
-                  return NoTransitionPage<dynamic>(
+                  return MaterialPage<void>(
                       child: MetricFullScreenSvgView(
                         svgData: data['svgData'] as String,
                       ),
@@ -114,13 +115,19 @@ class AppRouter {
               path: TrapezoidalThreadScreen.path,
               name: TrapezoidalThreadScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage<dynamic>(child: const TrapezoidalThreadScreen(), key: state.pageKey),
+                  MaterialPage<void>(child: const TrapezoidalThreadScreen(), key: state.pageKey),
+            ),
+              GoRoute(
+              path: TrapezoidalToleranceSelectionScreen.path,
+              name: TrapezoidalToleranceSelectionScreen.name,
+              pageBuilder: (BuildContext context, GoRouterState state) =>
+                  MaterialPage<void>(child: const TrapezoidalToleranceSelectionScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: AboutApp.path,
               name: AboutApp.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  NoTransitionPage<dynamic>(child: const AboutApp(), key: state.pageKey),
+                  MaterialPage<void>(child: const AboutApp(), key: state.pageKey),
             ),
           ],
           navigatorKey: _tabNavigatorKey,

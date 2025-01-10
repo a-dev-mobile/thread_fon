@@ -14,6 +14,7 @@ import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/features/05_trapezoidal_threads/diameter_selection/bloc/trapezoidal_thread_bloc.dart';
 import 'package:threadfon/features/05_trapezoidal_threads/diameter_selection/models/trapezoidal_thread_model.dart';
 import 'package:threadfon/features/05_trapezoidal_threads/diameter_selection/repositories/trapezoidal_thread_repository.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/tolerance_selection/views/trapezoidal_tolerance_selection_screen.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 
@@ -88,7 +89,7 @@ class _TrapezoidalThreadViewState extends State<_TrapezoidalThreadView> {
           previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (BuildContext context, TrapezoidalThreadState state) async {
         if (state.enumNavigationStatus.isNavigation) {
-          // await context.pushNamed(TrapezoidalToleranceSelectionScreen.name);
+          await context.pushNamed(TrapezoidalToleranceSelectionScreen.name);
           bloc.resetNavigationStatus();
         }
       },
