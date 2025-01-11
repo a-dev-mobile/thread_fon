@@ -58,35 +58,16 @@ class TrapezoidalInfoMainParameters extends StatelessWidget {
           ),
           InfoRow(
             label: localization.thread_diam_nom,
-            value: info.diameter.toString(),
+            value: info.diameter,
           ),
           InfoRow(
             label: localization.pitch,
-            value: info.pitch.toString(),
+            value: info.pitch,
           ),
           InfoRow(
             label: localization.tolerance,
             value: info.tolerance,
-          ),
-          InfoRow(
             isHaveDividerBottom: false,
-            label: 'd1',
-            value: info.d1.toString(),
-          ),
-          InfoRow(
-            isHaveDividerBottom: false,
-            label: 'd2',
-            value: info.d2.toString(),
-          ),
-          InfoRow(
-            isHaveDividerBottom: false,
-            label: 'd3',
-            value: info.d3.toString(),
-          ),
-          InfoRow(
-            isHaveDividerBottom: false,
-            label: 'd4',
-            value: info.d4.toString(),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:threadfon/core/widgets/info_row_max_min.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
 
 import 'package:threadfon/features/05_trapezoidal_threads/info/models/trapezoidal_info_model.dart';
@@ -15,30 +16,21 @@ class TrapezoidalInfoDiametersParameters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GeneratedLocalization localization = context.l10n;
-    final bool isFemale = info.type == 'female';
-    final String prefix = isFemale ? 'D' : 'd';
-
     return MyCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          _DiameterSection(
-            title: '$prefix - ${localization.diam_major}',
-            diameterData: info.major_diameter,
-          ),
-          const SizedBox(height: 10.0),
-          _DiameterSection(
-            title: '${prefix}2 - ${localization.diam_middle}',
-            diameterData: info.pitch_diameter,
-          ),
-          const SizedBox(height: 10.0),
-          _DiameterSection(
-            title: '${prefix}1 - ${localization.diam_minor}',
-            diameterData: info.minor_diameter,
-            isHaveDividerBottom: false,
-          ),
-        ],
+        children: info.diameter_info.map((DiameterInfo diameter) {
+          return Column(
+            children: [
+              _DiameterSection(
+                title: diameter.name,
+                diameterData: diameter,
+                isHaveDividerBottom: diameter != info.diameter_info.last,
+              ),
+              if (diameter != info.diameter_info.last) const SizedBox(height: 10.0),
+            ],
+          );
+        }).toList(),
       ),
     );
   }
@@ -46,7 +38,7 @@ class TrapezoidalInfoDiametersParameters extends StatelessWidget {
 
 class _DiameterSection extends StatelessWidget {
   final String title;
-  final DiameterData diameterData;
+  final DiameterInfo diameterData;
   final bool isHaveDividerBottom;
 
   const _DiameterSection({
@@ -59,6 +51,36 @@ class _DiameterSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final GeneratedLocalization localization = context.l10n;
 
+    // Check if we have only min or max value
+    final bool hasOnlyMin = diameterData.min.isNotEmpty &&
+                           diameterData.max.isEmpty &&
+                           diameterData.basic.isEmpty &&
+                           diameterData.avg.isEmpty;
+
+    final bool hasOnlyMax = diameterData.max.isNotEmpty &&
+                           diameterData.min.isEmpty &&
+                           diameterData.basic.isEmpty &&
+                           diameterData.avg.isEmpty;
+
+    if (hasOnlyMin) {
+      return InfoRowMaxMin(
+        label: title,
+        value: diameterData.min,
+        labelMaxMin: localization.min,
+        isHaveDividerBottom: isHaveDividerBottom,
+      );
+    }
+
+    if (hasOnlyMax) {
+      return InfoRowMaxMin(
+        label: title,
+        value: diameterData.max,
+        labelMaxMin: localization.max,
+        isHaveDividerBottom: isHaveDividerBottom,
+      );
+    }
+
+    // Default view for complete diameter data
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -88,9 +110,9 @@ class _DiameterSection extends StatelessWidget {
               ),
               const SizedBox(width: 8.0),
               _DiameterItem(
-                diameter: diameterData.basic,
-                dEs: diameterData.es,
-                dEi: diameterData.ei,
+                basic: diameterData.basic,
+                es: diameterData.es,
+                ei: diameterData.ei,
               ),
             ],
           ),
@@ -110,42 +132,41 @@ class _DiameterSection extends StatelessWidget {
 }
 
 class _DiameterItem extends StatelessWidget {
-  final String diameter;
-  final String? dEs;
-  final String? dEi;
+  final String basic;
+  final String es;
+  final String ei;
 
   const _DiameterItem({
-    required this.diameter,
-    this.dEs,
-    this.dEi,
+    required this.basic,
+    required this.es,
+    required this.ei,
   });
 
   @override
   Widget build(BuildContext context) {
-    final bool hasDEs = dEs != null && dEs!.isNotEmpty;
-    final bool hasDEi = dEi != null && dEi!.isNotEmpty;
-
-
+    final bool hasDEs = es.isNotEmpty;
+    final bool hasDEi = ei.isNotEmpty;
 
     return Row(
       children: <Widget>[
-        Text(
-          diameter.toString(),
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        if (hasDEs || hasDEi) ...<Widget>[
+        if (basic.isNotEmpty)
+          Text(
+            basic,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+        if (hasDEs || hasDEi) ...[
           const SizedBox(width: 8.0),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               if (hasDEs)
                 Text(
-                  dEs!,
+                  es,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               if (hasDEi)
                 Text(
-                  dEi!,
+                  ei,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
             ],
@@ -173,10 +194,11 @@ class _ValueItem extends StatelessWidget {
           label,
           style: Theme.of(context).textTheme.bodySmall,
         ),
-        Text(
-          value,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
+        if (value.isNotEmpty)
+          Text(
+            value,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
       ],
     );
   }

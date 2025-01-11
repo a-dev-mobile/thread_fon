@@ -7,18 +7,19 @@ part 'trapezoidal_info_model.g.dart';
 
 @freezed
 @immutable
-class DiameterData with _$DiameterData {
-  const factory DiameterData({
+class DiameterInfo with _$DiameterInfo {
+  const factory DiameterInfo({
+    required String name,
     required String max,
     required String es,
     required String basic,
     required String avg,
     required String ei,
     required String min,
-  }) = _DiameterData;
+  }) = _DiameterInfo;
 
-  factory DiameterData.fromJson(Map<String, dynamic> json) =>
-      _$DiameterDataFromJson(json);
+  factory DiameterInfo.fromJson(Map<String, dynamic> json) =>
+      _$DiameterInfoFromJson(json);
 }
 
 @freezed
@@ -38,22 +39,15 @@ class AdditionalInfo with _$AdditionalInfo {
 @immutable
 class TrapezoidalInfoModel with _$TrapezoidalInfoModel {
   const factory TrapezoidalInfoModel({
-    required int id,
     required String description,
     required String designation,
     required String diameter,
     required String pitch,
-    required String d1,
-    required String d2,
-    required String d3,
-    required String d4,
     required String tolerance,
     required String type,
     required String units,
-    required DiameterData major_diameter,
-    required DiameterData pitch_diameter,
-    required DiameterData minor_diameter,
-    @Default(<AdditionalInfo>[]) List<AdditionalInfo> additional_info,
+    required List<DiameterInfo> diameter_info,
+    required List<AdditionalInfo> additional_info,
   }) = _TrapezoidalInfoModel;
 
   factory TrapezoidalInfoModel.fromJson(Map<String, dynamic> json) =>
