@@ -129,7 +129,7 @@ class AppRouter {
               path: TrapezoidalInfoScreen.path,
               name: TrapezoidalInfoScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const TrapezoidalToleranceSelectionScreen(), key: state.pageKey),
+                  MaterialPage<void>(child: const TrapezoidalInfoScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: AboutApp.path,

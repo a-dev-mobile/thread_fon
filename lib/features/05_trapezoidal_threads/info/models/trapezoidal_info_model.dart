@@ -9,12 +9,12 @@ part 'trapezoidal_info_model.g.dart';
 @immutable
 class DiameterData with _$DiameterData {
   const factory DiameterData({
-    required num max,
-    required num es,
-    required num basic,
-    required num avg,
-    required num ei,
-    required num min,
+    required String max,
+    required String es,
+    required String basic,
+    required String avg,
+    required String ei,
+    required String min,
   }) = _DiameterData;
 
   factory DiameterData.fromJson(Map<String, dynamic> json) =>
@@ -41,12 +41,12 @@ class TrapezoidalInfoModel with _$TrapezoidalInfoModel {
     required int id,
     required String description,
     required String designation,
-    required num diameter,
-    required num pitch,
-    required num d1,
-    required num d2,
-    required num d3,
-    required num d4,
+    required String diameter,
+    required String pitch,
+    required String d1,
+    required String d2,
+    required String d3,
+    required String d4,
     required String tolerance,
     required String type,
     required String units,

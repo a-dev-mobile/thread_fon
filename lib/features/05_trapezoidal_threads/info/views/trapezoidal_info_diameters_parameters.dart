@@ -110,9 +110,9 @@ class _DiameterSection extends StatelessWidget {
 }
 
 class _DiameterItem extends StatelessWidget {
-  final num diameter;
-  final num? dEs;
-  final num? dEi;
+  final String diameter;
+  final String? dEs;
+  final String? dEi;
 
   const _DiameterItem({
     required this.diameter,
@@ -122,17 +122,10 @@ class _DiameterItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool hasDEs = dEs != null && dEs != 0;
-    final bool hasDEi = dEi != null && dEi != 0;
+    final bool hasDEs = dEs != null && dEs!.isNotEmpty;
+    final bool hasDEi = dEi != null && dEi!.isNotEmpty;
 
-    // Метод для форматирования значения с префиксом
-    String formatValue(num? value) {
-      if (value == null) {
-        return '';
-      }
 
-      return value > 0 ? '+${value.toString()}' : value.toString();
-    }
 
     return Row(
       children: <Widget>[
@@ -147,12 +140,12 @@ class _DiameterItem extends StatelessWidget {
             children: <Widget>[
               if (hasDEs)
                 Text(
-                  formatValue(dEs),
+                  dEs!,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               if (hasDEi)
                 Text(
-                  formatValue(dEi),
+                  dEi!,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
             ],
@@ -164,7 +157,7 @@ class _DiameterItem extends StatelessWidget {
 }
 
 class _ValueItem extends StatelessWidget {
-  final num value;
+  final String value;
   final String label;
 
   const _ValueItem({
@@ -181,7 +174,7 @@ class _ValueItem extends StatelessWidget {
           style: Theme.of(context).textTheme.bodySmall,
         ),
         Text(
-          value.toString(),
+          value,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
       ],
