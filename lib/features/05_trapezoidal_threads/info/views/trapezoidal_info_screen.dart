@@ -16,8 +16,8 @@ import 'package:threadfon/features/05_trapezoidal_threads/info/bloc/trapezoidal_
 import 'package:threadfon/features/05_trapezoidal_threads/info/repositories/trapezoidal_info_repository.dart';
 import 'package:threadfon/features/05_trapezoidal_threads/info/views/full_screen_svg_view.dart';
 import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal_additional_info.dart';
-import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal_info_diameters_parameters.dart';
-import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal_info_main_parameters.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal_diameters_info.dart';
+import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal_main_info.dart';
 
 import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';

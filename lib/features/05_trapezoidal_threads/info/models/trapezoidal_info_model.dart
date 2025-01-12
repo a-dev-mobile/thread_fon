@@ -4,7 +4,16 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'trapezoidal_info_model.freezed.dart';
 part 'trapezoidal_info_model.g.dart';
+@freezed
+@immutable
+class MainInfo with _$MainInfo {
+  const factory MainInfo({
+    required String name,
+    required String value,
+  }) = _MainInfo;
 
+  factory MainInfo.fromJson(Map<String, dynamic> json) => _$MainInfoFromJson(json);
+}
 @freezed
 @immutable
 class DiameterInfo with _$DiameterInfo {
@@ -41,11 +50,7 @@ class TrapezoidalInfoModel with _$TrapezoidalInfoModel {
   const factory TrapezoidalInfoModel({
     required String description,
     required String designation,
-    required String diameter,
-    required String pitch,
-    required String tolerance,
-    required String type,
-    required String units,
+    required List<MainInfo> main_info,
     required List<DiameterInfo> diameter_info,
     required List<AdditionalInfo> additional_info,
   }) = _TrapezoidalInfoModel;

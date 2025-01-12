@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:threadfon/core/constant/enum_thread_male_female.dart';
+import 'package:threadfon/core/widgets/info_row_max_min.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/04_imperial_threads/info/models/imperial_info_model.dart';
-import 'package:threadfon/core/widgets/info_row_max_min.dart';
 import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 

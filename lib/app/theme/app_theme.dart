@@ -19,7 +19,8 @@ import 'package:flutter/material.dart';
 /// );
 /// https://rydmike.com/flexcolorscheme/themesplayground-latest/
 sealed class AppTheme {
-  static const FlexSurfaceMode _darkSurfaceMode = FlexSurfaceMode.levelSurfacesLowScaffold;
+  static const FlexSurfaceMode _darkSurfaceMode =
+      FlexSurfaceMode.levelSurfacesLowScaffold;
   static const int _blendLevel = 8;
 
   static final ThemeData light = FlexThemeData.light(

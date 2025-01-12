@@ -19,8 +19,10 @@ import 'package:threadfon/features/10_settings/views/about_app.dart';
 
 class AppRouter {
   final FirebaseAnalytics analytics;
-  final GlobalKey<NavigatorState> _pageNavigatorKey = GlobalKey<NavigatorState>();
-  final GlobalKey<NavigatorState> _tabNavigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _pageNavigatorKey =
+      GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _tabNavigatorKey =
+      GlobalKey<NavigatorState>();
 
   AppRouter({required this.analytics}) {
     router = _createRouter();
@@ -30,7 +32,8 @@ class AppRouter {
   GoRouter _createRouter() {
     return GoRouter(
       navigatorKey: _pageNavigatorKey,
-      errorPageBuilder: (BuildContext context, GoRouterState state) => MaterialPage<void>(
+      errorPageBuilder: (BuildContext context, GoRouterState state) =>
+          MaterialPage<void>(
         key: state.pageKey,
         child: Center(child: Text(state.error.toString())),
       ),
@@ -50,61 +53,75 @@ class AppRouter {
               path: SplashScreen.path,
               name: SplashScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const SplashScreen(), key: state.pageKey),
+                  MaterialPage<void>(
+                      child: const SplashScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: MetricDiameterScreen.path,
               name: MetricDiameterScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const MetricDiameterScreen(), key: state.pageKey),
+                  MaterialPage<void>(
+                      child: const MetricDiameterScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ImperialDiameterScreen.path,
               name: ImperialDiameterScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const ImperialDiameterScreen(), key: state.pageKey),
+                  MaterialPage<void>(
+                      child: const ImperialDiameterScreen(),
+                      key: state.pageKey),
             ),
             GoRoute(
               path: ImperialToleranceSelectionScreen.path,
               name: ImperialToleranceSelectionScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const ImperialToleranceSelectionScreen(), key: state.pageKey),
+                  MaterialPage<void>(
+                      child: const ImperialToleranceSelectionScreen(),
+                      key: state.pageKey),
             ),
             GoRoute(
               path: ImperialInfoScreen.path,
               name: ImperialInfoScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const ImperialInfoScreen(), key: state.pageKey),
+                  MaterialPage<void>(
+                      child: const ImperialInfoScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ThreadTypeSelectionScreen.path,
               name: ThreadTypeSelectionScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const ThreadTypeSelectionScreen(), key: state.pageKey),
+                  MaterialPage<void>(
+                      child: const ThreadTypeSelectionScreen(),
+                      key: state.pageKey),
             ),
             GoRoute(
               path: PitchSelectionScreen.path,
               name: PitchSelectionScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const PitchSelectionScreen(), key: state.pageKey),
+                  MaterialPage<void>(
+                      child: const PitchSelectionScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: ToleranceSelectionScreen.path,
               name: ToleranceSelectionScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const ToleranceSelectionScreen(), key: state.pageKey),
+                  MaterialPage<void>(
+                      child: const ToleranceSelectionScreen(),
+                      key: state.pageKey),
             ),
             GoRoute(
               path: MetricInfoScreen.path,
               name: MetricInfoScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const MetricInfoScreen(), key: state.pageKey),
+                  MaterialPage<void>(
+                      child: const MetricInfoScreen(), key: state.pageKey),
             ),
             GoRoute(
                 path: MetricFullScreenSvgView.path,
                 name: MetricFullScreenSvgView.name,
                 pageBuilder: (BuildContext context, GoRouterState state) {
-                  final Map<String, dynamic> data = state.extra! as Map<String, dynamic>;
+                  final Map<String, dynamic> data =
+                      state.extra! as Map<String, dynamic>;
 
                   return MaterialPage<void>(
                       child: MetricFullScreenSvgView(
@@ -116,26 +133,31 @@ class AppRouter {
               path: TrapezoidalThreadScreen.path,
               name: TrapezoidalThreadScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const TrapezoidalThreadScreen(), key: state.pageKey),
+                  MaterialPage<void>(
+                      child: const TrapezoidalThreadScreen(),
+                      key: state.pageKey),
             ),
             GoRoute(
               path: TrapezoidalToleranceSelectionScreen.path,
               name: TrapezoidalToleranceSelectionScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const TrapezoidalToleranceSelectionScreen(), key: state.pageKey),
+                  MaterialPage<void>(
+                      child: const TrapezoidalToleranceSelectionScreen(),
+                      key: state.pageKey),
             ),
-
             GoRoute(
               path: TrapezoidalInfoScreen.path,
               name: TrapezoidalInfoScreen.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const TrapezoidalInfoScreen(), key: state.pageKey),
+                  MaterialPage<void>(
+                      child: const TrapezoidalInfoScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: AboutApp.path,
               name: AboutApp.name,
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                  MaterialPage<void>(child: const AboutApp(), key: state.pageKey),
+                  MaterialPage<void>(
+                      child: const AboutApp(), key: state.pageKey),
             ),
           ],
           navigatorKey: _tabNavigatorKey,
@@ -152,7 +174,8 @@ class _AnalyticsObserver extends NavigatorObserver {
 
   void _sendScreenView(Route<dynamic>? route) {
     if (route is MaterialPageRoute) {
-      final String screenName = route.settings.name ?? route.settings.toString();
+      final String screenName =
+          route.settings.name ?? route.settings.toString();
       analytics.logEvent(
         name: 'screen_view',
         parameters: <String, Object>{'screen_name': screenName},

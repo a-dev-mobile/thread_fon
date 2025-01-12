@@ -92,6 +92,27 @@ dart_code_metrics:
     cascading-widget-extensions: true
 
   rules:
+    # New Common Rules from 1.26.0
+    - avoid-commented-out-code
+    - avoid-future-ignore
+    - prefer-switch-expression
+    - avoid-unnecessary-continue
+    - no-empty-string
+    - avoid-continue
+    - pattern-fields-ordering
+    - use-existing-destructuring
+    - prefer-class-destructuring
+    - prefer-static-method
+    - avoid-if-with-many-branches
+    - prefer-commenting-future-delayed
+    - avoid-complex-arithmetic-expressions
+
+    # New Flutter Rules from 1.26.0
+    - prefer-spacing
+    - use-closest-build-context
+    - prefer-transform-over-container
+    - prefer-align-over-container
+
     # Code Quality
     - avoid-dynamic: false
     - avoid-passing-async-when-sync-expected

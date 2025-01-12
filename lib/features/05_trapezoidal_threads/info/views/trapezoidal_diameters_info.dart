@@ -21,13 +21,14 @@ class TrapezoidalInfoDiametersParameters extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: info.diameter_info.map((DiameterInfo diameter) {
           return Column(
-            children: [
+            children: <Widget>[
               _DiameterSection(
                 title: diameter.name,
                 diameterData: diameter,
                 isHaveDividerBottom: diameter != info.diameter_info.last,
               ),
-              if (diameter != info.diameter_info.last) const SizedBox(height: 10.0),
+              if (diameter != info.diameter_info.last)
+                const SizedBox(height: 10.0),
             ],
           );
         }).toList(),
@@ -53,14 +54,14 @@ class _DiameterSection extends StatelessWidget {
 
     // Check if we have only min or max value
     final bool hasOnlyMin = diameterData.min.isNotEmpty &&
-                           diameterData.max.isEmpty &&
-                           diameterData.basic.isEmpty &&
-                           diameterData.avg.isEmpty;
+        diameterData.max.isEmpty &&
+        diameterData.basic.isEmpty &&
+        diameterData.avg.isEmpty;
 
     final bool hasOnlyMax = diameterData.max.isNotEmpty &&
-                           diameterData.min.isEmpty &&
-                           diameterData.basic.isEmpty &&
-                           diameterData.avg.isEmpty;
+        diameterData.min.isEmpty &&
+        diameterData.basic.isEmpty &&
+        diameterData.avg.isEmpty;
 
     if (hasOnlyMin) {
       return InfoRowMaxMin(
@@ -154,7 +155,7 @@ class _DiameterItem extends StatelessWidget {
             basic,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
-        if (hasDEs || hasDEi) ...[
+        if (hasDEs || hasDEi) ...<Widget>[
           const SizedBox(width: 8.0),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

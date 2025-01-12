@@ -50,25 +50,14 @@ class TrapezoidalInfoMainParameters extends StatelessWidget {
           ),
           const SizedBox(height: 16.0),
           const Divider(),
-          InfoRow(
-            label: localization.thread_type,
-            value: info.type == 'male'
-                ? localization.external_thread
-                : localization.internal_thread,
-          ),
-          InfoRow(
-            label: localization.thread_diam_nom,
-            value: info.diameter,
-          ),
-          InfoRow(
-            label: localization.pitch,
-            value: info.pitch,
-          ),
-          InfoRow(
-            label: localization.tolerance,
-            value: info.tolerance,
-            isHaveDividerBottom: false,
-          ),
+          // Display main_info items
+          ...info.main_info.map((MainInfo item) {
+            return InfoRow(
+              label: item.name,
+              value: item.value,
+              isHaveDividerBottom: item != info.main_info.last,
+            );
+          }),
         ],
       ),
     );
