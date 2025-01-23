@@ -5,8 +5,8 @@ part of 'trapezoidal_info_bloc.dart';
 sealed class TrapezoidalInfoState with _$TrapezoidalInfoState {
   const factory TrapezoidalInfoState({
     TrapezoidalInfoModel? model,
-    String? svgData,
-    String? svgDataNoDimensions,
+    String? svgDimensions,
+    String? svgAnnotations,
     @Default(EnumStatus.loading) EnumStatus svgRequestStatus,
     @Default(EnumStatus.loading) EnumStatus enumPageStatus,
     @Default(EnumNavigationStatus.initial)

@@ -59,7 +59,7 @@ class TrapezoidalInfoBloc extends Cubit<TrapezoidalInfoState>
       ));
 
       // Start fetching SVG data in the background
-      // _fetchSvgData(coreUserSelection, trapezoidalUserSelection);
+      await _fetchSvgData(coreUserSelection, trapezoidalUserSelection);
     } catch (e, s) {
       _logger.e(
         'Error loading info',
@@ -84,52 +84,42 @@ class TrapezoidalInfoBloc extends Cubit<TrapezoidalInfoState>
   }
 
   Future<void> _fetchSvgData(CoreUserSelection coreUserSelection,
-      TrapezoidalUserSelection trapezoidUserSelection) async {
+      TrapezoidalUserSelection trapezoidalUserSelection) async {
     emit(state.copyWith(svgRequestStatus: EnumStatus.loading));
     try {
       final String theme = _themeBloc.state.themeMode.name;
       final String language = _languageBloc.state.enumLang.name;
 
-      final Future<String> fetchSvgWithDimensions = _repository.fetchSvgData(
-        diameter: trapezoidUserSelection.diameter!,
-        pitch: trapezoidUserSelection.pitch!,
+      final Future<String> fetchSvgDimensions = _repository.fetchSvgDimensions(
+        diameter: trapezoidalUserSelection.diameter!,
+        pitch: trapezoidalUserSelection.pitch!,
         type: coreUserSelection.threadType.name,
-        tolerance: trapezoidUserSelection.tolerance!,
+        tolerance: trapezoidalUserSelection.tolerance!,
         language: language,
-        units: trapezoidUserSelection.units.name,
-        precision: trapezoidUserSelection.precision,
+        units: trapezoidalUserSelection.units.name,
+        precision: trapezoidalUserSelection.precision,
         theme: theme,
-        showDimensions: true,
       );
 
-      final Future<String> fetchSvgWithoutDimensions = _repository.fetchSvgData(
-        diameter: trapezoidUserSelection.diameter!,
-        pitch: trapezoidUserSelection.pitch!,
+      final Future<String> fetchSvgAnnotations =
+          _repository.fetchSvgAnnotations(
         type: coreUserSelection.threadType.name,
-        tolerance: trapezoidUserSelection.tolerance!,
         language: language,
-        units: trapezoidUserSelection.units.name,
-        precision: trapezoidUserSelection.precision,
         theme: theme,
-        showDimensions: false,
       );
 
-      final List<String> results = await Future.wait(<Future<String>>[
-        fetchSvgWithDimensions,
-        fetchSvgWithoutDimensions,
+      final List<String> results = await Future.wait<String>(<Future<String>>[
+        fetchSvgDimensions,
+        fetchSvgAnnotations,
       ]);
 
       emit(state.copyWith(
-        svgData: results[0],
-        svgDataNoDimensions: results[1],
+        svgDimensions: results.first,
+        svgAnnotations: results[1],
         svgRequestStatus: EnumStatus.success,
       ));
     } catch (e, s) {
-      _logger.e(
-        'Error fetching SVG data',
-        error: e,
-        stackTrace: s,
-      );
+      _logger.e('Error fetching SVG data', error: e, stackTrace: s);
       emit(state.copyWith(
         svgRequestStatus: EnumStatus.error,
         svgErrorMsg: 'Error loading SVG data',

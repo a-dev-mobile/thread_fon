@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
@@ -107,8 +108,8 @@ class _TrapezoidalTrapezoidalInfoViewState
             if (state.isSvgOverlayVisible)
               SvgOverlay(
                 svgData: state.showDimensions
-                    ? state.svgData ?? ''
-                    : state.svgDataNoDimensions ?? '',
+                    ? state.svgDimensions ?? ''
+                    : state.svgAnnotations ?? '',
                 svgRequestStatus: state.svgRequestStatus,
                 svgErrorMsg: state.svgErrorMsg,
                 overlayHeight: overlayHeight,
@@ -118,8 +119,8 @@ class _TrapezoidalTrapezoidalInfoViewState
                 onClose: () => bloc.toggleSvgOverlay(),
                 onExpand: () {
                   final String? svgDataToSend = state.showDimensions
-                      ? state.svgData
-                      : state.svgDataNoDimensions;
+                      ? state.svgDimensions
+                      : state.svgAnnotations;
 
                   if (svgDataToSend != null) {
                     context.pushNamed(TrapezoidalFullScreenSvgView.name,
@@ -178,10 +179,10 @@ class _TrapezoidalTrapezoidalInfoViewState
           floating: true,
           snap: true,
           actions: <Widget>[
-            // IconButton(
-            //   icon: const Icon(FontAwesomeIcons.compassDrafting),
-            //   onPressed: () => bloc.toggleSvgOverlay(),
-            // ),
+            IconButton(
+              icon: const Icon(FontAwesomeIcons.compassDrafting),
+              onPressed: () => bloc.toggleSvgOverlay(),
+            ),
             IconButton(
               icon: const Icon(Icons.settings),
               onPressed: () {

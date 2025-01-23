@@ -15,8 +15,6 @@ class TrapezoidalInfoRepository {
   }) : _apiService = apiService;
 
   final ApiService _apiService;
-  final LogService _logger = LogService('trapezoidal_info_repository');
-  static const String _baseUrl = '/v1/trapezoidal';
 
   Future<TrapezoidalInfoModel> fetchTrapezoidalInfo({
     required String diameter,
@@ -43,13 +41,10 @@ class TrapezoidalInfoRepository {
       );
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> rawData =
-            response.data as Map<String, dynamic>;
-
+        final Map<String, dynamic> rawData = response.data as Map<String, dynamic>;
         return TrapezoidalInfoModel.fromJson(rawData);
       } else {
-        final String errorMessage =
-            'Failed to fetch info. Status code: ${response.statusCode}';
+        final String errorMessage = 'Failed to fetch info. Status code: ${response.statusCode}';
         _logger.e(errorMessage);
         throw Exception(errorMessage);
       }
@@ -59,7 +54,7 @@ class TrapezoidalInfoRepository {
     }
   }
 
-  Future<String> fetchSvgData({
+  Future<String> fetchSvgDimensions({
     required String diameter,
     required String pitch,
     required String type,
@@ -68,9 +63,8 @@ class TrapezoidalInfoRepository {
     required String units,
     required int precision,
     required String theme,
-    required bool showDimensions,
   }) async {
-    const String endpoint = '$_baseUrl/svg';
+    const String endpoint = '$_baseUrl/svg-dimensions';
     try {
       final Response response = await _apiService.get(
         endpoint,
@@ -83,7 +77,6 @@ class TrapezoidalInfoRepository {
           'units': units,
           'precision': precision,
           'theme': theme,
-          'show_dimensions': showDimensions.toString(),
         },
         options: Options(responseType: ResponseType.plain),
       );
@@ -91,13 +84,42 @@ class TrapezoidalInfoRepository {
       if (response.statusCode == 200) {
         return response.data as String;
       } else {
-        final String errorMessage =
-            'Failed to fetch SVG data. Status code: ${response.statusCode}';
+        final String errorMessage = 'Failed to fetch SVG dimensions. Status code: ${response.statusCode}';
         _logger.e(errorMessage);
         throw Exception(errorMessage);
       }
     } catch (e, s) {
-      _logger.e('Error fetching SVG data', error: e, stackTrace: s);
+      _logger.e('Error fetching SVG dimensions', error: e, stackTrace: s);
+      Error.throwWithStackTrace(e, s);
+    }
+  }
+
+  Future<String> fetchSvgAnnotations({
+    required String type,
+    required String language,
+    required String theme,
+  }) async {
+    const String endpoint = '$_baseUrl/svg-annotations';
+    try {
+      final Response response = await _apiService.get(
+        endpoint,
+        queryParameters: <String, dynamic>{
+          'type': type,
+          'language': language,
+          'theme': theme,
+        },
+        options: Options(responseType: ResponseType.plain),
+      );
+
+      if (response.statusCode == 200) {
+        return response.data as String;
+      } else {
+        final String errorMessage = 'Failed to fetch SVG annotations. Status code: ${response.statusCode}';
+        _logger.e(errorMessage);
+        throw Exception(errorMessage);
+      }
+    } catch (e, s) {
+      _logger.e('Error fetching SVG annotations', error: e, stackTrace: s);
       Error.throwWithStackTrace(e, s);
     }
   }
