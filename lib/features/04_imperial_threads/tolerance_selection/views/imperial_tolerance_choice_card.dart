@@ -17,17 +17,21 @@ class ImperialToleranceChoiceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final bool isEqual = tolerance.formatted.fractional == tolerance.formatted.decimal;
+    
     return MyCard(
       onTap: onTap,
       child: ListTile(
         title: Text(
           tolerance.formatted.fractional,
-          style: theme.textTheme.titleLarge?.copyWith(
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
-        subtitle: Text(
+        subtitle: isEqual ? null : Text(
           tolerance.formatted.decimal,
+          textAlign: TextAlign.center,
           style: theme.textTheme.titleMedium,
         ),
       ),

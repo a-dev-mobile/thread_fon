@@ -63,7 +63,11 @@
   "m_thread_female_description": "M - Метрическая внутренняя цилиндрическая резьба",
   "m_thread_gost": "ГОСТ 24705-2004 / ISO 965",
   "m_thread_male_description": "M - Метрическая наружная цилиндрическая резьба",
+
   "min": "мин",
+  "select_diameter_and_pitch": "Выберите диаметр и шаг",
+"trapezoidal_thread": "Трапецеидальная резьба",
+"trapezoidal_thread_gost": "ГОСТ 24737-81",
 
   "minor_diam_avg": "Средний внутренний (минорный) диаметр",
   "minor_diam_d1": "Внутренний диаметр D1",

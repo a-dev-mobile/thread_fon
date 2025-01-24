@@ -189,6 +189,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "select_class": MessageLookupByLibrary.simpleMessage("Выберите класс"),
         "select_diameter":
             MessageLookupByLibrary.simpleMessage("Выберите диаметр"),
+        "select_diameter_and_pitch":
+            MessageLookupByLibrary.simpleMessage("Выберите диаметр и шаг"),
         "select_pitch": MessageLookupByLibrary.simpleMessage("Выберите шаг"),
         "select_tolerance":
             MessageLookupByLibrary.simpleMessage("Выберите допуск"),
@@ -227,6 +229,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalTruncation":
             MessageLookupByLibrary.simpleMessage("3H/8 - Суммарное усечение"),
         "tpi": MessageLookupByLibrary.simpleMessage("Витков на дюйм"),
+        "trapezoidal_thread":
+            MessageLookupByLibrary.simpleMessage("Трапецеидальная резьба"),
+        "trapezoidal_thread_gost":
+            MessageLookupByLibrary.simpleMessage("ГОСТ 24737-81"),
         "type_pitch": MessageLookupByLibrary.simpleMessage("Тип шага"),
         "units": MessageLookupByLibrary.simpleMessage("Единицы измерения"),
         "version": MessageLookupByLibrary.simpleMessage("Версия"),

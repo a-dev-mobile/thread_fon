@@ -47,7 +47,6 @@
   "launch": "Launch",
   "loadingMessage": "Loading...",
   "main": "Home",
-
   "major_diam_avg": "Mean Major Diameter",
   "major_diam_max": "Max Major Diameter",
   "major_diam_min": "Min Major Diameter",
@@ -64,7 +63,9 @@
   "m_thread_gost": "ISO 965: ISO General Purpose Metric Screw Threads",
   "m_thread_male_description": "M - Metric External Cylindrical Thread",
   "min": "min",
-
+  "trapezoidal_thread": "Trapezoidal Thread",
+  "trapezoidal_thread_gost": "ISO 2901, 2903, 2904",
+  "select_diameter_and_pitch": "Select Diameter and Pitch",
   "minor_diam_avg": "Mean Minor Diameter",
   "minor_diam_d1": "Minor Diameter D1",
   "minor_diam_d3": "Minor Diameter D3",
@@ -141,8 +142,8 @@
   "app_store_not_found": "App Store not found",
   "leave_review": "Leave a Review",
   "no_internet": "No Internet Connection",
-   "tpi": "Threads per inch",
-   "thread_series": "Thread Series",
-"thread_class": "Thread Class",
+  "tpi": "Threads per inch",
+  "thread_series": "Thread Series",
+  "thread_class": "Thread Class",
   "minor_diameter_unr": "UNR Minor Diameter"
 }

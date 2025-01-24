@@ -9,6 +9,7 @@ import 'package:threadfon/core/constant/enum_threads.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
+import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/features/02_thread_type_selection/bloc/thread_type_bloc.dart';
 import 'package:threadfon/features/10_settings/bloc/settings_bloc.dart';
@@ -95,7 +96,7 @@ class _SettingsDrawerView extends StatelessWidget {
                   '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
               break;
             case EnumThreads.trapezoidal:
-              threadTypeText = 'trapezoidal';
+           threadTypeText = '${localization.trapezoidal_thread_gost}\n${localization.trapezoidal_thread}';
           }
 
           return Drawer(
@@ -333,6 +334,7 @@ class _SettingsDrawerView extends StatelessWidget {
                 langText = 'Русский';
                 break;
             }
+
             return RadioListTile<EnumLang>(
               title: Text(langText),
               value: lang,
@@ -349,8 +351,7 @@ class _SettingsDrawerView extends StatelessWidget {
     );
   }
 
-  /// Dialog to choose thread type
-  void _showThreadDialog(BuildContext context) {
+void _showThreadDialog(BuildContext context) {
     final GeneratedLocalization localization = context.l10n;
     final EnumThreads currentThreadType = bloc.state.enumThreads;
 
@@ -359,36 +360,30 @@ class _SettingsDrawerView extends StatelessWidget {
       useRootNavigator: true,
       builder: (BuildContext dialogContext) => AlertDialog(
         title: Text(localization.choose_thread),
+        contentPadding: const EdgeInsets.symmetric(vertical: 8),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: EnumThreads.values.map((EnumThreads threadType) {
             String threadTypeText;
             switch (threadType) {
               case EnumThreads.metric:
-                threadTypeText =
-                    '${localization.metric_thread_gost}\n${localization.metric_thread}';
+                threadTypeText = '${localization.metric_thread_gost}\n${localization.metric_thread}';
                 break;
               case EnumThreads.imperial:
-                threadTypeText =
-                    '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
+                threadTypeText = '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
                 break;
               case EnumThreads.trapezoidal:
-                threadTypeText = 'trapezoidal';
+                threadTypeText = '${localization.trapezoidal_thread_gost}\n${localization.trapezoidal_thread}';
             }
 
             return RadioListTile<EnumThreads>(
-              dense: true, // Уменьшенный размер
-
               title: Text(
                 threadTypeText,
-                softWrap: true, // Позволяет тексту переноситься
+                style: const TextStyle(fontSize: 13),
               ),
+              dense: true,
               value: threadType,
               groupValue: currentThreadType,
-              contentPadding: const EdgeInsets.symmetric(
-                  vertical: 4.0), // Уменьшаем отступы
-              controlAffinity: ListTileControlAffinity
-                  .leading, // Располагаем радио-кнопку слева
               onChanged: (EnumThreads? value) {
                 if (value != null) {
                   bloc.setThreadType(value);
@@ -399,15 +394,6 @@ class _SettingsDrawerView extends StatelessWidget {
             );
           }).toList(),
         ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => dialogContext.pop(),
-            child: Text(
-              localization.cancel,
-              style: TextStyle(color: Theme.of(context).primaryColor),
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -70,7 +70,8 @@ class _ThreadTypeSelectionView extends StatelessWidget {
             '${localization.metric_thread_gost}\n${localization.metric_thread}',
           EnumThreads.imperial =>
             '${localization.imperial_thread_gost}\n${localization.imperial_thread}',
-          EnumThreads.trapezoidal => 'trapezoidal',
+          EnumThreads.trapezoidal => '${localization.trapezoidal_thread_gost}\n${localization.trapezoidal_thread}',
+
         },
         body: BlocListener<ThreadTypeBloc, ThreadTypeState>(
           listenWhen: (ThreadTypeState previous, ThreadTypeState current) =>

@@ -681,6 +681,36 @@ class GeneratedLocalization {
     );
   }
 
+  /// `Trapezoidal Thread`
+  String get trapezoidal_thread {
+    return Intl.message(
+      'Trapezoidal Thread',
+      name: 'trapezoidal_thread',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ISO 2901, 2903, 2904`
+  String get trapezoidal_thread_gost {
+    return Intl.message(
+      'ISO 2901, 2903, 2904',
+      name: 'trapezoidal_thread_gost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Diameter and Pitch`
+  String get select_diameter_and_pitch {
+    return Intl.message(
+      'Select Diameter and Pitch',
+      name: 'select_diameter_and_pitch',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Mean Minor Diameter`
   String get minor_diam_avg {
     return Intl.message(

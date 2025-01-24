@@ -59,7 +59,7 @@ class MetricInfoBloc extends Cubit<MetricInfoState>
       ));
 
       // Start fetching SVG data in the background
-      _fetchSvgData(coreUserSelection, metricUserSelection);
+      await _fetchSvgData(coreUserSelection, metricUserSelection);
     } catch (e, s) {
       _logger.e('Error loading info', error: e, stackTrace: s);
 

@@ -66,14 +66,12 @@ class _ToleranceSelectionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GeneratedLocalization localization = context.l10n;
-    final TrapezoidalToleranceBloc bloc =
-        context.read<TrapezoidalToleranceBloc>();
+    final TrapezoidalToleranceBloc bloc = context.read<TrapezoidalToleranceBloc>();
 
     return BlocListener<TrapezoidalToleranceBloc, TrapezoidalToleranceState>(
-      listenWhen: (TrapezoidalToleranceState previous,
-              TrapezoidalToleranceState current) =>
+      listenWhen: (previous, current) =>
           previous.enumNavigationStatus != current.enumNavigationStatus,
-      listener: (BuildContext context, TrapezoidalToleranceState state) {
+      listener: (context, state) {
         if (state.enumNavigationStatus.isNavigation) {
           context.pushNamed(TrapezoidalInfoScreen.name);
           bloc.resetNavigationStatus();
@@ -102,34 +100,50 @@ class _ToleranceSelectionView extends StatelessWidget {
                               EnumThreadMaleFemale.female
                           ? 1
                           : 0,
-                      child: Scaffold(
-                        appBar: AppBar(
-                          title: Text(localization.select_class),
-                          bottom: TabBar(
-                            onTap: (int index) {
-                              final EnumThreadMaleFemale newGender = index == 1
+                      child: Builder(
+                        builder: (BuildContext context) {
+                          final TabController tabController = DefaultTabController.of(context);
+                          tabController.addListener(() {
+                            if (!tabController.indexIsChanging) {
+                              final EnumThreadMaleFemale newGender = tabController.index == 1
                                   ? EnumThreadMaleFemale.female
                                   : EnumThreadMaleFemale.male;
                               if (bloc.state.selectedThreadType != newGender) {
                                 bloc.updateGenderSelection(newGender);
                               }
-                            },
-                            tabs: <Widget>[
-                              Tab(text: localization.external_thread),
-                              Tab(text: localization.internal_thread),
-                            ],
-                          ),
-                        ),
-                        body: TabBarView(
-                          children: <Widget>[
-                            _buildToleranceList(
-                                context, bloc.state.maleTolerances,
-                                isFemale: false),
-                            _buildToleranceList(
-                                context, bloc.state.femaleTolerances,
-                                isFemale: true),
-                          ],
-                        ),
+                            }
+                          });
+                          
+                          return Scaffold(
+                            appBar: AppBar(
+                              title: Text(localization.select_class),
+                              bottom: TabBar(
+                                onTap: (int index) {
+                                  final EnumThreadMaleFemale newGender = index == 1
+                                      ? EnumThreadMaleFemale.female
+                                      : EnumThreadMaleFemale.male;
+                                  if (bloc.state.selectedThreadType != newGender) {
+                                    bloc.updateGenderSelection(newGender);
+                                  }
+                                },
+                                tabs: <Widget>[
+                                  Tab(text: localization.external_thread),
+                                  Tab(text: localization.internal_thread),
+                                ],
+                              ),
+                            ),
+                            body: TabBarView(
+                              children: <Widget>[
+                                _buildToleranceList(
+                                    context, bloc.state.maleTolerances,
+                                    isFemale: false),
+                                _buildToleranceList(
+                                    context, bloc.state.femaleTolerances,
+                                    isFemale: true),
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     );
                 }

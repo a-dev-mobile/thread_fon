@@ -16,7 +16,7 @@ sealed class TrapezoidalInfoState with _$TrapezoidalInfoState {
     @Default(EnumUnits.mm) EnumUnits units,
     @Default(5) int precision,
     @Default(false) bool isSvgOverlayVisible,
-    @Default(true) bool showDimensions,
+    @Default(false) bool showDimensions,
   }) = _TrapezoidalInfoState;
 
   factory TrapezoidalInfoState.fromJson(Map<String, dynamic> json) =>

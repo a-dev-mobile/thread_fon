@@ -15,8 +15,8 @@ class MetricInfoState with _$MetricInfoState {
     String? svgErrorMsg,
     @Default(EnumUnits.mm) EnumUnits units,
     @Default(3) int precision,
-    @Default(true) bool isSvgOverlayVisible,
-    @Default(true) bool showDimensions,
+    @Default(false) bool isSvgOverlayVisible,
+    @Default(false) bool showDimensions,
   }) = _InfoState;
 
   factory MetricInfoState.fromJson(Map<String, dynamic> json) =>

@@ -191,6 +191,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "select_class": MessageLookupByLibrary.simpleMessage("Select Class"),
         "select_diameter":
             MessageLookupByLibrary.simpleMessage("Select Diameter"),
+        "select_diameter_and_pitch":
+            MessageLookupByLibrary.simpleMessage("Select Diameter and Pitch"),
         "select_pitch": MessageLookupByLibrary.simpleMessage("Select Pitch"),
         "select_tolerance":
             MessageLookupByLibrary.simpleMessage("Select Tolerance"),
@@ -229,6 +231,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalTruncation":
             MessageLookupByLibrary.simpleMessage("Total Truncation (3H/8)"),
         "tpi": MessageLookupByLibrary.simpleMessage("Threads per inch"),
+        "trapezoidal_thread":
+            MessageLookupByLibrary.simpleMessage("Trapezoidal Thread"),
+        "trapezoidal_thread_gost":
+            MessageLookupByLibrary.simpleMessage("ISO 2901, 2903, 2904"),
         "type_pitch": MessageLookupByLibrary.simpleMessage("Pitch Type"),
         "units": MessageLookupByLibrary.simpleMessage("Units"),
         "version": MessageLookupByLibrary.simpleMessage("Version"),
