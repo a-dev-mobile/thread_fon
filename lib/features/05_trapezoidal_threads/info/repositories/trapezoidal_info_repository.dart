@@ -41,10 +41,12 @@ class TrapezoidalInfoRepository {
       );
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> rawData = response.data as Map<String, dynamic>;
+        final Map<String, dynamic> rawData =
+            response.data as Map<String, dynamic>;
         return TrapezoidalInfoModel.fromJson(rawData);
       } else {
-        final String errorMessage = 'Failed to fetch info. Status code: ${response.statusCode}';
+        final String errorMessage =
+            'Failed to fetch info. Status code: ${response.statusCode}';
         _logger.e(errorMessage);
         throw Exception(errorMessage);
       }
@@ -84,7 +86,8 @@ class TrapezoidalInfoRepository {
       if (response.statusCode == 200) {
         return response.data as String;
       } else {
-        final String errorMessage = 'Failed to fetch SVG dimensions. Status code: ${response.statusCode}';
+        final String errorMessage =
+            'Failed to fetch SVG dimensions. Status code: ${response.statusCode}';
         _logger.e(errorMessage);
         throw Exception(errorMessage);
       }
@@ -114,7 +117,8 @@ class TrapezoidalInfoRepository {
       if (response.statusCode == 200) {
         return response.data as String;
       } else {
-        final String errorMessage = 'Failed to fetch SVG annotations. Status code: ${response.statusCode}';
+        final String errorMessage =
+            'Failed to fetch SVG annotations. Status code: ${response.statusCode}';
         _logger.e(errorMessage);
         throw Exception(errorMessage);
       }

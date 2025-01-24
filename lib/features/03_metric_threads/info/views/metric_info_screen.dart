@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
@@ -13,14 +12,13 @@ import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/core/widgets/svg_overlay.dart';
+import 'package:threadfon/core/widgets/thread_info_app_bar.dart';
 import 'package:threadfon/features/03_metric_threads/info/bloc/metric_info_bloc.dart';
 import 'package:threadfon/features/03_metric_threads/info/repositories/metric_info_repository.dart';
 import 'package:threadfon/features/03_metric_threads/info/views/metric_full_screen_svg_view.dart';
 import 'package:threadfon/features/03_metric_threads/info/views/metric_info_diameters_parameters.dart';
 import 'package:threadfon/features/03_metric_threads/info/views/metric_info_main_parameters.dart';
 import 'package:threadfon/features/03_metric_threads/info/views/metric_info_parameters.dart';
-import 'package:threadfon/localization/generated/l10n.dart';
-import 'package:threadfon/localization/l10n_extension.dart';
 
 final LogService _logger = LogService('info_screen');
 
@@ -166,53 +164,26 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
 
   Widget _buildSuccessContent(BuildContext context, MetricInfoState state,
       MetricInfoBloc bloc, double overlayHeight) {
-    final GeneratedLocalization localization = context.l10n;
-
     return CustomScrollView(
       slivers: <Widget>[
-        SliverAppBar(
-          title: Text(localization.threads_info),
-          floating: true,
-          snap: true,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(FontAwesomeIcons.compassDrafting),
-              onPressed: () => bloc.toggleSvgOverlay(),
-            ),
-            IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return UnitsPrecisionDialog(
-                      units: state.units,
-                      precision: state.precision,
-                      onApply:
-                          (EnumUnits selectedUnits, int selectedPrecision) {
-                        bloc.updateUnitsPrecision(
-                          units: selectedUnits,
-                          precision: selectedPrecision,
-                        );
-                      },
-                    );
-                  },
-                );
-              },
-            ),
-          ],
+        ThreadInfoAppBar(
+          hasSvgButton: true,
+          units: state.units,
+          precision: state.precision,
+          onSvgToggle: () => bloc.toggleSvgOverlay(),
+          onUnitsPrecisionUpdate: (EnumUnits units, int precision) =>
+              bloc.updateUnitsPrecision(
+            units: units,
+            precision: precision,
+          ),
         ),
         SliverPadding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           sliver: SliverList(
             delegate: SliverChildListDelegate(<Widget>[
-              MetricInfoMainParameters(
-                info: state.model!,
-              ),
+              MetricInfoMainParameters(info: state.model!),
               const Divider(),
-              MetricInfoDiametersParameters(
-                info: state.model!,
-              ),
+              MetricInfoDiametersParameters(info: state.model!),
               const Divider(),
               MetricInfoParameters(
                 info: state.model!,
@@ -227,109 +198,6 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
               height: overlayHeight,
             ),
           ),
-      ],
-    );
-  }
-}
-
-class UnitsPrecisionDialog extends StatefulWidget {
-  final EnumUnits units;
-  final int precision;
-  final void Function(EnumUnits units, int precision) onApply;
-
-  const UnitsPrecisionDialog({
-    required this.units,
-    required this.precision,
-    required this.onApply,
-    super.key,
-  });
-
-  @override
-  _UnitsPrecisionDialogState createState() => _UnitsPrecisionDialogState();
-}
-
-class _UnitsPrecisionDialogState extends State<UnitsPrecisionDialog> {
-  late EnumUnits _selectedUnits;
-  late int _selectedPrecision;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedUnits = widget.units;
-    _selectedPrecision = widget.precision;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final GeneratedLocalization localization = context.l10n;
-
-    return AlertDialog(
-      title: Text(localization.settings),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          // Units selection
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(localization.units),
-              DropdownButton<EnumUnits>(
-                value: _selectedUnits,
-                items: EnumUnits.values.map((EnumUnits units) {
-                  return DropdownMenuItem<EnumUnits>(
-                    value: units,
-                    child: Text(units == EnumUnits.mm
-                        ? localization.mm
-                        : localization.inch),
-                  );
-                }).toList(),
-                onChanged: (EnumUnits? newValue) {
-                  if (newValue != null) {
-                    setState(() {
-                      _selectedUnits = newValue;
-                    });
-                  }
-                },
-              ),
-            ],
-          ),
-          // Precision selection
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(localization.precision),
-              DropdownButton<int>(
-                value: _selectedPrecision,
-                items: <int>[1, 2, 3, 4, 5].map((int value) {
-                  return DropdownMenuItem<int>(
-                    value: value,
-                    child: Text(value.toString()),
-                  );
-                }).toList(),
-                onChanged: (int? newValue) {
-                  if (newValue != null) {
-                    setState(() {
-                      _selectedPrecision = newValue;
-                    });
-                  }
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () => context.pop(),
-          child: Text(localization.cancel),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            widget.onApply(_selectedUnits, _selectedPrecision);
-            context.pop();
-          },
-          child: Text(localization.apply),
-        ),
       ],
     );
   }

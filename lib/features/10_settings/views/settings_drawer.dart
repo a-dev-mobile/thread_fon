@@ -9,7 +9,6 @@ import 'package:threadfon/core/constant/enum_threads.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/loading_widget.dart';
-import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/core/widgets/my_error_widget.dart';
 import 'package:threadfon/features/02_thread_type_selection/bloc/thread_type_bloc.dart';
 import 'package:threadfon/features/10_settings/bloc/settings_bloc.dart';
@@ -96,7 +95,8 @@ class _SettingsDrawerView extends StatelessWidget {
                   '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
               break;
             case EnumThreads.trapezoidal:
-           threadTypeText = '${localization.trapezoidal_thread_gost}\n${localization.trapezoidal_thread}';
+              threadTypeText =
+                  '${localization.trapezoidal_thread_gost}\n${localization.trapezoidal_thread}';
           }
 
           return Drawer(
@@ -351,7 +351,7 @@ class _SettingsDrawerView extends StatelessWidget {
     );
   }
 
-void _showThreadDialog(BuildContext context) {
+  void _showThreadDialog(BuildContext context) {
     final GeneratedLocalization localization = context.l10n;
     final EnumThreads currentThreadType = bloc.state.enumThreads;
 
@@ -367,13 +367,16 @@ void _showThreadDialog(BuildContext context) {
             String threadTypeText;
             switch (threadType) {
               case EnumThreads.metric:
-                threadTypeText = '${localization.metric_thread_gost}\n${localization.metric_thread}';
+                threadTypeText =
+                    '${localization.metric_thread_gost}\n${localization.metric_thread}';
                 break;
               case EnumThreads.imperial:
-                threadTypeText = '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
+                threadTypeText =
+                    '${localization.imperial_thread_gost}\n${localization.imperial_thread}';
                 break;
               case EnumThreads.trapezoidal:
-                threadTypeText = '${localization.trapezoidal_thread_gost}\n${localization.trapezoidal_thread}';
+                threadTypeText =
+                    '${localization.trapezoidal_thread_gost}\n${localization.trapezoidal_thread}';
             }
 
             return RadioListTile<EnumThreads>(

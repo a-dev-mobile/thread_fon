@@ -26,8 +26,8 @@ class TrapezoidalToleranceChoiceCard extends StatelessWidget {
           tolerance.formatted,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+                fontWeight: FontWeight.bold,
+              ),
         ),
       ),
     );

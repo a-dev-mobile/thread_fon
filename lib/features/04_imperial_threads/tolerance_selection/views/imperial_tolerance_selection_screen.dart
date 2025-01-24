@@ -97,30 +97,37 @@ class _ToleranceSelectionView extends StatelessWidget {
                   case EnumStatus.success:
                     return DefaultTabController(
                       length: 2,
-                      initialIndex: bloc.state.selectedThreadType == EnumThreadMaleFemale.female ? 1 : 0,
+                      initialIndex: bloc.state.selectedThreadType ==
+                              EnumThreadMaleFemale.female
+                          ? 1
+                          : 0,
                       child: Builder(
                         builder: (BuildContext context) {
-                          final TabController tabController = DefaultTabController.of(context);
+                          final TabController tabController =
+                              DefaultTabController.of(context);
                           tabController.addListener(() {
                             if (!tabController.indexIsChanging) {
-                              final EnumThreadMaleFemale newGender = tabController.index == 1
-                                  ? EnumThreadMaleFemale.female
-                                  : EnumThreadMaleFemale.male;
+                              final EnumThreadMaleFemale newGender =
+                                  tabController.index == 1
+                                      ? EnumThreadMaleFemale.female
+                                      : EnumThreadMaleFemale.male;
                               if (bloc.state.selectedThreadType != newGender) {
                                 bloc.updateGenderSelection(newGender);
                               }
                             }
                           });
-                          
+
                           return Scaffold(
                             appBar: AppBar(
                               title: Text(localization.select_class),
                               bottom: TabBar(
                                 onTap: (int index) {
-                                  final EnumThreadMaleFemale newGender = index == 1
-                                      ? EnumThreadMaleFemale.female
-                                      : EnumThreadMaleFemale.male;
-                                  if (bloc.state.selectedThreadType != newGender) {
+                                  final EnumThreadMaleFemale newGender =
+                                      index == 1
+                                          ? EnumThreadMaleFemale.female
+                                          : EnumThreadMaleFemale.male;
+                                  if (bloc.state.selectedThreadType !=
+                                      newGender) {
                                     bloc.updateGenderSelection(newGender);
                                   }
                                 },

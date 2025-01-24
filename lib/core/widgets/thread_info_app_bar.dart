@@ -28,7 +28,7 @@ class ThreadInfoAppBar extends StatelessWidget {
     return SliverAppBar(
       title: Text(
         localization.threads_info,
-        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w600,
             ),
       ),

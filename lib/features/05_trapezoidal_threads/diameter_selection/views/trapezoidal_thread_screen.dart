@@ -98,7 +98,7 @@ class _TrapezoidalThreadViewState extends State<_TrapezoidalThreadView> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title:  Text(localization.select_diameter_and_pitch),
+          title: Text(localization.select_diameter_and_pitch),
         ),
         body: BlocBuilder<TrapezoidalThreadBloc, TrapezoidalThreadState>(
           buildWhen: (TrapezoidalThreadState previous,
