@@ -40,7 +40,7 @@ class AdditionalInfo with _$AdditionalInfo {
   const factory AdditionalInfo({
     required String name,
     required String value,
-    required String description,
+    String? description,
   }) = _AdditionalInfo;
 
   factory AdditionalInfo.fromJson(Map<String, dynamic> json) =>
