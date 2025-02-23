@@ -85,6 +85,19 @@ dart_code_metrics:
     maximum-nesting-level: 5
     source-lines-of-code: 50
     maintainability-index: 50
+    halstead-volume: 150
+    weight-of-class: 0.33
+    number-of-methods: 10
+    lines-of-code: 100
+    technical-debt:
+      threshold: 1
+      todo-cost: 161
+      ignore-cost: 320
+      ignore-for-file-cost: 396
+      as-dynamic-cost: 322
+      deprecated-annotations-cost: 37
+      file-too-many-lines-cost: 100
+      no-test-cost: 489
 
   formatter:
     indent: 2
@@ -92,7 +105,7 @@ dart_code_metrics:
     cascading-widget-extensions: true
 
   rules:
-    # New Common Rules from 1.26.0
+    # New Common Rules 1.26.0+
     - avoid-commented-out-code
     - avoid-future-ignore
     - prefer-switch-expression
@@ -107,7 +120,7 @@ dart_code_metrics:
     - prefer-commenting-future-delayed
     - avoid-complex-arithmetic-expressions
 
-    # New Flutter Rules from 1.26.0
+    # New Flutter Rules 1.26.0+
     - prefer-spacing
     - use-closest-build-context
     - prefer-transform-over-container

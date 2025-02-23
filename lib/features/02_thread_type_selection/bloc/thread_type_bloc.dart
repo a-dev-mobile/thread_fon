@@ -14,6 +14,7 @@ import 'package:threadfon/features/02_thread_type_selection/repositories/thread_
 import 'package:threadfon/features/03_metric_threads/diameter_selection/views/metric_diameter_screen.dart';
 import 'package:threadfon/features/04_imperial_threads/diameter_selection/views/imperial_diameter_screen.dart';
 import 'package:threadfon/features/05_trapezoidal_threads/diameter_selection/views/trapezoidal_thread_screen.dart';
+import 'package:threadfon/features/06_pipe_threads/diameter_selection/views/pipe_diameter_selection_screen.dart';
 
 part 'thread_type_bloc.freezed.dart';
 part 'thread_type_bloc.g.dart';
@@ -64,6 +65,8 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState>
         EnumThreads.metric => MetricDiameterScreen.name,
         EnumThreads.imperial => ImperialDiameterScreen.name,
         EnumThreads.trapezoidal => TrapezoidalThreadScreen.name,
+
+        EnumThreads.pipe => PipeDiameterSelectionScreen.name,
       };
 
       await _localStorage.updateCoreUserSelection(

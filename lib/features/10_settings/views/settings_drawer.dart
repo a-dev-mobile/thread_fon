@@ -97,6 +97,9 @@ class _SettingsDrawerView extends StatelessWidget {
             case EnumThreads.trapezoidal:
               threadTypeText =
                   '${localization.trapezoidal_thread_gost}\n${localization.trapezoidal_thread}';
+            case EnumThreads.pipe:
+              threadTypeText =
+                  '${localization.pipe_thread_gost}\n${localization.pipe_thread}';
           }
 
           return Drawer(
@@ -377,6 +380,9 @@ class _SettingsDrawerView extends StatelessWidget {
               case EnumThreads.trapezoidal:
                 threadTypeText =
                     '${localization.trapezoidal_thread_gost}\n${localization.trapezoidal_thread}';
+              case EnumThreads.pipe:
+                threadTypeText =
+                    '${localization.pipe_thread_gost}\n${localization.pipe_thread}';
             }
 
             return RadioListTile<EnumThreads>(

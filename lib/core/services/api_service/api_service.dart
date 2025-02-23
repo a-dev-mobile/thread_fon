@@ -1,7 +1,6 @@
 // lib/src/common/services/api_service.dart
 import 'package:dio/dio.dart';
 
-import 'correlation_id_interceptor.dart';
 import 'user_agent_provider.dart';
 
 class ApiService {
@@ -12,8 +11,8 @@ class ApiService {
     dio = Dio();
     dio.options = BaseOptions(
       // baseUrl: 'http://10.0.3.2:5000',
-      // baseUrl: 'https://dev-thread-api.wayofdt.de',
-      baseUrl: 'https://thread-api.wayofdt.de',
+      baseUrl: 'https://dev-thread-api.wayofdt.de',
+      // baseUrl: 'https://thread-api.wayofdt.de',
       connectTimeout: const Duration(seconds: 25),
       receiveTimeout: const Duration(seconds: 23),
       headers: <String, dynamic>{
@@ -22,7 +21,7 @@ class ApiService {
       },
     );
 
-    dio.interceptors.add(CorrelationIdInterceptor());
+    // dio.interceptors.add(CorrelationIdInterceptor());
 
     return this;
   }

@@ -15,6 +15,7 @@ import 'package:threadfon/features/04_imperial_threads/tolerance_selection/views
 import 'package:threadfon/features/05_trapezoidal_threads/diameter_selection/views/trapezoidal_thread_screen.dart';
 import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal_info_screen.dart';
 import 'package:threadfon/features/05_trapezoidal_threads/tolerance_selection/views/trapezoidal_tolerance_selection_screen.dart';
+import 'package:threadfon/features/06_pipe_threads/diameter_selection/views/pipe_diameter_selection_screen.dart';
 import 'package:threadfon/features/10_settings/views/about_app.dart';
 
 class AppRouter {
@@ -151,6 +152,13 @@ class AppRouter {
               pageBuilder: (BuildContext context, GoRouterState state) =>
                   MaterialPage<void>(
                       child: const TrapezoidalInfoScreen(), key: state.pageKey),
+            ),
+              GoRoute(
+              path: PipeDiameterSelectionScreen.path,
+              name: PipeDiameterSelectionScreen.name,
+              pageBuilder: (BuildContext context, GoRouterState state) =>
+                  MaterialPage<void>(
+                      child: const PipeDiameterSelectionScreen(), key: state.pageKey),
             ),
             GoRoute(
               path: AboutApp.path,

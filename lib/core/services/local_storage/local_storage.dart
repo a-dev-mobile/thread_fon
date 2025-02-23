@@ -13,6 +13,7 @@ import 'package:threadfon/core/utils/device_id_generator.dart';
 import 'package:threadfon/features/03_metric_threads/core/models/metric_user_selection.dart';
 import 'package:threadfon/features/04_imperial_threads/models/imperial_user_selection.dart';
 import 'package:threadfon/features/05_trapezoidal_threads/core/models/trapezoidal_user_selection.dart';
+import 'package:threadfon/features/06_pipe_threads/core/models/pipe_user_selection.dart';
 
 final LogService _logger = LogService('local_storage');
 
@@ -319,6 +320,84 @@ class LocalStorage {
     } on Exception catch (e, s) {
       await _recordError(e, s, 'UPDATE_TRAPEZOIDAL_USER_SELECTION',
           _trapezoidalUserSelection, null);
+    }
+  }
+// ******************************
+// ******************************
+// ******************************
+// ******************************
+// **********pipe********
+// ******************************
+// ******************************
+// ******************************
+// ******************************
+
+  static const String _pipeScrollPosition = '_pipeScrollPosition';
+
+  Future<void> setPipeScrollPosition(double position) async {
+    await _setValue<double>(key: _pipeScrollPosition, value: position);
+  }
+
+  Future<double> getPipeScrollPosition() async {
+    return await _getValue<double>(
+            key: _pipeScrollPosition, defaultValue: 0.0) ??
+        0.0;
+  }
+
+  static const String _pipeUserSelection = '_pipeUserSelection';
+
+  Future<PipeUserSelection> getPipeUserSelection() async {
+    final String? jsonString = await _getValue<String>(
+        key: _pipeUserSelection, defaultValue: '{}');
+    try {
+      return jsonString != null
+          ? PipeUserSelection.fromJson(
+              json.decode(jsonString) as Map<String, dynamic>)
+          : const PipeUserSelection();
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'GET_PIPE_USER_SELECTION',
+          _pipeUserSelection, jsonString);
+
+      return const PipeUserSelection();
+    }
+  }
+
+  Future<void> setPipeUserSelection(
+      PipeUserSelection value) async {
+    try {
+      final String jsonString = json.encode(value.toJson());
+      await _setValue<String>(
+          key: _pipeUserSelection, value: jsonString);
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'SET_PIPE_USER_SELECTION',
+          _pipeUserSelection, value);
+    }
+  }
+
+  // ******************************
+
+  Future<void> updatePipeUserSelection(
+    FutureOr<PipeUserSelection> Function(
+            PipeUserSelection current)
+        updateFn,
+  ) async {
+    try {
+      // Получаем текущий объект ImperialUserSelection
+      PipeUserSelection currentSelection =
+          await getPipeUserSelection();
+
+      // Применяем функцию обновления
+      PipeUserSelection updatedSelection =
+          await updateFn(currentSelection);
+
+      // Сохраняем обновленный объект
+      await setPipeUserSelection(updatedSelection);
+
+      await _log('UPDATE_PIPE_USER_SELECTION', _pipeUserSelection,
+          updatedSelection);
+    } on Exception catch (e, s) {
+      await _recordError(e, s, 'UPDATE_PIPE_USER_SELECTION',
+          _pipeUserSelection, null);
     }
   }
 
