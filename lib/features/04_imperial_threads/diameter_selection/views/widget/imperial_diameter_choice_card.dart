@@ -31,7 +31,7 @@ class ImperialDiameterChoiceCard extends StatelessWidget {
               ?.copyWith(fontWeight: FontWeight.bold),
         ),
         title: Text(formatted.fractional,
-            style: theme.textTheme.titleLarge?.copyWith(
+            style: theme.textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.bold,
             )),
         subtitle: Text(

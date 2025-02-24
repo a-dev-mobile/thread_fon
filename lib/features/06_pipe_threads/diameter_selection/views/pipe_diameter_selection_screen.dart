@@ -118,7 +118,7 @@ class _DiameterSelectionView extends StatelessWidget {
 
                           return Scaffold(
                             appBar: AppBar(
-                              title: Text(localization.select_class),
+                              title: Text(localization.select_diameter),
                               bottom: TabBar(
                                 onTap: (int index) {
                                   final EnumThreadMaleFemale newGender =
