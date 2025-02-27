@@ -40,5 +40,21 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+    
+    # Add privacy manifests for plugins that need them
+    if target.name == 'connectivity_plus'
+      # Make sure the privacy manifest directory exists
+      privacy_manifest_dir = "#{target.product_dir}/connectivity_plus.framework/PrivacyInfo.xcprivacy"
+      privacy_manifest_path = "#{Dir.pwd}/Runner/PrivacyInfo.xcprivacy"
+      
+      target.build_configurations.each do |config|
+        # Create a script phase to copy the privacy manifest
+        script_phase = target.new_shell_script_build_phase("Copy Privacy Manifest")
+        script_phase.shell_script = <<-SCRIPT
+          mkdir -p "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/"
+          cp "#{privacy_manifest_path}" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/"
+        SCRIPT
+      end
+    end
   end
 end
