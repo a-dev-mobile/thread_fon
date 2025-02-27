@@ -13,7 +13,7 @@ class ImperialUserSelection with _$ImperialUserSelection {
     String? tpi,
     @Default(EnumUnits.inch) EnumUnits units,
     @Default(4) int precision,
-     @Default(false) bool isSvgOverlayVisible,
+    @Default(false) bool isSvgOverlayVisible,
   }) = _ImperialUserSelection;
 
   factory ImperialUserSelection.fromJson(Map<String, dynamic> json) =>

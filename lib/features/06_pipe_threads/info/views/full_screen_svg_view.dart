@@ -15,12 +15,10 @@ class PipeFullScreenSvgView extends StatefulWidget {
   });
 
   @override
-  _PipeFullScreenSvgViewState createState() =>
-      _PipeFullScreenSvgViewState();
+  _PipeFullScreenSvgViewState createState() => _PipeFullScreenSvgViewState();
 }
 
-class _PipeFullScreenSvgViewState
-    extends State<PipeFullScreenSvgView> {
+class _PipeFullScreenSvgViewState extends State<PipeFullScreenSvgView> {
   @override
   void initState() {
     super.initState();

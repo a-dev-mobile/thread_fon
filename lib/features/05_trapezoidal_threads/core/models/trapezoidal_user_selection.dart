@@ -13,7 +13,7 @@ class TrapezoidalUserSelection with _$TrapezoidalUserSelection {
     String? pitch,
     @Default(EnumUnits.mm) EnumUnits units,
     @Default(3) int precision,
-     @Default(false) bool isSvgOverlayVisible,
+    @Default(false) bool isSvgOverlayVisible,
   }) = _TrapezoidalUserSelection;
 
   factory TrapezoidalUserSelection.fromJson(Map<String, dynamic> json) =>

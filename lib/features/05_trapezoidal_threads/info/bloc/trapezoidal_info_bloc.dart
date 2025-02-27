@@ -159,8 +159,9 @@ class TrapezoidalInfoBloc extends Cubit<TrapezoidalInfoState>
   void toggleSvgOverlay() {
     bool isSvgOverlayVisible = !state.isSvgOverlayVisible;
     emit(state.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
-    _localStorage.updateTrapezoidalUserSelection((TrapezoidalUserSelection current) =>
-        current.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
+    _localStorage.updateTrapezoidalUserSelection(
+        (TrapezoidalUserSelection current) =>
+            current.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
   }
 
   void toggleDimensions() {

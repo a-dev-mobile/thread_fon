@@ -25,6 +25,7 @@ class ThemeBloc extends Cubit<ThemeState> with BlocIgnoreEmitAfterClosed {
 
   /// Переключает между светлой и тёмной темой
   void toggle() {
-    setTheme(state.themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark);
+    setTheme(
+        state.themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark);
   }
 }

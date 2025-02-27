@@ -20,7 +20,6 @@ import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal
 import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal_diameters_info.dart';
 import 'package:threadfon/features/05_trapezoidal_threads/info/views/trapezoidal_main_info.dart';
 
-
 final LogService _logger = LogService('info_screen');
 
 class TrapezoidalInfoScreen extends StatefulWidget {

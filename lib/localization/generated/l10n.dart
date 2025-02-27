@@ -18,8 +18,10 @@ class GeneratedLocalization {
   static GeneratedLocalization? _current;
 
   static GeneratedLocalization get current {
-    assert(_current != null,
-        'No instance of GeneratedLocalization was loaded. Try to initialize the GeneratedLocalization delegate before accessing GeneratedLocalization.current.');
+    assert(
+      _current != null,
+      'No instance of GeneratedLocalization was loaded. Try to initialize the GeneratedLocalization delegate before accessing GeneratedLocalization.current.',
+    );
     return _current!;
   }
 
@@ -41,54 +43,38 @@ class GeneratedLocalization {
 
   static GeneratedLocalization of(BuildContext context) {
     final instance = GeneratedLocalization.maybeOf(context);
-    assert(instance != null,
-        'No instance of GeneratedLocalization present in the widget tree. Did you add GeneratedLocalization.delegate in localizationsDelegates?');
+    assert(
+      instance != null,
+      'No instance of GeneratedLocalization present in the widget tree. Did you add GeneratedLocalization.delegate in localizationsDelegates?',
+    );
     return instance!;
   }
 
   static GeneratedLocalization? maybeOf(BuildContext context) {
     return Localizations.of<GeneratedLocalization>(
-        context, GeneratedLocalization);
+      context,
+      GeneratedLocalization,
+    );
   }
 
   /// `en_US`
   String get localeCode {
-    return Intl.message(
-      'en_US',
-      name: 'localeCode',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('en_US', name: 'localeCode', desc: '', args: []);
   }
 
   /// `en`
   String get languageCode {
-    return Intl.message(
-      'en',
-      name: 'languageCode',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('en', name: 'languageCode', desc: '', args: []);
   }
 
   /// `English`
   String get language {
-    return Intl.message(
-      'English',
-      name: 'language',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('English', name: 'language', desc: '', args: []);
   }
 
   /// `About the App`
   String get about {
-    return Intl.message(
-      'About the App',
-      name: 'about',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('About the App', name: 'about', desc: '', args: []);
   }
 
   /// `Additional Information`
@@ -113,62 +99,32 @@ class GeneratedLocalization {
 
   /// `ThreadFon`
   String get app_name {
-    return Intl.message(
-      'ThreadFon',
-      name: 'app_name',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('ThreadFon', name: 'app_name', desc: '', args: []);
   }
 
   /// `Apply`
   String get apply {
-    return Intl.message(
-      'Apply',
-      name: 'apply',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Apply', name: 'apply', desc: '', args: []);
   }
 
   /// `avg`
   String get avg {
-    return Intl.message(
-      'avg',
-      name: 'avg',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('avg', name: 'avg', desc: '', args: []);
   }
 
   /// `Bolt`
   String get bolt {
-    return Intl.message(
-      'Bolt',
-      name: 'bolt',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Bolt', name: 'bolt', desc: '', args: []);
   }
 
   /// `Cancel`
   String get cancel {
-    return Intl.message(
-      'Cancel',
-      name: 'cancel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
   }
 
   /// `D1_es`
   String get d1_es {
-    return Intl.message(
-      'D1_es',
-      name: 'd1_es',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('D1_es', name: 'd1_es', desc: '', args: []);
   }
 
   /// `D1_es Tolerance`
@@ -183,12 +139,7 @@ class GeneratedLocalization {
 
   /// `D2_ei`
   String get d2_ei {
-    return Intl.message(
-      'D2_ei',
-      name: 'd2_ei',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('D2_ei', name: 'd2_ei', desc: '', args: []);
   }
 
   /// `D2_ei Tolerance`
@@ -203,12 +154,7 @@ class GeneratedLocalization {
 
   /// `D2_es`
   String get d2_es {
-    return Intl.message(
-      'D2_es',
-      name: 'd2_es',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('D2_es', name: 'd2_es', desc: '', args: []);
   }
 
   /// `D2_es Tolerance`
@@ -223,12 +169,7 @@ class GeneratedLocalization {
 
   /// `D_ei`
   String get d_ei {
-    return Intl.message(
-      'D_ei',
-      name: 'd_ei',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('D_ei', name: 'd_ei', desc: '', args: []);
   }
 
   /// `D_ei Tolerance`
@@ -243,12 +184,7 @@ class GeneratedLocalization {
 
   /// `D_es`
   String get d_es {
-    return Intl.message(
-      'D_es',
-      name: 'd_es',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('D_es', name: 'd_es', desc: '', args: []);
   }
 
   /// `D_es Tolerance`
@@ -293,12 +229,7 @@ class GeneratedLocalization {
 
   /// `---`
   String get dialog_about_app_4 {
-    return Intl.message(
-      '---',
-      name: 'dialog_about_app_4',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('---', name: 'dialog_about_app_4', desc: '', args: []);
   }
 
   /// `Always verify your results!`
@@ -323,22 +254,12 @@ class GeneratedLocalization {
 
   /// `Diameter`
   String get diameter {
-    return Intl.message(
-      'Diameter',
-      name: 'diameter',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Diameter', name: 'diameter', desc: '', args: []);
   }
 
   /// `Diameters`
   String get diameters {
-    return Intl.message(
-      'Diameters',
-      name: 'diameters',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Diameters', name: 'diameters', desc: '', args: []);
   }
 
   /// `Major Diameter`
@@ -373,22 +294,12 @@ class GeneratedLocalization {
 
   /// `Error`
   String get error {
-    return Intl.message(
-      'Error',
-      name: 'error',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Error', name: 'error', desc: '', args: []);
   }
 
   /// `Exit App`
   String get exit_app {
-    return Intl.message(
-      'Exit App',
-      name: 'exit_app',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Exit App', name: 'exit_app', desc: '', args: []);
   }
 
   /// `Are you sure you want to exit the app?`
@@ -413,12 +324,7 @@ class GeneratedLocalization {
 
   /// `Feedback`
   String get feedback {
-    return Intl.message(
-      'Feedback',
-      name: 'feedback',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Feedback', name: 'feedback', desc: '', args: []);
   }
 
   /// `Oops, something went wrong!\nPlease try again.`
@@ -433,32 +339,17 @@ class GeneratedLocalization {
 
   /// `G`
   String get g_thread_abrv {
-    return Intl.message(
-      'G',
-      name: 'g_thread_abrv',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('G', name: 'g_thread_abrv', desc: '', args: []);
   }
 
   /// `h`
   String get h {
-    return Intl.message(
-      'h',
-      name: 'h',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('h', name: 'h', desc: '', args: []);
   }
 
   /// `inch`
   String get inch {
-    return Intl.message(
-      'inch',
-      name: 'inch',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('inch', name: 'inch', desc: '', args: []);
   }
 
   /// `Internal Thread`
@@ -473,32 +364,17 @@ class GeneratedLocalization {
 
   /// `English`
   String get lang_en {
-    return Intl.message(
-      'English',
-      name: 'lang_en',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('English', name: 'lang_en', desc: '', args: []);
   }
 
   /// `Russian`
   String get lang_ru {
-    return Intl.message(
-      'Russian',
-      name: 'lang_ru',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Russian', name: 'lang_ru', desc: '', args: []);
   }
 
   /// `Launch`
   String get launch {
-    return Intl.message(
-      'Launch',
-      name: 'launch',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Launch', name: 'launch', desc: '', args: []);
   }
 
   /// `Loading...`
@@ -513,12 +389,7 @@ class GeneratedLocalization {
 
   /// `Home`
   String get main {
-    return Intl.message(
-      'Home',
-      name: 'main',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Home', name: 'main', desc: '', args: []);
   }
 
   /// `Mean Major Diameter`
@@ -563,22 +434,12 @@ class GeneratedLocalization {
 
   /// `max`
   String get max {
-    return Intl.message(
-      'max',
-      name: 'max',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('max', name: 'max', desc: '', args: []);
   }
 
   /// `mean`
   String get mean {
-    return Intl.message(
-      'mean',
-      name: 'mean',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('mean', name: 'mean', desc: '', args: []);
   }
 
   /// `Choose Thread`
@@ -673,12 +534,7 @@ class GeneratedLocalization {
 
   /// `M`
   String get m_thread_abrv {
-    return Intl.message(
-      'M',
-      name: 'm_thread_abrv',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('M', name: 'm_thread_abrv', desc: '', args: []);
   }
 
   /// `M - Metric Internal Cylindrical Thread`
@@ -713,12 +569,7 @@ class GeneratedLocalization {
 
   /// `min`
   String get min {
-    return Intl.message(
-      'min',
-      name: 'min',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('min', name: 'min', desc: '', args: []);
   }
 
   /// `Select Diameter and Pitch`
@@ -793,32 +644,17 @@ class GeneratedLocalization {
 
   /// `mm`
   String get mm {
-    return Intl.message(
-      'mm',
-      name: 'mm',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('mm', name: 'mm', desc: '', args: []);
   }
 
   /// `No`
   String get no {
-    return Intl.message(
-      'No',
-      name: 'no',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('No', name: 'no', desc: '', args: []);
   }
 
   /// `No Data`
   String get no_data {
-    return Intl.message(
-      'No Data',
-      name: 'no_data',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('No Data', name: 'no_data', desc: '', args: []);
   }
 
   /// `No Data to Display`
@@ -833,22 +669,12 @@ class GeneratedLocalization {
 
   /// `Nuts`
   String get nuts {
-    return Intl.message(
-      'Nuts',
-      name: 'nuts',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Nuts', name: 'nuts', desc: '', args: []);
   }
 
   /// `Pitch`
   String get pitch {
-    return Intl.message(
-      'Pitch',
-      name: 'pitch',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Pitch', name: 'pitch', desc: '', args: []);
   }
 
   /// `Pitch Diameter`
@@ -913,42 +739,22 @@ class GeneratedLocalization {
 
   /// `Precision`
   String get precision {
-    return Intl.message(
-      'Precision',
-      name: 'precision',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Precision', name: 'precision', desc: '', args: []);
   }
 
   /// `Rate the App`
   String get rate_app {
-    return Intl.message(
-      'Rate the App',
-      name: 'rate_app',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Rate the App', name: 'rate_app', desc: '', args: []);
   }
 
   /// `Restart App`
   String get restartApp {
-    return Intl.message(
-      'Restart App',
-      name: 'restartApp',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Restart App', name: 'restartApp', desc: '', args: []);
   }
 
   /// `Retry`
   String get retry {
-    return Intl.message(
-      'Retry',
-      name: 'retry',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
   }
 
   /// `Select Diameter`
@@ -993,22 +799,12 @@ class GeneratedLocalization {
 
   /// `Setting`
   String get setting {
-    return Intl.message(
-      'Setting',
-      name: 'setting',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Setting', name: 'setting', desc: '', args: []);
   }
 
   /// `Settings`
   String get settings {
-    return Intl.message(
-      'Settings',
-      name: 'settings',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Settings', name: 'settings', desc: '', args: []);
   }
 
   /// `Thank you for using our application`
@@ -1053,12 +849,7 @@ class GeneratedLocalization {
 
   /// `Diameter`
   String get thread_diam {
-    return Intl.message(
-      'Diameter',
-      name: 'thread_diam',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Diameter', name: 'thread_diam', desc: '', args: []);
   }
 
   /// `Diameter (nominal)`
@@ -1073,12 +864,7 @@ class GeneratedLocalization {
 
   /// `Pitch`
   String get thread_pitch {
-    return Intl.message(
-      'Pitch',
-      name: 'thread_pitch',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Pitch', name: 'thread_pitch', desc: '', args: []);
   }
 
   /// `Thread Information`
@@ -1133,52 +919,27 @@ class GeneratedLocalization {
 
   /// `Thread Type`
   String get thread_type {
-    return Intl.message(
-      'Thread Type',
-      name: 'thread_type',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Thread Type', name: 'thread_type', desc: '', args: []);
   }
 
   /// `Tolerance`
   String get tolerance {
-    return Intl.message(
-      'Tolerance',
-      name: 'tolerance',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Tolerance', name: 'tolerance', desc: '', args: []);
   }
 
   /// `Pitch Type`
   String get type_pitch {
-    return Intl.message(
-      'Pitch Type',
-      name: 'type_pitch',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Pitch Type', name: 'type_pitch', desc: '', args: []);
   }
 
   /// `Units`
   String get units {
-    return Intl.message(
-      'Units',
-      name: 'units',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Units', name: 'units', desc: '', args: []);
   }
 
   /// `Yes`
   String get yes {
-    return Intl.message(
-      'Yes',
-      name: 'yes',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Yes', name: 'yes', desc: '', args: []);
   }
 
   /// `Choose Language`
@@ -1203,32 +964,17 @@ class GeneratedLocalization {
 
   /// `Light Theme`
   String get light_theme {
-    return Intl.message(
-      'Light Theme',
-      name: 'light_theme',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Light Theme', name: 'light_theme', desc: '', args: []);
   }
 
   /// `Dark Theme`
   String get dark_theme {
-    return Intl.message(
-      'Dark Theme',
-      name: 'dark_theme',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Dark Theme', name: 'dark_theme', desc: '', args: []);
   }
 
   /// `Send Email`
   String get send_email {
-    return Intl.message(
-      'Send Email',
-      name: 'send_email',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Send Email', name: 'send_email', desc: '', args: []);
   }
 
   /// `No email application found.`
@@ -1423,22 +1169,12 @@ class GeneratedLocalization {
 
   /// `About the App`
   String get about_app {
-    return Intl.message(
-      'About the App',
-      name: 'about_app',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('About the App', name: 'about_app', desc: '', args: []);
   }
 
   /// `Version`
   String get version {
-    return Intl.message(
-      'Version',
-      name: 'version',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Version', name: 'version', desc: '', args: []);
   }
 
   /// `ThreadFon is your comprehensive reference for standard thread parameters.`
@@ -1453,12 +1189,7 @@ class GeneratedLocalization {
 
   /// `App Icon`
   String get app_icon_alt {
-    return Intl.message(
-      'App Icon',
-      name: 'app_icon_alt',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('App Icon', name: 'app_icon_alt', desc: '', args: []);
   }
 
   /// `App Store not found`
@@ -1493,12 +1224,7 @@ class GeneratedLocalization {
 
   /// `Threads per inch`
   String get tpi {
-    return Intl.message(
-      'Threads per inch',
-      name: 'tpi',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Threads per inch', name: 'tpi', desc: '', args: []);
   }
 
   /// `Thread Series`

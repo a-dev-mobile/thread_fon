@@ -51,9 +51,9 @@ class AdditionalInfo with _$AdditionalInfo {
 @immutable
 class PipeInfoModel with _$PipeInfoModel {
   const factory PipeInfoModel({
-    required String designation1, 
-    required String designation2, 
-    required String unit,         
+    required String designation1,
+    required String designation2,
+    required String unit,
     required String description,
     required List<MainInfo> main_info,
     required List<DiameterInfo> diameter_info,

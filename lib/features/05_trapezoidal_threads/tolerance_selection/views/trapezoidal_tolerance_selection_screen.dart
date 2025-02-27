@@ -70,7 +70,8 @@ class _ToleranceSelectionView extends StatelessWidget {
         context.read<TrapezoidalToleranceBloc>();
 
     return BlocListener<TrapezoidalToleranceBloc, TrapezoidalToleranceState>(
-      listenWhen: (TrapezoidalToleranceState previous, TrapezoidalToleranceState current) =>
+      listenWhen: (TrapezoidalToleranceState previous,
+              TrapezoidalToleranceState current) =>
           previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (BuildContext context, TrapezoidalToleranceState state) {
         if (state.enumNavigationStatus.isNavigation) {

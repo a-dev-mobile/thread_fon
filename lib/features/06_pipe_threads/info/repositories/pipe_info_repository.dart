@@ -5,8 +5,6 @@ import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/features/06_pipe_threads/info/models/pipe_info_model.dart';
 
-
-
 final LogService _logger = LogService('pipe_info_repository');
 const String _baseUrl = '/v1/pipe';
 
@@ -36,7 +34,7 @@ class PipeInfoRepository {
       );
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> rawData = 
+        final Map<String, dynamic> rawData =
             response.data as Map<String, dynamic>;
         return PipeInfoModel.fromJson(rawData);
       } else {

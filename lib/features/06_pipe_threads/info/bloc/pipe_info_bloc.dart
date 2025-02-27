@@ -14,9 +14,6 @@ import 'package:threadfon/features/06_pipe_threads/core/models/pipe_user_selecti
 import 'package:threadfon/features/06_pipe_threads/info/models/pipe_info_model.dart';
 import 'package:threadfon/features/06_pipe_threads/info/repositories/pipe_info_repository.dart';
 
-
-
-
 part 'pipe_info_bloc.freezed.dart';
 part 'pipe_info_bloc.g.dart';
 part 'pipe_info_state.dart';
@@ -76,7 +73,7 @@ class PipeInfoBloc extends Cubit<PipeInfoState>
   Future<PipeInfoModel> _fetchModel(CoreUserSelection coreUserSelection,
       PipeUserSelection pipeUserSelection) async {
     return await _repository.fetchPipeInfo(
-      id: pipeUserSelection.id ?? 0, 
+      id: pipeUserSelection.id ?? 0,
       language: _languageBloc.state.enumLang.name,
       units: pipeUserSelection.units.name,
       precision: pipeUserSelection.precision,
@@ -91,8 +88,8 @@ class PipeInfoBloc extends Cubit<PipeInfoState>
       final String language = _languageBloc.state.enumLang.name;
 
       final Future<String> fetchSvgDimensions = _repository.fetchSvgDimensions(
-        diameter:' pipeUserSelection.diameter!',
-        pitch:' pipeUserSelection.pitch!',
+        diameter: ' pipeUserSelection.diameter!',
+        pitch: ' pipeUserSelection.pitch!',
         type: coreUserSelection.threadType.name,
         tolerance: 'pipeUserSelection.tolerance!',
         language: language,
@@ -150,9 +147,8 @@ class PipeInfoBloc extends Cubit<PipeInfoState>
 
   Future<void> updateUnitsPrecision(
       {required EnumUnits units, required int precision}) async {
-    await _localStorage.updatePipeUserSelection(
-        (PipeUserSelection current) =>
-            current.copyWith(units: units, precision: precision));
+    await _localStorage.updatePipeUserSelection((PipeUserSelection current) =>
+        current.copyWith(units: units, precision: precision));
     await load();
   }
 

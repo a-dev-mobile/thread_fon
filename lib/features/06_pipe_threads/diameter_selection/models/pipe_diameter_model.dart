@@ -22,7 +22,7 @@ class PipeDiameterItem with _$PipeDiameterItem {
     required int id,
     required String fractional,
     required String decimal,
-    String? tolerance,  // Optional for female items
+    String? tolerance, // Optional for female items
   }) = _PipeDiameterItem;
 
   factory PipeDiameterItem.fromJson(Map<String, dynamic> json) =>

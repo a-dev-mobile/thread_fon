@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threadfon/core/constant/enum_units.dart';
 import 'package:threadfon/core/widgets/info_row.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
-import 'package:threadfon/features/06_pipe_threads/info/bloc/pipe_info_bloc.dart';
 import 'package:threadfon/features/06_pipe_threads/info/models/pipe_info_model.dart';
 
-
-import 'package:threadfon/localization/generated/l10n.dart';
-import 'package:threadfon/localization/l10n_extension.dart';
 
 class PipeInfoMainParameters extends StatelessWidget {
   final PipeInfoModel info;
@@ -20,8 +14,6 @@ class PipeInfoMainParameters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return MyCard(
       child: Column(
         children: <Widget>[
@@ -33,13 +25,12 @@ class PipeInfoMainParameters extends StatelessWidget {
                 ),
           ),
           Text(
-           '(${info.designation2})',
+            '(${info.designation2})',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
-
           Text(
             info.description,
             textAlign: TextAlign.center,

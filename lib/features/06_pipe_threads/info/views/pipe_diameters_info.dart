@@ -3,7 +3,6 @@ import 'package:threadfon/core/widgets/info_row_max_min.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/06_pipe_threads/info/models/pipe_info_model.dart';
 
-
 import 'package:threadfon/localization/generated/l10n.dart';
 import 'package:threadfon/localization/l10n_extension.dart';
 

@@ -9,10 +9,9 @@ part 'pipe_user_selection.g.dart';
 class PipeUserSelection with _$PipeUserSelection {
   const factory PipeUserSelection({
     int? id,
-
     @Default(EnumUnits.mm) EnumUnits units,
     @Default(3) int precision,
-     @Default(false) bool isSvgOverlayVisible,
+    @Default(false) bool isSvgOverlayVisible,
   }) = _PipeUserSelection;
 
   factory PipeUserSelection.fromJson(Map<String, dynamic> json) =>
