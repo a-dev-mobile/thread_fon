@@ -17,19 +17,14 @@ class ThemeBloc extends Cubit<ThemeState> with BlocIgnoreEmitAfterClosed {
 
   final LocalStorage _storage;
 
-  // Метод для установки конкретной темы и сохранения в SharedPreferences
+  /// Устанавливает новую тему и сохраняет её в хранилище
   void setTheme(ThemeMode mode) {
-    final ThemeState newState = state.copyWith(themeMode: mode);
-    emit(newState);
-    _storage.setThemeState(newState);
+    emit(state.copyWith(themeMode: mode));
+    _storage.setThemeState(state);
   }
 
-  // Метод для переключения темы и сохранения в SharedPreferences
+  /// Переключает между светлой и тёмной темой
   void toggle() {
-    if (state.themeMode == ThemeMode.dark) {
-      setTheme(ThemeMode.light);
-    } else {
-      setTheme(ThemeMode.dark);
-    }
+    setTheme(state.themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark);
   }
 }

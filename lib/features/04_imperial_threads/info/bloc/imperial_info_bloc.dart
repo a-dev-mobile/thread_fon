@@ -55,7 +55,7 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
         model: model,
         units: imperialUserSelection.units,
         precision: imperialUserSelection.precision,
-        isSvgOverlayVisible: coreUserSelection.isSvgOverlayVisible,
+        isSvgOverlayVisible: imperialUserSelection.isSvgOverlayVisible,
       ));
 
       // Start fetching SVG data in the background
@@ -169,7 +169,7 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
   void toggleSvgOverlay() {
     bool isSvgOverlayVisible = !state.isSvgOverlayVisible;
     emit(state.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
-    _localStorage.updateCoreUserSelection((CoreUserSelection current) =>
+    _localStorage.updateImperialUserSelection((ImperialUserSelection current) =>
         current.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
   }
 

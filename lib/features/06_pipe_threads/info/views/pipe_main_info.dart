@@ -20,21 +20,26 @@ class PipeInfoMainParameters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GeneratedLocalization localization = context.l10n;
-    final EnumUnits units = context.read<PipeInfoBloc>().state.units;
-    final String unitsText =
-        units == EnumUnits.mm ? localization.mm : localization.inch;
+
 
     return MyCard(
       child: Column(
         children: <Widget>[
           Text(
-            info.designation,
+            info.designation1,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
+          Text(
+           '(${info.designation2})',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+
           Text(
             info.description,
             textAlign: TextAlign.center,
@@ -44,7 +49,7 @@ class PipeInfoMainParameters extends StatelessWidget {
           ),
           const SizedBox(height: 8.0),
           Text(
-            '${localization.units}: $unitsText',
+            info.unit,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -52,7 +57,6 @@ class PipeInfoMainParameters extends StatelessWidget {
           ),
           const SizedBox(height: 16.0),
           const Divider(),
-          // Display main_info items
           ...info.main_info.map((MainInfo item) {
             return InfoRow(
               label: item.name,

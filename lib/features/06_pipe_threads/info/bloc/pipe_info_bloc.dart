@@ -58,7 +58,7 @@ class PipeInfoBloc extends Cubit<PipeInfoState>
         model: model,
         units: pipeUserSelection.units,
         precision: pipeUserSelection.precision,
-        isSvgOverlayVisible: coreUserSelection.isSvgOverlayVisible,
+        isSvgOverlayVisible: pipeUserSelection.isSvgOverlayVisible,
       ));
 
       // Start fetching SVG data in the background
@@ -74,15 +74,12 @@ class PipeInfoBloc extends Cubit<PipeInfoState>
   }
 
   Future<PipeInfoModel> _fetchModel(CoreUserSelection coreUserSelection,
-      PipeUserSelection trapezoidUserSelection) async {
+      PipeUserSelection pipeUserSelection) async {
     return await _repository.fetchPipeInfo(
-      diameter:' trapezoidUserSelection.diameter!',
-      pitch: 'trapezoidUserSelection.pitch!',
-      type: coreUserSelection.threadType.name,
-      tolerance: 'trapezoidUserSelection.tolerance!',
+      id: pipeUserSelection.id ?? 0, 
       language: _languageBloc.state.enumLang.name,
-      units: trapezoidUserSelection.units.name,
-      precision: trapezoidUserSelection.precision,
+      units: pipeUserSelection.units.name,
+      precision: pipeUserSelection.precision,
     );
   }
 
@@ -162,7 +159,7 @@ class PipeInfoBloc extends Cubit<PipeInfoState>
   void toggleSvgOverlay() {
     bool isSvgOverlayVisible = !state.isSvgOverlayVisible;
     emit(state.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
-    _localStorage.updateCoreUserSelection((CoreUserSelection current) =>
+    _localStorage.updatePipeUserSelection((PipeUserSelection current) =>
         current.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
   }
 

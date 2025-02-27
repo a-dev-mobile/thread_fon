@@ -14,19 +14,19 @@ class LanguageBloc extends Cubit<LanguageState> with BlocIgnoreEmitAfterClosed {
     required EnumLang enumLang,
   })  : _storage = storage,
         super(LanguageState(enumLang: enumLang));
+
   final LocalStorage _storage;
 
+  /// Устанавливает новый язык и сохраняет его в хранилище
   Future<void> setLanguage(EnumLang value) async {
-    final LanguageState newState = state.copyWith(enumLang: value);
-    emit(newState);
-    _storage.setLanguageState(newState);
+    emit(state.copyWith(enumLang: value));
+    await _storage.setLanguageState(state);
   }
 
+  /// Переключает язык между английским и русским
   Future<void> toggle() async {
-    if (state.enumLang == EnumLang.en) {
-      setLanguage(EnumLang.ru);
-    } else {
-      setLanguage(EnumLang.en);
-    }
+    final EnumLang newLang =
+        state.enumLang == EnumLang.en ? EnumLang.ru : EnumLang.en;
+    await setLanguage(newLang);
   }
 }

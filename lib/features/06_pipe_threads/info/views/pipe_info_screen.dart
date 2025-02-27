@@ -20,13 +20,6 @@ import 'package:threadfon/features/06_pipe_threads/info/views/pipe_additional_in
 import 'package:threadfon/features/06_pipe_threads/info/views/pipe_diameters_info.dart';
 import 'package:threadfon/features/06_pipe_threads/info/views/pipe_main_info.dart';
 
-
-
-
-
-
-
-
 final LogService _logger = LogService('info_screen');
 
 class PipeInfoScreen extends StatefulWidget {
@@ -72,12 +65,10 @@ class _PipePipeInfoView extends StatefulWidget {
   const _PipePipeInfoView();
 
   @override
-  State<_PipePipeInfoView> createState() =>
-      _PipePipeInfoViewState();
+  State<_PipePipeInfoView> createState() => _PipePipeInfoViewState();
 }
 
-class _PipePipeInfoViewState
-    extends State<_PipePipeInfoView> {
+class _PipePipeInfoViewState extends State<_PipePipeInfoView> {
   @override
   Widget build(BuildContext context) {
     final PipeInfoBloc bloc = context.watch<PipeInfoBloc>();
@@ -96,9 +87,8 @@ class _PipePipeInfoViewState
         : calculatedOverlayHeight;
 
     return BlocListener<PipeInfoBloc, PipeInfoState>(
-      listenWhen:
-          (PipeInfoState previous, PipeInfoState current) =>
-              previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen: (PipeInfoState previous, PipeInfoState current) =>
+          previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (BuildContext context, PipeInfoState state) async {
         // Handle side effects if needed
       },
@@ -177,7 +167,7 @@ class _PipePipeInfoViewState
     return CustomScrollView(
       slivers: <Widget>[
         ThreadInfoAppBar(
-          hasSvgButton: true,
+          hasSvgButton: false,
           units: state.units,
           precision: state.precision,
           onSvgToggle: () => bloc.toggleSvgOverlay(),

@@ -1061,10 +1061,10 @@ class GeneratedLocalization {
     );
   }
 
-  /// `Diameter (Nominal)`
+  /// `Diameter (nominal)`
   String get thread_diam_nom {
     return Intl.message(
-      'Diameter (Nominal)',
+      'Diameter (nominal)',
       name: 'thread_diam_nom',
       desc: '',
       args: [],

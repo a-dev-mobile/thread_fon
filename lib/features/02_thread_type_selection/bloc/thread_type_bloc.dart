@@ -65,7 +65,6 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState>
         EnumThreads.metric => MetricDiameterScreen.name,
         EnumThreads.imperial => ImperialDiameterScreen.name,
         EnumThreads.trapezoidal => TrapezoidalThreadScreen.name,
-
         EnumThreads.pipe => PipeDiameterSelectionScreen.name,
       };
 

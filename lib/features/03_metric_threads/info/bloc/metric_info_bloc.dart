@@ -55,7 +55,7 @@ class MetricInfoBloc extends Cubit<MetricInfoState>
         model: model,
         units: metricUserSelection.units,
         precision: metricUserSelection.precision,
-        isSvgOverlayVisible: coreUserSelection.isSvgOverlayVisible,
+        isSvgOverlayVisible: metricUserSelection.isSvgOverlayVisible,
       ));
 
       // Start fetching SVG data in the background
@@ -160,7 +160,7 @@ class MetricInfoBloc extends Cubit<MetricInfoState>
   void toggleSvgOverlay() {
     bool isSvgOverlayVisible = !state.isSvgOverlayVisible;
     emit(state.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
-    _localStorage.updateCoreUserSelection((CoreUserSelection current) =>
+    _localStorage.updateMetricUserSelection((MetricUserSelection current) =>
         current.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
   }
 

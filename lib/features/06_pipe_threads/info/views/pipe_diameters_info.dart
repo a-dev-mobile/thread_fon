@@ -190,6 +190,12 @@ class _ValueItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Если значение пустое, возвращаем пустой SizedBox
+    if (value.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    // Если значение есть, показываем колонку с label и value
     return Column(
       children: <Widget>[
         Text(

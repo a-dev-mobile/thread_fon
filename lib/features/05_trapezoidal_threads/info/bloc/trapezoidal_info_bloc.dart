@@ -55,7 +55,7 @@ class TrapezoidalInfoBloc extends Cubit<TrapezoidalInfoState>
         model: model,
         units: trapezoidalUserSelection.units,
         precision: trapezoidalUserSelection.precision,
-        isSvgOverlayVisible: coreUserSelection.isSvgOverlayVisible,
+        isSvgOverlayVisible: trapezoidalUserSelection.isSvgOverlayVisible,
       ));
 
       // Start fetching SVG data in the background
@@ -159,7 +159,7 @@ class TrapezoidalInfoBloc extends Cubit<TrapezoidalInfoState>
   void toggleSvgOverlay() {
     bool isSvgOverlayVisible = !state.isSvgOverlayVisible;
     emit(state.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
-    _localStorage.updateCoreUserSelection((CoreUserSelection current) =>
+    _localStorage.updateTrapezoidalUserSelection((TrapezoidalUserSelection current) =>
         current.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
   }
 

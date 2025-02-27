@@ -18,6 +18,7 @@ class MetricUserSelection with _$MetricUserSelection {
     String? fullName,
     @Default(EnumUnits.mm) EnumUnits units,
     @Default(3) int precision,
+    @Default(false) bool isSvgOverlayVisible,
   }) = _MetricUserSelection;
 
   factory MetricUserSelection.fromJson(Map<String, dynamic> json) =>

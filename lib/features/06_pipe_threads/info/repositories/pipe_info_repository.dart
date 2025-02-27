@@ -18,10 +18,7 @@ class PipeInfoRepository {
   final ApiService _apiService;
 
   Future<PipeInfoModel> fetchPipeInfo({
-    required String diameter,
-    required String pitch,
-    required String type,
-    required String tolerance,
+    required int id,
     required String language,
     required String units,
     required int precision,
@@ -31,10 +28,7 @@ class PipeInfoRepository {
       final Response response = await _apiService.get(
         endpoint,
         queryParameters: <String, dynamic>{
-          'diameter': diameter,
-          'pitch': pitch,
-          'type': type,
-          'tolerance': tolerance,
+          'id': id.toString(),
           'language': language,
           'units': units,
           'precision': precision,
@@ -42,7 +36,7 @@ class PipeInfoRepository {
       );
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> rawData =
+        final Map<String, dynamic> rawData = 
             response.data as Map<String, dynamic>;
         return PipeInfoModel.fromJson(rawData);
       } else {

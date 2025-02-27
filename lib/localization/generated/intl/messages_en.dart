@@ -219,7 +219,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Designation"),
         "thread_diam": MessageLookupByLibrary.simpleMessage("Diameter"),
         "thread_diam_nom":
-            MessageLookupByLibrary.simpleMessage("Diameter (Nominal)"),
+            MessageLookupByLibrary.simpleMessage("Diameter (nominal)"),
         "thread_pitch": MessageLookupByLibrary.simpleMessage("Pitch"),
         "thread_pitch_coarse":
             MessageLookupByLibrary.simpleMessage("Coarse Pitch"),
