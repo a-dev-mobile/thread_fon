@@ -1,9 +1,9 @@
 name: threadfon
 description: A new Flutter project.
 
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+publish_to: "none"
 
-version: 2.2.0+10
+version: 2.3.0+10
 
 environment:
   sdk: ^3.5.3
@@ -20,12 +20,9 @@ dependencies:
 
 
 
-  # Database
-  shared_preferences: ^2.3.5
-  # sqflite: ^2.3.3
 
-  # very_good_analysis: ^6.0.0
-  # sqflite_common_ffi: ^2.3.3
+  shared_preferences: ^2.3.5
+
 
   intl: any
   async: any
