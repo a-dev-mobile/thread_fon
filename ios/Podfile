@@ -44,7 +44,7 @@ post_install do |installer|
     # Add privacy manifests for plugins that need them
     if target.name == 'connectivity_plus'
       # Make sure the privacy manifest directory exists
-      privacy_manifest_dir = "#{target.product_dir}/connectivity_plus.framework/PrivacyInfo.xcprivacy"
+      privacy_manifest_dir = "#{target.product_name}/connectivity_plus.framework/PrivacyInfo.xcprivacy"
       privacy_manifest_path = "#{Dir.pwd}/Runner/PrivacyInfo.xcprivacy"
       
       target.build_configurations.each do |config|
