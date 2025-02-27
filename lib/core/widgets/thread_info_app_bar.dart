@@ -106,7 +106,7 @@ class _UnitsPrecisionDialogState extends State<UnitsPrecisionDialog> {
                   return DropdownMenuItem<EnumUnits>(
                     value: units,
                     child: Text(units == EnumUnits.mm
-                        ? localization.mm
+                        ? localization.mm_short
                         : localization.inch),
                   );
                 }).toList(),

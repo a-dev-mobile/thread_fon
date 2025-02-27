@@ -22,7 +22,7 @@ class MetricInfoMainParameters extends StatelessWidget {
     final GeneratedLocalization localization = context.l10n;
     final EnumUnits units = context.read<MetricInfoBloc>().state.units;
     final String unitsText =
-        units == EnumUnits.mm ? localization.mm : localization.inch;
+        units == EnumUnits.mm ? localization.mm_long : localization.inch;
 
     return MyCard(
       child: Column(

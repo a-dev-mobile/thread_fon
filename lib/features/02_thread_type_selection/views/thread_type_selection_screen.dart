@@ -110,6 +110,7 @@ class _ThreadTypeSelectionView extends StatelessWidget {
                                       EnumThreadMaleFemale.female
                                   ? localization.internal_thread
                                   : localization.external_thread;
+                                  
                               return Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 8.0),
