@@ -132,12 +132,12 @@ upgrade:
 # Исправление проблем с CocoaPods
 ########################
 
+# Полная очистка и переустановка CocoaPods
 fix-cocoapods:
 	@echo "Переустанавливаю CocoaPods..."
-	
 	brew reinstall cocoapods
 	@echo "Очистка кеша CocoaPods..."
-	pod cache clean --all
+	cd ios && pod cache clean --all
 	@echo "Запуск pod install..."
 	cd ios && pod install
 	@echo "Очистка Flutter и получение зависимостей..."
@@ -145,12 +145,29 @@ fix-cocoapods:
 	$(FLUTTER) pub get
 	@echo "Задача fix-cocoapods завершена."
 
+# Полный сброс и инициализация CocoaPods
+reset-cocoapods:
+	@echo "Полный сброс CocoaPods..."
+	cd ios && pod cache clean --all
+	@echo "Деинтеграция CocoaPods из проекта..."
+	cd ios && pod deintegrate
+	@echo "Настройка репозиториев CocoaPods..."
+	cd ios && pod setup
+	@echo "Установка зависимостей с обновлением репозиториев..."
+	cd ios && pod install --repo-update
+	cd ..
+	@echo "Очистка Flutter и получение зависимостей..."
+	$(FLUTTER) clean
+	$(FLUTTER) pub get
+	@echo "Задача reset-cocoapods завершена."
 
-
+# Обновление зависимостей CocoaPods без деинтеграции
 update-pods:
 	@echo "Обновление зависимостей CocoaPods..."
 	$(FLUTTER) precache --ios
-	cd ios && rm -f Podfile.lock && pod install --repo-update && cd ..
+	cd ios && rm -f Podfile.lock && pod install --repo-update
+	cd ..
+	@echo "Задача update-pods завершена."
 
 ########################
 # Инициализация проекта
@@ -165,7 +182,7 @@ init:
 	$(MAKE) format
 	$(MAKE) fix
 ifeq ($(UNAME_S),Darwin)
-	$(MAKE) 
+	$(MAKE) update-pods
 endif
 
 ########################
