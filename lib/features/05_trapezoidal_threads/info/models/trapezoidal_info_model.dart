@@ -7,7 +7,7 @@ part 'trapezoidal_info_model.g.dart';
 
 @freezed
 @immutable
-class MainInfo with _$MainInfo {
+sealed class MainInfo with _$MainInfo {
   const factory MainInfo({
     required String name,
     required String value,
@@ -19,7 +19,7 @@ class MainInfo with _$MainInfo {
 
 @freezed
 @immutable
-class DiameterInfo with _$DiameterInfo {
+sealed class DiameterInfo with _$DiameterInfo {
   const factory DiameterInfo({
     required String name,
     required String max,
@@ -36,7 +36,7 @@ class DiameterInfo with _$DiameterInfo {
 
 @freezed
 @immutable
-class AdditionalInfo with _$AdditionalInfo {
+sealed class AdditionalInfo with _$AdditionalInfo {
   const factory AdditionalInfo({
     required String name,
     required String value,
@@ -49,7 +49,7 @@ class AdditionalInfo with _$AdditionalInfo {
 
 @freezed
 @immutable
-class TrapezoidalInfoModel with _$TrapezoidalInfoModel {
+sealed class TrapezoidalInfoModel with _$TrapezoidalInfoModel {
   const factory TrapezoidalInfoModel({
     required String description,
     required String designation,

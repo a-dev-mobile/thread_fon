@@ -5,7 +5,7 @@ part 'trapezoidal_thread_model.freezed.dart';
 
 @freezed
 @immutable
-class TrapezoidalThreadModel with _$TrapezoidalThreadModel {
+sealed class TrapezoidalThreadModel with _$TrapezoidalThreadModel {
   const factory TrapezoidalThreadModel({
     required String diameter,
     required String pitch,

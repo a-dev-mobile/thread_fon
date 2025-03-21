@@ -2,7 +2,7 @@ part of 'imperial_tolerance_bloc.dart';
 
 @freezed
 @immutable
-class ImperialToleranceState with _$ImperialToleranceState {
+sealed class ImperialToleranceState with _$ImperialToleranceState {
   const factory ImperialToleranceState({
     @Default(<ImperialToleranceItem>[])
     List<ImperialToleranceItem> femaleTolerances,

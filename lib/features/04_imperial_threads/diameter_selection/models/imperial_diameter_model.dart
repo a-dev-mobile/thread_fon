@@ -5,7 +5,7 @@ part 'imperial_diameter_model.g.dart';
 
 @freezed
 @immutable
-class ImperialDiameterModel with _$ImperialDiameterModel {
+sealed class ImperialDiameterModel with _$ImperialDiameterModel {
   const factory ImperialDiameterModel({
     required int id,
     required Formatted formatted,
@@ -20,7 +20,7 @@ class ImperialDiameterModel with _$ImperialDiameterModel {
 
 @freezed
 @immutable
-class Formatted with _$Formatted {
+sealed class Formatted with _$Formatted {
   const factory Formatted({
     required String fractional,
     required String decimal,

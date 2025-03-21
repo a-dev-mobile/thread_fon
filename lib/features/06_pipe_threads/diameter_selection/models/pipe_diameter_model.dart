@@ -5,7 +5,7 @@ part 'pipe_diameter_model.g.dart';
 
 @freezed
 @immutable
-class PipeDiameterModel with _$PipeDiameterModel {
+sealed class PipeDiameterModel with _$PipeDiameterModel {
   const factory PipeDiameterModel({
     required List<PipeDiameterItem> female,
     required List<PipeDiameterItem> male,
@@ -17,7 +17,7 @@ class PipeDiameterModel with _$PipeDiameterModel {
 
 @freezed
 @immutable
-class PipeDiameterItem with _$PipeDiameterItem {
+sealed class PipeDiameterItem with _$PipeDiameterItem {
   const factory PipeDiameterItem({
     required int id,
     required String fractional,

@@ -2,7 +2,7 @@ part of 'tolerance_bloc.dart';
 
 @freezed
 @immutable
-class ToleranceState with _$ToleranceState {
+sealed class ToleranceState with _$ToleranceState {
   const factory ToleranceState({
     @Default(<ToleranceModel>[]) List<ToleranceModel> tolerances,
     @Default(EnumStatus.loading) EnumStatus enumPageStatus,

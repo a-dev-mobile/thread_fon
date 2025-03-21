@@ -6,7 +6,7 @@ part 'pipe_user_selection.g.dart';
 
 @freezed
 @immutable
-class PipeUserSelection with _$PipeUserSelection {
+sealed class PipeUserSelection with _$PipeUserSelection {
   const factory PipeUserSelection({
     int? id,
     @Default(EnumUnits.mm) EnumUnits units,

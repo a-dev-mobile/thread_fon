@@ -6,7 +6,7 @@ part 'trapezoidal_user_selection.g.dart';
 
 @freezed
 @immutable
-class TrapezoidalUserSelection with _$TrapezoidalUserSelection {
+sealed class TrapezoidalUserSelection with _$TrapezoidalUserSelection {
   const factory TrapezoidalUserSelection({
     String? diameter,
     String? tolerance,

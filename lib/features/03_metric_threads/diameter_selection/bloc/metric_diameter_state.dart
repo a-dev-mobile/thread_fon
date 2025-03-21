@@ -2,7 +2,7 @@ part of 'metric_diameter_bloc.dart';
 
 @freezed
 @immutable
-class MetricDiameterState with _$MetricDiameterState {
+sealed class MetricDiameterState with _$MetricDiameterState {
   const factory MetricDiameterState({
     @Default(<MetricDiameterModel>[]) List<MetricDiameterModel> diameters,
     @Default(EnumStatus.loading) EnumStatus enumPageStatus,

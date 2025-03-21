@@ -2,7 +2,7 @@ part of 'thread_type_bloc.dart';
 
 @freezed
 @immutable
-class ThreadTypeState with _$ThreadTypeState {
+sealed class ThreadTypeState with _$ThreadTypeState {
   const factory ThreadTypeState({
     @Default(<ThreadTypeModel>[]) List<ThreadTypeModel> threadTypes,
     @Default(EnumStatus.loading) EnumStatus enumPageStatus,

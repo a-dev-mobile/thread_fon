@@ -55,3 +55,4 @@ app.*.map.json
 *.gen.dart
 artifact/*.aab
 artifact/*.zip
+android/app/.cxx/Debug/*

@@ -2,7 +2,7 @@ part of 'metric_info_bloc.dart';
 
 @freezed
 @immutable
-class MetricInfoState with _$MetricInfoState {
+sealed class MetricInfoState with _$MetricInfoState {
   const factory MetricInfoState({
     MetricInfoModel? model,
     String? svgData,

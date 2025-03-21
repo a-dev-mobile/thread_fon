@@ -28,7 +28,7 @@ enum EnumInstrumentThreadRange {
 
 @freezed
 @immutable
-class PitchModel with _$PitchModel {
+sealed class PitchModel with _$PitchModel {
   const factory PitchModel({
     @JsonKey(name: 'type') required EnumPitchDataType enumPitchDataType,
     required String info,

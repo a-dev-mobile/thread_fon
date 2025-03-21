@@ -7,7 +7,7 @@ part 'metric_user_selection.g.dart';
 
 @freezed
 @immutable
-class MetricUserSelection with _$MetricUserSelection {
+sealed class MetricUserSelection with _$MetricUserSelection {
   const factory MetricUserSelection({
     double? diameter,
     int? id,

@@ -8,7 +8,7 @@ part 'imperial_info_model.g.dart';
 
 @freezed
 @immutable
-class AdditionalInfo with _$AdditionalInfo {
+sealed class AdditionalInfo with _$AdditionalInfo {
   const factory AdditionalInfo({
     required String name,
     required String value,
@@ -20,7 +20,7 @@ class AdditionalInfo with _$AdditionalInfo {
 
 @freezed
 @immutable
-class ImperialInfoModel with _$ImperialInfoModel {
+sealed class ImperialInfoModel with _$ImperialInfoModel {
   const factory ImperialInfoModel({
     required int id,
     required String fractional_diameter,

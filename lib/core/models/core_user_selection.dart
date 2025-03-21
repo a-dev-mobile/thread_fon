@@ -7,7 +7,7 @@ part 'core_user_selection.g.dart';
 
 @freezed
 @immutable
-class CoreUserSelection with _$CoreUserSelection {
+sealed class CoreUserSelection with _$CoreUserSelection {
   const factory CoreUserSelection({
     @Default(EnumThreadMaleFemale.male) EnumThreadMaleFemale threadType,
     @Default(EnumThreads.metric) EnumThreads enumThreads,

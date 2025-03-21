@@ -5,7 +5,7 @@ part 'trapezoidal_tolerance_model.g.dart';
 
 @freezed
 @immutable
-class TrapezoidalToleranceModel with _$TrapezoidalToleranceModel {
+sealed class TrapezoidalToleranceModel with _$TrapezoidalToleranceModel {
   const factory TrapezoidalToleranceModel({
     required List<TrapezoidalToleranceItem> female,
     required List<TrapezoidalToleranceItem> male,
@@ -17,7 +17,7 @@ class TrapezoidalToleranceModel with _$TrapezoidalToleranceModel {
 
 @freezed
 @immutable
-class TrapezoidalToleranceItem with _$TrapezoidalToleranceItem {
+sealed class TrapezoidalToleranceItem with _$TrapezoidalToleranceItem {
   const factory TrapezoidalToleranceItem({
     required String tolerance,
     required String formatted,

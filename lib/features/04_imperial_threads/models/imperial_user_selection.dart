@@ -6,7 +6,7 @@ part 'imperial_user_selection.g.dart';
 
 @freezed
 @immutable
-class ImperialUserSelection with _$ImperialUserSelection {
+sealed class ImperialUserSelection with _$ImperialUserSelection {
   const factory ImperialUserSelection({
     String? diameter,
     String? series,

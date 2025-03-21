@@ -2,7 +2,7 @@ part of 'pitch_bloc.dart';
 
 @freezed
 @immutable
-class PitchState with _$PitchState {
+sealed class PitchState with _$PitchState {
   const factory PitchState({
     @Default(<PitchModel>[]) List<PitchModel> pitches,
     @Default(EnumStatus.loading) EnumStatus enumPageStatus,

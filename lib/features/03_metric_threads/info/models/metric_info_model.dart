@@ -6,7 +6,7 @@ part 'metric_info_model.g.dart';
 
 @freezed
 @immutable
-class MetricInfoModel with _$MetricInfoModel {
+sealed class MetricInfoModel with _$MetricInfoModel {
   const factory MetricInfoModel({
     required int id,
     required num diameter,
