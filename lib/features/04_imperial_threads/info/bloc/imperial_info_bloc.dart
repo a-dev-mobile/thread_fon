@@ -21,7 +21,7 @@ part 'imperial_info_state.dart';
 final LogService _logger = LogService('imperial_info_bloc');
 
 class ImperialInfoBloc extends Cubit<ImperialInfoState>
-    with BlocIgnoreEmitAfterClosed {
+    with BlocIgnoreEmitAfterClosed<ImperialInfoState> {
   ImperialInfoBloc({
     required ImperialInfoRepository repository,
     required LocalStorage localStorage,
@@ -90,7 +90,7 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
       final String theme = _themeBloc.state.themeMode.name;
       final String language = _languageBloc.state.enumLang.name;
 
-      final Future<String> fetchSvgWithDimensions = _repository.fetchSvgData(
+      final Future<String> fetchSvgDimensions = _repository.fetchSvgDimensions(
         diameter: imperialUserSelection.diameter!,
         tpi: imperialUserSelection.tpi!,
         series: imperialUserSelection.series!,
@@ -99,37 +99,27 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
         units: imperialUserSelection.units.name,
         precision: imperialUserSelection.precision,
         theme: theme,
-        showDimensions: true,
       );
 
-      final Future<String> fetchSvgWithoutDimensions = _repository.fetchSvgData(
-        diameter: imperialUserSelection.diameter!,
-        tpi: imperialUserSelection.tpi!,
-        series: imperialUserSelection.series!,
+      final Future<String> fetchSvgAnnotations =
+          _repository.fetchSvgAnnotations(
         type: coreUserSelection.threadType.name,
         language: language,
-        units: imperialUserSelection.units.name,
-        precision: imperialUserSelection.precision,
         theme: theme,
-        showDimensions: false,
       );
 
-      final List<String> results = await Future.wait(<Future<String>>[
-        fetchSvgWithDimensions,
-        fetchSvgWithoutDimensions,
+      final List<String> results = await Future.wait<String>([
+        fetchSvgDimensions,
+        fetchSvgAnnotations,
       ]);
 
       emit(state.copyWith(
-        svgData: results[0],
-        svgDataNoDimensions: results[1],
+        svgDimensions: results.first,
+        svgAnnotations: results[1],
         svgRequestStatus: EnumStatus.success,
       ));
     } catch (e, s) {
-      _logger.e(
-        'Error fetching SVG data',
-        error: e,
-        stackTrace: s,
-      );
+      _logger.e('Error fetching SVG data', error: e, stackTrace: s);
       emit(state.copyWith(
         svgRequestStatus: EnumStatus.error,
         svgErrorMsg: 'Error loading SVG data',
@@ -139,11 +129,6 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
 
   Future<void> preparationNavigation() async {
     try {
-      // await _localStorage.updateImperialUserSelection(
-      //   (current) => current.copyWith(
-      //     id: state.model?.id,
-      //   ),
-      // );
       emit(state.copyWith(
           enumNavigationStatus: EnumNavigationStatus.navigation));
       await Future<void>.delayed(const Duration(milliseconds: 100));

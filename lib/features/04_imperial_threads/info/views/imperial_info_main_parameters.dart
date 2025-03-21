@@ -20,11 +20,6 @@ class ImperialInfoMainParameters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GeneratedLocalization localization = context.l10n;
-    final EnumUnits units = context.read<ImperialInfoBloc>().state.units;
-    final String unitsText =
-        units == EnumUnits.mm ? localization.mm_long : localization.inch;
-
     return MyCard(
       child: Column(
         children: <Widget>[
@@ -35,14 +30,13 @@ class ImperialInfoMainParameters extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          if (info.designation1 != info.designation2)
-            Text(
-              '(${info.designation2})',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
+          Text(
+            '(${info.designation2})',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
           Text(
             info.description,
             textAlign: TextAlign.center,
@@ -50,62 +44,23 @@ class ImperialInfoMainParameters extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          // Text(
-          //   'info.typePitchDescription',
-          //   textAlign: TextAlign.center,
-          //   style: Theme.of(context).textTheme.labelSmall?.copyWith(
-          //         fontWeight: FontWeight.bold,
-          //       ),
-          // ),
-          // Добавьте этот блок кода
           const SizedBox(height: 8.0),
           Text(
-            '${localization.units}: $unitsText',
+            info.unit,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          // Конец добавления
           const SizedBox(height: 16.0),
           const Divider(),
-          InfoRow(
-              label: localization.thread_type,
-              value: info.type_.isFemale
-                  ? localization.internal_thread
-                  : localization.external_thread),
-          InfoRow(
-            label: localization.thread_diam_nom,
-            value: info.decimal_diameter.toString(),
-          ),
-          InfoRow(
-            label: localization.tpi,
-            value: info.tpi.toString(),
-          ),
-          InfoRow(
-            label: localization.thread_series,
-            value: info.series_designation,
-          ),
-          InfoRow(
-            label: localization.thread_class,
-            value: info.series,
-          ),
-
-          InfoRow(
-            label: localization.pitch,
-            value: info.pitch.toString(),
-          ),
-
-          InfoRow(
-            isHaveDividerBottom: false,
-            label: localization.thread_depth,
-            value: info.thread_depth.toString(),
-          ),
-
-          // InfoRow(
-          //   label: 'localization.allowance',
-          //   value: info.allowance.toString(),
-          // ),
+          ...info.main_info.map((MainInfo item) {
+            return InfoRow(
+              label: item.name,
+              value: item.value,
+              isHaveDividerBottom: item != info.main_info.last,
+            );
+          }),
         ],
       ),
     );

@@ -56,20 +56,19 @@ class _ImperialInfoScreenState extends State<ImperialInfoScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => _bloc,
-      child: const _ImperialImperialInfoView(),
+      child: const _ImperialInfoView(),
     );
   }
 }
 
-class _ImperialImperialInfoView extends StatefulWidget {
-  const _ImperialImperialInfoView();
+class _ImperialInfoView extends StatefulWidget {
+  const _ImperialInfoView();
 
   @override
-  State<_ImperialImperialInfoView> createState() =>
-      _ImperialImperialInfoViewState();
+  State<_ImperialInfoView> createState() => _ImperialInfoViewState();
 }
 
-class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
+class _ImperialInfoViewState extends State<_ImperialInfoView> {
   @override
   Widget build(BuildContext context) {
     final ImperialInfoBloc bloc = context.watch<ImperialInfoBloc>();
@@ -103,8 +102,8 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
             if (state.isSvgOverlayVisible)
               SvgOverlay(
                 svgData: state.showDimensions
-                    ? state.svgData ?? ''
-                    : state.svgDataNoDimensions ?? '',
+                    ? state.svgDimensions ?? ''
+                    : state.svgAnnotations ?? '',
                 svgRequestStatus: state.svgRequestStatus,
                 svgErrorMsg: state.svgErrorMsg,
                 overlayHeight: overlayHeight,
@@ -114,8 +113,8 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
                 onClose: () => bloc.toggleSvgOverlay(),
                 onExpand: () {
                   final String? svgDataToSend = state.showDimensions
-                      ? state.svgData
-                      : state.svgDataNoDimensions;
+                      ? state.svgDimensions
+                      : state.svgAnnotations;
 
                   if (svgDataToSend != null) {
                     context.pushNamed(ImperialFullScreenSvgView.name,
@@ -199,9 +198,7 @@ class _ImperialImperialInfoViewState extends State<_ImperialImperialInfoView> {
         // Add extra space when overlay is visible
         if (state.isSvgOverlayVisible)
           SliverToBoxAdapter(
-            child: SizedBox(
-              height: overlayHeight,
-            ),
+            child: SizedBox(height: overlayHeight),
           ),
       ],
     );

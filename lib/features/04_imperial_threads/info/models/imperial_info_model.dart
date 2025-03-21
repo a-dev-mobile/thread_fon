@@ -1,10 +1,36 @@
-// ignore_for_file: non_constant_identifier_names
+// Updated imperial_info_model.dart
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:threadfon/core/constant/enum_thread_male_female.dart';
-
 part 'imperial_info_model.freezed.dart';
 part 'imperial_info_model.g.dart';
+@freezed
+@immutable
+sealed class MainInfo with _$MainInfo {
+  const factory MainInfo({
+    required String name,
+    required String value,
+  }) = _MainInfo;
+
+  factory MainInfo.fromJson(Map<String, dynamic> json) =>
+      _$MainInfoFromJson(json);
+}
+
+@freezed
+@immutable
+sealed class DiameterInfo with _$DiameterInfo {
+  const factory DiameterInfo({
+    required String name,
+    required String max,
+    required String es,
+    required String basic,
+    required String avg,
+    required String ei,
+    required String min,
+  }) = _DiameterInfo;
+
+  factory DiameterInfo.fromJson(Map<String, dynamic> json) =>
+      _$DiameterInfoFromJson(json);
+}
 
 @freezed
 @immutable
@@ -12,6 +38,7 @@ sealed class AdditionalInfo with _$AdditionalInfo {
   const factory AdditionalInfo({
     required String name,
     required String value,
+    String? description,
   }) = _AdditionalInfo;
 
   factory AdditionalInfo.fromJson(Map<String, dynamic> json) =>
@@ -22,45 +49,14 @@ sealed class AdditionalInfo with _$AdditionalInfo {
 @immutable
 sealed class ImperialInfoModel with _$ImperialInfoModel {
   const factory ImperialInfoModel({
-    required int id,
-    required String fractional_diameter,
-    required num decimal_diameter,
-    required String description,
     required String designation1,
     required String designation2,
-    required num tpi,
-    required num pitch,
-    required num thread_depth,
-    required String series_designation,
-    required String series,
-    @JsonKey(name: 'type') required EnumThreadMaleFemale type_,
-    required num t_d2,
-    required num t_d,
-    required num allowance,
-    required num major_diameter_basic,
-    required num major_diameter_avg,
-    required num pitch_diameter_basic,
-    required num pitch_diameter_avg,
-    required num minor_diameter_basic,
-    required num minor_diameter_avg,
-    required num h,
-    required String units,
-    required num pitch_diameter_tolerance,
-    num? major_diam_max,
-    num? major_diam_es,
-    num? major_diam_ei,
-    num? major_diam_min,
-    num? pitch_diameter_max,
-    num? pitch_diameter_es,
-    num? pitch_diameter_ei,
-    num? pitch_diameter_min,
-    num? minor_diameter_max,
-    num? minor_diam_es,
-    num? minor_diam_ei,
-    num? minor_diameter_min,
-    num? unr_minor_diameter_max,
-    num? major_diam_min2,
-    @Default(<AdditionalInfo>[]) List<AdditionalInfo> additional_info,
+    required String unit,
+    required String description,
+    required List<MainInfo> main_info,
+    required List<DiameterInfo> diameter_info,
+    required List<AdditionalInfo> additional_info,
+    
   }) = _ImperialInfoModel;
 
   factory ImperialInfoModel.fromJson(Map<String, dynamic> json) =>

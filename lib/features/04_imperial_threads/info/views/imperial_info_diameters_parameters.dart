@@ -16,98 +16,23 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GeneratedLocalization localization = context.l10n;
-    final bool isFemale = info.type_.isFemale;
-    final String prefix = isFemale ? 'D' : 'd';
-
-    // Создаем список виджетов секций диаметров
-    final List<Widget> sections = <Widget>[];
-
-    // Добавляем первую секцию диаметров в зависимости от типа резьбы
-    if (info.type_.isMale) {
-      sections.add(_DiameterSection(
-        title: '$prefix - ${localization.diam_major}',
-        diameter: info.major_diameter_basic,
-        dEs: info.major_diam_es,
-        dEi: info.major_diam_ei,
-        min: info.major_diam_min,
-        avg: info.major_diameter_avg,
-        max: info.major_diam_max,
-      ));
-    } else {
-      sections.add(_DiameterSection(
-        title: '${prefix}1 - ${localization.diam_minor}',
-        diameter: info.minor_diameter_basic,
-        dEs: info.minor_diam_es,
-        dEi: info.minor_diam_ei,
-        min: info.minor_diameter_min,
-        avg: info.minor_diameter_avg,
-        max: info.minor_diameter_max,
-      ));
-    }
-// ------------------------------------
-// ------------------------------------
-// ------------------------------------
-
-    sections.add(const SizedBox(height: 10.0));
-
-    // Добавляем среднюю секцию диаметра
-    sections.add(_DiameterSection(
-      title: '${prefix}2 - ${localization.diam_middle}',
-      diameter: info.pitch_diameter_basic,
-      dEs: info.pitch_diameter_es,
-      dEi: info.pitch_diameter_ei,
-      min: info.pitch_diameter_min,
-      avg: info.pitch_diameter_avg,
-      max: info.pitch_diameter_max,
-    ));
-    sections.add(const SizedBox(height: 10.0));
-
-    if (isFemale) {
-      sections.add(InfoRowMaxMin(
-        isHaveDividerBottom: false,
-        label: '$prefix - ${localization.diam_major}',
-        value: info.major_diameter_basic.toString(),
-        labelMaxMin: localization.min,
-      ));
-    } else {
-      // sections.add(_DiameterSection(
-      //   title: '${prefix}1max - ${localization.minor_diam_max}',
-      //   diameter: info.minor_diameter_basic,
-      //   dEs: info.minor_diam_es,
-      //   dEi: info.minor_diam_ei,
-      //   min: info.minor_diameter_min,
-      //   avg: info.minor_diameter_avg,
-      //   max: info.minor_diameter_max,
-      // ));
-      sections.add(InfoRowMaxMin(
-        // isHaveDividerBottom: false,
-        label: '${prefix}1 - ${localization.diam_minor}',
-        value: info.minor_diameter_max.toString(),
-        labelMaxMin: localization.max,
-      ));
-      sections.add(const SizedBox(height: 10.0));
-    }
-// ------------------------------------
-// ------------------------------------
-// ------------------------------------
-
-    // Добавляем информацию о диаметре отверстия, если она существует
-    if (info.type_.isMale) {
-      sections.add(InfoRowMaxMin(
-        isHaveDividerBottom: false,
-        label: '${prefix}3 - ${localization.minor_diameter_unr}',
-        value: info.unr_minor_diameter_max.toString(),
-        labelMaxMin: localization.max,
-      ));
-      // diameterSections.add(const SizedBox(height: 10.0));
-    }
-
     return MyCard(
       onTap: null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: sections,
+        children: info.diameter_info.map((DiameterInfo diameter) {
+          return Column(
+            children: <Widget>[
+              _DiameterSection(
+                title: diameter.name,
+                diameterData: diameter,
+                isHaveDividerBottom: diameter != info.diameter_info.last,
+              ),
+              if (diameter != info.diameter_info.last)
+                const SizedBox(height: 10.0),
+            ],
+          );
+        }).toList(),
       ),
     );
   }
@@ -115,41 +40,64 @@ class ImperialInfoDiametersParameters extends StatelessWidget {
 
 class _DiameterSection extends StatelessWidget {
   final String title;
-  final num diameter;
-  final num? dEs;
-  final num? dEi;
-  final num? min;
-  final num? avg;
-  final num? max;
+  final DiameterInfo diameterData;
+  final bool isHaveDividerBottom;
 
   const _DiameterSection({
     required this.title,
-    required this.diameter,
-    this.dEs,
-    this.dEi,
-    this.min,
-    this.avg,
-    this.max,
+    required this.diameterData,
+    this.isHaveDividerBottom = true,
   });
 
   @override
   Widget build(BuildContext context) {
     final GeneratedLocalization localization = context.l10n;
 
+    // Check if we have only min or max value
+    final bool hasOnlyMin = diameterData.min.isNotEmpty &&
+        diameterData.max.isEmpty &&
+        diameterData.basic.isEmpty &&
+        diameterData.avg.isEmpty;
+
+    final bool hasOnlyMax = diameterData.max.isNotEmpty &&
+        diameterData.min.isEmpty &&
+        diameterData.basic.isEmpty &&
+        diameterData.avg.isEmpty;
+
+    if (hasOnlyMin) {
+      return InfoRowMaxMin(
+        label: title,
+        value: diameterData.min,
+        labelMaxMin: localization.min,
+        isHaveDividerBottom: isHaveDividerBottom,
+      );
+    }
+
+    if (hasOnlyMax) {
+      return InfoRowMaxMin(
+        label: title,
+        value: diameterData.max,
+        labelMaxMin: localization.max,
+        isHaveDividerBottom: isHaveDividerBottom,
+      );
+    }
+
+    // Default view for complete diameter data
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        // Заголовок секции
         Container(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.grey,
-                width: 0.2,
-              ),
-            ),
-          ),
+          decoration: isHaveDividerBottom
+              ? const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Colors.grey,
+                      width: 0.2,
+                    ),
+                  ),
+                )
+              : null,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -164,58 +112,50 @@ class _DiameterSection extends StatelessWidget {
               ),
               const SizedBox(width: 8.0),
               _DiameterItem(
-                diameter: diameter,
-                dEs: dEs,
-                dEi: dEi,
+                basic: diameterData.basic,
+                es: diameterData.es,
+                ei: diameterData.ei,
               ),
             ],
           ),
         ),
-        // Отображение min, avg, max, если они заданы
-        if (min != null && avg != null && max != null) ...<Widget>[
-          const SizedBox(height: 6.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              _ValueItem(label: localization.min, value: min!),
-              _ValueItem(label: localization.avg, value: avg!),
-              _ValueItem(label: localization.max, value: max!),
-            ],
-          ),
-        ]
+        const SizedBox(height: 6.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            _ValueItem(label: localization.min, value: diameterData.min),
+            _ValueItem(label: localization.avg, value: diameterData.avg),
+            _ValueItem(label: localization.max, value: diameterData.max),
+          ],
+        ),
       ],
     );
   }
 }
 
 class _DiameterItem extends StatelessWidget {
-  final num diameter;
-  final num? dEs;
-  final num? dEi;
+  final String basic;
+  final String es;
+  final String ei;
 
   const _DiameterItem({
-    required this.diameter,
-    this.dEs,
-    this.dEi,
+    required this.basic,
+    required this.es,
+    required this.ei,
   });
 
   @override
   Widget build(BuildContext context) {
-    final bool hasDEs = dEs != null && dEs != 0;
-    final bool hasDEi = dEi != null && dEi != 0;
-
-    // Метод для форматирования значения с префиксом
-    String formatValue(num? value) {
-      if (value == null) return '';
-      return value > 0 ? '+${value.toString()}' : value.toString();
-    }
+    final bool hasDEs = es.isNotEmpty;
+    final bool hasDEi = ei.isNotEmpty;
 
     return Row(
       children: <Widget>[
-        Text(
-          diameter.toString(),
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
+        if (basic.isNotEmpty)
+          Text(
+            basic,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
         if (hasDEs || hasDEi) ...<Widget>[
           const SizedBox(width: 8.0),
           Column(
@@ -223,12 +163,12 @@ class _DiameterItem extends StatelessWidget {
             children: <Widget>[
               if (hasDEs)
                 Text(
-                  formatValue(dEs),
+                  es,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               if (hasDEi)
                 Text(
-                  formatValue(dEi),
+                  ei,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
             ],
@@ -240,7 +180,7 @@ class _DiameterItem extends StatelessWidget {
 }
 
 class _ValueItem extends StatelessWidget {
-  final num value;
+  final String value;
   final String label;
 
   const _ValueItem({
@@ -250,46 +190,23 @@ class _ValueItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Если значение пустое, возвращаем пустой SizedBox
+    if (value.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    // Если значение есть, показываем колонку с label и value
     return Column(
       children: <Widget>[
         Text(
           label,
           style: Theme.of(context).textTheme.bodySmall,
         ),
-        Text(
-          value.toString(),
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-      ],
-    );
-  }
-}
-
-class _AdditionalImperialInfoItem extends StatelessWidget {
-  final String label;
-  final num value;
-
-  const _AdditionalImperialInfoItem({
-    required this.label,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Expanded(
-          child: Text(
-            label,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+        if (value.isNotEmpty)
+          Text(
+            value,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
-        ),
-        _DiameterItem(
-          diameter: value,
-        ),
       ],
     );
   }

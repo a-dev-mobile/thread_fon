@@ -5,8 +5,8 @@ part of 'imperial_info_bloc.dart';
 sealed class ImperialInfoState with _$ImperialInfoState {
   const factory ImperialInfoState({
     ImperialInfoModel? model,
-    String? svgData,
-    String? svgDataNoDimensions,
+    String? svgDimensions,
+    String? svgAnnotations,
     @Default(EnumStatus.loading) EnumStatus svgRequestStatus,
     @Default(EnumStatus.loading) EnumStatus enumPageStatus,
     @Default(EnumNavigationStatus.initial)
