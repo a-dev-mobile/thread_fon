@@ -3,6 +3,29 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'imperial_info_model.freezed.dart';
 part 'imperial_info_model.g.dart';
+
+
+
+@freezed
+@immutable
+sealed class ImperialInfoModel with _$ImperialInfoModel {
+  const factory ImperialInfoModel({
+    required String designation1,
+    required String designation2,
+    required String unit,
+    required String description,
+    required List<MainInfo> main_info,
+    required List<DiameterInfo> diameter_info,
+    required List<AdditionalInfo> additional_info,
+    
+  }) = _ImperialInfoModel;
+
+  factory ImperialInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$ImperialInfoModelFromJson(json);
+}
+
+
+
 @freezed
 @immutable
 sealed class MainInfo with _$MainInfo {
@@ -43,22 +66,4 @@ sealed class AdditionalInfo with _$AdditionalInfo {
 
   factory AdditionalInfo.fromJson(Map<String, dynamic> json) =>
       _$AdditionalInfoFromJson(json);
-}
-
-@freezed
-@immutable
-sealed class ImperialInfoModel with _$ImperialInfoModel {
-  const factory ImperialInfoModel({
-    required String designation1,
-    required String designation2,
-    required String unit,
-    required String description,
-    required List<MainInfo> main_info,
-    required List<DiameterInfo> diameter_info,
-    required List<AdditionalInfo> additional_info,
-    
-  }) = _ImperialInfoModel;
-
-  factory ImperialInfoModel.fromJson(Map<String, dynamic> json) =>
-      _$ImperialInfoModelFromJson(json);
 }

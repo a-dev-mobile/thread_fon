@@ -10,8 +10,8 @@ class ApiService {
     final String userAgent = await getUserAgent();
     dio = Dio();
     dio.options = BaseOptions(
-      baseUrl: 'http://10.0.3.2:5000',
-      // baseUrl: 'https://dev-thread-api.wayofdt.de',
+      // baseUrl: 'http://10.0.3.2:5000',
+      baseUrl: 'https://dev-thread-api.wayofdt.de',
       // baseUrl: 'https://thread-api.wayofdt.de',
       connectTimeout: const Duration(seconds: 25),
       receiveTimeout: const Duration(seconds: 23),

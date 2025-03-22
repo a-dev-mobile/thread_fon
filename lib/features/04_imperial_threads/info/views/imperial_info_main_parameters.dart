@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threadfon/core/constant/enum_thread_male_female.dart';
-import 'package:threadfon/core/constant/enum_units.dart';
 import 'package:threadfon/core/widgets/info_row.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
-import 'package:threadfon/features/04_imperial_threads/info/bloc/imperial_info_bloc.dart';
 import 'package:threadfon/features/04_imperial_threads/info/models/imperial_info_model.dart';
 
-import 'package:threadfon/localization/generated/l10n.dart';
-import 'package:threadfon/localization/l10n_extension.dart';
 
 class ImperialInfoMainParameters extends StatelessWidget {
   final ImperialInfoModel info;
@@ -31,7 +25,7 @@ class ImperialInfoMainParameters extends StatelessWidget {
                 ),
           ),
           Text(
-            '(${info.designation2})',
+            info.designation2,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -55,10 +49,13 @@ class ImperialInfoMainParameters extends StatelessWidget {
           const SizedBox(height: 16.0),
           const Divider(),
           ...info.main_info.map((MainInfo item) {
+
+            bool isHaveDividerBottom = item != info.main_info.last;
+            
             return InfoRow(
               label: item.name,
               value: item.value,
-              isHaveDividerBottom: item != info.main_info.last,
+              isHaveDividerBottom: isHaveDividerBottom,
             );
           }),
         ],

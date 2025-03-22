@@ -108,7 +108,7 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
         theme: theme,
       );
 
-      final List<String> results = await Future.wait<String>([
+      final List<String> results = await Future.wait<String>(<Future<String>>[
         fetchSvgDimensions,
         fetchSvgAnnotations,
       ]);

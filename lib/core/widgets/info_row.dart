@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class InfoRow extends StatelessWidget {
   final String label;
   final String? value;
-  final bool isHaveDividerBottom; // Новый параметр
+  final bool isHaveDividerBottom;
 
   const InfoRow({
     required this.label,
