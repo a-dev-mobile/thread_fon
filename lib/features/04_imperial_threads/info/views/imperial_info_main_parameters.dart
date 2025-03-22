@@ -3,7 +3,6 @@ import 'package:threadfon/core/widgets/info_row.dart';
 import 'package:threadfon/core/widgets/my_card.dart';
 import 'package:threadfon/features/04_imperial_threads/info/models/imperial_info_model.dart';
 
-
 class ImperialInfoMainParameters extends StatelessWidget {
   final ImperialInfoModel info;
 
@@ -49,9 +48,8 @@ class ImperialInfoMainParameters extends StatelessWidget {
           const SizedBox(height: 16.0),
           const Divider(),
           ...info.main_info.map((MainInfo item) {
-
             bool isHaveDividerBottom = item != info.main_info.last;
-            
+
             return InfoRow(
               label: item.name,
               value: item.value,

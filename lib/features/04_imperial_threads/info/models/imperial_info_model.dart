@@ -4,8 +4,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'imperial_info_model.freezed.dart';
 part 'imperial_info_model.g.dart';
 
-
-
 @freezed
 @immutable
 sealed class ImperialInfoModel with _$ImperialInfoModel {
@@ -17,14 +15,11 @@ sealed class ImperialInfoModel with _$ImperialInfoModel {
     required List<MainInfo> main_info,
     required List<DiameterInfo> diameter_info,
     required List<AdditionalInfo> additional_info,
-    
   }) = _ImperialInfoModel;
 
   factory ImperialInfoModel.fromJson(Map<String, dynamic> json) =>
       _$ImperialInfoModelFromJson(json);
 }
-
-
 
 @freezed
 @immutable

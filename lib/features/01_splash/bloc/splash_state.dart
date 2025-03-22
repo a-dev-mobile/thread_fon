@@ -13,5 +13,4 @@ sealed class SplashState with _$SplashState {
 
   factory SplashState.fromJson(Map<String, dynamic> json) =>
       _$SplashStateFromJson(json);
-
 }

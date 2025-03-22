@@ -59,7 +59,7 @@ class PipeInfoBloc extends Cubit<PipeInfoState>
       ));
 
       // Start fetching SVG data in the background
-      await _fetchSvgData(coreUserSelection, pipeUserSelection);
+      // await _fetchSvgData(coreUserSelection, pipeUserSelection);
     } catch (e, s) {
       _logger.e(
         'Error loading info',
