@@ -18,11 +18,11 @@ class FallbackInterceptor extends Interceptor {
       // Switch to fallback URL on any error with the primary URL
       usingFallback = true;
       dio.options.baseUrl = fallbackUrl;
-      
+
       // Retry the request with the fallback URL
       try {
         final RequestOptions request = error.requestOptions;
-        final response = await dio.request(
+        final Response response = await dio.request(
           request.path,
           data: request.data,
           queryParameters: request.queryParameters,
