@@ -101,7 +101,7 @@ jobs:
           flutter build ipa --release \
             --export-options-plist=ios/Runner/ExportOptions.plist \
             --dart-define-from-file=env_dart/prod.json \
-            --allow-provisioning-updates
+            -- -allowProvisioningUpdates
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
