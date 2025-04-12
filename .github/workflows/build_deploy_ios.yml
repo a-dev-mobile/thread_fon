@@ -97,23 +97,27 @@ jobs:
           # Update Info.plist with bundle id
           plutil -replace CFBundleIdentifier -string "$BUNDLE_IDENTIFIER" ios/Runner/Info.plist
           
-          # Build IPA with correct configuration
-          # First modify Podfile to handle provisioning update
-          echo '
-          post_install do |installer|
-            installer.pods_project.targets.each do |target|
-              target.build_configurations.each do |config|
-                config.build_settings["EXPANDED_CODE_SIGN_IDENTITY"] = ""
-                config.build_settings["CODE_SIGNING_REQUIRED"] = "NO"
-                config.build_settings["CODE_SIGNING_ALLOWED"] = "NO"
-              end
-            end
-          end' >> ios/Podfile
+          # Build IPA with explicit xcodebuild command
+          mkdir -p build/ios/ipa
           
-          # Build the IPA
-          flutter build ipa --release \
-            --export-options-plist=ios/Runner/ExportOptions.plist \
+          # First run Flutter build without creating IPA
+          flutter build ios --release --no-codesign \
             --dart-define-from-file=env_dart/prod.json
+          
+          # Then use xcodebuild directly with correct signing
+          cd ios
+          xcodebuild -workspace Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -archivePath ../build/ios/archive/Runner.xcarchive \
+            -allowProvisioningUpdates \
+            clean archive
+          
+          # Export IPA from archive
+          xcodebuild -exportArchive \
+            -archivePath ../build/ios/archive/Runner.xcarchive \
+            -exportOptionsPlist Runner/ExportOptions.plist \
+            -exportPath ../build/ios/ipa
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
