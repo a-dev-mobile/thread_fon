@@ -97,7 +97,8 @@ jobs:
                 },
                 include_bitcode: false,
                 include_symbols: true,
-                output_name: "app-release.ipa"
+                output_name: "app-release.ipa",
+                xcargs: "-allowProvisioningUpdates"
               )
               
               # Upload to App Store Connect
