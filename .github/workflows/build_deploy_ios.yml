@@ -43,8 +43,13 @@ jobs:
       - name: Install Fastlane
         run: |
           gem install fastlane
-          cd ios && gem install cocoapods && pod install
+          gem install cocoapods
 
+
+          
+      - name: Run pod install
+        run: cd ios && pod install
+        
       - name: Setup Fastlane
         run: |
           # Create Fastlane directory if it doesn't exist
@@ -108,7 +113,8 @@ jobs:
                   }
                 },
                 include_bitcode: false,
-                include_symbols: true
+                include_symbols: true,
+                output_name: "app-release.ipa"
               )
               
               # Upload to App Store Connect
@@ -152,6 +158,9 @@ jobs:
           # Prepare Flutter for iOS release build
           flutter build ios --release --no-codesign --dart-define-from-file=env_dart/prod.json
           
+          # Fix permissions for Fastlane
+          chmod -R 755 ios
+          
           # Run Fastlane
           cd ios && fastlane beta
 
@@ -166,7 +175,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-release-ios
-          path: ios/Runner.ipa
+          path: ios/app-release.ipa
 
       - name: Save IPA to releases folder
         id: save-ipa
@@ -174,7 +183,7 @@ jobs:
           # Создаем папку для релизов
           mkdir -p releases
           # Копируем IPA в папку releases с именем, содержащим commit hash
-          cp ios/Runner.ipa releases/app-ios-${{ steps.commit-info.outputs.sha }}.ipa
+          cp ios/app-release.ipa releases/app-ios-${{ steps.commit-info.outputs.sha }}.ipa
           echo "filename=app-ios-${{ steps.commit-info.outputs.sha }}.ipa" >> $GITHUB_OUTPUT
 
       - name: Send Telegram notification with IPA
@@ -189,4 +198,4 @@ jobs:
             Commit: ${{ steps.commit-info.outputs.sha }}
             Дата: ${{ steps.commit-info.outputs.date }}
             Сообщение: ${{ steps.commit-info.outputs.message }}
-          document: ios/Runner.ipa
+          document: ios/app-release.ipa
