@@ -76,8 +76,7 @@ jobs:
           # Build IPA with allow-provisioning-updates flag
           flutter build ipa --release \
             --export-options-plist=ios/Runner/ExportOptions.plist \
-            --dart-define-from-file=env_dart/prod.json \
-            --allow-provisioning-updates
+            --dart-define-from-file=env_dart/prod.json
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
