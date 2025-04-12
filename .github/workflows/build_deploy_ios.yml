@@ -58,7 +58,31 @@ jobs:
           
           # Установка профиля
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp ios/Runner/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+          cp ios/Runner/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/profile.mobileprovision
+
+      - name: Create ExportOptions.plist
+        run: |
+          cat > ios/Runner/ExportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>method</key>
+              <string>app-store</string>
+              <key>teamID</key>
+              <string>${{ secrets.DEVELOPMENT_TEAM }}</string>
+              <key>signingStyle</key>
+              <string>manual</string>
+              <key>provisioningProfiles</key>
+              <dict>
+                  <key>${{ secrets.BUNDLE_IDENTIFIER }}</key>
+                  <string>${{ secrets.PROVISIONING_PROFILE }}</string>
+              </dict>
+              <key>signingCertificate</key>
+              <string>${{ secrets.CODE_SIGN_IDENTITY }}</string>
+          </dict>
+          </plist>
+          EOF
 
       - name: Build IPA
         env:
@@ -76,7 +100,8 @@ jobs:
           # Build IPA with allow-provisioning-updates flag
           flutter build ipa --release \
             --export-options-plist=ios/Runner/ExportOptions.plist \
-            --dart-define-from-file=env_dart/prod.json
+            --dart-define-from-file=env_dart/prod.json \
+            --allow-provisioning-updates
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
