@@ -26,10 +26,6 @@ jobs:
           mkdir -p env_dart
           gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
           --output env_dart/prod.json env_dart/prod.json.gpg
-          
-          # # Расшифровка GoogleService-Info.plist.gpg
-          # gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
-          # --output ios/Runner/GoogleService-Info.plist ios/Runner/GoogleService-Info.plist.gpg
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -38,121 +34,126 @@ jobs:
           channel: "stable"
           cache: true
 
+      - name: Install Ruby and Fastlane
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Install Fastlane
+        run: |
+          gem install fastlane
+          cd ios && gem install cocoapods && pod install
+
+      - name: Setup Fastlane
+        run: |
+          # Create Fastlane directory if it doesn't exist
+          mkdir -p ios/fastlane
+          
+          # Create Fastfile
+          cat > ios/fastlane/Fastfile << 'EOF'
+          default_platform(:ios)
+          
+          platform :ios do
+            desc "Build and upload to TestFlight"
+            lane :beta do
+              # Create temporary keychain
+              create_keychain(
+                name: "build_keychain",
+                password: ENV["KEYCHAIN_PASSWORD"],
+                default_keychain: true,
+                unlock: true,
+                timeout: 3600,
+                lock_when_sleeps: false
+              )
+              
+              # Import certificate
+              import_certificate(
+                certificate_path: "Runner/certificate.p12",
+                certificate_password: ENV["P12_PASSWORD"],
+                keychain_name: "build_keychain",
+                keychain_password: ENV["KEYCHAIN_PASSWORD"]
+              )
+              
+              # Install provisioning profile
+              install_provisioning_profile(
+                path: "Runner/profile.mobileprovision"
+              )
+              
+              # Update bundle identifier in project settings
+              update_app_identifier(
+                xcodeproj: "Runner.xcodeproj",
+                plist_path: "Runner/Info.plist",
+                app_identifier: ENV["BUNDLE_IDENTIFIER"]
+              )
+              
+              # Update code signing settings
+              update_code_signing_settings(
+                use_automatic_signing: false,
+                path: "Runner.xcodeproj",
+                team_id: ENV["DEVELOPMENT_TEAM"],
+                profile_name: ENV["PROVISIONING_PROFILE"],
+                code_sign_identity: ENV["CODE_SIGN_IDENTITY"],
+                bundle_identifier: ENV["BUNDLE_IDENTIFIER"]
+              )
+              
+              # Build the app
+              build_app(
+                workspace: "Runner.xcworkspace",
+                scheme: "Runner",
+                export_method: "app-store",
+                export_options: {
+                  provisioningProfiles: {
+                    ENV["BUNDLE_IDENTIFIER"] => ENV["PROVISIONING_PROFILE"]
+                  }
+                },
+                include_bitcode: false,
+                include_symbols: true
+              )
+              
+              # Upload to App Store Connect
+              api_key = app_store_connect_api_key(
+                key_id: ENV["APP_STORE_CONNECT_API_KEY_ID"],
+                issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+                in_house: false
+              )
+              
+              upload_to_testflight(
+                api_key: api_key,
+                skip_waiting_for_build_processing: true
+              )
+            end
+          end
+          EOF
+          
+          # Create Appfile
+          cat > ios/fastlane/Appfile << EOF
+          app_identifier("${{ secrets.BUNDLE_IDENTIFIER }}")
+          team_id("${{ secrets.DEVELOPMENT_TEAM }}")
+          EOF
+
       - name: Flutter pub get
         run: flutter pub get
         
       - name: Generate code with build_runner
         run: dart run build_runner build --delete-conflicting-outputs --release
 
-      - name: Setup keychain and import certificates
-        run: |
-          # Создаем временный keychain
-          security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
-          security set-keychain-settings -t 3600 -u build.keychain
-          
-          # Импортируем сертификат в keychain
-          security import ios/Runner/certificate.p12 -k build.keychain -P "${{ secrets.P12_PASSWORD }}" -A
-          security set-key-partition-list -S apple-tool:,apple: -s -k "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
-          
-          # Установка профиля
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp ios/Runner/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/profile.mobileprovision
-
-      - name: Create ExportOptions.plist
-        run: |
-          cat > ios/Runner/ExportOptions.plist << EOF
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-              <key>method</key>
-              <string>app-store</string>
-              <key>teamID</key>
-              <string>${{ secrets.DEVELOPMENT_TEAM }}</string>
-              <key>signingStyle</key>
-              <string>manual</string>
-              <key>provisioningProfiles</key>
-              <dict>
-                  <key>${{ secrets.BUNDLE_IDENTIFIER }}</key>
-                  <string>${{ secrets.PROVISIONING_PROFILE }}</string>
-              </dict>
-              <key>signingCertificate</key>
-              <string>${{ secrets.CODE_SIGN_IDENTITY }}</string>
-          </dict>
-          </plist>
-          EOF
-
-      - name: Build IPA
+      - name: Build and upload IPA with Fastlane
         env:
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
-          PROVISIONING_PROFILE_SPECIFIER: ${{ secrets.PROVISIONING_PROFILE }}
+          PROVISIONING_PROFILE: ${{ secrets.PROVISIONING_PROFILE }}
           CODE_SIGN_IDENTITY: ${{ secrets.CODE_SIGN_IDENTITY }}
           BUNDLE_IDENTIFIER: ${{ secrets.BUNDLE_IDENTIFIER }}
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
         run: |
-          # Update project.pbxproj with correct bundle ID
-          sed -i '' "s/PRODUCT_BUNDLE_IDENTIFIER = \".*\"/PRODUCT_BUNDLE_IDENTIFIER = \"$BUNDLE_IDENTIFIER\"/" ios/Runner.xcodeproj/project.pbxproj
-    
-          # Update Info.plist with bundle id
-          plutil -replace CFBundleIdentifier -string "$BUNDLE_IDENTIFIER" ios/Runner/Info.plist
+          # Prepare Flutter for iOS release build
+          flutter build ios --release --no-codesign --dart-define-from-file=env_dart/prod.json
           
-          # Use flutter build with correct options for CI/CD environment
-          # Create a temp keychain for the CI process
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-          
-          # Create temporary keychain
-          security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" $KEYCHAIN_PATH
-          
-          # Import certificate to keychain
-          security import ios/Runner/certificate.p12 -k $KEYCHAIN_PATH -P "${{ secrets.P12_PASSWORD }}" -A
-          
-          # Add keychain to search list
-          security list-keychains -d user -s $KEYCHAIN_PATH $(security list-keychains -d user | sed s/\"//g)
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${{ secrets.KEYCHAIN_PASSWORD }}" $KEYCHAIN_PATH
-          
-          # Set up provisioning profile
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp ios/Runner/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/profile.mobileprovision
-
-          # Create exportOptions.plist file explicitly
-          cat > ios/ExportOptions.plist << EOF
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-              <key>method</key>
-              <string>app-store</string>
-              <key>teamID</key>
-              <string>${{ secrets.DEVELOPMENT_TEAM }}</string>
-              <key>signingStyle</key>
-              <string>manual</string>
-              <key>provisioningProfiles</key>
-              <dict>
-                  <key>${{ secrets.BUNDLE_IDENTIFIER }}</key>
-                  <string>profile</string>
-              </dict>
-              <key>signingCertificate</key>
-              <string>${{ secrets.CODE_SIGN_IDENTITY }}</string>
-          </dict>
-          </plist>
-          EOF
-          
-          # Build the IPA
-          flutter build ipa \
-            --release \
-            --export-options-plist=ios/ExportOptions.plist \
-            --dart-define-from-file=env_dart/prod.json \
-            --obfuscate \
-            --split-debug-info=build/ios/symbols
-
-      - name: Upload IPA artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release-ios
-          path: build/ios/ipa/*.ipa
+          # Run Fastlane
+          cd ios && fastlane beta
 
       - name: Get commit info
         id: commit-info
@@ -161,25 +162,20 @@ jobs:
           echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "date=$(git log -1 --format=%cd --date=format:'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
 
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-ios
+          path: ios/Runner.ipa
+
       - name: Save IPA to releases folder
         id: save-ipa
         run: |
           # Создаем папку для релизов
           mkdir -p releases
           # Копируем IPA в папку releases с именем, содержащим commit hash
-          find build/ios/ipa -name "*.ipa" -exec cp {} releases/app-ios-${{ steps.commit-info.outputs.sha }}.ipa \;
+          cp ios/Runner.ipa releases/app-ios-${{ steps.commit-info.outputs.sha }}.ipa
           echo "filename=app-ios-${{ steps.commit-info.outputs.sha }}.ipa" >> $GITHUB_OUTPUT
-
-      - name: Upload to App Store Connect
-        env:
-          API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
-          API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
-        run: |
-          # Отправка IPA в App Store Connect с использованием xcrun altool
-          xcrun altool --upload-app --type ios \
-          -f build/ios/ipa/*.ipa \
-          --apiKey "$API_KEY_ID" \
-          --apiIssuer "$API_ISSUER_ID"
 
       - name: Send Telegram notification with IPA
         uses: appleboy/telegram-action@master
@@ -193,4 +189,4 @@ jobs:
             Commit: ${{ steps.commit-info.outputs.sha }}
             Дата: ${{ steps.commit-info.outputs.date }}
             Сообщение: ${{ steps.commit-info.outputs.message }}
-          document: build/ios/ipa/*.ipa
+          document: ios/Runner.ipa
