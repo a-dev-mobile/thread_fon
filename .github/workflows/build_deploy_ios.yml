@@ -14,16 +14,8 @@ jobs:
 
       - name: Decrypt files
         run: |
-          mkdir -p ios/Runner
-          # Расшифровка сертификатов и профилей для iOS
-          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
-          --output ios/Runner/certificate.p12 ios/Runner/certificate.p12.gpg
-          
-          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
-          --output ios/Runner/profile.mobileprovision ios/Runner/profile.mobileprovision.gpg
-          
-          # Расшифровка env_dart/prod.json.gpg
           mkdir -p env_dart
+          # Расшифровка env_dart/prod.json.gpg
           gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
           --output env_dart/prod.json env_dart/prod.json.gpg
 
@@ -51,7 +43,7 @@ jobs:
       - name: Generate code with build_runner
         run: dart run build_runner build --delete-conflicting-outputs --release
         
-      # New step to prepare the Flutter iOS project
+      # Prepare the Flutter iOS project
       - name: Prepare Flutter iOS project
         run: |
           # Ensure Flutter-generated files exist
@@ -60,7 +52,7 @@ jobs:
           cd ios && flutter clean && cd ..
           flutter pub get
           
-      # Now we can run pod install
+      # Run pod install
       - name: Run pod install
         run: cd ios && pod install
         
@@ -69,36 +61,13 @@ jobs:
           # Create Fastlane directory if it doesn't exist
           mkdir -p ios/fastlane
           
-          # Create Fastfile
+          # Create Fastfile with automatic signing
           cat > ios/fastlane/Fastfile << 'EOF'
           default_platform(:ios)
           
           platform :ios do
             desc "Build and upload to TestFlight"
             lane :beta do
-              # Create temporary keychain
-              create_keychain(
-                name: "build_keychain",
-                password: ENV["KEYCHAIN_PASSWORD"],
-                default_keychain: true,
-                unlock: true,
-                timeout: 3600,
-                lock_when_sleeps: false
-              )
-              
-              # Import certificate
-              import_certificate(
-                certificate_path: "Runner/certificate.p12",
-                certificate_password: ENV["P12_PASSWORD"],
-                keychain_name: "build_keychain",
-                keychain_password: ENV["KEYCHAIN_PASSWORD"]
-              )
-              
-              # Install provisioning profile
-              install_provisioning_profile(
-                path: "Runner/profile.mobileprovision"
-              )
-              
               # Update bundle identifier in project settings
               update_app_identifier(
                 xcodeproj: "Runner.xcodeproj",
@@ -106,25 +75,25 @@ jobs:
                 app_identifier: ENV["BUNDLE_IDENTIFIER"]
               )
               
-              # Update code signing settings
+              # Update code signing settings to use automatic signing
               update_code_signing_settings(
-                use_automatic_signing: false,
+                use_automatic_signing: true,
                 path: "Runner.xcodeproj",
                 team_id: ENV["DEVELOPMENT_TEAM"],
-                profile_name: ENV["PROVISIONING_PROFILE"],
-                code_sign_identity: ENV["CODE_SIGN_IDENTITY"],
                 bundle_identifier: ENV["BUNDLE_IDENTIFIER"]
               )
               
-              # Build the app
+              # Build the app with automatic signing
               build_app(
                 workspace: "Runner.xcworkspace",
                 scheme: "Runner",
                 export_method: "app-store",
                 export_options: {
-                  provisioningProfiles: {
-                    ENV["BUNDLE_IDENTIFIER"] => ENV["PROVISIONING_PROFILE"]
-                  }
+                  method: "app-store-connect",
+                  teamID: ENV["DEVELOPMENT_TEAM"],
+                  signingStyle: "automatic",
+                  uploadSymbols: true,
+                  stripSwiftSymbols: true
                 },
                 include_bitcode: false,
                 include_symbols: true,
@@ -154,11 +123,7 @@ jobs:
 
       - name: Build and upload IPA with Fastlane
         env:
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
-          PROVISIONING_PROFILE: ${{ secrets.PROVISIONING_PROFILE }}
-          CODE_SIGN_IDENTITY: ${{ secrets.CODE_SIGN_IDENTITY }}
           BUNDLE_IDENTIFIER: ${{ secrets.BUNDLE_IDENTIFIER }}
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
