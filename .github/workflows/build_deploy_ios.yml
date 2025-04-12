@@ -45,8 +45,22 @@ jobs:
           gem install fastlane
           gem install cocoapods
 
-
+      - name: Flutter pub get
+        run: flutter pub get
+        
+      - name: Generate code with build_runner
+        run: dart run build_runner build --delete-conflicting-outputs --release
+        
+      # New step to prepare the Flutter iOS project
+      - name: Prepare Flutter iOS project
+        run: |
+          # Ensure Flutter-generated files exist
+          flutter precache --ios
+          flutter pub get
+          cd ios && flutter clean && cd ..
+          flutter pub get
           
+      # Now we can run pod install
       - name: Run pod install
         run: cd ios && pod install
         
@@ -137,12 +151,6 @@ jobs:
           app_identifier("${{ secrets.BUNDLE_IDENTIFIER }}")
           team_id("${{ secrets.DEVELOPMENT_TEAM }}")
           EOF
-
-      - name: Flutter pub get
-        run: flutter pub get
-        
-      - name: Generate code with build_runner
-        run: dart run build_runner build --delete-conflicting-outputs --release
 
       - name: Build and upload IPA with Fastlane
         env:
