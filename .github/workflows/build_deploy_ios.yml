@@ -27,9 +27,9 @@ jobs:
           gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
           --output env_dart/prod.json env_dart/prod.json.gpg
           
-          # Расшифровка GoogleService-Info.plist.gpg
-          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
-          --output ios/Runner/GoogleService-Info.plist ios/Runner/GoogleService-Info.plist.gpg
+          # # Расшифровка GoogleService-Info.plist.gpg
+          # gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
+          # --output ios/Runner/GoogleService-Info.plist ios/Runner/GoogleService-Info.plist.gpg
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
