@@ -38,10 +38,10 @@ android {
 
     signingConfigs {
         release {
-            keyAlias 'keystore'
-            keyPassword 'zgjycrbq22'
-            storeFile file('/home/dmitriy/Documents/DEV/MY_GITHUB/thread_fon/android/keystore.jks')
-            storePassword 'zgjycrbq22'
+            keyAlias System.getenv("KEY_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
+            storeFile file("keystore.jks")
+            storePassword System.getenv("STORE_PASSWORD")
         }
 
 

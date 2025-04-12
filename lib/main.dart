@@ -13,13 +13,13 @@ import 'package:threadfon/app/app.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/router/app_router.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
+import 'package:threadfon/config/firebase_config.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
 import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/app_bloc_observer.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
 import 'package:threadfon/core/widgets/restart_widget.dart';
-import 'package:threadfon/firebase_options.dart';
 
 final LogService _logger = LogService('main');
 
@@ -36,7 +36,7 @@ Future<void> main() async {
 
       try {
         await Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
+          options: FirebaseConfig.currentPlatform,
         );
 
         // Инициализация Crashlytics

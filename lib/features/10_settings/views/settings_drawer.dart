@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threadfon/app/language/language_bloc.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
+import 'package:threadfon/config/env_config.dart';
 import 'package:threadfon/core/constant/enum_lang.dart';
 import 'package:threadfon/core/constant/enum_status.dart';
 import 'package:threadfon/core/constant/enum_threads.dart';
@@ -237,7 +238,7 @@ class _SettingsDrawerView extends StatelessWidget {
   Future<void> _sendEmail(BuildContext context) async {
     final Uri emailUri = Uri(
       scheme: 'mailto',
-      path: 'wayofdt@gmail.com',
+      path: EnvConfig.email,
       queryParameters: <String, dynamic>{
         'subject': 'Feedback ThreadFon',
       },
@@ -260,8 +261,8 @@ class _SettingsDrawerView extends StatelessWidget {
   /// Function to open App Store or Play Store
   Future<void> _openAppStoreOrPlayStore(BuildContext context) async {
     final String url = Theme.of(context).platform == TargetPlatform.iOS
-        ? 'https://apps.apple.com/app/id1602169811'
-        : 'https://play.google.com/store/apps/details?id=a.dev.mobile.threadfon';
+        ? EnvConfig.iosAppStoreUrl
+        : EnvConfig.androidGooglePlayUrl;
 
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));

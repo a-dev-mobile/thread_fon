@@ -1,22 +1,20 @@
 // lib/src/common/services/api_service.dart
 import 'package:dio/dio.dart';
+import 'package:threadfon/config/env_config.dart';
 import 'package:threadfon/core/services/api_service/fallback_interceptor.dart';
 
 import 'user_agent_provider.dart';
 
 class ApiService {
   late final Dio dio;
-  final String primaryUrl = 'https://thread-api.wayofdt.de';
-  final String fallbackUrl = 'http://134.255.232.136:5000';
+  final String primaryUrl = EnvConfig.apiPrimaryUrl;
+  final String fallbackUrl = EnvConfig.apiFallbackUrl;
   late final FallbackInterceptor fallbackInterceptor;
 
   Future<ApiService> init() async {
     final String userAgent = await getUserAgent();
     dio = Dio();
     dio.options = BaseOptions(
-      // baseUrl: 'http://10.0.3.2:5000',
-      // baseUrl: 'https://dev-thread-api.wayofdt.de',
-      // baseUrl: 'http://134.255.232.136:5000',
       baseUrl: primaryUrl,
       connectTimeout: const Duration(seconds: 25),
       receiveTimeout: const Duration(seconds: 23),

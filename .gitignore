@@ -17,11 +17,9 @@ migrate_working_dir/
 *.ipr
 *.iws
 .idea/
+.vscode/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+
 # Auto generated
 *.freezed.dart
 *.g.dart
@@ -55,5 +53,13 @@ app.*.map.json
 *.gen.dart
 artifact/*.aab
 artifact/*.zip
+makefile
+*.jks
 android/app/.cxx/*
+**/android/key.properties
+.env
+google-services.json
+firebase.json
 
+env_dart/*.json
+env_dart
