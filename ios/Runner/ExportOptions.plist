@@ -11,7 +11,7 @@
     <key>provisioningProfiles</key>
     <dict>
         <key>a.dev.mobile.threadfon</key>
-        <string>threadfon_appstore</string>
+        <string>profile</string>
     </dict>
     <key>signingCertificate</key>
     <string>Apple Distribution</string>

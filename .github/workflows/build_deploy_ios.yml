@@ -67,13 +67,17 @@ jobs:
           CODE_SIGN_IDENTITY: ${{ secrets.CODE_SIGN_IDENTITY }}
           BUNDLE_IDENTIFIER: ${{ secrets.BUNDLE_IDENTIFIER }}
         run: |
-          # Обновляем Info.plist с bundle id если необходимо
+          # Update project.pbxproj with correct bundle ID
+          sed -i '' "s/PRODUCT_BUNDLE_IDENTIFIER = \".*\"/PRODUCT_BUNDLE_IDENTIFIER = \"$BUNDLE_IDENTIFIER\"/" ios/Runner.xcodeproj/project.pbxproj
+    
+          # Update Info.plist with bundle id
           plutil -replace CFBundleIdentifier -string "$BUNDLE_IDENTIFIER" ios/Runner/Info.plist
           
-          # Сборка IPA-файла
+          # Build IPA with allow-provisioning-updates flag
           flutter build ipa --release \
             --export-options-plist=ios/Runner/ExportOptions.plist \
-            --dart-define-from-file=env_dart/prod.json
+            --dart-define-from-file=env_dart/prod.json \
+            --allow-provisioning-updates
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
