@@ -97,27 +97,56 @@ jobs:
           # Update Info.plist with bundle id
           plutil -replace CFBundleIdentifier -string "$BUNDLE_IDENTIFIER" ios/Runner/Info.plist
           
-          # Build IPA with explicit xcodebuild command
-          mkdir -p build/ios/ipa
+          # Use flutter build with correct options for CI/CD environment
+          # Create a temp keychain for the CI process
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
           
-          # First run Flutter build without creating IPA
-          flutter build ios --release --no-codesign \
-            --dart-define-from-file=env_dart/prod.json
+          # Create temporary keychain
+          security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" $KEYCHAIN_PATH
           
-          # Then use xcodebuild directly with correct signing
-          cd ios
-          xcodebuild -workspace Runner.xcworkspace \
-            -scheme Runner \
-            -configuration Release \
-            -archivePath ../build/ios/archive/Runner.xcarchive \
-            -allowProvisioningUpdates \
-            clean archive
+          # Import certificate to keychain
+          security import ios/Runner/certificate.p12 -k $KEYCHAIN_PATH -P "${{ secrets.P12_PASSWORD }}" -A
           
-          # Export IPA from archive
-          xcodebuild -exportArchive \
-            -archivePath ../build/ios/archive/Runner.xcarchive \
-            -exportOptionsPlist Runner/ExportOptions.plist \
-            -exportPath ../build/ios/ipa
+          # Add keychain to search list
+          security list-keychains -d user -s $KEYCHAIN_PATH $(security list-keychains -d user | sed s/\"//g)
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${{ secrets.KEYCHAIN_PASSWORD }}" $KEYCHAIN_PATH
+          
+          # Set up provisioning profile
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp ios/Runner/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/profile.mobileprovision
+
+          # Create exportOptions.plist file explicitly
+          cat > ios/ExportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>method</key>
+              <string>app-store</string>
+              <key>teamID</key>
+              <string>${{ secrets.DEVELOPMENT_TEAM }}</string>
+              <key>signingStyle</key>
+              <string>manual</string>
+              <key>provisioningProfiles</key>
+              <dict>
+                  <key>${{ secrets.BUNDLE_IDENTIFIER }}</key>
+                  <string>profile</string>
+              </dict>
+              <key>signingCertificate</key>
+              <string>${{ secrets.CODE_SIGN_IDENTITY }}</string>
+          </dict>
+          </plist>
+          EOF
+          
+          # Build the IPA
+          flutter build ipa \
+            --release \
+            --export-options-plist=ios/ExportOptions.plist \
+            --dart-define-from-file=env_dart/prod.json \
+            --obfuscate \
+            --split-debug-info=build/ios/symbols
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
