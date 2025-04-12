@@ -1,4 +1,4 @@
-name: Flutter Build APK
+name: Flutter Build IPA
 
 on:
   workflow_dispatch:
@@ -7,26 +7,29 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Decrypt files
         run: |
-          mkdir -p android/app
-          # Расшифровка keystore файла
+          mkdir -p ios/Runner
+          # Расшифровка сертификатов и профилей для iOS
           gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
-          --output android/app/keystore.jks android/app/keystore.jks.gpg
+          --output ios/Runner/certificate.p12 ios/Runner/certificate.p12.gpg
+          
+          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
+          --output ios/Runner/profile.mobileprovision ios/Runner/profile.mobileprovision.gpg
           
           # Расшифровка env_dart/prod.json.gpg
           mkdir -p env_dart
           gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
           --output env_dart/prod.json env_dart/prod.json.gpg
           
-          # Расшифровка google-services.json.gpg
+          # Расшифровка GoogleService-Info.plist.gpg
           gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
-          --output android/app/google-services.json android/app/google-services.json.gpg
+          --output ios/Runner/GoogleService-Info.plist ios/Runner/GoogleService-Info.plist.gpg
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -41,18 +44,42 @@ jobs:
       - name: Generate code with build_runner
         run: dart run build_runner build --delete-conflicting-outputs --release
 
-      - name: Build APK
-        run: flutter build apk --release --dart-define-from-file=env_dart/prod.json
-        env:
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+      - name: Setup keychain and import certificates
+        run: |
+          # Создаем временный keychain
+          security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
+          security set-keychain-settings -t 3600 -u build.keychain
+          
+          # Импортируем сертификат в keychain
+          security import ios/Runner/certificate.p12 -k build.keychain -P "${{ secrets.P12_PASSWORD }}" -A
+          security set-key-partition-list -S apple-tool:,apple: -s -k "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
+          
+          # Установка профиля
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp ios/Runner/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
-      - name: Upload APK
+      - name: Build IPA
+        env:
+          DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
+          PROVISIONING_PROFILE_SPECIFIER: ${{ secrets.PROVISIONING_PROFILE }}
+          CODE_SIGN_IDENTITY: ${{ secrets.CODE_SIGN_IDENTITY }}
+          BUNDLE_IDENTIFIER: ${{ secrets.BUNDLE_IDENTIFIER }}
+        run: |
+          # Обновляем Info.plist с bundle id если необходимо
+          plutil -replace CFBundleIdentifier -string "$BUNDLE_IDENTIFIER" ios/Runner/Info.plist
+          
+          # Сборка IPA-файла
+          flutter build ipa --release \
+            --export-options-plist=ios/Runner/ExportOptions.plist \
+            --dart-define-from-file=env_dart/prod.json
+
+      - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: app-release-ios
+          path: build/ios/ipa/*.ipa
 
       - name: Get commit info
         id: commit-info
@@ -61,26 +88,36 @@ jobs:
           echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "date=$(git log -1 --format=%cd --date=format:'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
 
-      - name: Upload APK to release folder
-        id: upload-release
+      - name: Save IPA to releases folder
+        id: save-ipa
         run: |
-          # Создаем папку для релизов, если её нет
+          # Создаем папку для релизов
           mkdir -p releases
-          # Копируем APK в папку releases с именем, содержащим commit hash
-          cp build/app/outputs/flutter-apk/app-release.apk releases/app-${{ steps.commit-info.outputs.sha }}.apk
-          # Устанавливаем имя файла для использования в дальнейших шагах
-          echo "filename=app-${{ steps.commit-info.outputs.sha }}.apk" >> $GITHUB_OUTPUT
+          # Копируем IPA в папку releases с именем, содержащим commit hash
+          find build/ios/ipa -name "*.ipa" -exec cp {} releases/app-ios-${{ steps.commit-info.outputs.sha }}.ipa \;
+          echo "filename=app-ios-${{ steps.commit-info.outputs.sha }}.ipa" >> $GITHUB_OUTPUT
 
-      - name: Send Telegram notification with APK
+      - name: Upload to App Store Connect
+        env:
+          API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        run: |
+          # Отправка IPA в App Store Connect с использованием xcrun altool
+          xcrun altool --upload-app --type ios \
+          -f build/ios/ipa/*.ipa \
+          --apiKey "$API_KEY_ID" \
+          --apiIssuer "$API_ISSUER_ID"
+
+      - name: Send Telegram notification with IPA
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: |
-            🚀 Новая сборка приложения
+            🍏 Новая сборка iOS приложения
             
             Repo: ${{ github.repository }}
             Commit: ${{ steps.commit-info.outputs.sha }}
             Дата: ${{ steps.commit-info.outputs.date }}
             Сообщение: ${{ steps.commit-info.outputs.message }}
-          document: build/app/outputs/flutter-apk/app-release.apk
+          document: build/ios/ipa/*.ipa
