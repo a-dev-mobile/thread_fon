@@ -216,16 +216,24 @@ jobs:
           cp build/ios/ipa/app-release.ipa releases/app-ios-${{ steps.commit-info.outputs.sha }}.ipa
           echo "filename=app-ios-${{ steps.commit-info.outputs.sha }}.ipa" >> $GITHUB_OUTPUT
 
-      - name: Send Telegram notification with IPA
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: |
-            🍏 New iOS app build
-            
-            Repo: ${{ github.repository }}
-            Commit: ${{ steps.commit-info.outputs.sha }}
-            Date: ${{ steps.commit-info.outputs.date }}
-            Message: ${{ steps.commit-info.outputs.message }}
-          document: build/ios/ipa/app-release.ipa
+      # Use curl to send Telegram notification instead of the container action
+      - name: Send Telegram notification
+        run: |
+          MESSAGE="🍏 New iOS app build
+
+          Repo: ${{ github.repository }}
+          Commit: ${{ steps.commit-info.outputs.sha }}
+          Date: ${{ steps.commit-info.outputs.date }}
+          Message: ${{ steps.commit-info.outputs.message }}"
+          
+          # First send the text message
+          curl -X POST \
+            -H 'Content-Type: application/json' \
+            -d "{\"chat_id\": \"${{ secrets.TELEGRAM_CHAT_ID }}\", \"text\": \"$MESSAGE\", \"parse_mode\": \"Markdown\"}" \
+            https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage
+          
+          # Then upload the file/document
+          curl -X POST \
+            -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -F document=@"build/ios/ipa/app-release.ipa" \
+            https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument
