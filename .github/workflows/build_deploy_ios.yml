@@ -15,14 +15,14 @@ jobs:
       - name: Decrypt files
         run: |
           mkdir -p ios/Runner
-          # Расшифровка сертификатов и профилей для iOS
+          # Decrypt certificates and profiles for iOS
           gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
           --output ios/Runner/certificate.p12 ios/Runner/certificate.p12.gpg
           
           gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
           --output ios/Runner/profile.mobileprovision ios/Runner/profile.mobileprovision.gpg
           
-          # Расшифровка env_dart/prod.json.gpg
+          # Decrypt env_dart/prod.json.gpg
           mkdir -p env_dart
           gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
           --output env_dart/prod.json env_dart/prod.json.gpg
@@ -69,44 +69,50 @@ jobs:
           # Create Fastlane directory if it doesn't exist
           mkdir -p ios/fastlane
           
-          # Create Fastfile with manual signing approach
+          # Create Fastfile with the standard approach for certificate handling
           cat > ios/fastlane/Fastfile << 'EOF'
           default_platform(:ios)
           
           platform :ios do
             desc "Build and upload to TestFlight"
             lane :beta do
-              # Set up keychain for the certificates
+              # Create a temporary keychain
+              keychain_name = "build_keychain"
+              keychain_password = ENV["KEYCHAIN_PASSWORD"]
+              
+              delete_keychain(
+                name: keychain_name
+              ) if File.exist? File.expand_path("~/Library/Keychains/#{keychain_name}-db")
+              
               create_keychain(
-                name: "build_keychain",
-                password: ENV["KEYCHAIN_PASSWORD"],
+                name: keychain_name,
+                password: keychain_password,
                 default_keychain: true,
                 unlock: true,
                 timeout: 3600,
-                lock_when_sleeps: false
+                add_to_search_list: true
               )
               
-              # Import certificate
+              # Import certificate and install provisioning profile
               import_certificate(
                 certificate_path: "Runner/certificate.p12",
                 certificate_password: ENV["P12_PASSWORD"],
-                keychain_name: "build_keychain",
-                keychain_password: ENV["KEYCHAIN_PASSWORD"]
+                keychain_name: keychain_name,
+                keychain_password: keychain_password,
+                log_output: true
               )
               
-              # Install provisioning profile
               install_provisioning_profile(
                 path: "Runner/profile.mobileprovision"
               )
               
-              # Update bundle identifier in project settings
+              # Update bundle identifier and code signing settings
               update_app_identifier(
                 xcodeproj: "Runner.xcodeproj",
                 plist_path: "Runner/Info.plist",
                 app_identifier: ENV["BUNDLE_IDENTIFIER"]
               )
               
-              # Configure code signing with manual signing
               update_code_signing_settings(
                 use_automatic_signing: false,
                 path: "Runner.xcodeproj",
@@ -142,6 +148,11 @@ jobs:
                 api_key: api_key,
                 skip_waiting_for_build_processing: true
               )
+              
+              # Clean up the keychain
+              delete_keychain(
+                name: keychain_name
+              ) if File.exist? File.expand_path("~/Library/Keychains/#{keychain_name}-db")
             end
           end
           EOF
@@ -188,9 +199,9 @@ jobs:
       - name: Save IPA to releases folder
         id: save-ipa
         run: |
-          # Создаем папку для релизов
+          # Create folder for releases
           mkdir -p releases
-          # Копируем IPA в папку releases с именем, содержащим commit hash
+          # Copy IPA to releases folder with name containing commit hash
           cp ios/app-release.ipa releases/app-ios-${{ steps.commit-info.outputs.sha }}.ipa
           echo "filename=app-ios-${{ steps.commit-info.outputs.sha }}.ipa" >> $GITHUB_OUTPUT
 
@@ -200,10 +211,10 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: |
-            🍏 Новая сборка iOS приложения
+            🍏 New iOS app build
             
             Repo: ${{ github.repository }}
             Commit: ${{ steps.commit-info.outputs.sha }}
-            Дата: ${{ steps.commit-info.outputs.date }}
-            Сообщение: ${{ steps.commit-info.outputs.message }}
+            Date: ${{ steps.commit-info.outputs.date }}
+            Message: ${{ steps.commit-info.outputs.message }}
           document: ios/app-release.ipa
