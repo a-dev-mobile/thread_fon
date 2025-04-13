@@ -177,12 +177,22 @@ jobs:
           
           # Create build directory if it doesn't exist
           mkdir -p build/ios/ipa
-          cp ios/app-release.ipa build/ios/ipa/
+          
+          # Find the IPA file
+          find . -name "*.ipa" -type f
 
       - name: Upload to TestFlight with xcrun altool
         run: |
+          # Find the IPA file
+          IPA_PATH=$(find . -name "*.ipa" -type f | head -n 1)
+          echo "Found IPA at: $IPA_PATH"
+          
+          # Create build directory if it doesn't exist and copy IPA there
+          mkdir -p build/ios/ipa
+          cp "$IPA_PATH" build/ios/ipa/app-release.ipa
+          
           # Use xcrun altool to upload directly to App Store Connect
-          xcrun altool --upload-app --type ios -f ios/app-release.ipa \
+          xcrun altool --upload-app --type ios -f "$IPA_PATH" \
             --apiKey ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }} \
             --apiIssuer ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }} \
             --verbose
@@ -198,15 +208,20 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-release-ios
-          path: ios/app-release.ipa
+          path: |
+            **/**.ipa
 
       - name: Save IPA to releases folder
         id: save-ipa
         run: |
+          # Find the IPA file
+          IPA_PATH=$(find . -name "*.ipa" -type f | head -n 1)
+          echo "Found IPA at: $IPA_PATH"
+          
           # Create folder for releases
           mkdir -p releases
           # Copy IPA to releases folder with name containing commit hash
-          cp ios/app-release.ipa releases/app-ios-${{ steps.commit-info.outputs.sha }}.ipa
+          cp "$IPA_PATH" releases/app-ios-${{ steps.commit-info.outputs.sha }}.ipa
           echo "filename=app-ios-${{ steps.commit-info.outputs.sha }}.ipa" >> $GITHUB_OUTPUT
 
       - name: Send Telegram notification with IPA
@@ -221,4 +236,4 @@ jobs:
             Commit: ${{ steps.commit-info.outputs.sha }}
             Date: ${{ steps.commit-info.outputs.date }}
             Message: ${{ steps.commit-info.outputs.message }}
-          document: ios/app-release.ipa
+          document: releases/app-ios-${{ steps.commit-info.outputs.sha }}.ipa
