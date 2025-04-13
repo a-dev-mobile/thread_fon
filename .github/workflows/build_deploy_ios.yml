@@ -173,6 +173,7 @@ jobs:
           BUNDLE_IDENTIFIER: ${{ secrets.BUNDLE_IDENTIFIER }}
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
         run: |
           # Prepare Flutter for iOS release build
           flutter build ios --release --no-codesign --dart-define-from-file=env_dart/prod.json
