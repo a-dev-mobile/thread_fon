@@ -1,65 +1,68 @@
-name: Flutter Build APK
+name: Android Build & Release
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
+    
+env:
+  FLUTTER_VERSION: "3.29.2"
+  PLAY_CONSOLE_URL: "https://play.google.com/console/u/0/developers/"
 
 jobs:
-  build:
+  build-android:
+    name: Build Android APK
     runs-on: ubuntu-latest
     steps:
+      # Подготовка окружения
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Decrypt files
-        run: |
-          mkdir -p android/app
-          # Расшифровка keystore файла
-          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
-          --output android/app/keystore.jks android/app/keystore.jks.gpg
-          
-          # Расшифровка env_dart/prod.json.gpg
-          mkdir -p env_dart
-          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
-          --output env_dart/prod.json env_dart/prod.json.gpg
-          
-          # Расшифровка google-services.json.gpg
-          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
-          --output android/app/google-services.json android/app/google-services.json.gpg
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.29.2"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
           cache: true
 
-      - name: Flutter pub get
+      - name: Install dependencies
         run: flutter pub get
-      
-      # Активация и генерация локализации
+
+      # Расшифровка файлов
+      - name: Decrypt secrets
+        run: |
+          mkdir -p android/app env_dart
+          
+          # Keystore для подписи
+          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
+          --output android/app/keystore.jks android/app/keystore.jks.gpg
+          
+          # Environment config
+          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
+          --output env_dart/prod.json env_dart/prod.json.gpg
+          
+          # Firebase config
+          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
+          --output android/app/google-services.json android/app/google-services.json.gpg
+
+      # Генерация кода
       - name: Generate localization
         run: |
           dart pub global activate intl_utils
           dart pub global run intl_utils:generate
-        
+
       - name: Generate code with build_runner
         run: dart run build_runner build --delete-conflicting-outputs --release
 
+      # Сборка APK
       - name: Build APK
-        run: flutter build apk --release --dart-define-from-file=env_dart/prod.json
         env:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        run: flutter build apk --release --dart-define-from-file=env_dart/prod.json
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
-
+      # Подготовка артефактов и уведомлений
       - name: Get commit info
         id: commit-info
         run: |
@@ -67,26 +70,38 @@ jobs:
           echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "date=$(git log -1 --format=%cd --date=format:'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
 
-      - name: Upload APK to release folder
-        id: upload-release
-        run: |
-          # Создаем папку для релизов, если её нет
-          mkdir -p releases
-          # Копируем APK в папку releases с именем, содержащим commit hash
-          cp build/app/outputs/flutter-apk/app-release.apk releases/app-${{ steps.commit-info.outputs.sha }}.apk
-          # Устанавливаем имя файла для использования в дальнейших шагах
-          echo "filename=app-${{ steps.commit-info.outputs.sha }}.apk" >> $GITHUB_OUTPUT
-
-      - name: Send Telegram notification with APK
-        uses: appleboy/telegram-action@master
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: |
-            🚀 Новая сборка приложения
-            
-            Repo: ${{ github.repository }}
-            Commit: ${{ steps.commit-info.outputs.sha }}
-            Дата: ${{ steps.commit-info.outputs.date }}
-            Сообщение: ${{ steps.commit-info.outputs.message }}
-          document: build/app/outputs/flutter-apk/app-release.apk
+          name: android-release
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Save release version
+        run: |
+          mkdir -p releases
+          cp build/app/outputs/flutter-apk/app-release.apk releases/android-${{ steps.commit-info.outputs.sha }}.apk
+
+      # Отправка уведомления в Telegram
+      - name: Send Telegram notification
+        run: |
+          # Подготовка сообщения с информацией о сборке
+          MESSAGE="🤖 Android Build Completed
+
+          Repo: ${{ github.repository }}
+          Commit: ${{ steps.commit-info.outputs.sha }}
+          Date: ${{ steps.commit-info.outputs.date }}
+          Message: ${{ steps.commit-info.outputs.message }}
+          
+          Play Console: ${{ env.PLAY_CONSOLE_URL }}"
+          
+          # Отправка текста
+          curl -G \
+            --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            --data-urlencode "text=$MESSAGE" \
+            https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage
+          
+          # Отправка файла
+          curl -X POST \
+            -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -F document=@"build/app/outputs/flutter-apk/app-release.apk" \
+            https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument
