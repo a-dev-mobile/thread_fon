@@ -214,7 +214,7 @@ jobs:
           Repo: ${{ github.repository }}
           Commit: ${{ steps.commit-info.outputs.sha }}
           Date: ${{ steps.commit-info.outputs.date }}
-          Message: ${{ steps.commit-info.outputs.message }}
+          Message: ${{ steps.commit-info.outputs.message }}"
           
           # Отправка текста
           curl -G \
