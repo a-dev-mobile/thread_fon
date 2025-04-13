@@ -7,7 +7,6 @@ on:
     
 env:
   FLUTTER_VERSION: "3.29.2"
-  PLAY_CONSOLE_URL: "https://play.google.com/console/u/0/developers/"
 
 jobs:
   build-android:
@@ -92,7 +91,6 @@ jobs:
           Date: ${{ steps.commit-info.outputs.date }}
           Message: ${{ steps.commit-info.outputs.message }}
           
-          Play Console: ${{ env.PLAY_CONSOLE_URL }}"
           
           # Отправка текста
           curl -G \

@@ -9,7 +9,6 @@ env:
   FLUTTER_VERSION: "3.29.2"
   RUBY_VERSION: "3.2"
   APP_STORE_CONNECT_URL: "https://appstoreconnect.apple.com/apps/${{ secrets.APP_STORE_ID }}/testflight/ios"
-  COMPLIANCE_URL: "https://appstoreconnect.apple.com/apps/${{ secrets.APP_STORE_ID }}/testflight/ios/compliance"
 
 jobs:
   build-ios:
@@ -216,9 +215,6 @@ jobs:
           Commit: ${{ steps.commit-info.outputs.sha }}
           Date: ${{ steps.commit-info.outputs.date }}
           Message: ${{ steps.commit-info.outputs.message }}
-          
-          TestFlight: ${{ env.APP_STORE_CONNECT_URL }}
-          ⚠️ Compliance: ${{ env.COMPLIANCE_URL }} (требуется активация)"
           
           # Отправка текста
           curl -G \
