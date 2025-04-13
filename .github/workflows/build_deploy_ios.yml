@@ -227,9 +227,9 @@ jobs:
           Message: ${{ steps.commit-info.outputs.message }}"
           
           # First send the text message
-          curl -X POST \
-            -H 'Content-Type: application/json' \
-            -d "{\"chat_id\": \"${{ secrets.TELEGRAM_CHAT_ID }}\", \"text\": \"$MESSAGE\", \"parse_mode\": \"Markdown\"}" \
+          curl -G \
+            --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            --data-urlencode "text=$MESSAGE" \
             https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage
           
           # Then upload the file/document
