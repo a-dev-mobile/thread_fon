@@ -58,8 +58,10 @@ makefile
 android/app/.cxx/*
 **/android/key.properties
 .env
+
 google-services.json
 firebase.json
 
 env_dart/*.json
 
+.fvm/**

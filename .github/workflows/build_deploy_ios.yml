@@ -7,14 +7,14 @@ on:
       - '[0-9]+.[0-9]+.[0-9]+*'
     
 env:
-  FLUTTER_VERSION: "3.29.2"
+  FLUTTER_VERSION: "3.32.7"
   RUBY_VERSION: "3.2"
   APP_STORE_CONNECT_URL: "https://appstoreconnect.apple.com/apps/${{ secrets.APP_STORE_ID }}/testflight/ios"
 
 jobs:
   build-ios:
     name: Build & Upload iOS
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
       # Подготовка окружения
       - name: Checkout code
@@ -183,10 +183,11 @@ jobs:
       # Выгрузка в TestFlight
       - name: Upload to TestFlight
         run: |
-          xcrun altool --upload-app --type ios -f build/ios/ipa/app-release.ipa \
-            --apiKey ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }} \
-            --apiIssuer ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }} \
-            --verbose
+          xcrun notarytool submit build/ios/ipa/app-release.ipa \
+            --key-id ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }} \
+            --issuer-id ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }} \
+            --key private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}.p8 \
+            --wait
 
       # Подготовка артефактов и уведомлений
       - name: Get commit info
