@@ -65,3 +65,6 @@ firebase.json
 env_dart/*.json
 
 .fvm/**
+android/.kotlin/
+*.md
+
