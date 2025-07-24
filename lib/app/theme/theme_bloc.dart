@@ -9,11 +9,9 @@ part 'theme_bloc.g.dart';
 part 'theme_state.dart';
 
 class ThemeBloc extends Cubit<ThemeState> with BlocIgnoreEmitAfterClosed {
-  ThemeBloc({
-    required LocalStorage storage,
-    required ThemeMode themeMode,
-  })  : _storage = storage,
-        super(ThemeState(themeMode: themeMode));
+  ThemeBloc({required LocalStorage storage, required ThemeMode themeMode})
+    : _storage = storage,
+      super(ThemeState(themeMode: themeMode));
 
   final LocalStorage _storage;
 
@@ -26,6 +24,7 @@ class ThemeBloc extends Cubit<ThemeState> with BlocIgnoreEmitAfterClosed {
   /// Переключает между светлой и тёмной темой
   void toggle() {
     setTheme(
-        state.themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark);
+      state.themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark,
+    );
   }
 }

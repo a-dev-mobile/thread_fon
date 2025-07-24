@@ -35,8 +35,9 @@ class _ToleranceSelectionScreenState extends State<ToleranceSelectionScreen> {
   void initState() {
     super.initState();
     final ApiService apiService = context.read<ApiService>();
-    final ToleranceRepository toleranceRepository =
-        ToleranceRepository(apiService: apiService);
+    final ToleranceRepository toleranceRepository = ToleranceRepository(
+      apiService: apiService,
+    );
     final LocalStorage localStorage = context.read<LocalStorage>();
     final LanguageBloc languageBloc = context.read<LanguageBloc>();
 
@@ -73,9 +74,7 @@ class _ToleranceSelectionView extends StatelessWidget {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(localization.select_tolerance),
-        ),
+        appBar: AppBar(title: Text(localization.select_tolerance)),
         body: Stack(
           children: <Widget>[
             BlocBuilder<ToleranceBloc, ToleranceState>(

@@ -36,8 +36,8 @@ class PipeDiameterChoiceCard extends StatelessWidget {
           model.decimal,
           textAlign: TextAlign.center,
           style: theme.textTheme.bodyMedium?.copyWith(
-              // color: theme.textTheme.caption?.color,
-              ),
+            // color: theme.textTheme.caption?.color,
+          ),
         ),
       ),
     );

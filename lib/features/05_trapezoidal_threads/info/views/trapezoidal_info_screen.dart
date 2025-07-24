@@ -38,8 +38,9 @@ class _TrapezoidalInfoScreenState extends State<TrapezoidalInfoScreen> {
   void initState() {
     super.initState();
     final ApiService apiService = context.read<ApiService>();
-    final TrapezoidalInfoRepository infoRepository =
-        TrapezoidalInfoRepository(apiService: apiService);
+    final TrapezoidalInfoRepository infoRepository = TrapezoidalInfoRepository(
+      apiService: apiService,
+    );
     final LocalStorage localStorage = context.read<LocalStorage>();
     final LanguageBloc languageBloc = context.read<LanguageBloc>();
     final ThemeBloc themeBloc = context.read<ThemeBloc>();
@@ -120,10 +121,10 @@ class _TrapezoidalTrapezoidalInfoViewState
                       : state.svgAnnotations;
 
                   if (svgDataToSend != null) {
-                    context.pushNamed(TrapezoidalFullScreenSvgView.name,
-                        extra: <String, String>{
-                          'svgData': svgDataToSend,
-                        });
+                    context.pushNamed(
+                      TrapezoidalFullScreenSvgView.name,
+                      extra: <String, String>{'svgData': svgDataToSend},
+                    );
                   } else {
                     // Handle the null case, perhaps show an error or a placeholder
                     _logger.e('SVG data is null when trying to expand');
@@ -144,8 +145,13 @@ class _TrapezoidalTrapezoidalInfoViewState
     );
   }
 
-  Widget _buildContent(TrapezoidalInfoBloc bloc, BuildContext context,
-      double overlayHeight, double svgWidth, double svgHeight) {
+  Widget _buildContent(
+    TrapezoidalInfoBloc bloc,
+    BuildContext context,
+    double overlayHeight,
+    double svgWidth,
+    double svgHeight,
+  ) {
     final TrapezoidalInfoState state = bloc.state;
 
     switch (state.enumPageStatus) {
@@ -165,8 +171,12 @@ class _TrapezoidalTrapezoidalInfoViewState
     }
   }
 
-  Widget _buildSuccessContent(BuildContext context, TrapezoidalInfoState state,
-      TrapezoidalInfoBloc bloc, double overlayHeight) {
+  Widget _buildSuccessContent(
+    BuildContext context,
+    TrapezoidalInfoState state,
+    TrapezoidalInfoBloc bloc,
+    double overlayHeight,
+  ) {
     return CustomScrollView(
       slivers: <Widget>[
         ThreadInfoAppBar(
@@ -175,34 +185,23 @@ class _TrapezoidalTrapezoidalInfoViewState
           precision: state.precision,
           onSvgToggle: () => bloc.toggleSvgOverlay(),
           onUnitsPrecisionUpdate: (EnumUnits units, int precision) =>
-              bloc.updateUnitsPrecision(
-            units: units,
-            precision: precision,
-          ),
+              bloc.updateUnitsPrecision(units: units, precision: precision),
         ),
         SliverPadding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           sliver: SliverList(
             delegate: SliverChildListDelegate(<Widget>[
-              TrapezoidalInfoMainParameters(
-                info: state.model!,
-              ),
+              TrapezoidalInfoMainParameters(info: state.model!),
               const Divider(),
-              TrapezoidalInfoDiametersParameters(
-                info: state.model!,
-              ),
+              TrapezoidalInfoDiametersParameters(info: state.model!),
               const Divider(),
-              TrapezoidalAdditionalInfo(
-                list: state.model!.additional_info,
-              ),
+              TrapezoidalAdditionalInfo(list: state.model!.additional_info),
             ]),
           ),
         ),
         // Add extra space when overlay is visible
         if (state.isSvgOverlayVisible)
-          SliverToBoxAdapter(
-            child: SizedBox(height: overlayHeight),
-          ),
+          SliverToBoxAdapter(child: SizedBox(height: overlayHeight)),
       ],
     );
   }

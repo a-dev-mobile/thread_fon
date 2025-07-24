@@ -6,10 +6,7 @@ import 'package:threadfon/features/04_imperial_threads/info/models/imperial_info
 class ImperialAdditionalInfo extends StatelessWidget {
   final List<AdditionalInfo> list;
 
-  const ImperialAdditionalInfo({
-    required this.list,
-    super.key,
-  });
+  const ImperialAdditionalInfo({required this.list, super.key});
 
   @override
   Widget build(BuildContext context) {

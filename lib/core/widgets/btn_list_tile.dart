@@ -16,11 +16,9 @@ class BtnListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-        trailing: trailing,
-        leading: leading,
-        title: Text(
-          text,
-        ),
-        onTap: onTap,
-      );
+    trailing: trailing,
+    leading: leading,
+    title: Text(text),
+    onTap: onTap,
+  );
 }

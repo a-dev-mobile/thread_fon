@@ -18,10 +18,7 @@ class LoadingWidget extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             context.l10n.loadingMessage,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
         ],
       ),

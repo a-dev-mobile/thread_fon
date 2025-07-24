@@ -82,9 +82,11 @@ class _ToleranceSelectionView extends StatelessWidget {
         body: Stack(
           children: <Widget>[
             BlocBuilder<ImperialToleranceBloc, ImperialToleranceState>(
-              buildWhen: (ImperialToleranceState previous,
-                      ImperialToleranceState current) =>
-                  previous.enumPageStatus != current.enumPageStatus,
+              buildWhen:
+                  (
+                    ImperialToleranceState previous,
+                    ImperialToleranceState current,
+                  ) => previous.enumPageStatus != current.enumPageStatus,
               builder: (BuildContext context, ImperialToleranceState state) {
                 switch (state.enumPageStatus) {
                   case EnumStatus.loading:
@@ -97,7 +99,8 @@ class _ToleranceSelectionView extends StatelessWidget {
                   case EnumStatus.success:
                     return DefaultTabController(
                       length: 2,
-                      initialIndex: bloc.state.selectedThreadType ==
+                      initialIndex:
+                          bloc.state.selectedThreadType ==
                               EnumThreadMaleFemale.female
                           ? 1
                           : 0,
@@ -109,8 +112,8 @@ class _ToleranceSelectionView extends StatelessWidget {
                             if (!tabController.indexIsChanging) {
                               final EnumThreadMaleFemale newGender =
                                   tabController.index == 1
-                                      ? EnumThreadMaleFemale.female
-                                      : EnumThreadMaleFemale.male;
+                                  ? EnumThreadMaleFemale.female
+                                  : EnumThreadMaleFemale.male;
                               if (bloc.state.selectedThreadType != newGender) {
                                 bloc.updateGenderSelection(newGender);
                               }
@@ -124,8 +127,8 @@ class _ToleranceSelectionView extends StatelessWidget {
                                 onTap: (int index) {
                                   final EnumThreadMaleFemale newGender =
                                       index == 1
-                                          ? EnumThreadMaleFemale.female
-                                          : EnumThreadMaleFemale.male;
+                                      ? EnumThreadMaleFemale.female
+                                      : EnumThreadMaleFemale.male;
                                   if (bloc.state.selectedThreadType !=
                                       newGender) {
                                     bloc.updateGenderSelection(newGender);
@@ -140,11 +143,15 @@ class _ToleranceSelectionView extends StatelessWidget {
                             body: TabBarView(
                               children: <Widget>[
                                 _buildToleranceList(
-                                    context, bloc.state.maleTolerances,
-                                    isFemale: false),
+                                  context,
+                                  bloc.state.maleTolerances,
+                                  isFemale: false,
+                                ),
                                 _buildToleranceList(
-                                    context, bloc.state.femaleTolerances,
-                                    isFemale: true),
+                                  context,
+                                  bloc.state.femaleTolerances,
+                                  isFemale: true,
+                                ),
                               ],
                             ),
                           );
@@ -161,8 +168,10 @@ class _ToleranceSelectionView extends StatelessWidget {
   }
 
   Widget _buildToleranceList(
-      BuildContext context, List<ImperialToleranceItem> tolerances,
-      {required bool isFemale}) {
+    BuildContext context,
+    List<ImperialToleranceItem> tolerances, {
+    required bool isFemale,
+  }) {
     final ImperialToleranceBloc bloc = context.read<ImperialToleranceBloc>();
     final GeneratedLocalization localization = context.l10n;
 

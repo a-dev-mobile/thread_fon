@@ -64,77 +64,81 @@ class _ThreadTypeSelectionView extends StatelessWidget {
     final ThreadTypeBloc bloc = context.watch<ThreadTypeBloc>();
 
     return DrawerScreen(
-        title: localization.thread_type,
-        subtitle: switch (bloc.state.coreUserSelection.enumThreads) {
-          EnumThreads.metric =>
-            '${localization.metric_thread_gost}\n${localization.metric_thread}',
-          EnumThreads.imperial =>
-            '${localization.imperial_thread_gost}\n${localization.imperial_thread}',
-          EnumThreads.trapezoidal =>
-            '${localization.trapezoidal_thread_gost}\n${localization.trapezoidal_thread}',
-          EnumThreads.pipe =>
-            '${localization.pipe_thread_gost}\n${localization.pipe_thread}'
+      title: localization.thread_type,
+      subtitle: switch (bloc.state.coreUserSelection.enumThreads) {
+        EnumThreads.metric =>
+          '${localization.metric_thread_gost}\n${localization.metric_thread}',
+        EnumThreads.imperial =>
+          '${localization.imperial_thread_gost}\n${localization.imperial_thread}',
+        EnumThreads.trapezoidal =>
+          '${localization.trapezoidal_thread_gost}\n${localization.trapezoidal_thread}',
+        EnumThreads.pipe =>
+          '${localization.pipe_thread_gost}\n${localization.pipe_thread}',
+      },
+      body: BlocListener<ThreadTypeBloc, ThreadTypeState>(
+        listenWhen: (ThreadTypeState previous, ThreadTypeState current) =>
+            previous.enumNavigationStatus != current.enumNavigationStatus,
+        listener: (BuildContext context, ThreadTypeState state) {
+          if (state.enumNavigationStatus.isNavigation) {
+            context.pushNamed(state.nextNameScreen);
+            bloc.resetNavigationStatus();
+          }
         },
-        body: BlocListener<ThreadTypeBloc, ThreadTypeState>(
-          listenWhen: (ThreadTypeState previous, ThreadTypeState current) =>
-              previous.enumNavigationStatus != current.enumNavigationStatus,
-          listener: (BuildContext context, ThreadTypeState state) {
-            if (state.enumNavigationStatus.isNavigation) {
-              context.pushNamed(state.nextNameScreen);
-              bloc.resetNavigationStatus();
-            }
-          },
-          child: Stack(
-            children: <Widget>[
-              BlocBuilder<ThreadTypeBloc, ThreadTypeState>(
-                builder: (BuildContext context, ThreadTypeState state) {
-                  switch (state.enumPageStatus) {
-                    case EnumStatus.loading:
-                      return const LoadingWidget();
+        child: Stack(
+          children: <Widget>[
+            BlocBuilder<ThreadTypeBloc, ThreadTypeState>(
+              builder: (BuildContext context, ThreadTypeState state) {
+                switch (state.enumPageStatus) {
+                  case EnumStatus.loading:
+                    return const LoadingWidget();
 
-                    case EnumStatus.error:
-                      return MyErrorWidget(
-                        errorMsg: state.errorMsg,
-                        onRetry: () => context.read<ThreadTypeBloc>().load(),
-                      );
+                  case EnumStatus.error:
+                    return MyErrorWidget(
+                      errorMsg: state.errorMsg,
+                      onRetry: () => context.read<ThreadTypeBloc>().load(),
+                    );
 
-                    case EnumStatus.success:
-                      return Center(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize:
-                                MainAxisSize.min, // Центрирует по вертикали
-                            children: state.threadTypes
-                                .map((ThreadTypeModel threadType) {
-                              final String label = threadType.enumThreadType ==
-                                      EnumThreadMaleFemale.female
-                                  ? localization.internal_thread
-                                  : localization.external_thread;
+                  case EnumStatus.success:
+                    return Center(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize:
+                              MainAxisSize.min, // Центрирует по вертикали
+                          children: state.threadTypes.map((
+                            ThreadTypeModel threadType,
+                          ) {
+                            final String label =
+                                threadType.enumThreadType ==
+                                    EnumThreadMaleFemale.female
+                                ? localization.internal_thread
+                                : localization.external_thread;
 
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
-                                child: FractionallySizedBox(
-                                  widthFactor:
-                                      0.8, // Устанавливает ширину 80% от ширины родителя
-                                  child: ThreadTypeChoiceCard(
-                                    svgAssetPath: threadType.svgAssetPath,
-                                    label: label,
-                                    onTap: () {
-                                      bloc.preparationNavigation(threadType);
-                                    },
-                                  ),
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8.0,
+                              ),
+                              child: FractionallySizedBox(
+                                widthFactor:
+                                    0.8, // Устанавливает ширину 80% от ширины родителя
+                                child: ThreadTypeChoiceCard(
+                                  svgAssetPath: threadType.svgAssetPath,
+                                  label: label,
+                                  onTap: () {
+                                    bloc.preparationNavigation(threadType);
+                                  },
                                 ),
-                              );
-                            }).toList(),
-                          ),
+                              ),
+                            );
+                          }).toList(),
                         ),
-                      );
-                  }
-                },
-              ),
-            ],
-          ),
-        ));
+                      ),
+                    );
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

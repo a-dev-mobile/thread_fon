@@ -19,9 +19,9 @@ class SettingsBloc extends Cubit<SettingsState> with BlocIgnoreEmitAfterClosed {
   SettingsBloc({
     required LocalStorage localStorage,
     required LanguageBloc languageBloc,
-  })  : _localStorage = localStorage,
-        _languageBloc = languageBloc,
-        super(const SettingsState());
+  }) : _localStorage = localStorage,
+       _languageBloc = languageBloc,
+       super(const SettingsState());
 
   final LocalStorage _localStorage;
   final LanguageBloc _languageBloc;
@@ -30,13 +30,15 @@ class SettingsBloc extends Cubit<SettingsState> with BlocIgnoreEmitAfterClosed {
     try {
       emit(state.copyWith(enumPageStatus: EnumStatus.loading));
       // final metricUserSelection = await _localStorage.getMetricUserSelection();
-      final CoreUserSelection coreUserSelection =
-          await _localStorage.getCoreUserSelection();
+      final CoreUserSelection coreUserSelection = await _localStorage
+          .getCoreUserSelection();
       final EnumThreads enumThreads = coreUserSelection.enumThreads;
-      emit(state.copyWith(
-        enumPageStatus: EnumStatus.success,
-        enumThreads: enumThreads,
-      ));
+      emit(
+        state.copyWith(
+          enumPageStatus: EnumStatus.success,
+          enumThreads: enumThreads,
+        ),
+      );
     } catch (e, s) {
       _logger.e('Error loading settings', error: e, stackTrace: s);
 
@@ -63,9 +65,6 @@ class SettingsBloc extends Cubit<SettingsState> with BlocIgnoreEmitAfterClosed {
     final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading settings.'
         : 'Произошла ошибка при загрузке настроек.';
-    emit(state.copyWith(
-      enumPageStatus: EnumStatus.error,
-      errorMsg: errorMsg,
-    ));
+    emit(state.copyWith(enumPageStatus: EnumStatus.error, errorMsg: errorMsg));
   }
 }

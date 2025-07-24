@@ -9,9 +9,8 @@ final LogService _logger = LogService('pipe_info_repository');
 const String _baseUrl = '/v1/pipe';
 
 class PipeInfoRepository {
-  PipeInfoRepository({
-    required ApiService apiService,
-  }) : _apiService = apiService;
+  PipeInfoRepository({required ApiService apiService})
+    : _apiService = apiService;
 
   final ApiService _apiService;
 

@@ -2,11 +2,8 @@ import 'package:logger/logger.dart';
 
 class CustomPrinter extends LogPrinter {
   CustomPrinter(this.fileName)
-      : _prettyPrinterWithStack = PrettyPrinter(
-          colors: false,
-        ),
-        _prettyPrinterWithoutStack =
-            PrettyPrinter(colors: false, methodCount: 0);
+    : _prettyPrinterWithStack = PrettyPrinter(colors: false),
+      _prettyPrinterWithoutStack = PrettyPrinter(colors: false, methodCount: 0);
 
   final String fileName;
   final PrettyPrinter _prettyPrinterWithStack;
@@ -24,14 +21,16 @@ class CustomPrinter extends LogPrinter {
 
 class LogService {
   LogService(String fileName)
-      : _logger = Logger(
-          printer: CustomPrinter(fileName),
-        );
+    : _logger = Logger(printer: CustomPrinter(fileName));
 
   final Logger _logger;
 
-  void t(dynamic message,
-      {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
+  void t(
+    dynamic message, {
+    Object? error,
+    StackTrace? stackTrace,
+    bool includeStackTrace = true,
+  }) {
     _logger.t(
       message,
       error: error,
@@ -39,8 +38,12 @@ class LogService {
     );
   }
 
-  void d(dynamic message,
-      {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
+  void d(
+    dynamic message, {
+    Object? error,
+    StackTrace? stackTrace,
+    bool includeStackTrace = true,
+  }) {
     _logger.d(
       message,
       error: error,
@@ -48,8 +51,12 @@ class LogService {
     );
   }
 
-  void i(dynamic message,
-      {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
+  void i(
+    dynamic message, {
+    Object? error,
+    StackTrace? stackTrace,
+    bool includeStackTrace = true,
+  }) {
     _logger.i(
       message,
       error: error,
@@ -57,8 +64,12 @@ class LogService {
     );
   }
 
-  void w(dynamic message,
-      {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
+  void w(
+    dynamic message, {
+    Object? error,
+    StackTrace? stackTrace,
+    bool includeStackTrace = true,
+  }) {
     _logger.w(
       message,
       error: error,
@@ -66,12 +77,14 @@ class LogService {
     );
   }
 
-  void e(dynamic message,
-      {Object? error,
-      StackTrace? stackTrace,
-      bool includeStackTrace = true,
-      Map<String, dynamic>? additionalInfo,
-      bool reportToServer = true}) {
+  void e(
+    dynamic message, {
+    Object? error,
+    StackTrace? stackTrace,
+    bool includeStackTrace = true,
+    Map<String, dynamic>? additionalInfo,
+    bool reportToServer = true,
+  }) {
     _logger.e(
       message,
       error: error,
@@ -79,8 +92,12 @@ class LogService {
     );
   }
 
-  void f(dynamic message,
-      {Object? error, StackTrace? stackTrace, bool includeStackTrace = true}) {
+  void f(
+    dynamic message, {
+    Object? error,
+    StackTrace? stackTrace,
+    bool includeStackTrace = true,
+  }) {
     _logger.f(
       message,
       error: error,

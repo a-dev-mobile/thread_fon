@@ -38,8 +38,9 @@ class _ImperialInfoScreenState extends State<ImperialInfoScreen> {
   void initState() {
     super.initState();
     final ApiService apiService = context.read<ApiService>();
-    final ImperialInfoRepository infoRepository =
-        ImperialInfoRepository(apiService: apiService);
+    final ImperialInfoRepository infoRepository = ImperialInfoRepository(
+      apiService: apiService,
+    );
     final LocalStorage localStorage = context.read<LocalStorage>();
     final LanguageBloc languageBloc = context.read<LanguageBloc>();
     final ThemeBloc themeBloc = context.read<ThemeBloc>();
@@ -54,10 +55,7 @@ class _ImperialInfoScreenState extends State<ImperialInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => _bloc,
-      child: const _ImperialInfoView(),
-    );
+    return BlocProvider(create: (_) => _bloc, child: const _ImperialInfoView());
   }
 }
 
@@ -117,10 +115,10 @@ class _ImperialInfoViewState extends State<_ImperialInfoView> {
                       : state.svgAnnotations;
 
                   if (svgDataToSend != null) {
-                    context.pushNamed(ImperialFullScreenSvgView.name,
-                        extra: <String, String>{
-                          'svgData': svgDataToSend,
-                        });
+                    context.pushNamed(
+                      ImperialFullScreenSvgView.name,
+                      extra: <String, String>{'svgData': svgDataToSend},
+                    );
                   } else {
                     // Handle the null case, perhaps show an error or a placeholder
                     _logger.e('SVG data is null when trying to expand');
@@ -141,8 +139,13 @@ class _ImperialInfoViewState extends State<_ImperialInfoView> {
     );
   }
 
-  Widget _buildContent(ImperialInfoBloc bloc, BuildContext context,
-      double overlayHeight, double svgWidth, double svgHeight) {
+  Widget _buildContent(
+    ImperialInfoBloc bloc,
+    BuildContext context,
+    double overlayHeight,
+    double svgWidth,
+    double svgHeight,
+  ) {
     final ImperialInfoState state = bloc.state;
 
     switch (state.enumPageStatus) {
@@ -162,8 +165,12 @@ class _ImperialInfoViewState extends State<_ImperialInfoView> {
     }
   }
 
-  Widget _buildSuccessContent(BuildContext context, ImperialInfoState state,
-      ImperialInfoBloc bloc, double overlayHeight) {
+  Widget _buildSuccessContent(
+    BuildContext context,
+    ImperialInfoState state,
+    ImperialInfoBloc bloc,
+    double overlayHeight,
+  ) {
     return CustomScrollView(
       slivers: <Widget>[
         ThreadInfoAppBar(
@@ -172,34 +179,23 @@ class _ImperialInfoViewState extends State<_ImperialInfoView> {
           precision: state.precision,
           onSvgToggle: () => bloc.toggleSvgOverlay(),
           onUnitsPrecisionUpdate: (EnumUnits units, int precision) =>
-              bloc.updateUnitsPrecision(
-            units: units,
-            precision: precision,
-          ),
+              bloc.updateUnitsPrecision(units: units, precision: precision),
         ),
         SliverPadding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           sliver: SliverList(
             delegate: SliverChildListDelegate(<Widget>[
-              ImperialInfoMainParameters(
-                info: state.model!,
-              ),
+              ImperialInfoMainParameters(info: state.model!),
               const Divider(),
-              ImperialInfoDiametersParameters(
-                info: state.model!,
-              ),
+              ImperialInfoDiametersParameters(info: state.model!),
               const Divider(),
-              ImperialAdditionalInfo(
-                list: state.model!.additional_info,
-              ),
+              ImperialAdditionalInfo(list: state.model!.additional_info),
             ]),
           ),
         ),
         // Add extra space when overlay is visible
         if (state.isSvgOverlayVisible)
-          SliverToBoxAdapter(
-            child: SizedBox(height: overlayHeight),
-          ),
+          SliverToBoxAdapter(child: SizedBox(height: overlayHeight)),
       ],
     );
   }

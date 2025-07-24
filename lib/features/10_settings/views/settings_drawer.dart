@@ -59,14 +59,22 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     return BlocProvider(
       create: (_) => settingsBloc,
       child: _SettingsDrawerView(
-          settingsBloc, themeBloc, languageBloc, localStorage),
+        settingsBloc,
+        themeBloc,
+        languageBloc,
+        localStorage,
+      ),
     );
   }
 }
 
 class _SettingsDrawerView extends StatelessWidget {
   const _SettingsDrawerView(
-      this.bloc, this.themeBloc, this.languageBloc, this.localStorage);
+    this.bloc,
+    this.themeBloc,
+    this.languageBloc,
+    this.localStorage,
+  );
   final SettingsBloc bloc;
   final ThemeBloc themeBloc;
   final LanguageBloc languageBloc;
@@ -126,7 +134,9 @@ class _SettingsDrawerView extends StatelessWidget {
                             Container(
                               width: double.infinity,
                               padding: const EdgeInsets.symmetric(
-                                  vertical: 50, horizontal: 20),
+                                vertical: 50,
+                                horizontal: 20,
+                              ),
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: <Color>[
@@ -186,8 +196,9 @@ class _SettingsDrawerView extends StatelessWidget {
                                   const Divider(),
                                   ListTile(
                                     leading: const Icon(Icons.feedback),
-                                    title:
-                                        Text(localization.suggest_improvement),
+                                    title: Text(
+                                      localization.suggest_improvement,
+                                    ),
                                     onTap: () => _sendEmail(context),
                                   ),
                                   const Divider(),
@@ -239,9 +250,7 @@ class _SettingsDrawerView extends StatelessWidget {
     final Uri emailUri = Uri(
       scheme: 'mailto',
       path: EnvConfig.email,
-      queryParameters: <String, dynamic>{
-        'subject': 'Feedback ThreadFon',
-      },
+      queryParameters: <String, dynamic>{'subject': 'Feedback ThreadFon'},
     );
     try {
       if (await canLaunchUrl(emailUri)) {
@@ -268,9 +277,9 @@ class _SettingsDrawerView extends StatelessWidget {
       await launchUrl(Uri.parse(url));
     } else {
       // Handle error
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.app_store_not_found)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.l10n.app_store_not_found)));
     }
   }
 
@@ -387,10 +396,7 @@ class _SettingsDrawerView extends StatelessWidget {
             }
 
             return RadioListTile<EnumThreads>(
-              title: Text(
-                threadTypeText,
-                style: const TextStyle(fontSize: 13),
-              ),
+              title: Text(threadTypeText, style: const TextStyle(fontSize: 13)),
               dense: true,
               value: threadType,
               groupValue: currentThreadType,

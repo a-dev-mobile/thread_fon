@@ -21,17 +21,17 @@ part 'pipe_diameter_state.dart';
 final LogService _logger = LogService('pipe_diameter_bloc');
 
 class PipeDiameterBloc extends Cubit<PipeDiameterState>
-    // ignore: always_specify_types
-    with
+        // ignore: always_specify_types
+        with
         BlocIgnoreEmitAfterClosed {
   PipeDiameterBloc({
     required PipeDiameterRepository repository,
     required LocalStorage localStorage,
     required LanguageBloc languageBloc,
-  })  : _repository = repository,
-        _localStorage = localStorage,
-        _languageBloc = languageBloc,
-        super(const PipeDiameterState());
+  }) : _repository = repository,
+       _localStorage = localStorage,
+       _languageBloc = languageBloc,
+       super(const PipeDiameterState());
 
   final PipeDiameterRepository _repository;
   final LocalStorage _localStorage;
@@ -40,18 +40,20 @@ class PipeDiameterBloc extends Cubit<PipeDiameterState>
   Future<void> load() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final PipeUserSelection threadUserSelection =
-          await _localStorage.getPipeUserSelection();
-      final CoreUserSelection coreUserSelection =
-          await _localStorage.getCoreUserSelection();
-      final PipeDiameterModel diametersResponse =
-          await _repository.fetchDiameters();
-      emit(state.copyWith(
-        enumPageStatus: EnumStatus.success,
-        femaleDiameters: diametersResponse.female,
-        maleDiameters: diametersResponse.male,
-        selectedThreadType: coreUserSelection.threadType,
-      ));
+      final PipeUserSelection threadUserSelection = await _localStorage
+          .getPipeUserSelection();
+      final CoreUserSelection coreUserSelection = await _localStorage
+          .getCoreUserSelection();
+      final PipeDiameterModel diametersResponse = await _repository
+          .fetchDiameters();
+      emit(
+        state.copyWith(
+          enumPageStatus: EnumStatus.success,
+          femaleDiameters: diametersResponse.female,
+          maleDiameters: diametersResponse.male,
+          selectedThreadType: coreUserSelection.threadType,
+        ),
+      );
     } catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
       _setErrorState();
@@ -61,12 +63,12 @@ class PipeDiameterBloc extends Cubit<PipeDiameterState>
   Future<void> preparationNavigation(PipeDiameterItem selectedDiameter) async {
     try {
       await _localStorage.updatePipeUserSelection(
-        (PipeUserSelection current) => current.copyWith(
-          id: selectedDiameter.id,
-        ),
+        (PipeUserSelection current) =>
+            current.copyWith(id: selectedDiameter.id),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(
+        state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation),
+      );
     } catch (e, s) {
       _logger.e('Error updating diameter selection', error: e, stackTrace: s);
       _setErrorState();
@@ -76,9 +78,7 @@ class PipeDiameterBloc extends Cubit<PipeDiameterState>
   Future<void> updateGenderSelection(EnumThreadMaleFemale threadType) async {
     try {
       await _localStorage.updateCoreUserSelection(
-        (CoreUserSelection current) => current.copyWith(
-          threadType: threadType,
-        ),
+        (CoreUserSelection current) => current.copyWith(threadType: threadType),
       );
       emit(state.copyWith(selectedThreadType: threadType));
     } catch (e, s) {
@@ -91,15 +91,16 @@ class PipeDiameterBloc extends Cubit<PipeDiameterState>
     final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading diameters.'
         : 'Произошла ошибка при загрузке допусков.';
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         enumPageStatus: EnumStatus.error,
         errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumNavigationStatus: EnumNavigationStatus.initial,
+      ),
+    );
   }
 
   void resetNavigationStatus() {
-    emit(state.copyWith(
-      enumNavigationStatus: EnumNavigationStatus.initial,
-    ));
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

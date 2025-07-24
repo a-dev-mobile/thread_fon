@@ -8,10 +8,8 @@ part 'pipe_info_model.g.dart';
 @freezed
 @immutable
 sealed class MainInfo with _$MainInfo {
-  const factory MainInfo({
-    required String name,
-    required String value,
-  }) = _MainInfo;
+  const factory MainInfo({required String name, required String value}) =
+      _MainInfo;
 
   factory MainInfo.fromJson(Map<String, dynamic> json) =>
       _$MainInfoFromJson(json);

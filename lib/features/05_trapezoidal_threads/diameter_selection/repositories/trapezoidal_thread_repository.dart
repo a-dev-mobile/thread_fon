@@ -11,23 +11,27 @@ class TrapezoidalThreadRepository {
   final ApiService _apiService;
 
   TrapezoidalThreadRepository({required ApiService apiService})
-      : _apiService = apiService;
+    : _apiService = apiService;
 
   Future<List<TrapezoidalThreadModel>> fetchThreads() async {
     try {
-      final Response response =
-          await _apiService.get('/v1/trapezoidal/diameters');
+      final Response response = await _apiService.get(
+        '/v1/trapezoidal/diameters',
+      );
 
       if (response.statusCode == 200) {
         final List<dynamic> rawData = response.data;
 
         return rawData
-            .map((dynamic json) =>
-                TrapezoidalThreadModel.fromJson(json as Map<String, dynamic>))
+            .map(
+              (dynamic json) =>
+                  TrapezoidalThreadModel.fromJson(json as Map<String, dynamic>),
+            )
             .toList();
       } else {
         _logger.e(
-            'Failed to fetch trapezoidal threads. Status code: ${response.statusCode}');
+          'Failed to fetch trapezoidal threads. Status code: ${response.statusCode}',
+        );
         throw Exception('Failed to fetch trapezoidal threads');
       }
     } catch (e, s) {

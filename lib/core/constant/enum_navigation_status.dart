@@ -1,9 +1,5 @@
 // enum_navigation.dart
-enum EnumNavigationStatus {
-  initial,
-  preparation,
-  navigation,
-}
+enum EnumNavigationStatus { initial, preparation, navigation }
 
 extension $EnumNavigation on EnumNavigationStatus {
   bool get isInitial => this == EnumNavigationStatus.initial;

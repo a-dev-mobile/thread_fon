@@ -39,8 +39,9 @@ class _PipeDiameterSelectionScreenState
   void initState() {
     super.initState();
     final ApiService apiService = context.read<ApiService>();
-    final PipeDiameterRepository diameterRepository =
-        PipeDiameterRepository(apiService: apiService);
+    final PipeDiameterRepository diameterRepository = PipeDiameterRepository(
+      apiService: apiService,
+    );
     final LocalStorage localStorage = context.read<LocalStorage>();
     final LanguageBloc languageBloc = context.read<LanguageBloc>();
 
@@ -96,7 +97,8 @@ class _DiameterSelectionView extends StatelessWidget {
                   case EnumStatus.success:
                     return DefaultTabController(
                       length: 2,
-                      initialIndex: bloc.state.selectedThreadType ==
+                      initialIndex:
+                          bloc.state.selectedThreadType ==
                               EnumThreadMaleFemale.female
                           ? 1
                           : 0,
@@ -108,8 +110,8 @@ class _DiameterSelectionView extends StatelessWidget {
                             if (!tabController.indexIsChanging) {
                               final EnumThreadMaleFemale newGender =
                                   tabController.index == 1
-                                      ? EnumThreadMaleFemale.female
-                                      : EnumThreadMaleFemale.male;
+                                  ? EnumThreadMaleFemale.female
+                                  : EnumThreadMaleFemale.male;
                               if (bloc.state.selectedThreadType != newGender) {
                                 bloc.updateGenderSelection(newGender);
                               }
@@ -123,8 +125,8 @@ class _DiameterSelectionView extends StatelessWidget {
                                 onTap: (int index) {
                                   final EnumThreadMaleFemale newGender =
                                       index == 1
-                                          ? EnumThreadMaleFemale.female
-                                          : EnumThreadMaleFemale.male;
+                                      ? EnumThreadMaleFemale.female
+                                      : EnumThreadMaleFemale.male;
                                   if (bloc.state.selectedThreadType !=
                                       newGender) {
                                     bloc.updateGenderSelection(newGender);
@@ -139,11 +141,15 @@ class _DiameterSelectionView extends StatelessWidget {
                             body: TabBarView(
                               children: <Widget>[
                                 _buildDiameterList(
-                                    context, bloc.state.maleDiameters,
-                                    isFemale: false),
+                                  context,
+                                  bloc.state.maleDiameters,
+                                  isFemale: false,
+                                ),
                                 _buildDiameterList(
-                                    context, bloc.state.femaleDiameters,
-                                    isFemale: true),
+                                  context,
+                                  bloc.state.femaleDiameters,
+                                  isFemale: true,
+                                ),
                               ],
                             ),
                           );
@@ -160,8 +166,10 @@ class _DiameterSelectionView extends StatelessWidget {
   }
 
   Widget _buildDiameterList(
-      BuildContext context, List<PipeDiameterItem> diameters,
-      {required bool isFemale}) {
+    BuildContext context,
+    List<PipeDiameterItem> diameters, {
+    required bool isFemale,
+  }) {
     final PipeDiameterBloc bloc = context.read<PipeDiameterBloc>();
 
     return ListView.separated(

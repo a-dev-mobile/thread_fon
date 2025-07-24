@@ -9,10 +9,7 @@ class ImperialFullScreenSvgView extends StatefulWidget {
   static const String name = 'FullScreenSvgView';
   final String svgData;
 
-  const ImperialFullScreenSvgView({
-    required this.svgData,
-    super.key,
-  });
+  const ImperialFullScreenSvgView({required this.svgData, super.key});
 
   @override
   _ImperialFullScreenSvgViewState createState() =>
@@ -47,10 +44,7 @@ class _ImperialFullScreenSvgViewState extends State<ImperialFullScreenSvgView> {
             backgroundDecoration: BoxDecoration(
               color: Theme.of(context).scaffoldBackgroundColor,
             ),
-            child: SvgPicture.string(
-              widget.svgData,
-              fit: BoxFit.contain,
-            ),
+            child: SvgPicture.string(widget.svgData, fit: BoxFit.contain),
           ),
           // Back button
           Positioned(

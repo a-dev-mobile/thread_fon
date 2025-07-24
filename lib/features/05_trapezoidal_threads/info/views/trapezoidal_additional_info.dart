@@ -7,10 +7,7 @@ import 'package:threadfon/features/05_trapezoidal_threads/info/models/trapezoida
 class TrapezoidalAdditionalInfo extends StatelessWidget {
   final List<AdditionalInfo> list;
 
-  const TrapezoidalAdditionalInfo({
-    required this.list,
-    super.key,
-  });
+  const TrapezoidalAdditionalInfo({required this.list, super.key});
 
   @override
   Widget build(BuildContext context) {

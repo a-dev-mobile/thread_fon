@@ -27,11 +27,11 @@ class MetricInfoBloc extends Cubit<MetricInfoState>
     required LocalStorage localStorage,
     required LanguageBloc languageBloc,
     required ThemeBloc themeBloc,
-  })  : _repository = repository,
-        _localStorage = localStorage,
-        _languageBloc = languageBloc,
-        _themeBloc = themeBloc,
-        super(const MetricInfoState());
+  }) : _repository = repository,
+       _localStorage = localStorage,
+       _languageBloc = languageBloc,
+       _themeBloc = themeBloc,
+       super(const MetricInfoState());
 
   final MetricInfoRepository _repository;
   final ThemeBloc _themeBloc;
@@ -39,24 +39,30 @@ class MetricInfoBloc extends Cubit<MetricInfoState>
   final LanguageBloc _languageBloc;
 
   Future<void> load() async {
-    emit(state.copyWith(
-      enumPageStatus: EnumStatus.loading,
-      svgRequestStatus: EnumStatus.loading,
-    ));
+    emit(
+      state.copyWith(
+        enumPageStatus: EnumStatus.loading,
+        svgRequestStatus: EnumStatus.loading,
+      ),
+    );
     try {
-      final MetricUserSelection metricUserSelection =
-          await _localStorage.getMetricUserSelection();
-      final CoreUserSelection coreUserSelection =
-          await _localStorage.getCoreUserSelection();
-      final MetricInfoModel model =
-          await _fetchModel(coreUserSelection, metricUserSelection);
-      emit(state.copyWith(
-        enumPageStatus: EnumStatus.success,
-        model: model,
-        units: metricUserSelection.units,
-        precision: metricUserSelection.precision,
-        isSvgOverlayVisible: metricUserSelection.isSvgOverlayVisible,
-      ));
+      final MetricUserSelection metricUserSelection = await _localStorage
+          .getMetricUserSelection();
+      final CoreUserSelection coreUserSelection = await _localStorage
+          .getCoreUserSelection();
+      final MetricInfoModel model = await _fetchModel(
+        coreUserSelection,
+        metricUserSelection,
+      );
+      emit(
+        state.copyWith(
+          enumPageStatus: EnumStatus.success,
+          model: model,
+          units: metricUserSelection.units,
+          precision: metricUserSelection.precision,
+          isSvgOverlayVisible: metricUserSelection.isSvgOverlayVisible,
+        ),
+      );
 
       // Start fetching SVG data in the background
       await _fetchSvgData(coreUserSelection, metricUserSelection);
@@ -67,8 +73,10 @@ class MetricInfoBloc extends Cubit<MetricInfoState>
     }
   }
 
-  Future<MetricInfoModel> _fetchModel(CoreUserSelection coreUserSelection,
-      MetricUserSelection metricUserSelection) async {
+  Future<MetricInfoModel> _fetchModel(
+    CoreUserSelection coreUserSelection,
+    MetricUserSelection metricUserSelection,
+  ) async {
     return await _repository.fetchInfo(
       diameter: metricUserSelection.diameter!,
       pitch: metricUserSelection.pitch!,
@@ -80,8 +88,10 @@ class MetricInfoBloc extends Cubit<MetricInfoState>
     );
   }
 
-  Future<void> _fetchSvgData(CoreUserSelection coreUserSelection,
-      MetricUserSelection metricUserSelection) async {
+  Future<void> _fetchSvgData(
+    CoreUserSelection coreUserSelection,
+    MetricUserSelection metricUserSelection,
+  ) async {
     emit(state.copyWith(svgRequestStatus: EnumStatus.loading));
     try {
       final String theme = _themeBloc.state.themeMode.name;
@@ -116,30 +126,33 @@ class MetricInfoBloc extends Cubit<MetricInfoState>
         fetchSvgWithoutDimensions,
       ]);
 
-      emit(state.copyWith(
-        svgData: results[0],
-        svgDataNoDimensions: results[1],
-        svgRequestStatus: EnumStatus.success,
-      ));
+      emit(
+        state.copyWith(
+          svgData: results[0],
+          svgDataNoDimensions: results[1],
+          svgRequestStatus: EnumStatus.success,
+        ),
+      );
     } catch (e, s) {
       _logger.e('Error fetching SVG data', error: e, stackTrace: s);
 
-      emit(state.copyWith(
-        svgRequestStatus: EnumStatus.error,
-        svgErrorMsg: 'Error loading SVG data',
-      ));
+      emit(
+        state.copyWith(
+          svgRequestStatus: EnumStatus.error,
+          svgErrorMsg: 'Error loading SVG data',
+        ),
+      );
     }
   }
 
   Future<void> preparationNavigation() async {
     try {
       await _localStorage.updateMetricUserSelection(
-        (MetricUserSelection current) => current.copyWith(
-          id: state.model?.id,
-        ),
+        (MetricUserSelection current) => current.copyWith(id: state.model?.id),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(
+        state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation),
+      );
       await Future<void>.delayed(const Duration(milliseconds: 100));
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
@@ -149,19 +162,24 @@ class MetricInfoBloc extends Cubit<MetricInfoState>
     }
   }
 
-  Future<void> updateUnitsPrecision(
-      {required EnumUnits units, required int precision}) async {
+  Future<void> updateUnitsPrecision({
+    required EnumUnits units,
+    required int precision,
+  }) async {
     await _localStorage.updateMetricUserSelection(
-        (MetricUserSelection current) =>
-            current.copyWith(units: units, precision: precision));
+      (MetricUserSelection current) =>
+          current.copyWith(units: units, precision: precision),
+    );
     await load();
   }
 
   void toggleSvgOverlay() {
     bool isSvgOverlayVisible = !state.isSvgOverlayVisible;
     emit(state.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
-    _localStorage.updateMetricUserSelection((MetricUserSelection current) =>
-        current.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
+    _localStorage.updateMetricUserSelection(
+      (MetricUserSelection current) =>
+          current.copyWith(isSvgOverlayVisible: isSvgOverlayVisible),
+    );
   }
 
   void toggleDimensions() {
@@ -173,9 +191,12 @@ class MetricInfoBloc extends Cubit<MetricInfoState>
     final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading info.'
         : 'Произошла ошибка при загрузке информации.';
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         enumPageStatus: EnumStatus.error,
         errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumNavigationStatus: EnumNavigationStatus.initial,
+      ),
+    );
   }
 }

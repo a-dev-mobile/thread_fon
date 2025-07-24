@@ -13,22 +13,28 @@ class DeviceIdGenerator {
     try {
       if (Platform.isAndroid) {
         final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-        uniqueId = _generateHash('${androidInfo.id}'
-            '${androidInfo.id}'
-            '${androidInfo.manufacturer}'
-            '${androidInfo.model}');
+        uniqueId = _generateHash(
+          '${androidInfo.id}'
+          '${androidInfo.id}'
+          '${androidInfo.manufacturer}'
+          '${androidInfo.model}',
+        );
       } else if (Platform.isIOS) {
         final IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-        uniqueId = _generateHash('${iosInfo.identifierForVendor}'
-            '${iosInfo.name}'
-            '${iosInfo.systemName}'
-            '${iosInfo.model}');
+        uniqueId = _generateHash(
+          '${iosInfo.identifierForVendor}'
+          '${iosInfo.name}'
+          '${iosInfo.systemName}'
+          '${iosInfo.model}',
+        );
       } else if (kIsWeb) {
         // For web, use a combination of browser and system details
         final WebBrowserInfo webInfo = await deviceInfo.webBrowserInfo;
-        uniqueId = _generateHash('${webInfo.userAgent}'
-            '${webInfo.platform}'
-            '${webInfo.browserName}');
+        uniqueId = _generateHash(
+          '${webInfo.userAgent}'
+          '${webInfo.platform}'
+          '${webInfo.browserName}',
+        );
       } else {
         uniqueId = 'UnknownPlatform';
       }

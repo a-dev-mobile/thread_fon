@@ -4,11 +4,7 @@ class MyCard extends StatelessWidget {
   final Widget child;
   final VoidCallback? onTap;
 
-  const MyCard({
-    required this.child,
-    this.onTap,
-    super.key,
-  });
+  const MyCard({required this.child, this.onTap, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +25,7 @@ class MyCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12.0),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: child,
-        ),
+        child: Padding(padding: const EdgeInsets.all(16.0), child: child),
       ),
     );
   }

@@ -38,8 +38,9 @@ class _PipeInfoScreenState extends State<PipeInfoScreen> {
   void initState() {
     super.initState();
     final ApiService apiService = context.read<ApiService>();
-    final PipeInfoRepository infoRepository =
-        PipeInfoRepository(apiService: apiService);
+    final PipeInfoRepository infoRepository = PipeInfoRepository(
+      apiService: apiService,
+    );
     final LocalStorage localStorage = context.read<LocalStorage>();
     final LanguageBloc languageBloc = context.read<LanguageBloc>();
     final ThemeBloc themeBloc = context.read<ThemeBloc>();
@@ -54,10 +55,7 @@ class _PipeInfoScreenState extends State<PipeInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => _bloc,
-      child: const _PipePipeInfoView(),
-    );
+    return BlocProvider(create: (_) => _bloc, child: const _PipePipeInfoView());
   }
 }
 
@@ -117,10 +115,10 @@ class _PipePipeInfoViewState extends State<_PipePipeInfoView> {
                       : state.svgAnnotations;
 
                   if (svgDataToSend != null) {
-                    context.pushNamed(PipeFullScreenSvgView.name,
-                        extra: <String, String>{
-                          'svgData': svgDataToSend,
-                        });
+                    context.pushNamed(
+                      PipeFullScreenSvgView.name,
+                      extra: <String, String>{'svgData': svgDataToSend},
+                    );
                   } else {
                     // Handle the null case, perhaps show an error or a placeholder
                     _logger.e('SVG data is null when trying to expand');
@@ -141,8 +139,13 @@ class _PipePipeInfoViewState extends State<_PipePipeInfoView> {
     );
   }
 
-  Widget _buildContent(PipeInfoBloc bloc, BuildContext context,
-      double overlayHeight, double svgWidth, double svgHeight) {
+  Widget _buildContent(
+    PipeInfoBloc bloc,
+    BuildContext context,
+    double overlayHeight,
+    double svgWidth,
+    double svgHeight,
+  ) {
     final PipeInfoState state = bloc.state;
 
     switch (state.enumPageStatus) {
@@ -162,8 +165,12 @@ class _PipePipeInfoViewState extends State<_PipePipeInfoView> {
     }
   }
 
-  Widget _buildSuccessContent(BuildContext context, PipeInfoState state,
-      PipeInfoBloc bloc, double overlayHeight) {
+  Widget _buildSuccessContent(
+    BuildContext context,
+    PipeInfoState state,
+    PipeInfoBloc bloc,
+    double overlayHeight,
+  ) {
     return CustomScrollView(
       slivers: <Widget>[
         ThreadInfoAppBar(
@@ -172,34 +179,23 @@ class _PipePipeInfoViewState extends State<_PipePipeInfoView> {
           precision: state.precision,
           onSvgToggle: () => bloc.toggleSvgOverlay(),
           onUnitsPrecisionUpdate: (EnumUnits units, int precision) =>
-              bloc.updateUnitsPrecision(
-            units: units,
-            precision: precision,
-          ),
+              bloc.updateUnitsPrecision(units: units, precision: precision),
         ),
         SliverPadding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           sliver: SliverList(
             delegate: SliverChildListDelegate(<Widget>[
-              PipeInfoMainParameters(
-                info: state.model!,
-              ),
+              PipeInfoMainParameters(info: state.model!),
               const Divider(),
-              PipeInfoDiametersParameters(
-                info: state.model!,
-              ),
+              PipeInfoDiametersParameters(info: state.model!),
               const Divider(),
-              PipeAdditionalInfo(
-                list: state.model!.additional_info,
-              ),
+              PipeAdditionalInfo(list: state.model!.additional_info),
             ]),
           ),
         ),
         // Add extra space when overlay is visible
         if (state.isSvgOverlayVisible)
-          SliverToBoxAdapter(
-            child: SizedBox(height: overlayHeight),
-          ),
+          SliverToBoxAdapter(child: SizedBox(height: overlayHeight)),
       ],
     );
   }

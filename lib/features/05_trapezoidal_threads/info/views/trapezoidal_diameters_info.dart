@@ -9,10 +9,7 @@ import 'package:threadfon/localization/l10n_extension.dart';
 class TrapezoidalInfoDiametersParameters extends StatelessWidget {
   final TrapezoidalInfoModel info;
 
-  const TrapezoidalInfoDiametersParameters({
-    required this.info,
-    super.key,
-  });
+  const TrapezoidalInfoDiametersParameters({required this.info, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +50,14 @@ class _DiameterSection extends StatelessWidget {
     final GeneratedLocalization localization = context.l10n;
 
     // Check if we have only min or max value
-    final bool hasOnlyMin = diameterData.min.isNotEmpty &&
+    final bool hasOnlyMin =
+        diameterData.min.isNotEmpty &&
         diameterData.max.isEmpty &&
         diameterData.basic.isEmpty &&
         diameterData.avg.isEmpty;
 
-    final bool hasOnlyMax = diameterData.max.isNotEmpty &&
+    final bool hasOnlyMax =
+        diameterData.max.isNotEmpty &&
         diameterData.min.isEmpty &&
         diameterData.basic.isEmpty &&
         diameterData.avg.isEmpty;
@@ -90,10 +89,7 @@ class _DiameterSection extends StatelessWidget {
           decoration: isHaveDividerBottom
               ? const BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(
-                      color: Colors.grey,
-                      width: 0.2,
-                    ),
+                    bottom: BorderSide(color: Colors.grey, width: 0.2),
                   ),
                 )
               : null,
@@ -104,9 +100,9 @@ class _DiameterSection extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
               const SizedBox(width: 8.0),
@@ -151,25 +147,16 @@ class _DiameterItem extends StatelessWidget {
     return Row(
       children: <Widget>[
         if (basic.isNotEmpty)
-          Text(
-            basic,
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
+          Text(basic, style: Theme.of(context).textTheme.bodyLarge),
         if (hasDEs || hasDEi) ...<Widget>[
           const SizedBox(width: 8.0),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               if (hasDEs)
-                Text(
-                  es,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
+                Text(es, style: Theme.of(context).textTheme.bodySmall),
               if (hasDEi)
-                Text(
-                  ei,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
+                Text(ei, style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
         ],
@@ -182,24 +169,15 @@ class _ValueItem extends StatelessWidget {
   final String value;
   final String label;
 
-  const _ValueItem({
-    required this.value,
-    required this.label,
-  });
+  const _ValueItem({required this.value, required this.label});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
+        Text(label, style: Theme.of(context).textTheme.bodySmall),
         if (value.isNotEmpty)
-          Text(
-            value,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          Text(value, style: Theme.of(context).textTheme.bodyMedium),
       ],
     );
   }

@@ -51,14 +51,14 @@ class AppRouter {
       observers: <NavigatorObserver>[_AnalyticsObserver(analytics: analytics)],
       errorPageBuilder: (BuildContext context, GoRouterState state) =>
           MaterialPage<void>(
-        key: state.pageKey,
-        child: Center(
-          child: Text(
-            'Ошибка навигации: ${state.error?.toString() ?? "Неизвестная ошибка"}',
-            style: Theme.of(context).textTheme.headlineSmall,
+            key: state.pageKey,
+            child: Center(
+              child: Text(
+                'Ошибка навигации: ${state.error?.toString() ?? "Неизвестная ошибка"}',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+            ),
           ),
-        ),
-      ),
       routes: <RouteBase>[
         ShellRoute(
           builder: (BuildContext context, GoRouterState state, Widget child) {
@@ -116,7 +116,8 @@ class AppRouter {
                       state.extra! as Map<String, dynamic>;
 
                   return MetricFullScreenSvgView(
-                      svgData: data['svgData'] as String);
+                    svgData: data['svgData'] as String,
+                  );
                 },
               ),
             ]),
@@ -207,9 +208,9 @@ class AppRouter {
       name: name,
       pageBuilder: (BuildContext context, GoRouterState state) =>
           MaterialPage<void>(
-        key: state.pageKey,
-        child: builder(context, state),
-      ),
+            key: state.pageKey,
+            child: builder(context, state),
+          ),
     );
   }
 
@@ -224,9 +225,9 @@ class AppRouter {
       name: name,
       pageBuilder: (BuildContext context, GoRouterState state) =>
           MaterialPage<void>(
-        key: state.pageKey,
-        child: builder(context, state),
-      ),
+            key: state.pageKey,
+            child: builder(context, state),
+          ),
     );
   }
 
@@ -239,8 +240,9 @@ class AppRouter {
 /// Наблюдатель для отслеживания навигации и отправки данных в аналитику
 class _AnalyticsObserver extends NavigatorObserver {
   final FirebaseAnalytics analytics;
-  static final LogService _logger =
-      LogService('AnalyticsObserver'); // Убрано const
+  static final LogService _logger = LogService(
+    'AnalyticsObserver',
+  ); // Убрано const
 
   _AnalyticsObserver({required this.analytics});
 

@@ -19,10 +19,9 @@ class InfoRow extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    final TextStyle? labelStyle =
-        Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-            );
+    final TextStyle? labelStyle = Theme.of(
+      context,
+    ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600);
     final TextStyle? valueStyle = Theme.of(context).textTheme.bodyMedium;
 
     return Container(
@@ -30,10 +29,7 @@ class InfoRow extends StatelessWidget {
       decoration: isHaveDividerBottom
           ? const BoxDecoration(
               border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.2,
-                ),
+                bottom: BorderSide(color: Colors.grey, width: 0.2),
               ),
             )
           : null,
@@ -41,19 +37,10 @@ class InfoRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           // Label
-          Expanded(
-            child: Text(
-              label,
-              style: labelStyle,
-            ),
-          ),
+          Expanded(child: Text(label, style: labelStyle)),
           const SizedBox(width: 8.0), // Отступ между label и value
           // Value
-          Text(
-            value!,
-            style: valueStyle,
-            textAlign: TextAlign.right,
-          ),
+          Text(value!, style: valueStyle, textAlign: TextAlign.right),
         ],
       ),
     );

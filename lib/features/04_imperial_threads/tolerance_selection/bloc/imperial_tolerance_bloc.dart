@@ -25,10 +25,10 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState>
     required Imperial repository,
     required LocalStorage localStorage,
     required LanguageBloc languageBloc,
-  })  : _repository = repository,
-        _localStorage = localStorage,
-        _languageBloc = languageBloc,
-        super(const ImperialToleranceState());
+  }) : _repository = repository,
+       _localStorage = localStorage,
+       _languageBloc = languageBloc,
+       super(const ImperialToleranceState());
 
   final Imperial _repository;
   final LocalStorage _localStorage;
@@ -37,21 +37,23 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState>
   Future<void> load() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final ImperialUserSelection imperialUserSelection =
-          await _localStorage.getImperialUserSelection();
-      final CoreUserSelection coreUserSelection =
-          await _localStorage.getCoreUserSelection();
-      final ImperialToleranceModel tolerancesResponse =
-          await _repository.fetchTolerances(
-        tpi: imperialUserSelection.tpi!,
-        diameter: imperialUserSelection.diameter!,
+      final ImperialUserSelection imperialUserSelection = await _localStorage
+          .getImperialUserSelection();
+      final CoreUserSelection coreUserSelection = await _localStorage
+          .getCoreUserSelection();
+      final ImperialToleranceModel tolerancesResponse = await _repository
+          .fetchTolerances(
+            tpi: imperialUserSelection.tpi!,
+            diameter: imperialUserSelection.diameter!,
+          );
+      emit(
+        state.copyWith(
+          enumPageStatus: EnumStatus.success,
+          femaleTolerances: tolerancesResponse.female,
+          maleTolerances: tolerancesResponse.male,
+          selectedThreadType: coreUserSelection.threadType,
+        ),
       );
-      emit(state.copyWith(
-        enumPageStatus: EnumStatus.success,
-        femaleTolerances: tolerancesResponse.female,
-        maleTolerances: tolerancesResponse.male,
-        selectedThreadType: coreUserSelection.threadType,
-      ));
     } catch (e, s) {
       _logger.e('Error loading tolerances', error: e, stackTrace: s);
 
@@ -60,15 +62,17 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState>
   }
 
   Future<void> preparationNavigation(
-      ImperialToleranceItem selectedTolerance, bool isFemale) async {
+    ImperialToleranceItem selectedTolerance,
+    bool isFemale,
+  ) async {
     try {
       await _localStorage.updateImperialUserSelection(
-        (ImperialUserSelection current) => current.copyWith(
-          series: selectedTolerance.series,
-        ),
+        (ImperialUserSelection current) =>
+            current.copyWith(series: selectedTolerance.series),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(
+        state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation),
+      );
     } catch (e, s) {
       _logger.e('Error updating tolerance selection', error: e, stackTrace: s);
 
@@ -80,9 +84,7 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState>
   Future<void> updateGenderSelection(EnumThreadMaleFemale threadType) async {
     try {
       await _localStorage.updateCoreUserSelection(
-        (CoreUserSelection current) => current.copyWith(
-          threadType: threadType,
-        ),
+        (CoreUserSelection current) => current.copyWith(threadType: threadType),
       );
       emit(state.copyWith(selectedThreadType: threadType));
     } catch (e, s) {
@@ -95,15 +97,16 @@ class ImperialToleranceBloc extends Cubit<ImperialToleranceState>
     final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading tolerances.'
         : 'Произошла ошибка при загрузке допусков.';
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         enumPageStatus: EnumStatus.error,
         errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumNavigationStatus: EnumNavigationStatus.initial,
+      ),
+    );
   }
 
   void resetNavigationStatus() {
-    emit(state.copyWith(
-      enumNavigationStatus: EnumNavigationStatus.initial,
-    ));
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

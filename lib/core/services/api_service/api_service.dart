@@ -53,8 +53,11 @@ class ApiService {
     Options? options,
   }) async {
     try {
-      return await dio.get(path,
-          queryParameters: queryParameters, options: options);
+      return await dio.get(
+        path,
+        queryParameters: queryParameters,
+        options: options,
+      );
     } catch (e) {
       rethrow;
     }

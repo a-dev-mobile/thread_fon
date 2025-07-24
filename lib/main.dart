@@ -34,14 +34,13 @@ Future<void> main() async {
       FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
       try {
-        await Firebase.initializeApp(
-          options: FirebaseConfig.currentPlatform,
-        );
+        await Firebase.initializeApp(options: FirebaseConfig.currentPlatform);
 
         // Инициализация Crashlytics
         // Включаем сбор нефатальных ошибок
-        await FirebaseCrashlytics.instance
-            .setCrashlyticsCollectionEnabled(!kDebugMode);
+        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+          !kDebugMode,
+        );
 
         // Передаём все необработанные асинхронные ошибки в Crashlytics
         PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
@@ -62,10 +61,12 @@ Future<void> main() async {
             FlutterError.dumpErrorToConsole(details);
           }
 
-          _logger.e('FlutterError.onError',
-              error: details.exception,
-              stackTrace: details.stack ?? StackTrace.current,
-              reportToServer: false);
+          _logger.e(
+            'FlutterError.onError',
+            error: details.exception,
+            stackTrace: details.stack ?? StackTrace.current,
+            reportToServer: false,
+          );
 
           // Также отправляем в Crashlytics
           FirebaseCrashlytics.instance.recordFlutterFatalError(details);

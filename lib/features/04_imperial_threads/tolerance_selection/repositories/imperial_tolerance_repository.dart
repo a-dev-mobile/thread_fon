@@ -19,15 +19,13 @@ class Imperial {
     try {
       final Response response = await _apiService.get(
         '/v1/imperial/tolerance',
-        queryParameters: <String, dynamic>{
-          'tpi': tpi,
-          'diameter': diameter,
-        },
+        queryParameters: <String, dynamic>{'tpi': tpi, 'diameter': diameter},
       );
 
       if (response.statusCode == 200) {
         return ImperialToleranceModel.fromJson(
-            response.data as Map<String, dynamic>);
+          response.data as Map<String, dynamic>,
+        );
       } else {
         _logger.e(
           'Failed to fetch tolerances',
@@ -36,11 +34,7 @@ class Imperial {
         throw Exception('Failed to fetch tolerances');
       }
     } catch (e, s) {
-      _logger.e(
-        'Error fetching tolerances',
-        error: e,
-        stackTrace: s,
-      );
+      _logger.e('Error fetching tolerances', error: e, stackTrace: s);
       Error.throwWithStackTrace(e, s);
     }
   }

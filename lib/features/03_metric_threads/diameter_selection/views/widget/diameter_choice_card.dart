@@ -17,9 +17,9 @@ class DiameterChoiceCard extends StatelessWidget {
       onTap: onTap,
       child: Text(
         info,
-        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+        style: Theme.of(
+          context,
+        ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
     );

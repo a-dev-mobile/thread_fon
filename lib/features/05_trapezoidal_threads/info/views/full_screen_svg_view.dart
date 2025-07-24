@@ -9,10 +9,7 @@ class TrapezoidalFullScreenSvgView extends StatefulWidget {
   static const String name = 'FullScreenSvgView';
   final String svgData;
 
-  const TrapezoidalFullScreenSvgView({
-    required this.svgData,
-    super.key,
-  });
+  const TrapezoidalFullScreenSvgView({required this.svgData, super.key});
 
   @override
   _TrapezoidalFullScreenSvgViewState createState() =>
@@ -48,10 +45,7 @@ class _TrapezoidalFullScreenSvgViewState
             backgroundDecoration: BoxDecoration(
               color: Theme.of(context).scaffoldBackgroundColor,
             ),
-            child: SvgPicture.string(
-              widget.svgData,
-              fit: BoxFit.contain,
-            ),
+            child: SvgPicture.string(widget.svgData, fit: BoxFit.contain),
           ),
           // Back button
           Positioned(

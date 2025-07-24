@@ -34,8 +34,9 @@ class _PitchSelectionScreenState extends State<PitchSelectionScreen> {
   void initState() {
     super.initState();
     final ApiService apiService = context.read<ApiService>();
-    final PitchRepository pitchRepository =
-        PitchRepository(apiService: apiService);
+    final PitchRepository pitchRepository = PitchRepository(
+      apiService: apiService,
+    );
     final LocalStorage localStorage = context.read<LocalStorage>();
     final LanguageBloc languageBloc = context.read<LanguageBloc>();
     _bloc = PitchBloc(
@@ -73,9 +74,7 @@ class _PitchSelectionView extends StatelessWidget {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(localization.select_pitch),
-        ),
+        appBar: AppBar(title: Text(localization.select_pitch)),
         body: Stack(
           children: <Widget>[
             BlocBuilder<PitchBloc, PitchState>(

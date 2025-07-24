@@ -24,10 +24,8 @@ sealed class ImperialInfoModel with _$ImperialInfoModel {
 @freezed
 @immutable
 sealed class MainInfo with _$MainInfo {
-  const factory MainInfo({
-    required String name,
-    required String value,
-  }) = _MainInfo;
+  const factory MainInfo({required String name, required String value}) =
+      _MainInfo;
 
   factory MainInfo.fromJson(Map<String, dynamic> json) =>
       _$MainInfoFromJson(json);

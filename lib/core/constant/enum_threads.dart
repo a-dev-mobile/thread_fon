@@ -1,9 +1,4 @@
-enum EnumThreads {
-  metric,
-  imperial,
-  trapezoidal,
-  pipe,
-}
+enum EnumThreads { metric, imperial, trapezoidal, pipe }
 
 extension $EnumThreads on EnumThreads {
   bool get isMetric => this == EnumThreads.metric;

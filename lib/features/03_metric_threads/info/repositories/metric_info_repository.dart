@@ -9,9 +9,8 @@ final LogService _logger = LogService('info_repository');
 const String _baseUrl = '/v1/metric';
 
 class MetricInfoRepository {
-  MetricInfoRepository({
-    required ApiService apiService,
-  }) : _apiService = apiService;
+  MetricInfoRepository({required ApiService apiService})
+    : _apiService = apiService;
 
   final ApiService _apiService;
 

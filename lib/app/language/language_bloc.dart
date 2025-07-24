@@ -9,11 +9,9 @@ part 'language_bloc.g.dart';
 part 'language_state.dart';
 
 class LanguageBloc extends Cubit<LanguageState> with BlocIgnoreEmitAfterClosed {
-  LanguageBloc({
-    required LocalStorage storage,
-    required EnumLang enumLang,
-  })  : _storage = storage,
-        super(LanguageState(enumLang: enumLang));
+  LanguageBloc({required LocalStorage storage, required EnumLang enumLang})
+    : _storage = storage,
+      super(LanguageState(enumLang: enumLang));
 
   final LocalStorage _storage;
 
@@ -25,8 +23,9 @@ class LanguageBloc extends Cubit<LanguageState> with BlocIgnoreEmitAfterClosed {
 
   /// Переключает язык между английским и русским
   Future<void> toggle() async {
-    final EnumLang newLang =
-        state.enumLang == EnumLang.en ? EnumLang.ru : EnumLang.en;
+    final EnumLang newLang = state.enumLang == EnumLang.en
+        ? EnumLang.ru
+        : EnumLang.en;
     await setLanguage(newLang);
   }
 }

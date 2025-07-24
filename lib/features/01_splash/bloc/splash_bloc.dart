@@ -19,8 +19,8 @@ class SplashBloc extends Cubit<SplashState>
   SplashBloc({
     required LanguageBloc languageBloc,
     required LocalStorage storage,
-  })  : _languageBloc = languageBloc,
-        super(const SplashState());
+  }) : _languageBloc = languageBloc,
+       super(const SplashState());
 
   final LanguageBloc _languageBloc;
 
@@ -40,8 +40,9 @@ class SplashBloc extends Cubit<SplashState>
 
   Future<void> preparationNavigation() async {
     try {
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(
+        state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation),
+      );
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
 
@@ -54,9 +55,12 @@ class SplashBloc extends Cubit<SplashState>
     final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading info.'
         : 'Произошла ошибка при загрузке информации.';
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         enumPageStatus: EnumStatus.error,
         errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumNavigationStatus: EnumNavigationStatus.initial,
+      ),
+    );
   }
 }

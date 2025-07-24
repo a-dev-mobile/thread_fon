@@ -8,10 +8,7 @@ import 'package:threadfon/localization/l10n_extension.dart';
 class MetricInfoParameters extends StatelessWidget {
   final MetricInfoModel info;
 
-  const MetricInfoParameters({
-    required this.info,
-    super.key,
-  });
+  const MetricInfoParameters({required this.info, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +37,9 @@ class MetricInfoParameters extends StatelessWidget {
 
   // Метод для получения списка параметров
   List<_Parameter> _getParameters(
-      GeneratedLocalization localization, MetricInfoModel info) {
+    GeneratedLocalization localization,
+    MetricInfoModel info,
+  ) {
     return <_Parameter>[
       _Parameter(
         label: localization.heightOfFundamentalTriangle,
@@ -50,47 +49,17 @@ class MetricInfoParameters extends StatelessWidget {
         label: localization.workingHeightOfProfile,
         value: info.fiveHDiv8,
       ),
-      _Parameter(
-        label: localization.crestTruncation,
-        value: info.hDiv8,
-      ),
-      _Parameter(
-        label: localization.rootTruncation,
-        value: info.hDiv4,
-      ),
-      _Parameter(
-        label: localization.totalTruncation,
-        value: info.threeHDiv8,
-      ),
+      _Parameter(label: localization.crestTruncation, value: info.hDiv8),
+      _Parameter(label: localization.rootTruncation, value: info.hDiv4),
+      _Parameter(label: localization.totalTruncation, value: info.threeHDiv8),
       // Дополнительные параметры
-      _Parameter(
-        label: localization.halfPitch,
-        value: info.pitchDiv2,
-      ),
-      _Parameter(
-        label: localization.quarterPitch,
-        value: info.pitchDiv4,
-      ),
-      _Parameter(
-        label: localization.eighthPitch,
-        value: info.pitchDiv8,
-      ),
-      _Parameter(
-        label: localization.cmin_label,
-        value: info.cMin,
-      ),
-      _Parameter(
-        label: localization.cmax_label,
-        value: info.cMax,
-      ),
-      _Parameter(
-        label: localization.rmax_label,
-        value: info.rMax,
-      ),
-      _Parameter(
-        label: localization.rmin_label,
-        value: info.rMin,
-      ),
+      _Parameter(label: localization.halfPitch, value: info.pitchDiv2),
+      _Parameter(label: localization.quarterPitch, value: info.pitchDiv4),
+      _Parameter(label: localization.eighthPitch, value: info.pitchDiv8),
+      _Parameter(label: localization.cmin_label, value: info.cMin),
+      _Parameter(label: localization.cmax_label, value: info.cMax),
+      _Parameter(label: localization.rmax_label, value: info.rMax),
+      _Parameter(label: localization.rmin_label, value: info.rMin),
     ];
   }
 }
@@ -100,8 +69,5 @@ class _Parameter {
   final String label;
   final num? value;
 
-  _Parameter({
-    required this.label,
-    required this.value,
-  });
+  _Parameter({required this.label, required this.value});
 }

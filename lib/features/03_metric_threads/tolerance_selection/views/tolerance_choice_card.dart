@@ -20,9 +20,9 @@ class ToleranceChoiceCard extends StatelessWidget {
       onTap: onTap,
       child: Text(
         tolerance.info,
-        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+        style: Theme.of(
+          context,
+        ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
     );

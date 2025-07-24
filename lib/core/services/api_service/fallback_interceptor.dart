@@ -26,10 +26,7 @@ class FallbackInterceptor extends Interceptor {
           request.path,
           data: request.data,
           queryParameters: request.queryParameters,
-          options: Options(
-            method: request.method,
-            headers: request.headers,
-          ),
+          options: Options(method: request.method, headers: request.headers),
         );
         return handler.resolve(response);
       } catch (e) {

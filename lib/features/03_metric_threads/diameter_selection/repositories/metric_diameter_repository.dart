@@ -11,10 +11,11 @@ class DiameterRepository {
   final ApiService _apiService;
 
   DiameterRepository({required ApiService apiService})
-      : _apiService = apiService;
+    : _apiService = apiService;
 
-  Future<List<MetricDiameterModel>> fetchDiameters(
-      {String order = 'asc'}) async {
+  Future<List<MetricDiameterModel>> fetchDiameters({
+    String order = 'asc',
+  }) async {
     try {
       final Response response = await _apiService.get(
         '/v1/metric/diameters',
@@ -24,12 +25,15 @@ class DiameterRepository {
       if (response.statusCode == 200) {
         final List<dynamic> rawData = response.data;
         return rawData
-            .map((json) =>
-                MetricDiameterModel.fromJson(json as Map<String, dynamic>))
+            .map(
+              (json) =>
+                  MetricDiameterModel.fromJson(json as Map<String, dynamic>),
+            )
             .toList();
       } else {
         _logger.e(
-            'Failed to fetch diameters. Status code: ${response.statusCode}');
+          'Failed to fetch diameters. Status code: ${response.statusCode}',
+        );
         throw Exception('Failed to fetch diameters');
       }
     } catch (e, s) {

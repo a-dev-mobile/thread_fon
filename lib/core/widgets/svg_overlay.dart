@@ -116,10 +116,7 @@ class SvgOverlay extends StatelessWidget {
               Positioned(
                 right: 0.0,
                 top: 0.0,
-                child: OverlayButton(
-                  icon: Icons.close,
-                  onPressed: onClose,
-                ),
+                child: OverlayButton(icon: Icons.close, onPressed: onClose),
               ),
             ],
           ),

@@ -66,13 +66,15 @@ class _ToleranceSelectionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GeneratedLocalization localization = context.l10n;
-    final TrapezoidalToleranceBloc bloc =
-        context.read<TrapezoidalToleranceBloc>();
+    final TrapezoidalToleranceBloc bloc = context
+        .read<TrapezoidalToleranceBloc>();
 
     return BlocListener<TrapezoidalToleranceBloc, TrapezoidalToleranceState>(
-      listenWhen: (TrapezoidalToleranceState previous,
-              TrapezoidalToleranceState current) =>
-          previous.enumNavigationStatus != current.enumNavigationStatus,
+      listenWhen:
+          (
+            TrapezoidalToleranceState previous,
+            TrapezoidalToleranceState current,
+          ) => previous.enumNavigationStatus != current.enumNavigationStatus,
       listener: (BuildContext context, TrapezoidalToleranceState state) {
         if (state.enumNavigationStatus.isNavigation) {
           context.pushNamed(TrapezoidalInfoScreen.name);
@@ -83,9 +85,11 @@ class _ToleranceSelectionView extends StatelessWidget {
         body: Stack(
           children: <Widget>[
             BlocBuilder<TrapezoidalToleranceBloc, TrapezoidalToleranceState>(
-              buildWhen: (TrapezoidalToleranceState previous,
-                      TrapezoidalToleranceState current) =>
-                  previous.enumPageStatus != current.enumPageStatus,
+              buildWhen:
+                  (
+                    TrapezoidalToleranceState previous,
+                    TrapezoidalToleranceState current,
+                  ) => previous.enumPageStatus != current.enumPageStatus,
               builder: (BuildContext context, TrapezoidalToleranceState state) {
                 switch (state.enumPageStatus) {
                   case EnumStatus.loading:
@@ -98,7 +102,8 @@ class _ToleranceSelectionView extends StatelessWidget {
                   case EnumStatus.success:
                     return DefaultTabController(
                       length: 2,
-                      initialIndex: bloc.state.selectedThreadType ==
+                      initialIndex:
+                          bloc.state.selectedThreadType ==
                               EnumThreadMaleFemale.female
                           ? 1
                           : 0,
@@ -110,8 +115,8 @@ class _ToleranceSelectionView extends StatelessWidget {
                             if (!tabController.indexIsChanging) {
                               final EnumThreadMaleFemale newGender =
                                   tabController.index == 1
-                                      ? EnumThreadMaleFemale.female
-                                      : EnumThreadMaleFemale.male;
+                                  ? EnumThreadMaleFemale.female
+                                  : EnumThreadMaleFemale.male;
                               if (bloc.state.selectedThreadType != newGender) {
                                 bloc.updateGenderSelection(newGender);
                               }
@@ -125,8 +130,8 @@ class _ToleranceSelectionView extends StatelessWidget {
                                 onTap: (int index) {
                                   final EnumThreadMaleFemale newGender =
                                       index == 1
-                                          ? EnumThreadMaleFemale.female
-                                          : EnumThreadMaleFemale.male;
+                                      ? EnumThreadMaleFemale.female
+                                      : EnumThreadMaleFemale.male;
                                   if (bloc.state.selectedThreadType !=
                                       newGender) {
                                     bloc.updateGenderSelection(newGender);
@@ -141,11 +146,15 @@ class _ToleranceSelectionView extends StatelessWidget {
                             body: TabBarView(
                               children: <Widget>[
                                 _buildToleranceList(
-                                    context, bloc.state.maleTolerances,
-                                    isFemale: false),
+                                  context,
+                                  bloc.state.maleTolerances,
+                                  isFemale: false,
+                                ),
                                 _buildToleranceList(
-                                    context, bloc.state.femaleTolerances,
-                                    isFemale: true),
+                                  context,
+                                  bloc.state.femaleTolerances,
+                                  isFemale: true,
+                                ),
                               ],
                             ),
                           );
@@ -162,10 +171,12 @@ class _ToleranceSelectionView extends StatelessWidget {
   }
 
   Widget _buildToleranceList(
-      BuildContext context, List<TrapezoidalToleranceItem> tolerances,
-      {required bool isFemale}) {
-    final TrapezoidalToleranceBloc bloc =
-        context.read<TrapezoidalToleranceBloc>();
+    BuildContext context,
+    List<TrapezoidalToleranceItem> tolerances, {
+    required bool isFemale,
+  }) {
+    final TrapezoidalToleranceBloc bloc = context
+        .read<TrapezoidalToleranceBloc>();
 
     return ListView.separated(
       padding: const EdgeInsets.symmetric(vertical: 16),

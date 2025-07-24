@@ -19,8 +19,8 @@ class MyErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GeneratedLocalization localization = context.l10n;
-    final LocalStorage localStorage =
-        context.read<LocalStorage>(); // Получаем LocalStorage
+    final LocalStorage localStorage = context
+        .read<LocalStorage>(); // Получаем LocalStorage
 
     return Center(
       child: Card.outlined(
@@ -37,9 +37,9 @@ class MyErrorWidget extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 localization.error,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Text(

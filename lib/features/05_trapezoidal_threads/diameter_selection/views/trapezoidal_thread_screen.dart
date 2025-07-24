@@ -39,8 +39,9 @@ class _TrapezoidalThreadScreenState extends State<TrapezoidalThreadScreen> {
     final ApiService apiService = context.read<ApiService>();
     final LocalStorage localStorage = context.read<LocalStorage>();
     final LanguageBloc languageBloc = context.read<LanguageBloc>();
-    final TrapezoidalThreadRepository repository =
-        TrapezoidalThreadRepository(apiService: apiService);
+    final TrapezoidalThreadRepository repository = TrapezoidalThreadRepository(
+      apiService: apiService,
+    );
 
     _bloc = TrapezoidalThreadBloc(
       repository: repository,
@@ -97,14 +98,15 @@ class _TrapezoidalThreadViewState extends State<_TrapezoidalThreadView> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(localization.select_diameter_and_pitch),
-        ),
+        appBar: AppBar(title: Text(localization.select_diameter_and_pitch)),
         body: BlocBuilder<TrapezoidalThreadBloc, TrapezoidalThreadState>(
-          buildWhen: (TrapezoidalThreadState previous,
-                  TrapezoidalThreadState current) =>
-              previous.enumPageStatus != current.enumPageStatus ||
-              previous.threads != current.threads,
+          buildWhen:
+              (
+                TrapezoidalThreadState previous,
+                TrapezoidalThreadState current,
+              ) =>
+                  previous.enumPageStatus != current.enumPageStatus ||
+                  previous.threads != current.threads,
           builder: (BuildContext context, TrapezoidalThreadState state) {
             switch (state.enumPageStatus) {
               case EnumStatus.loading:
@@ -162,9 +164,9 @@ class TrapezoidalThreadCard extends StatelessWidget {
       onTap: onTap,
       child: Text(
         designation,
-        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+        style: Theme.of(
+          context,
+        ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
     );

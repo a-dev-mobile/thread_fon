@@ -35,8 +35,9 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
   void initState() {
     super.initState();
     final ApiService apiService = context.read<ApiService>();
-    final DiameterRepository diameterRepository =
-        DiameterRepository(apiService: apiService);
+    final DiameterRepository diameterRepository = DiameterRepository(
+      apiService: apiService,
+    );
     final LocalStorage localStorage = context.read<LocalStorage>();
     final LanguageBloc languageBloc = context.read<LanguageBloc>();
 
@@ -105,9 +106,7 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(localization.select_diameter),
-        ),
+        appBar: AppBar(title: Text(localization.select_diameter)),
         body: Stack(
           children: <Widget>[
             // Основной контент
@@ -140,7 +139,9 @@ class _MetricDiameterViewState extends State<_MetricDiameterView> {
                         return DiameterChoiceCard(
                           info: diameter.info,
                           onTap: () => bloc.preparationNavigation(
-                              diameter, _scrollController.position.pixels),
+                            diameter,
+                            _scrollController.position.pixels,
+                          ),
                         );
                       },
                     );

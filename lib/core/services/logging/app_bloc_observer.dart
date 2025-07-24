@@ -21,14 +21,16 @@ class AppBlocObserver extends BlocObserver {
   ) {
     super.onTransition(bloc, transition);
     _logger.d(
-        "'bloc': ${bloc.runtimeType}, 'event': ${_truncate(transition.event)}, 'currentState': ${_truncate(transition.currentState)}, 'nextState': ${_truncate(transition.nextState)}");
+      "'bloc': ${bloc.runtimeType}, 'event': ${_truncate(transition.event)}, 'currentState': ${_truncate(transition.currentState)}, 'nextState': ${_truncate(transition.nextState)}",
+    );
   }
 
   @override
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
     super.onChange(bloc, change);
     _logger.d(
-        "'bloc': ${bloc.runtimeType}, 'currentState': ${_truncate(change.currentState)}, 'nextState': ${_truncate(change.nextState)}");
+      "'bloc': ${bloc.runtimeType}, 'currentState': ${_truncate(change.currentState)}, 'nextState': ${_truncate(change.nextState)}",
+    );
   }
 
   @override
@@ -40,12 +42,14 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
     super.onError(bloc, error, stackTrace);
-    _logger.e('Error in ${bloc.runtimeType}',
-        error: error,
-        stackTrace: stackTrace,
-        additionalInfo: <String, dynamic>{
-          'bloc_type': bloc.runtimeType.toString()
-        });
+    _logger.e(
+      'Error in ${bloc.runtimeType}',
+      error: error,
+      stackTrace: stackTrace,
+      additionalInfo: <String, dynamic>{
+        'bloc_type': bloc.runtimeType.toString(),
+      },
+    );
   }
 
   @override

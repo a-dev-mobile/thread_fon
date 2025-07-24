@@ -12,17 +12,15 @@ import 'package:threadfon/localization/l10n_extension.dart';
 class MetricInfoMainParameters extends StatelessWidget {
   final MetricInfoModel info;
 
-  const MetricInfoMainParameters({
-    required this.info,
-    super.key,
-  });
+  const MetricInfoMainParameters({required this.info, super.key});
 
   @override
   Widget build(BuildContext context) {
     final GeneratedLocalization localization = context.l10n;
     final EnumUnits units = context.read<MetricInfoBloc>().state.units;
-    final String unitsText =
-        units == EnumUnits.mm ? localization.mm_long : localization.inch;
+    final String unitsText = units == EnumUnits.mm
+        ? localization.mm_long
+        : localization.inch;
 
     return MyCard(
       child: Column(
@@ -30,49 +28,47 @@ class MetricInfoMainParameters extends StatelessWidget {
           Text(
             info.designation,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
             info.description,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
             info.typePitchDescription,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
           // Добавьте этот блок кода
           const SizedBox(height: 8.0),
           Text(
             '${localization.units}: $unitsText',
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           // Конец добавления
           const SizedBox(height: 16.0),
           const Divider(),
           InfoRow(
-              label: localization.thread_type,
-              value: info.threadType == EnumThreadMaleFemale.female
-                  ? localization.internal_thread
-                  : localization.external_thread),
+            label: localization.thread_type,
+            value: info.threadType == EnumThreadMaleFemale.female
+                ? localization.internal_thread
+                : localization.external_thread,
+          ),
           InfoRow(
             label: localization.thread_diam_nom,
             value: info.diameter.toString(),
           ),
-          InfoRow(
-            label: localization.pitch,
-            value: info.pitch.toString(),
-          ),
+          InfoRow(label: localization.pitch, value: info.pitch.toString()),
           InfoRow(
             label: localization.thread_depth,
             value: info.threadDepth.toString(),

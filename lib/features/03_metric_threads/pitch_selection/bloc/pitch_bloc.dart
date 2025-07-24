@@ -22,10 +22,10 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
     required PitchRepository repository,
     required LocalStorage localStorage,
     required LanguageBloc languageBloc,
-  })  : _repository = repository,
-        _localStorage = localStorage,
-        _languageBloc = languageBloc,
-        super(const PitchState());
+  }) : _repository = repository,
+       _localStorage = localStorage,
+       _languageBloc = languageBloc,
+       super(const PitchState());
 
   final PitchRepository _repository;
   final LocalStorage _localStorage;
@@ -34,14 +34,15 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
   Future<void> loadPitch() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final MetricUserSelection metricUserSelection =
-          await _localStorage.getMetricUserSelection();
+      final MetricUserSelection metricUserSelection = await _localStorage
+          .getMetricUserSelection();
       final List<PitchModel> pitchList = await _repository.fetchPitch(
         diameter: metricUserSelection.diameter!,
         language: _languageBloc.state.enumLang.name,
       );
-      emit(state.copyWith(
-          enumPageStatus: EnumStatus.success, pitches: pitchList));
+      emit(
+        state.copyWith(enumPageStatus: EnumStatus.success, pitches: pitchList),
+      );
     } catch (e, s) {
       _logger.e('Error loading pitch', error: e, stackTrace: s);
 
@@ -52,13 +53,12 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
   Future<void> preparationNavigation(PitchModel selectedPitch) async {
     try {
       await _localStorage.updateMetricUserSelection(
-        (MetricUserSelection current) => current.copyWith(
-          id: selectedPitch.id,
-          pitch: selectedPitch.pitch,
-        ),
+        (MetricUserSelection current) =>
+            current.copyWith(id: selectedPitch.id, pitch: selectedPitch.pitch),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(
+        state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation),
+      );
     } catch (e, s) {
       _logger.e('Error updating pitch selection', error: e, stackTrace: s);
 
@@ -71,15 +71,16 @@ class PitchBloc extends Cubit<PitchState> with BlocIgnoreEmitAfterClosed {
     final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading pitches.'
         : 'Произошла ошибка при загрузке шагов резьбы.';
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         enumPageStatus: EnumStatus.error,
         errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumNavigationStatus: EnumNavigationStatus.initial,
+      ),
+    );
   }
 
   void resetNavigationStatus() {
-    emit(state.copyWith(
-      enumNavigationStatus: EnumNavigationStatus.initial,
-    ));
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

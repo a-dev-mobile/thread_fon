@@ -11,17 +11,16 @@ class PipeDiameterRepository {
   final ApiService _apiService;
 
   PipeDiameterRepository({required ApiService apiService})
-      : _apiService = apiService;
+    : _apiService = apiService;
 
   Future<PipeDiameterModel> fetchDiameters() async {
     try {
-      final Response response = await _apiService.get(
-        '/v1/pipe/diameters',
-      );
+      final Response response = await _apiService.get('/v1/pipe/diameters');
 
       if (response.statusCode == 200) {
         return PipeDiameterModel.fromJson(
-            response.data as Map<String, dynamic>);
+          response.data as Map<String, dynamic>,
+        );
       } else {
         _logger.e(
           'Failed to fetch diameters',
@@ -30,11 +29,7 @@ class PipeDiameterRepository {
         throw Exception('Failed to fetch diameters');
       }
     } catch (e, s) {
-      _logger.e(
-        'Error fetching diameters',
-        error: e,
-        stackTrace: s,
-      );
+      _logger.e('Error fetching diameters', error: e, stackTrace: s);
       Error.throwWithStackTrace(e, s);
     }
   }

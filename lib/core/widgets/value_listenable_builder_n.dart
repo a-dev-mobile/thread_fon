@@ -2,11 +2,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-typedef ValueListenableBuilderNWidgetBuilder<T> = Widget Function(
-  BuildContext context,
-  List<T> values,
-  Widget? child,
-);
+typedef ValueListenableBuilderNWidgetBuilder<T> =
+    Widget Function(BuildContext context, List<T> values, Widget? child);
 
 class ValueListenableBuilderN<T> extends StatefulWidget {
   const ValueListenableBuilderN({
@@ -31,8 +28,9 @@ class _ValueListenableBuilderNState<T>
   @override
   void initState() {
     super.initState();
-    _currentValues =
-        widget.listenable.map((ValueListenable<T> e) => e.value).toList();
+    _currentValues = widget.listenable
+        .map((ValueListenable<T> e) => e.value)
+        .toList();
     for (final ValueListenable<T> listenable in widget.listenable) {
       listenable.addListener(_updateValues);
     }
@@ -45,8 +43,9 @@ class _ValueListenableBuilderNState<T>
       for (final ValueListenable<T> listenable in oldWidget.listenable) {
         listenable.removeListener(_updateValues);
       }
-      _currentValues =
-          widget.listenable.map((ValueListenable<T> e) => e.value).toList();
+      _currentValues = widget.listenable
+          .map((ValueListenable<T> e) => e.value)
+          .toList();
       for (final ValueListenable<T> listenable in widget.listenable) {
         listenable.addListener(_updateValues);
       }
@@ -63,8 +62,9 @@ class _ValueListenableBuilderNState<T>
 
   void _updateValues() {
     setState(() {
-      _currentValues =
-          widget.listenable.map((ValueListenable<T> e) => e.value).toList();
+      _currentValues = widget.listenable
+          .map((ValueListenable<T> e) => e.value)
+          .toList();
     });
   }
 

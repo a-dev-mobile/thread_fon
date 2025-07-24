@@ -38,8 +38,9 @@ class _MetricInfoState extends State<MetricInfoScreen> {
   void initState() {
     super.initState();
     final ApiService apiService = context.read<ApiService>();
-    final MetricInfoRepository infoRepository =
-        MetricInfoRepository(apiService: apiService);
+    final MetricInfoRepository infoRepository = MetricInfoRepository(
+      apiService: apiService,
+    );
     final LocalStorage localStorage = context.read<LocalStorage>();
     final LanguageBloc languageBloc = context.read<LanguageBloc>();
     final ThemeBloc themeBloc = context.read<ThemeBloc>();
@@ -54,10 +55,7 @@ class _MetricInfoState extends State<MetricInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => _bloc,
-      child: const _MetricInfoView(),
-    );
+    return BlocProvider(create: (_) => _bloc, child: const _MetricInfoView());
   }
 }
 
@@ -117,10 +115,10 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
                       : state.svgDataNoDimensions;
 
                   if (svgDataToSend != null) {
-                    context.pushNamed(MetricFullScreenSvgView.name,
-                        extra: <String, String>{
-                          'svgData': svgDataToSend,
-                        });
+                    context.pushNamed(
+                      MetricFullScreenSvgView.name,
+                      extra: <String, String>{'svgData': svgDataToSend},
+                    );
                   } else {
                     // Handle the null case, perhaps show an error or a placeholder
                     _logger.e('SVG data is null when trying to expand');
@@ -141,8 +139,13 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     );
   }
 
-  Widget _buildContent(MetricInfoBloc bloc, BuildContext context,
-      double overlayHeight, double svgWidth, double svgHeight) {
+  Widget _buildContent(
+    MetricInfoBloc bloc,
+    BuildContext context,
+    double overlayHeight,
+    double svgWidth,
+    double svgHeight,
+  ) {
     final MetricInfoState state = bloc.state;
 
     switch (state.enumPageStatus) {
@@ -162,8 +165,12 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
     }
   }
 
-  Widget _buildSuccessContent(BuildContext context, MetricInfoState state,
-      MetricInfoBloc bloc, double overlayHeight) {
+  Widget _buildSuccessContent(
+    BuildContext context,
+    MetricInfoState state,
+    MetricInfoBloc bloc,
+    double overlayHeight,
+  ) {
     return CustomScrollView(
       slivers: <Widget>[
         ThreadInfoAppBar(
@@ -172,10 +179,7 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
           precision: state.precision,
           onSvgToggle: () => bloc.toggleSvgOverlay(),
           onUnitsPrecisionUpdate: (EnumUnits units, int precision) =>
-              bloc.updateUnitsPrecision(
-            units: units,
-            precision: precision,
-          ),
+              bloc.updateUnitsPrecision(units: units, precision: precision),
         ),
         SliverPadding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -185,19 +189,13 @@ class _MetricInfoViewState extends State<_MetricInfoView> {
               const Divider(),
               MetricInfoDiametersParameters(info: state.model!),
               const Divider(),
-              MetricInfoParameters(
-                info: state.model!,
-              ),
+              MetricInfoParameters(info: state.model!),
             ]),
           ),
         ),
         // Add extra space when overlay is visible
         if (state.isSvgOverlayVisible)
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: overlayHeight,
-            ),
-          ),
+          SliverToBoxAdapter(child: SizedBox(height: overlayHeight)),
       ],
     );
   }

@@ -20,7 +20,9 @@ class ThreadTypeChoiceCard extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     // Определяем цвет для SVG в зависимости от темы
     final Color svgColor = theme.brightness == Brightness.dark
-        ? theme.colorScheme.inverseSurface // Цвет для тёмной темы
+        ? theme
+              .colorScheme
+              .inverseSurface // Цвет для тёмной темы
         : theme.colorScheme.primary; // Цвет для светлой темы
 
     return MyCard(
@@ -37,9 +39,9 @@ class ThreadTypeChoiceCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             label.toUpperCase(),
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
         ],

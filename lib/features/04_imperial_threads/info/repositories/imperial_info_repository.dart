@@ -9,9 +9,8 @@ final LogService _logger = LogService('imperial_info_repository');
 const String _baseUrl = '/v2/imperial';
 
 class ImperialInfoRepository {
-  ImperialInfoRepository({
-    required ApiService apiService,
-  }) : _apiService = apiService;
+  ImperialInfoRepository({required ApiService apiService})
+    : _apiService = apiService;
 
   final ApiService _apiService;
 

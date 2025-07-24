@@ -6,10 +6,7 @@ import 'package:threadfon/features/04_imperial_threads/info/models/imperial_info
 class ImperialInfoMainParameters extends StatelessWidget {
   final ImperialInfoModel info;
 
-  const ImperialInfoMainParameters({
-    required this.info,
-    super.key,
-  });
+  const ImperialInfoMainParameters({required this.info, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,31 +16,31 @@ class ImperialInfoMainParameters extends StatelessWidget {
           Text(
             info.designation1,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
             info.designation2,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
             info.description,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8.0),
           Text(
             info.unit,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16.0),
           const Divider(),

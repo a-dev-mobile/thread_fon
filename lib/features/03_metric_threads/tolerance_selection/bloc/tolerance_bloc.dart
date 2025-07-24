@@ -24,10 +24,10 @@ class ToleranceBloc extends Cubit<ToleranceState>
     required ToleranceRepository repository,
     required LocalStorage localStorage,
     required LanguageBloc languageBloc,
-  })  : _repository = repository,
-        _localStorage = localStorage,
-        _languageBloc = languageBloc,
-        super(const ToleranceState());
+  }) : _repository = repository,
+       _localStorage = localStorage,
+       _languageBloc = languageBloc,
+       super(const ToleranceState());
 
   final ToleranceRepository _repository;
   final LocalStorage _localStorage;
@@ -36,16 +36,20 @@ class ToleranceBloc extends Cubit<ToleranceState>
   Future<void> loadTolerances() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final MetricUserSelection metricUserSelection =
-          await _localStorage.getMetricUserSelection();
-      final CoreUserSelection coreUserSelection =
-          await _localStorage.getCoreUserSelection();
+      final MetricUserSelection metricUserSelection = await _localStorage
+          .getMetricUserSelection();
+      final CoreUserSelection coreUserSelection = await _localStorage
+          .getCoreUserSelection();
       final List<ToleranceModel> tolerances = await _repository.fetchTolerances(
         id: metricUserSelection.id!,
         threadType: coreUserSelection.threadType.name,
       );
-      emit(state.copyWith(
-          enumPageStatus: EnumStatus.success, tolerances: tolerances));
+      emit(
+        state.copyWith(
+          enumPageStatus: EnumStatus.success,
+          tolerances: tolerances,
+        ),
+      );
     } catch (e, s) {
       _logger.e('Error loading tolerances', error: e, stackTrace: s);
 
@@ -56,12 +60,12 @@ class ToleranceBloc extends Cubit<ToleranceState>
   Future<void> preparationNavigation(ToleranceModel selectedTolerance) async {
     try {
       await _localStorage.updateMetricUserSelection(
-        (MetricUserSelection current) => current.copyWith(
-          tolerance: selectedTolerance.tolerance,
-        ),
+        (MetricUserSelection current) =>
+            current.copyWith(tolerance: selectedTolerance.tolerance),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(
+        state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation),
+      );
     } catch (e, s) {
       _logger.e('Error updating tolerance selection', error: e, stackTrace: s);
 
@@ -74,15 +78,16 @@ class ToleranceBloc extends Cubit<ToleranceState>
     final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading tolerances.'
         : 'Произошла ошибка при загрузке допусков.';
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         enumPageStatus: EnumStatus.error,
         errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumNavigationStatus: EnumNavigationStatus.initial,
+      ),
+    );
   }
 
   void resetNavigationStatus() {
-    emit(state.copyWith(
-      enumNavigationStatus: EnumNavigationStatus.initial,
-    ));
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

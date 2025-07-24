@@ -6,10 +6,7 @@ import 'package:threadfon/features/06_pipe_threads/info/models/pipe_info_model.d
 class PipeAdditionalInfo extends StatelessWidget {
   final List<AdditionalInfo> list;
 
-  const PipeAdditionalInfo({
-    required this.list,
-    super.key,
-  });
+  const PipeAdditionalInfo({required this.list, super.key});
 
   @override
   Widget build(BuildContext context) {

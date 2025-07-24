@@ -26,9 +26,9 @@ class ImperialToleranceChoiceCard extends StatelessWidget {
         title: Text(
           tolerance.formatted.fractional,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
         ),
         subtitle: isEqual
             ? null

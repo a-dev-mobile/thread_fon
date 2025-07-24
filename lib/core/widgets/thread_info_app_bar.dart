@@ -28,9 +28,9 @@ class ThreadInfoAppBar extends StatelessWidget {
     return SliverAppBar(
       title: Text(
         localization.threads_info,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+        style: Theme.of(
+          context,
+        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
       ),
       floating: true,
       snap: true,
@@ -105,9 +105,11 @@ class _UnitsPrecisionDialogState extends State<UnitsPrecisionDialog> {
                 items: EnumUnits.values.map((EnumUnits units) {
                   return DropdownMenuItem<EnumUnits>(
                     value: units,
-                    child: Text(units == EnumUnits.mm
-                        ? localization.mm_short
-                        : localization.inch),
+                    child: Text(
+                      units == EnumUnits.mm
+                          ? localization.mm_short
+                          : localization.inch,
+                    ),
                   );
                 }).toList(),
                 onChanged: (EnumUnits? newValue) {

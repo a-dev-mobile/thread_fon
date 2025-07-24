@@ -5,11 +5,7 @@ class OverlayButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onPressed;
 
-  const OverlayButton({
-    required this.icon,
-    required this.onPressed,
-    super.key,
-  });
+  const OverlayButton({required this.icon, required this.onPressed, super.key});
 
   // Method to get button background color based on theme
   Color _getButtonBackgroundColor(BuildContext context) {
@@ -25,11 +21,7 @@ class OverlayButton extends StatelessWidget {
         color: _getButtonBackgroundColor(context),
         shape: BoxShape.circle,
       ),
-      child: IconButton(
-        icon: Icon(icon),
-        onPressed: onPressed,
-        iconSize: 20.0,
-      ),
+      child: IconButton(icon: Icon(icon), onPressed: onPressed, iconSize: 20.0),
     );
   }
 }

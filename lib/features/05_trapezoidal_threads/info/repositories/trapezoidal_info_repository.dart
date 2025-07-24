@@ -10,9 +10,8 @@ final LogService _logger = LogService('trapezoidal_info_repository');
 const String _baseUrl = '/v1/trapezoidal';
 
 class TrapezoidalInfoRepository {
-  TrapezoidalInfoRepository({
-    required ApiService apiService,
-  }) : _apiService = apiService;
+  TrapezoidalInfoRepository({required ApiService apiService})
+    : _apiService = apiService;
 
   final ApiService _apiService;
 

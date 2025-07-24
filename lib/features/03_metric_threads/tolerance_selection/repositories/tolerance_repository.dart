@@ -11,7 +11,7 @@ class ToleranceRepository {
   final ApiService _apiService;
 
   ToleranceRepository({required ApiService apiService})
-      : _apiService = apiService;
+    : _apiService = apiService;
 
   Future<List<ToleranceModel>> fetchTolerances({
     required int id,
@@ -20,17 +20,15 @@ class ToleranceRepository {
     try {
       final Response response = await _apiService.get(
         '/v1/metric/tolerance',
-        queryParameters: <String, dynamic>{
-          'type': threadType,
-          'id': id,
-        },
+        queryParameters: <String, dynamic>{'type': threadType, 'id': id},
       );
 
       if (response.statusCode == 200) {
         final List<dynamic> rawData = response.data as List<dynamic>;
         return rawData
             .map(
-                (json) => ToleranceModel.fromJson(json as Map<String, dynamic>))
+              (json) => ToleranceModel.fromJson(json as Map<String, dynamic>),
+            )
             .toList();
       } else {
         _logger.e(
@@ -40,11 +38,7 @@ class ToleranceRepository {
         throw Exception('Failed to fetch tolerances');
       }
     } catch (e, s) {
-      _logger.e(
-        'Error fetching tolerances',
-        error: e,
-        stackTrace: s,
-      );
+      _logger.e('Error fetching tolerances', error: e, stackTrace: s);
       Error.throwWithStackTrace(e, s);
     }
   }

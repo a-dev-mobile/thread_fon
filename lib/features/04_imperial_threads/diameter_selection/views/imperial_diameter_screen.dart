@@ -35,8 +35,9 @@ class _ImperialDiameterScreenState extends State<ImperialDiameterScreen> {
   void initState() {
     super.initState();
     final ApiService apiService = context.read<ApiService>();
-    final DiameterRepository diameterRepository =
-        DiameterRepository(apiService: apiService);
+    final DiameterRepository diameterRepository = DiameterRepository(
+      apiService: apiService,
+    );
     final LocalStorage localStorage = context.read<LocalStorage>();
     final LanguageBloc languageBloc = context.read<LanguageBloc>();
 
@@ -98,16 +99,17 @@ class _ImperialDiameterViewState extends State<_ImperialDiameterView> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(localization.select_diameter),
-        ),
+        appBar: AppBar(title: Text(localization.select_diameter)),
         body: Stack(
           children: <Widget>[
             BlocBuilder<ImperialDiameterBloc, ImperialDiameterState>(
-              buildWhen: (ImperialDiameterState previous,
-                      ImperialDiameterState current) =>
-                  previous.enumPageStatus != current.enumPageStatus ||
-                  previous.diameters != current.diameters,
+              buildWhen:
+                  (
+                    ImperialDiameterState previous,
+                    ImperialDiameterState current,
+                  ) =>
+                      previous.enumPageStatus != current.enumPageStatus ||
+                      previous.diameters != current.diameters,
               builder: (BuildContext context, ImperialDiameterState state) {
                 switch (state.enumPageStatus) {
                   case EnumStatus.loading:

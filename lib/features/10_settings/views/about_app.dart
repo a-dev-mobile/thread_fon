@@ -34,14 +34,13 @@ class _AboutAppState extends State<AboutApp> {
     final GeneratedLocalization localization = context.l10n;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(localization.about_app),
-      ),
+      appBar: AppBar(title: Text(localization.about_app)),
       body: Center(
         // Центрируем содержимое по горизонтали
         child: ConstrainedBox(
           constraints: const BoxConstraints(
-              maxWidth: 600), // Ограничиваем максимальную ширину
+            maxWidth: 600,
+          ), // Ограничиваем максимальную ширину
           child: SingleChildScrollView(
             // Обеспечиваем прокрутку на маленьких экранах
             padding: const EdgeInsets.all(16.0),
@@ -69,28 +68,20 @@ class _AboutAppState extends State<AboutApp> {
                 // Версия приложения
                 Text(
                   '${localization.version}: $_version',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                  ),
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                 ),
                 const SizedBox(height: 16),
                 // Описание приложения
                 Text(
                   localization.app_description,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+                  style: const TextStyle(fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
                 // Дополнительная информация или ссылки
                 Text(
                   '© ${DateTime.now().year} ThreadFon',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],
             ),

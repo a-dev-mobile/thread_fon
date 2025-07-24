@@ -27,10 +27,10 @@ class TrapezoidalToleranceBloc extends Cubit<TrapezoidalToleranceState>
     required TrapezoidalToleranceRepository repository,
     required LocalStorage localStorage,
     required LanguageBloc languageBloc,
-  })  : _repository = repository,
-        _localStorage = localStorage,
-        _languageBloc = languageBloc,
-        super(const TrapezoidalToleranceState());
+  }) : _repository = repository,
+       _localStorage = localStorage,
+       _languageBloc = languageBloc,
+       super(const TrapezoidalToleranceState());
 
   final TrapezoidalToleranceRepository _repository;
   final LocalStorage _localStorage;
@@ -39,21 +39,23 @@ class TrapezoidalToleranceBloc extends Cubit<TrapezoidalToleranceState>
   Future<void> load() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final TrapezoidalUserSelection threadUserSelection =
-          await _localStorage.getTrapezoidalUserSelection();
-      final CoreUserSelection coreUserSelection =
-          await _localStorage.getCoreUserSelection();
-      final TrapezoidalToleranceModel tolerancesResponse =
-          await _repository.fetchTolerances(
-        pitch: threadUserSelection.pitch!,
-        diameter: threadUserSelection.diameter!,
+      final TrapezoidalUserSelection threadUserSelection = await _localStorage
+          .getTrapezoidalUserSelection();
+      final CoreUserSelection coreUserSelection = await _localStorage
+          .getCoreUserSelection();
+      final TrapezoidalToleranceModel tolerancesResponse = await _repository
+          .fetchTolerances(
+            pitch: threadUserSelection.pitch!,
+            diameter: threadUserSelection.diameter!,
+          );
+      emit(
+        state.copyWith(
+          enumPageStatus: EnumStatus.success,
+          femaleTolerances: tolerancesResponse.female,
+          maleTolerances: tolerancesResponse.male,
+          selectedThreadType: coreUserSelection.threadType,
+        ),
       );
-      emit(state.copyWith(
-        enumPageStatus: EnumStatus.success,
-        femaleTolerances: tolerancesResponse.female,
-        maleTolerances: tolerancesResponse.male,
-        selectedThreadType: coreUserSelection.threadType,
-      ));
     } catch (e, s) {
       _logger.e('Error loading tolerances', error: e, stackTrace: s);
       _setErrorState();
@@ -61,15 +63,17 @@ class TrapezoidalToleranceBloc extends Cubit<TrapezoidalToleranceState>
   }
 
   Future<void> preparationNavigation(
-      TrapezoidalToleranceItem selectedTolerance, bool isFemale) async {
+    TrapezoidalToleranceItem selectedTolerance,
+    bool isFemale,
+  ) async {
     try {
       await _localStorage.updateTrapezoidalUserSelection(
-        (TrapezoidalUserSelection current) => current.copyWith(
-          tolerance: selectedTolerance.tolerance,
-        ),
+        (TrapezoidalUserSelection current) =>
+            current.copyWith(tolerance: selectedTolerance.tolerance),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(
+        state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation),
+      );
     } catch (e, s) {
       _logger.e('Error updating tolerance selection', error: e, stackTrace: s);
       _setErrorState();
@@ -79,9 +83,7 @@ class TrapezoidalToleranceBloc extends Cubit<TrapezoidalToleranceState>
   Future<void> updateGenderSelection(EnumThreadMaleFemale threadType) async {
     try {
       await _localStorage.updateCoreUserSelection(
-        (CoreUserSelection current) => current.copyWith(
-          threadType: threadType,
-        ),
+        (CoreUserSelection current) => current.copyWith(threadType: threadType),
       );
       emit(state.copyWith(selectedThreadType: threadType));
     } catch (e, s) {
@@ -94,15 +96,16 @@ class TrapezoidalToleranceBloc extends Cubit<TrapezoidalToleranceState>
     final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading tolerances.'
         : 'Произошла ошибка при загрузке допусков.';
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         enumPageStatus: EnumStatus.error,
         errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumNavigationStatus: EnumNavigationStatus.initial,
+      ),
+    );
   }
 
   void resetNavigationStatus() {
-    emit(state.copyWith(
-      enumNavigationStatus: EnumNavigationStatus.initial,
-    ));
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
   }
 }

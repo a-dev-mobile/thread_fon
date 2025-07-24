@@ -27,11 +27,11 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
     required LocalStorage localStorage,
     required LanguageBloc languageBloc,
     required ThemeBloc themeBloc,
-  })  : _repository = repository,
-        _localStorage = localStorage,
-        _languageBloc = languageBloc,
-        _themeBloc = themeBloc,
-        super(const ImperialInfoState());
+  }) : _repository = repository,
+       _localStorage = localStorage,
+       _languageBloc = languageBloc,
+       _themeBloc = themeBloc,
+       super(const ImperialInfoState());
 
   final ImperialInfoRepository _repository;
   final ThemeBloc _themeBloc;
@@ -39,39 +39,43 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
   final LanguageBloc _languageBloc;
 
   Future<void> load() async {
-    emit(state.copyWith(
-      enumPageStatus: EnumStatus.loading,
-      svgRequestStatus: EnumStatus.loading,
-    ));
+    emit(
+      state.copyWith(
+        enumPageStatus: EnumStatus.loading,
+        svgRequestStatus: EnumStatus.loading,
+      ),
+    );
     try {
-      final ImperialUserSelection imperialUserSelection =
-          await _localStorage.getImperialUserSelection();
-      final CoreUserSelection coreUserSelection =
-          await _localStorage.getCoreUserSelection();
-      final ImperialInfoModel model =
-          await _fetchModel(coreUserSelection, imperialUserSelection);
-      emit(state.copyWith(
-        enumPageStatus: EnumStatus.success,
-        model: model,
-        units: imperialUserSelection.units,
-        precision: imperialUserSelection.precision,
-        isSvgOverlayVisible: imperialUserSelection.isSvgOverlayVisible,
-      ));
+      final ImperialUserSelection imperialUserSelection = await _localStorage
+          .getImperialUserSelection();
+      final CoreUserSelection coreUserSelection = await _localStorage
+          .getCoreUserSelection();
+      final ImperialInfoModel model = await _fetchModel(
+        coreUserSelection,
+        imperialUserSelection,
+      );
+      emit(
+        state.copyWith(
+          enumPageStatus: EnumStatus.success,
+          model: model,
+          units: imperialUserSelection.units,
+          precision: imperialUserSelection.precision,
+          isSvgOverlayVisible: imperialUserSelection.isSvgOverlayVisible,
+        ),
+      );
 
       // Start fetching SVG data in the background
       // _fetchSvgData(coreUserSelection, imperialUserSelection);
     } catch (e, s) {
-      _logger.e(
-        'Error loading info',
-        error: e,
-        stackTrace: s,
-      );
+      _logger.e('Error loading info', error: e, stackTrace: s);
       _setErrorState();
     }
   }
 
-  Future<ImperialInfoModel> _fetchModel(CoreUserSelection coreUserSelection,
-      ImperialUserSelection imperialUserSelection) async {
+  Future<ImperialInfoModel> _fetchModel(
+    CoreUserSelection coreUserSelection,
+    ImperialUserSelection imperialUserSelection,
+  ) async {
     return await _repository.fetchImperialInfo(
       diameter: imperialUserSelection.diameter!,
       tpi: imperialUserSelection.tpi!,
@@ -83,8 +87,10 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
     );
   }
 
-  Future<void> _fetchSvgData(CoreUserSelection coreUserSelection,
-      ImperialUserSelection imperialUserSelection) async {
+  Future<void> _fetchSvgData(
+    CoreUserSelection coreUserSelection,
+    ImperialUserSelection imperialUserSelection,
+  ) async {
     emit(state.copyWith(svgRequestStatus: EnumStatus.loading));
     try {
       final String theme = _themeBloc.state.themeMode.name;
@@ -101,61 +107,67 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
         theme: theme,
       );
 
-      final Future<String> fetchSvgAnnotations =
-          _repository.fetchSvgAnnotations(
-        type: coreUserSelection.threadType.name,
-        language: language,
-        theme: theme,
-      );
+      final Future<String> fetchSvgAnnotations = _repository
+          .fetchSvgAnnotations(
+            type: coreUserSelection.threadType.name,
+            language: language,
+            theme: theme,
+          );
 
       final List<String> results = await Future.wait<String>(<Future<String>>[
         fetchSvgDimensions,
         fetchSvgAnnotations,
       ]);
 
-      emit(state.copyWith(
-        svgDimensions: results.first,
-        svgAnnotations: results[1],
-        svgRequestStatus: EnumStatus.success,
-      ));
+      emit(
+        state.copyWith(
+          svgDimensions: results.first,
+          svgAnnotations: results[1],
+          svgRequestStatus: EnumStatus.success,
+        ),
+      );
     } catch (e, s) {
       _logger.e('Error fetching SVG data', error: e, stackTrace: s);
-      emit(state.copyWith(
-        svgRequestStatus: EnumStatus.error,
-        svgErrorMsg: 'Error loading SVG data',
-      ));
+      emit(
+        state.copyWith(
+          svgRequestStatus: EnumStatus.error,
+          svgErrorMsg: 'Error loading SVG data',
+        ),
+      );
     }
   }
 
   Future<void> preparationNavigation() async {
     try {
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(
+        state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation),
+      );
       await Future<void>.delayed(const Duration(milliseconds: 100));
       emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
     } catch (e, s) {
-      _logger.e(
-        'Error updating selection',
-        error: e,
-        stackTrace: s,
-      );
+      _logger.e('Error updating selection', error: e, stackTrace: s);
       _setErrorState();
     }
   }
 
-  Future<void> updateUnitsPrecision(
-      {required EnumUnits units, required int precision}) async {
+  Future<void> updateUnitsPrecision({
+    required EnumUnits units,
+    required int precision,
+  }) async {
     await _localStorage.updateImperialUserSelection(
-        (ImperialUserSelection current) =>
-            current.copyWith(units: units, precision: precision));
+      (ImperialUserSelection current) =>
+          current.copyWith(units: units, precision: precision),
+    );
     await load();
   }
 
   void toggleSvgOverlay() {
     bool isSvgOverlayVisible = !state.isSvgOverlayVisible;
     emit(state.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
-    _localStorage.updateImperialUserSelection((ImperialUserSelection current) =>
-        current.copyWith(isSvgOverlayVisible: isSvgOverlayVisible));
+    _localStorage.updateImperialUserSelection(
+      (ImperialUserSelection current) =>
+          current.copyWith(isSvgOverlayVisible: isSvgOverlayVisible),
+    );
   }
 
   void toggleDimensions() {
@@ -167,9 +179,12 @@ class ImperialInfoBloc extends Cubit<ImperialInfoState>
     final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading info.'
         : 'Произошла ошибка при загрузке информации.';
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         enumPageStatus: EnumStatus.error,
         errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumNavigationStatus: EnumNavigationStatus.initial,
+      ),
+    );
   }
 }

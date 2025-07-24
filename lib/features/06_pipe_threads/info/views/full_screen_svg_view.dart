@@ -9,10 +9,7 @@ class PipeFullScreenSvgView extends StatefulWidget {
   static const String name = 'FullScreenSvgView';
   final String svgData;
 
-  const PipeFullScreenSvgView({
-    required this.svgData,
-    super.key,
-  });
+  const PipeFullScreenSvgView({required this.svgData, super.key});
 
   @override
   _PipeFullScreenSvgViewState createState() => _PipeFullScreenSvgViewState();
@@ -46,10 +43,7 @@ class _PipeFullScreenSvgViewState extends State<PipeFullScreenSvgView> {
             backgroundDecoration: BoxDecoration(
               color: Theme.of(context).scaffoldBackgroundColor,
             ),
-            child: SvgPicture.string(
-              widget.svgData,
-              fit: BoxFit.contain,
-            ),
+            child: SvgPicture.string(widget.svgData, fit: BoxFit.contain),
           ),
           // Back button
           Positioned(

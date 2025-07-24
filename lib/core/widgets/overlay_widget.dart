@@ -28,12 +28,7 @@ class _OverlayScreenState extends State<OverlayScreen> {
     // final location = widget.goRouterState.uri.toString();
 
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          widget.child,
-          const ConnectivityBanner(),
-        ],
-      ),
+      body: Stack(children: <Widget>[widget.child, const ConnectivityBanner()]),
     );
   }
 }

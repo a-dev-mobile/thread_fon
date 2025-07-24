@@ -12,7 +12,7 @@ class TrapezoidalToleranceRepository {
   final ApiService _apiService;
 
   TrapezoidalToleranceRepository({required ApiService apiService})
-      : _apiService = apiService;
+    : _apiService = apiService;
 
   Future<TrapezoidalToleranceModel> fetchTolerances({
     required String pitch,
@@ -29,7 +29,8 @@ class TrapezoidalToleranceRepository {
 
       if (response.statusCode == 200) {
         return TrapezoidalToleranceModel.fromJson(
-            response.data as Map<String, dynamic>);
+          response.data as Map<String, dynamic>,
+        );
       } else {
         _logger.e(
           'Failed to fetch tolerances',
@@ -38,11 +39,7 @@ class TrapezoidalToleranceRepository {
         throw Exception('Failed to fetch tolerances');
       }
     } catch (e, s) {
-      _logger.e(
-        'Error fetching tolerances',
-        error: e,
-        stackTrace: s,
-      );
+      _logger.e('Error fetching tolerances', error: e, stackTrace: s);
       Error.throwWithStackTrace(e, s);
     }
   }

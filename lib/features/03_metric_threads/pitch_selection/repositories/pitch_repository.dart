@@ -38,11 +38,7 @@ class PitchRepository {
         throw Exception('Failed to fetch pitch');
       }
     } catch (e, s) {
-      _logger.e(
-        'Error fetching pitch',
-        error: e,
-        stackTrace: s,
-      );
+      _logger.e('Error fetching pitch', error: e, stackTrace: s);
       Error.throwWithStackTrace(e, s);
     }
   }

@@ -26,10 +26,10 @@ class TrapezoidalThreadBloc extends Cubit<TrapezoidalThreadState>
     required TrapezoidalThreadRepository repository,
     required LocalStorage localStorage,
     required LanguageBloc languageBloc, // Added LanguageBloc
-  })  : _repository = repository,
-        _localStorage = localStorage,
-        _languageBloc = languageBloc, // Added field
-        super(const TrapezoidalThreadState());
+  }) : _repository = repository,
+       _localStorage = localStorage,
+       _languageBloc = languageBloc, // Added field
+       super(const TrapezoidalThreadState());
 
   final TrapezoidalThreadRepository _repository;
   final LocalStorage _localStorage;
@@ -38,16 +38,18 @@ class TrapezoidalThreadBloc extends Cubit<TrapezoidalThreadState>
   Future<void> loadThreads() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final List<TrapezoidalThreadModel> threads =
-          await _repository.fetchThreads();
-      final double scrollPosition =
-          await _localStorage.getTrapezoidalScrollPosition();
+      final List<TrapezoidalThreadModel> threads = await _repository
+          .fetchThreads();
+      final double scrollPosition = await _localStorage
+          .getTrapezoidalScrollPosition();
 
-      emit(state.copyWith(
-        enumPageStatus: EnumStatus.success,
-        threads: threads,
-        scrollPosition: scrollPosition,
-      ));
+      emit(
+        state.copyWith(
+          enumPageStatus: EnumStatus.success,
+          threads: threads,
+          scrollPosition: scrollPosition,
+        ),
+      );
     } catch (e, s) {
       _logger.e('Error loading trapezoidal threads', error: e, stackTrace: s);
       _setErrorState();
@@ -55,17 +57,18 @@ class TrapezoidalThreadBloc extends Cubit<TrapezoidalThreadState>
   }
 
   Future<void> preparationNavigation(
-      TrapezoidalThreadModel model, double scrollPosition) async {
+    TrapezoidalThreadModel model,
+    double scrollPosition,
+  ) async {
     await _localStorage.setTrapezoidalScrollPosition(scrollPosition);
     try {
       await _localStorage.updateTrapezoidalUserSelection(
-        (TrapezoidalUserSelection current) => current.copyWith(
-          diameter: model.diameter,
-          pitch: model.pitch,
-        ),
+        (TrapezoidalUserSelection current) =>
+            current.copyWith(diameter: model.diameter, pitch: model.pitch),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(
+        state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation),
+      );
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
       _setErrorState();
@@ -73,9 +76,7 @@ class TrapezoidalThreadBloc extends Cubit<TrapezoidalThreadState>
   }
 
   void resetNavigationStatus() {
-    emit(state.copyWith(
-      enumNavigationStatus: EnumNavigationStatus.initial,
-    ));
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
   }
 
   void _setErrorState() {
@@ -83,9 +84,12 @@ class TrapezoidalThreadBloc extends Cubit<TrapezoidalThreadState>
     final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading thread data.'
         : 'Произошла ошибка при загрузке данных резьбы.';
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         enumPageStatus: EnumStatus.error,
         errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumNavigationStatus: EnumNavigationStatus.initial,
+      ),
+    );
   }
 }

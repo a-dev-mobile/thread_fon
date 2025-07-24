@@ -23,10 +23,10 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState>
     required DiameterRepository repository,
     required LocalStorage localStorage,
     required LanguageBloc languageBloc,
-  })  : _repository = repository,
-        _localStorage = localStorage,
-        _languageBloc = languageBloc,
-        super(const ImperialDiameterState());
+  }) : _repository = repository,
+       _localStorage = localStorage,
+       _languageBloc = languageBloc,
+       super(const ImperialDiameterState());
 
   final DiameterRepository _repository;
   final LocalStorage _localStorage;
@@ -35,16 +35,18 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState>
   Future<void> load() async {
     emit(state.copyWith(enumPageStatus: EnumStatus.loading));
     try {
-      final List<ImperialDiameterModel> diameters =
-          await _repository.fetchDiameters();
-      final double scrollPosition =
-          await _localStorage.getImperialScrollPosition();
+      final List<ImperialDiameterModel> diameters = await _repository
+          .fetchDiameters();
+      final double scrollPosition = await _localStorage
+          .getImperialScrollPosition();
 
-      emit(state.copyWith(
-        enumPageStatus: EnumStatus.success,
-        diameters: diameters,
-        scrollPosition: scrollPosition,
-      ));
+      emit(
+        state.copyWith(
+          enumPageStatus: EnumStatus.success,
+          diameters: diameters,
+          scrollPosition: scrollPosition,
+        ),
+      );
     } catch (e, s) {
       _logger.e('Error loading diameters', error: e, stackTrace: s);
 
@@ -53,7 +55,9 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState>
   }
 
   Future<void> preparationNavigation(
-      ImperialDiameterModel model, double scrollPosition) async {
+    ImperialDiameterModel model,
+    double scrollPosition,
+  ) async {
     await _localStorage.setImperialScrollPosition(scrollPosition);
     try {
       await _localStorage.updateImperialUserSelection(
@@ -63,8 +67,9 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState>
           series: model.series,
         ),
       );
-      emit(state.copyWith(
-          enumNavigationStatus: EnumNavigationStatus.navigation));
+      emit(
+        state.copyWith(enumNavigationStatus: EnumNavigationStatus.navigation),
+      );
     } catch (e, s) {
       _logger.e('Error updating selection', error: e, stackTrace: s);
 
@@ -73,9 +78,7 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState>
   }
 
   void resetNavigationStatus() {
-    emit(state.copyWith(
-      enumNavigationStatus: EnumNavigationStatus.initial,
-    ));
+    emit(state.copyWith(enumNavigationStatus: EnumNavigationStatus.initial));
   }
 
   void _setErrorState() {
@@ -83,9 +86,12 @@ class ImperialDiameterBloc extends Cubit<ImperialDiameterState>
     final String errorMsg = currentLang == EnumLang.en
         ? 'An error occurred while loading diameters.'
         : 'Произошла ошибка при загрузке диаметров.';
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         enumPageStatus: EnumStatus.error,
         errorMsg: errorMsg,
-        enumNavigationStatus: EnumNavigationStatus.initial));
+        enumNavigationStatus: EnumNavigationStatus.initial,
+      ),
+    );
   }
 }
