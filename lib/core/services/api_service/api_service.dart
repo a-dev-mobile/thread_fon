@@ -30,7 +30,8 @@ class ApiService {
     dio.httpClientAdapter = IOHttpClientAdapter(
       createHttpClient: () {
         final HttpClient client = HttpClient();
-        client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
         return client;
       },
     );
@@ -45,7 +46,6 @@ class ApiService {
 
     return this;
   }
-
 
   Future<Response<dynamic>> get(
     String path, {

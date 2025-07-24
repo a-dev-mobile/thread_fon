@@ -525,7 +525,6 @@ class LocalStorage {
   Future<void> setCurrentRoute(String route) =>
       _setValue<String>(key: _currentRouteKey, value: route);
 
-
   // ******************************
   // Универсальные методы для хранения и получения данных
 
