@@ -3,7 +3,8 @@ name: Android Build & Release
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    tags:
+      - '*.*.*+*'
     
 env:
   FLUTTER_VERSION: "3.29.2"
