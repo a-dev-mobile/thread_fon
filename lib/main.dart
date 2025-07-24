@@ -15,7 +15,6 @@ import 'package:threadfon/app/router/app_router.dart';
 import 'package:threadfon/app/theme/theme_bloc.dart';
 import 'package:threadfon/config/firebase_config.dart';
 import 'package:threadfon/core/services/api_service/api_service.dart';
-import 'package:threadfon/core/services/error_reporting/error_reporting_service.dart';
 import 'package:threadfon/core/services/local_storage/local_storage.dart';
 import 'package:threadfon/core/services/logging/app_bloc_observer.dart';
 import 'package:threadfon/core/services/logging/logger.dart';
@@ -56,9 +55,6 @@ Future<void> main() async {
         final String _ = await localStorage.ensureUserId();
 
         final ApiService apiService = await ApiService().init();
-        // Инициализация глобального экземпляра ErrorReportingService
-        await ErrorReportingService.initialize(
-            apiService: apiService, localStorage: localStorage);
         // Настройка глобального обработчика ошибок Flutter (сохранение существующей логики)
         FlutterError.onError = (FlutterErrorDetails details) {
           if (!kReleaseMode) {
@@ -70,15 +66,6 @@ Future<void> main() async {
               error: details.exception,
               stackTrace: details.stack ?? StackTrace.current,
               reportToServer: false);
-          // Отправка ошибки через глобальный экземпляр
-          globalErrorReporting.reportError(
-              error: details.exception,
-              stackTrace: details.stack,
-              customMessage: 'Flutter Framework Error',
-              additionalInfo: <String, dynamic>{
-                'context': 'Flutter Framework Error Handler',
-                'route': 'Unknown'
-              });
 
           // Также отправляем в Crashlytics
           FirebaseCrashlytics.instance.recordFlutterFatalError(details);

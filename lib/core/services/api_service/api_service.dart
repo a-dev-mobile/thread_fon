@@ -1,5 +1,7 @@
 // lib/src/common/services/api_service.dart
+import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:threadfon/config/env_config.dart';
 import 'package:threadfon/core/services/api_service/fallback_interceptor.dart';
 
@@ -24,6 +26,15 @@ class ApiService {
       },
     );
 
+    // Disable SSL certificate validation
+    dio.httpClientAdapter = IOHttpClientAdapter(
+      createHttpClient: () {
+        final HttpClient client = HttpClient();
+        client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+        return client;
+      },
+    );
+
     // Add fallback interceptor
     fallbackInterceptor = FallbackInterceptor(
       dio: dio,
@@ -34,6 +45,7 @@ class ApiService {
 
     return this;
   }
+
 
   Future<Response<dynamic>> get(
     String path, {

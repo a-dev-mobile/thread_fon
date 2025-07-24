@@ -40,8 +40,6 @@ class LocalStorage {
   static const String _currentUserIdKey = '_currentUserId';
   static const String _lastActivityTimestampKey = '_lastActivityTimestamp';
   static const String _currentRouteKey = '_currentRoute';
-  static const String _lastErrorTimestampKey = '_lastErrorTimestamp';
-  static const String _errorCountLastHourKey = '_errorCountLastHour';
 
   /// Инициализация SharedPreferences.
   Future<void> initialize() async {
@@ -527,21 +525,6 @@ class LocalStorage {
   Future<void> setCurrentRoute(String route) =>
       _setValue<String>(key: _currentRouteKey, value: route);
 
-  // Методы для работы с _lastErrorTimestamp
-
-  Future<String?> getLastErrorTimestamp() =>
-      _getValue<String>(key: _lastErrorTimestampKey);
-
-  Future<void> setLastErrorTimestamp(String timestamp) =>
-      _setValue<String>(key: _lastErrorTimestampKey, value: timestamp);
-
-  // Методы для работы с _errorCountLastHour
-
-  Future<int?> getErrorCountLastHour() =>
-      _getValue<int>(key: _errorCountLastHourKey);
-
-  Future<void> setErrorCountLastHour(int count) =>
-      _setValue<int>(key: _errorCountLastHourKey, value: count);
 
   // ******************************
   // Универсальные методы для хранения и получения данных

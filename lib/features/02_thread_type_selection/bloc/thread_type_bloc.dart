@@ -83,8 +83,6 @@ class ThreadTypeBloc extends Cubit<ThreadTypeState>
       _logger.e('Error updating thread type selection',
           error: e, stackTrace: s);
 
-      // Отправляем ошибку в ErrorReportingService
-
       _setErrorState();
     }
   }
