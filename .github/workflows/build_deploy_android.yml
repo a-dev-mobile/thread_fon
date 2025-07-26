@@ -11,7 +11,7 @@ env:
 
 jobs:
   build-android:
-    name: Build Android APK
+    name: Build Android APK & AAB
     runs-on: ubuntu-latest
     steps:
       # Подготовка окружения
@@ -54,13 +54,20 @@ jobs:
       - name: Generate code with build_runner
         run: dart run build_runner build --delete-conflicting-outputs --release
 
-      # Сборка APK
+      # Сборка APK и AAB
       - name: Build APK
         env:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
         run: flutter build apk --release --dart-define-from-file=env_dart/prod.json
+
+      - name: Build AAB for Google Play
+        env:
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        run: flutter build appbundle --release --dart-define-from-file=env_dart/prod.json
 
       # Подготовка артефактов и уведомлений
       - name: Get commit info
@@ -70,19 +77,26 @@ jobs:
           echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "date=$(git log -1 --format=%cd --date=format:'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
 
-      - name: Upload artifact
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: android-release
+          name: android-apk-release
           path: build/app/outputs/flutter-apk/app-release.apk
 
-      - name: Save release version
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-aab-release
+          path: build/app/outputs/bundle/release/app-release.aab
+
+      - name: Save release files
         run: |
           mkdir -p releases
-          cp build/app/outputs/flutter-apk/app-release.apk releases/android-${{ steps.commit-info.outputs.sha }}.apk
+          cp build/app/outputs/flutter-apk/app-release.apk releases/android-apk-${{ steps.commit-info.outputs.sha }}.apk
+          cp build/app/outputs/bundle/release/app-release.aab releases/android-aab-${{ steps.commit-info.outputs.sha }}.aab
 
       # Отправка уведомления в Telegram
-      - name: Send Telegram notification
+      - name: Send Telegram notification with APK
         run: |
           # Подготовка сообщения с информацией о сборке
           MESSAGE="🤖 Android Build Completed
@@ -90,7 +104,10 @@ jobs:
           Repo: ${{ github.repository }}
           Commit: ${{ steps.commit-info.outputs.sha }}
           Date: ${{ steps.commit-info.outputs.date }}
-          Message: ${{ steps.commit-info.outputs.message }}"
+          Message: ${{ steps.commit-info.outputs.message }}
+          
+          📦 APK for testing attached
+          📱 AAB ready for Google Play release"
           
           # Отправка текста
           curl -G \
@@ -98,8 +115,18 @@ jobs:
             --data-urlencode "text=$MESSAGE" \
             https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage
           
-          # Отправка файла
+          # Отправка APK файла
           curl -X POST \
             -F "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
             -F "document=@build/app/outputs/flutter-apk/app-release.apk" \
+            -F "caption=📦 APK for testing" \
+            https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument
+
+      - name: Send AAB to Telegram
+        run: |
+          # Отправка AAB файла
+          curl -X POST \
+            -F "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -F "document=@build/app/outputs/bundle/release/app-release.aab" \
+            -F "caption=📱 AAB for Google Play Store" \
             https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument

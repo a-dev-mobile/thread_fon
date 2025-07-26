@@ -58,6 +58,10 @@ jobs:
           # Environment config
           gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
           --output env_dart/prod.json env_dart/prod.json.gpg
+          
+          # Firebase config для iOS
+          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
+          --output ios/Runner/GoogleService-Info.plist ios/Runner/GoogleService-Info.plist.gpg
 
       # Генерация кода
       - name: Generate localization
@@ -72,7 +76,20 @@ jobs:
       - name: Prepare iOS build
         run: |
           flutter precache --ios
-          cd ios && pod install && cd ..
+          
+          # Очистка кэша CocoaPods и обновление зависимостей
+          cd ios
+          rm -rf Podfile.lock
+          rm -rf Pods/
+          rm -rf ~/.cocoapods/repos/trunk
+          
+          # Обновление репозиториев CocoaPods
+          pod repo update
+          
+          # Установка зависимостей с обновлением
+          pod install --repo-update
+          
+          cd ..
 
       # Настройка Fastlane
       - name: Configure Fastlane
@@ -174,6 +191,9 @@ jobs:
           # Подготовка Flutter 
           flutter build ios --release --no-codesign --dart-define-from-file=env_dart/prod.json
           
+          # Создание директории для IPA
+          mkdir -p build/ios/ipa
+          
           # Сборка через Fastlane
           cd ios && fastlane release
           
@@ -183,11 +203,11 @@ jobs:
       # Выгрузка в TestFlight
       - name: Upload to TestFlight
         run: |
-          xcrun notarytool submit build/ios/ipa/app-release.ipa \
-            --key-id ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }} \
-            --issuer-id ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }} \
-            --key private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}.p8 \
-            --wait
+          xcrun altool --upload-app \
+            --type ios \
+            --file build/ios/ipa/app-release.ipa \
+            --apiKey ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }} \
+            --apiIssuer ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
 
       # Подготовка артефактов и уведомлений
       - name: Get commit info
@@ -211,25 +231,25 @@ jobs:
       # Отправка уведомления в Telegram
       - name: Send Telegram notification
         run: |
-          cat << EOF > message.txt
-          🍏 iOS Build Completed
+          MESSAGE="🍏 iOS Build Completed
 
           Repo: ${{ github.repository }}
           Commit: ${{ steps.commit-info.outputs.sha }}
           Date: ${{ steps.commit-info.outputs.date }}
           Message: ${{ steps.commit-info.outputs.message }}
-                    
-          TestFlight: ${{ env.APP_STORE_CONNECT_URL }}
-          EOF
-
+          
+          📱 Uploaded to TestFlight
+          🔗 TestFlight: ${{ env.APP_STORE_CONNECT_URL }}"
+          
           # Отправка текста
           curl -G \
             --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            --data-urlencode "text=$(cat message.txt)" \
+            --data-urlencode "text=$MESSAGE" \
             https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage
           
           # Отправка файла
           curl -X POST \
-            -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -F document=@"build/ios/ipa/app-release.ipa" \
+            -F "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -F "document=@build/ios/ipa/app-release.ipa" \
+            -F "caption=🍏 iOS IPA for TestFlight" \
             https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument
