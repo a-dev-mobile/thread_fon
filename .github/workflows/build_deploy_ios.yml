@@ -59,9 +59,14 @@ jobs:
           gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
           --output env_dart/prod.json env_dart/prod.json.gpg
           
-          # Firebase config для iOS
-          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
-          --output ios/Runner/GoogleService-Info.plist ios/Runner/GoogleService-Info.plist.gpg
+          # Firebase config для iOS (опционально)
+          if [ -f "ios/Runner/GoogleService-Info.plist.gpg" ]; then
+            echo "Decrypting Firebase config for iOS..."
+            gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FILE_PASSPHRASE }}" \
+            --output ios/Runner/GoogleService-Info.plist ios/Runner/GoogleService-Info.plist.gpg
+          else
+            echo "Warning: GoogleService-Info.plist.gpg not found, skipping Firebase config for iOS"
+          fi
 
       # Генерация кода
       - name: Generate localization
